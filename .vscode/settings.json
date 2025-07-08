@@ -52,7 +52,7 @@
   "[scss]": {
     "editor.defaultFormatter": "stylelint.vscode-stylelint"
   },
-  "cSpell.words": [],
+  "cSpell.words": ["plotly"],
   "diffEditor.ignoreTrimWhitespace": false,
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": true,
