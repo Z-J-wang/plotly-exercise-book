@@ -1,6 +1,4 @@
 import './css/main.css'
-import '@/css/common.less'
-
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import ElementPlus from 'element-plus'

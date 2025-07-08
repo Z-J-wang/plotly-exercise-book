@@ -16,7 +16,6 @@ const routes = Object.entries(files).map(([key, value]) => {
     component: value
   }
 })
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes

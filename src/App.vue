@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, RouterView } from 'vue-router'
 import BasicAside from './components/BasicAside.vue'
 
 const activeIndex = ref('1')
@@ -10,7 +10,7 @@ const activeIndex = ref('1')
   <el-container class="basic-layout">
     <el-header>
       <el-menu :default-active="activeIndex" mode="horizontal" :ellipsis="false">
-        <el-menu-item>
+        <el-menu-item index="0">
           <RouterLink :to="{ name: 'HomeView' }" class="font-bold text-xl">Plotly.js 习题册</RouterLink>
         </el-menu-item>
         <el-menu-item index="1">Processing Center</el-menu-item>
@@ -32,12 +32,14 @@ const activeIndex = ref('1')
       <el-aside width="200px">
         <BasicAside />
       </el-aside>
-      <el-main>Main</el-main>
+      <el-main>
+        <RouterView />
+      </el-main>
     </el-container>
   </el-container>
 </template>
 
-<style scoped>
+<style lang="less" scoped>
 .basic-layout {
   .el-header {
     padding-right: 0;
