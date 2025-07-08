@@ -14,6 +14,10 @@ module.exports = {
         ignoreAtRules: ['tailwind']
       }
     ],
+    "selector-class-pattern": [
+      "(^[a-z]([-]?[a-z0-9])*$)|(^el)",  // 忽略 el 开头的类名
+      { "resolveNestedSelectors": true },
+    ],
     'color-hex-length': 'long', // 颜色6位长度
     // 属性的排序
     'order/properties-order': [

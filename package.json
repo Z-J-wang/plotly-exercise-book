@@ -17,6 +17,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "element-plus": "^2.10.3",
     "pinia": "^2.1.3",
     "vue": "^3.3.4",
     "vue-router": "^4.2.2"
