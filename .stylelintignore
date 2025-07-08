@@ -16,6 +16,9 @@ bll
 api
 lib
 
+# 忽略指定文件
+index.html
+
 # 忽略所有的JS文件
 **/*.js
 **/*.jsx
