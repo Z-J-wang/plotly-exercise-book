@@ -1,0 +1,25 @@
+# stylelint将不对本文件列举的文件或者目录进行校验
+node_modules
+dist
+public
+dist-ssr
+coverage
+script
+public
+.git
+.vscode
+.husky
+.github
+entities
+dal
+bll
+api
+lib
+
+# 忽略所有的JS文件
+**/*.js
+**/*.jsx
+**/*.ts
+**/*.tsx
+**/*.mjs
+**/*.cjs

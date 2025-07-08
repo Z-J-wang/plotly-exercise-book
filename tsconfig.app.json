@@ -1,0 +1,16 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "include": ["env.d.ts", "bll/", "dal/", "entities/", "api/", "src/**/*", "src/**/*.vue"], // 注意：通配规则，必须放在具体规则后面
+  "exclude": ["src/**/tests/*"],
+  "compilerOptions": {
+    "composite": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "dal/*": ["./dal/*"],
+      "bll/*": ["./bll/*"],
+      "entities/*": ["./entities/*"],
+      "api/*": ["./api/*"]
+    }
+  }
+}

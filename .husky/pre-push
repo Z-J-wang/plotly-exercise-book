@@ -1,0 +1,3 @@
+# Husky v9.1.6
+# push 前进行 lint 检查。如果检查不通过，则阻止 push。
+yarn lint
