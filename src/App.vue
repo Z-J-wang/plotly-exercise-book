@@ -29,10 +29,12 @@ const activeIndex = ref('1')
       </el-menu>
     </el-header>
     <el-container>
-      <el-aside width="200px">
-        <BasicAside />
+      <el-aside width="250px" class="border-r-2">
+        <el-scrollbar height="calc(100vh - 60px)">
+          <BasicAside />
+        </el-scrollbar>
       </el-aside>
-      <el-main>
+      <el-main class="bg-gray-50">
         <RouterView />
       </el-main>
     </el-container>
