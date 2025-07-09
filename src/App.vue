@@ -1,85 +1,55 @@
-<script setup lang="ts">
+<script lang="ts" setup>
+import { ref } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import BasicAside from './components/BasicAside.vue'
+
+const activeIndex = ref('1')
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/students">Students</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <el-container class="basic-layout">
+    <el-header>
+      <el-menu :default-active="activeIndex" mode="horizontal" :ellipsis="false">
+        <el-menu-item index="0">
+          <RouterLink :to="{ name: 'HomeView' }" class="font-bold text-xl">Plotly.js 习题册</RouterLink>
+        </el-menu-item>
+        <el-menu-item index="1">Processing Center</el-menu-item>
+        <el-sub-menu index="2">
+          <template #title>Workspace</template>
+          <el-menu-item index="2-1">item one</el-menu-item>
+          <el-menu-item index="2-2">item two</el-menu-item>
+          <el-menu-item index="2-3">item three</el-menu-item>
+          <el-sub-menu index="2-4">
+            <template #title>item four</template>
+            <el-menu-item index="2-4-1">item one</el-menu-item>
+            <el-menu-item index="2-4-2">item two</el-menu-item>
+            <el-menu-item index="2-4-3">item three</el-menu-item>
+          </el-sub-menu>
+        </el-sub-menu>
+      </el-menu>
+    </el-header>
+    <el-container>
+      <el-aside width="250px" class="border-r-2">
+        <el-scrollbar height="calc(100vh - 60px)">
+          <BasicAside />
+        </el-scrollbar>
+      </el-aside>
+      <el-main class="bg-gray-50">
+        <RouterView />
+      </el-main>
+    </el-container>
+  </el-container>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  margin-top: 2rem;
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  border-left: 1px solid var(--color-border);
-  padding: 0 1rem;
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (width >= 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+<style lang="less" scoped>
+.basic-layout {
+  .el-header {
+    padding-right: 0;
+    padding-left: 0;
   }
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    margin-top: 1rem;
-    margin-left: -1rem;
-    padding: 1rem 0;
-    font-size: 1rem;
-    text-align: left;
+  .el-menu--horizontal > .el-menu-item:nth-child(1) {
+    margin-right: auto;
   }
 }
 </style>

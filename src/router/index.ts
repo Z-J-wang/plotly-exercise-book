@@ -1,28 +1,24 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 
+const files = import.meta.glob('../views/**/*.vue')
+const routes = Object.entries(files).map(([key, value]) => {
+  const name = key.replace(/^.*[\\\/]/, '').replace(/\.vue$/, '')
+  return {
+    path: `/${
+      name === 'HomeView'
+        ? ''
+        : name
+            .replace(/View$/, '') // 删除View
+            .replace(/^[A-Z]/, (match) => match.toLowerCase()) // 首字母小写
+            .replace(/[A-Z]/g, (match) => `-${match.toLowerCase()}`) // 驼峰转连字符
+    }`,
+    name: name,
+    component: value
+  }
+})
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: HomeView
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
-    },
-    {
-      path: '/students',
-      name: 'Students',
-      component: () => import('../views/StudentsView.vue')
-    }
-  ]
+  routes
 })
 
 export default router

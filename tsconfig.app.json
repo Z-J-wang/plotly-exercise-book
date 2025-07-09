@@ -11,6 +11,7 @@
       "bll/*": ["./bll/*"],
       "entities/*": ["./entities/*"],
       "api/*": ["./api/*"]
-    }
+    },
+    "types": ["element-plus/global"]
   }
 }
