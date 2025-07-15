@@ -1,4 +1,6 @@
 declare namespace PlotlyTypes {
+  import type { StyleValue } from 'vue'
+
   // Plotly 支持的图表类型
   export type PlotlyGraphType =
     | 'cartesian' // 笛卡尔图表
@@ -48,33 +50,33 @@ declare namespace PlotlyTypes {
   }
 
   export interface Layout {
-    title?: string | {}
-    showlegend?: boolean
-    legend?: {}
-    margin?: {
-      autoexpand?: boolean
-      b?: number
-      l?: number
-      r?: number
-      t?: number
-      pad?: number
-    }
-    autosize?: boolean
-    width?: number
-    height?: number
-    font?: {}
-    uniformtext?: {}
-    separators?: string
-    paper_bgcolor?: string
-    plot_bgcolor?: string
-    autotypenumbers?: 'convert types' | 'strict'
-    colorscale?: {}
-    colorway?: {}
-    modebar?: {}
-    hovermode?: 'x' | 'y' | 'closest' | false | 'x unified' | 'y unified'
-    hoversubplots?: 'single' | 'overlaying' | 'axis'
-    clickmode?: 'event' | 'select' | 'event+select' | 'none'
-    dragmode?:
+    title: string | {}
+    showlegend: boolean
+    legend: {}
+    margin: Partial<{
+      autoexpand: boolean
+      b: number
+      l: number
+      r: number
+      t: number
+      pad: number
+    }>
+    autosize: boolean
+    width: number
+    height: number
+    font: {}
+    uniformtext: {}
+    separators: string
+    paper_bgcolor: string
+    plot_bgcolor: string
+    autotypenumbers: 'convert types' | 'strict'
+    colorscale: {}
+    colorway: {}
+    modebar: {}
+    hovermode: 'x' | 'y' | 'closest' | false | 'x unified' | 'y unified'
+    hoversubplots: 'single' | 'overlaying' | 'axis'
+    clickmode: 'event' | 'select' | 'event+select' | 'none'
+    dragmode:
       | 'zoom'
       | 'pan'
       | 'select'
@@ -87,9 +89,9 @@ declare namespace PlotlyTypes {
       | 'orbit'
       | 'turntable'
       | false
-    selectdirection?: 'h' | 'v' | 'd' | 'any'
-    activeselection?: {}
-    newselection?: {}
+    selectdirection: 'h' | 'v' | 'd' | 'any'
+    activeselection: {}
+    newselection: {}
 
     // 添加索引签名允许任意Plotly布局属性
     [prop: string]: string | number | boolean | {} | undefined | Array<any> | Function // 兼容Plotly的复杂配置
@@ -148,12 +150,12 @@ declare namespace PlotlyTypes {
     showSendToCloud: boolean // 默认值false。是否在modeBar显示发送到 Chart Studio Cloud 的按钮。需搭配plotlyServerURL属性使用。
     showEditInChartStudio: boolean // 默认值false。是否在modeBar显示编辑图表的按钮。需搭配plotlyServerURL属性使用。如果该属性和showSendToCloud属性都为true，则显示编辑图表的按钮。
     modeBarButtonsToRemove: string[] // 默认值[]。需要隐藏modeBar按钮列表。Plotly支持的按钮列表:https://github.com/plotly/plotly.js/blob/master/src/components/modebar/buttons.js
-    modeBarButtonsToAdd: PlotlyModeBarButton[] // 默认值[]。需要添加的modeBar按钮列表。
-    toImageButtonOptions: PlotlyModeBarButton // 默认值{}。覆盖toImage按钮的默认配置项。
+    modeBarButtonsToAdd: ModeBarButton[] // 默认值[]。需要添加的modeBar按钮列表。
+    toImageButtonOptions: ModeBarButton // 默认值{}。覆盖toImage按钮的默认配置项。
     displaylogo: boolean // 默认值true。是否显示logo。
     watermark: boolean // 默认值false。是否显示水印。
     plotGlPixelRatio: number // 默认值2。取值范围1-4。设置WebGL图像导出时的像素比。
-    setBackground: CSSProperties // 默认值'transparent'。设置图表的背景色。
+    setBackground: StyleValue // 默认值'transparent'。设置图表的背景色。
     topojsonURL: string // 默认值'https://cdn.plot.ly/'。设置topojson文件的URL。
     mapboxAccessToken: null | string // 默认值null。设置Mapbox的访问令牌。
     logging: // 设置日志级别。

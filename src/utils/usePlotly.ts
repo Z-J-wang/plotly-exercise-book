@@ -14,8 +14,8 @@ export function usePlotly(
   gd: Element | ElementID,
   data: PlotlyTypes.TraceData[],
   useReact: boolean = false,
-  layout?: PlotlyTypes.Layout,
-  config?: PlotlyTypes.Config
+  layout?: Partial<PlotlyTypes.Layout>,
+  config?: Partial<PlotlyTypes.Config>
 ) {
   let plotly: Promise<Element> | null = null
   const plotlyTemplate = ref<PlotlyTypes.Template | null>(null)
@@ -47,7 +47,7 @@ export function usePlotly(
     react: function (
       data: PlotlyTypes.TraceData[],
       layout?: PlotlyTypes.Layout,
-      config?: PlotlyTypes.Config
+      config?: Partial<PlotlyTypes.Config>
     ): Promise<Element> {
       return Plotly.react(gd, data, layout, config).then((element: Element) => _updateTemplate(element))
     },
