@@ -6,3 +6,4 @@ declare module '*.vue' {
 }
 
 declare module 'plotly.js-dist-min'
+declare type ElementID = string // 元素 ID

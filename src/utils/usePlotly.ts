@@ -1,118 +1,6 @@
 import Plotly from 'plotly.js-dist-min'
 import { ref } from 'vue'
 
-export interface TraceData {
-  type: string
-  x?: number[]
-  y?: number[]
-  z?: number[]
-  mode?: string
-  name?: string
-  [prop: string]: string | number | boolean | {} | undefined | Array<any> | Function // 兼容Plotly的复杂配置
-}
-
-export interface PlotlyLayout {
-  title?: string | {}
-  showlegend?: boolean
-  legend?: {}
-  margin?: {
-    autoexpand?: boolean
-    b?: number
-    l?: number
-    r?: number
-    t?: number
-    pad?: number
-  }
-  autosize?: boolean
-  width?: number
-  height?: number
-  font?: {}
-  uniformtext?: {}
-  separators?: string
-  paper_bgcolor?: string
-  plot_bgcolor?: string
-  autotypenumbers?: 'convert types' | 'strict'
-  colorscale?: {}
-  colorway?: {}
-  modebar?: {}
-  hovermode?: 'x' | 'y' | 'closest' | false | 'x unified' | 'y unified'
-  hoversubplots?: 'single' | 'overlaying' | 'axis'
-  clickmode?: 'event' | 'select' | 'event+select' | 'none'
-  dragmode?:
-    | 'zoom'
-    | 'pan'
-    | 'select'
-    | 'lasso'
-    | 'drawclosedpath'
-    | 'drawopenpath'
-    | 'drawline'
-    | 'drawrect'
-    | 'drawcircle'
-    | 'orbit'
-    | 'turntable'
-    | false
-  selectdirection?: 'h' | 'v' | 'd' | 'any'
-  activeselection?: {}
-  newselection?: {}
-
-  // 添加索引签名允许任意Plotly布局属性
-  [prop: string]: string | number | boolean | {} | undefined | Array<any> | Function // 兼容Plotly的复杂配置
-}
-
-export interface PlotlyTemplate {
-  data: any[]
-  layout: PlotlyLayout
-}
-export type ElementID = string // 元素 ID
-
-export interface ToImageOptions {
-  format?: 'png' | 'jpeg' | 'webp' | 'svg' | 'full-json'
-  width?: number
-  height?: number
-  scale?: number
-  filename?: string
-  setBackground?: any
-  imageDataOnly?: boolean // 仅返回图片数据。即不包含 base64 头
-}
-
-/**
- * template 校验结果数据类型
- */
-export type ValidateTemplateResult =
-  | true
-  | { code: 'missing' | 'unused' | 'reused' | 'noLayout' | 'noData'; msg: string }[]
-
-// Plotly 画面帧 数据类型
-export interface PlotlyFrame {
-  name?: string
-  data: TraceData[]
-  layout?: PlotlyLayout
-  tracesIndices: number[]
-  baseframe?: string
-}
-
-/**
- * 画面帧数据类型
- * 详见：https://github.com/plotly/plotly.js/blob/5e2163b2f3377187152bdfdffe1a9e64998ce5aa/src/plots/animation_attributes.js#L4
- */
-export interface AnimationOpts {
-  mode: // 动画播放模式
-  | 'immediate' // 打断当前帧，立即播放新帧
-    | 'next' // 等待当前帧播放完后，再播放新帧
-    | 'afterall' // 等待所有帧播放完毕后，再播放新帧
-  direction: 'forward' | 'reverse' // 动画播放方向，向前或向后
-  fromcurrent: boolean // 从当前帧开始播放帧，而不是开始播放
-  frame: {
-    duration: number // 每一帧的持续时间，单位ms
-    redraw: boolean // 强制重新绘制整个图表
-  }
-  transition: {
-    duration: number // 过渡的持续时间，单位ms
-    easing: 'linear' | 'circle' | 'cubic' | 'elastic' | 'back' | 'bounce' // 动画缓动函数
-  }
-  ordering: 'layout first' | 'traces first'
-}
-
 /**
  * 使用 plotly.js 绘制图表
  * @param {string id or DOM element} gd 图表容器元素或者其ID
@@ -124,13 +12,13 @@ export interface AnimationOpts {
  */
 export function usePlotly(
   gd: Element | ElementID,
-  data: TraceData[],
+  data: PlotlyTypes.TraceData[],
   useReact: boolean = false,
-  layout?: PlotlyLayout,
-  config?: any
+  layout?: PlotlyTypes.Layout,
+  config?: PlotlyTypes.Config
 ) {
   let plotly: Promise<Element> | null = null
-  const plotlyTemplate = ref<PlotlyTemplate | null>(null)
+  const plotlyTemplate = ref<PlotlyTypes.Template | null>(null)
   let _plotElement: Element | null = null
   if (useReact) {
     plotly = Plotly.react(gd, data, layout, config) as Promise<Element>
@@ -142,7 +30,7 @@ export function usePlotly(
 
   function _updateTemplate(plotElement: Element) {
     _plotElement = plotElement
-    plotlyTemplate.value = Plotly.makeTemplate(plotElement) as PlotlyTemplate
+    plotlyTemplate.value = Plotly.makeTemplate(plotElement) as PlotlyTypes.Template
   }
 
   return {
@@ -156,7 +44,11 @@ export function usePlotly(
      * @param {object} config 描述图表的配置
      * 详见：https://plotly.com/javascript/plotlyjs-function-reference/#plotlyreact
      */
-    react: function (data: TraceData[], layout?: PlotlyLayout, config?: any): Promise<Element> {
+    react: function (
+      data: PlotlyTypes.TraceData[],
+      layout?: PlotlyTypes.Layout,
+      config?: PlotlyTypes.Config
+    ): Promise<Element> {
       return Plotly.react(gd, data, layout, config).then((element: Element) => _updateTemplate(element))
     },
 
@@ -166,7 +58,7 @@ export function usePlotly(
      * @param traceIndices 指定要重新绘制的trace的索引，索引起始值为0
      */
     restyle: function (
-      traceData: Partial<Omit<TraceData, 'x' | 'y' | 'z'>>,
+      traceData: Partial<Omit<PlotlyTypes.TraceData, 'x' | 'y' | 'z'>>,
       traceIndices?: number | number[]
     ): Promise<Element> {
       return Plotly.restyle(gd, traceData, traceIndices).then((element: Element) => _updateTemplate(element))
@@ -176,7 +68,7 @@ export function usePlotly(
      * 根据新的layout，重新绘制当前图表
      * @param layout 描述图表的布局
      */
-    relayout: function (layout: Partial<PlotlyLayout>): Promise<Element> {
+    relayout: function (layout: Partial<PlotlyTypes.Layout>): Promise<Element> {
       return Plotly.relayout(gd, layout).then((element: Element) => _updateTemplate(element))
     },
 
@@ -187,8 +79,8 @@ export function usePlotly(
      * @param traceIndices 指定要重新绘制的trace的索引，索引起始值为0
      */
     update: function (
-      traceData: Partial<Omit<TraceData, 'x' | 'y' | 'z'>>,
-      layout: Partial<PlotlyLayout>,
+      traceData: Partial<Omit<PlotlyTypes.TraceData, 'x' | 'y' | 'z'>>,
+      layout: Partial<PlotlyTypes.Layout>,
       traceIndices?: number | number[]
     ): Promise<Element> {
       return Plotly.update(gd, traceData, layout, traceIndices).then((element: Element) => _updateTemplate(element))
@@ -199,7 +91,7 @@ export function usePlotly(
      * @param template
      * @returns 校验结果
      */
-    validateTemplate: function (template: Partial<PlotlyTemplate>): ValidateTemplateResult {
+    validateTemplate: function (template: Partial<PlotlyTypes.Template>): PlotlyTypes.ValidateTemplateResult {
       const result = Plotly.validateTemplate(_plotElement, template)
       return result === undefined ? true : result
     },
@@ -209,7 +101,10 @@ export function usePlotly(
      * @param traces
      * @param newIndices 可选，指定新 trace 插入的位置
      */
-    addTraces: function (traces: TraceData | TraceData[], newIndices?: number | number[]): Promise<Element> {
+    addTraces: function (
+      traces: PlotlyTypes.TraceData | PlotlyTypes.TraceData[],
+      newIndices?: number | number[]
+    ): Promise<Element> {
       return Plotly.addTraces(_plotElement, traces, newIndices).then((element: Element) => _updateTemplate(element))
     },
 
@@ -311,7 +206,7 @@ export function usePlotly(
      * @param frameList 帧列表
      * @param frameIndices 帧索引。未提供时则新增帧。如果提供则替换帧。
      */
-    addFrames(frameList: PlotlyFrame[], frameIndices?: number[]) {
+    addFrames(frameList: PlotlyTypes.Frame[], frameIndices?: number[]) {
       return Plotly.addFrames(_plotElement, frameList, frameIndices)
     },
 
@@ -322,8 +217,8 @@ export function usePlotly(
      * @returns
      */
     animate(
-      frameOrGroupNameOrFrameList: string | string[] | PlotlyFrame | PlotlyFrame[],
-      animationOpts?: AnimationOpts
+      frameOrGroupNameOrFrameList: string | string[] | PlotlyTypes.Frame | PlotlyTypes.Frame[],
+      animationOpts?: PlotlyTypes.AnimationOpts
     ) {
       return Plotly.animate(_plotElement, frameOrGroupNameOrFrameList, animationOpts)
     },
@@ -341,7 +236,7 @@ export function usePlotly(
      * @param opts 图片配置信息
      * @returns 图片 Base64 字符串
      */
-    toImage: function (opts: Omit<ToImageOptions, 'filename'>): Promise<Base64URLString> {
+    toImage: function (opts: Omit<PlotlyTypes.ToImageOptions, 'filename'>): Promise<Base64URLString> {
       return Plotly.toImage(_plotElement, opts)
     },
 
@@ -350,7 +245,7 @@ export function usePlotly(
      * @param opts 图片配置信息
      * @returns 图片名
      */
-    downloadImage(opts: Omit<ToImageOptions, 'imageDataOnly'>): Promise<string> {
+    downloadImage(opts: Omit<PlotlyTypes.ToImageOptions, 'imageDataOnly'>): Promise<string> {
       return Plotly.downloadImage(_plotElement, opts)
     }
   }
