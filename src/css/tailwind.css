@@ -1,4 +1,10 @@
 /* tailwind CSS 样式文件 */
+
+/* 基础样式。如果和其他UI框架一起使用，可能会造成样式冲突。可以选择性地删除。 */
 @tailwind base;
+
+/* 组件类样式 */
 @tailwind components;
+
+/* 工具类样式 */
 @tailwind utilities;
