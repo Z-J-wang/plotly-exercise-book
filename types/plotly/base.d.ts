@@ -61,6 +61,9 @@ export type Icons =
 
 export interface PlotData {
   type: PlotType
+  /**
+   * x轴数据
+   */
   x: Datum[] | Datum[][] | TypedArray
   y: Datum[] | Datum[][] | TypedArray
   z: Datum[] | Datum[][] | Datum[][][] | TypedArray
@@ -72,6 +75,11 @@ export interface PlotData {
   error_y: ErrorBar
   xaxis: string
   yaxis: string
+
+  /**
+   * 描述数据点的文本
+   * @default ''
+   */
   text: string | string[]
   lat: Datum[]
   lon: Datum[]
@@ -102,6 +110,10 @@ export interface PlotData {
   'marker.pad.b': number
   'marker.pad.l': number
   'marker.pad.r': number
+
+  /**
+   * trace 绘制模式
+   */
   mode:
     | 'lines'
     | 'markers'
@@ -182,6 +194,11 @@ export interface PlotData {
     | 'value+percent'
     | 'percent'
     | 'none'
+
+  /**
+   * 显示文本的位置
+   * @default 'middle center'
+   */
   textposition:
     | 'top left'
     | 'top center'
@@ -280,7 +297,7 @@ export interface PlotData {
 
   /**
    * trace名称，name 会作为图例名且在鼠标hover显示。
-   * @requires
+   * @default ''
    */
   name: string
   stackgroup: string
@@ -303,6 +320,11 @@ export interface PlotData {
   boxpoints: 'all' | 'outliers' | 'suspectedoutliers' | false
   jitter: number
   pointpos: number
+
+  /**
+   * 设置透明度，包含trace和图例透明度。
+   * @default 1
+   */
   opacity: number
   showscale: boolean
   colorscale: ColorScale
@@ -336,6 +358,10 @@ export interface PlotData {
   }>
   title: Partial<DataTitle>
   branchvalues: 'total' | 'remainder'
+
+  /**
+   * 数据项的标识符
+   */
   ids: string[]
   level: string
   cliponaxis: boolean
