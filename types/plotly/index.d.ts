@@ -1,92 +1,40 @@
 declare namespace PlotlyTypes {
   // 全局导出config.d.ts中的所有类型
   export { Config, EditConfig, ModeBarButton } from './config'
+  export { ScatterTrace } from './ScatterTrace'
 
-  export interface TraceData {
-    type: string
-    x?: number[]
-    y?: number[]
-    z?: number[]
-    mode?: string
-    name?: string
-    [prop: string]: string | number | boolean | {} | undefined | Array<any> | Function // 兼容Plotly的复杂配置
-  }
+  export type TraceData = Plotly.Data | ScatterTrace
 
-  export interface Layout {
-    title: string | {}
-    showlegend: boolean
-    legend: {}
-    margin: Partial<{
-      autoexpand: boolean
-      b: number
-      l: number
-      r: number
-      t: number
-      pad: number
-    }>
-    autosize: boolean
-    width: number
-    height: number
-    font: {}
-    uniformtext: {}
-    separators: string
-    paper_bgcolor: string
-    plot_bgcolor: string
-    autotypenumbers: 'convert types' | 'strict'
-    colorscale: {}
-    colorway: {}
-    modebar: {}
-    hovermode: 'x' | 'y' | 'closest' | false | 'x unified' | 'y unified'
-    hoversubplots: 'single' | 'overlaying' | 'axis'
-    clickmode: 'event' | 'select' | 'event+select' | 'none'
-    dragmode:
-      | 'zoom'
-      | 'pan'
-      | 'select'
-      | 'lasso'
-      | 'drawclosedpath'
-      | 'drawopenpath'
-      | 'drawline'
-      | 'drawrect'
-      | 'drawcircle'
-      | 'orbit'
-      | 'turntable'
-      | false
-    selectdirection: 'h' | 'v' | 'd' | 'any'
-    activeselection: {}
-    newselection: {}
-
-    // 添加索引签名允许任意Plotly布局属性
-    [prop: string]: string | number | boolean | {} | undefined | Array<any> | Function // 兼容Plotly的复杂配置
-  }
+  export type Layout =
+    | Plotly.Layout
+    | {
+        // 添加索引签名允许任意Plotly布局属性
+        [K in `legend_${string}`]: Partial<Plotly.Legend> // 兼容Plotly的复杂配置
+      }
 
   export interface Template {
-    data: any[]
-    layout: PlotlyLayout
+    data?: { [type in PlotType]?: Array<Partial<Plotly.PlotData>> } | undefined
+    layout?: Partial<Plotly.Layout> | undefined
   }
 
   export interface ToImageOptions {
-    format?: 'png' | 'jpeg' | 'webp' | 'svg' | 'full-json'
-    width?: number
-    height?: number
-    scale?: number
-    filename?: string
-    setBackground?: any
-    imageDataOnly?: boolean // 仅返回图片数据。即不包含 base64 头
+    format: 'jpeg' | 'png' | 'webp' | 'svg'
+    width: number
+    height: number
+    scale: number
+    filename: string
   }
 
   /**
    * template 校验结果数据类型
    */
-  export type ValidateTemplateResult =
-    | true
-    | { code: 'missing' | 'unused' | 'reused' | 'noLayout' | 'noData'; msg: string }[]
+  export type ValidateTemplateResult = true | Plotly.ValidateTemplateResult[]
 
   // Plotly 画面帧 数据类型
   export interface Frame {
     name?: string
     data: TraceData[]
-    layout?: PlotlyLayout
+    layout?: Layout
     tracesIndices: number[]
     baseframe?: string
   }

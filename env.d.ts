@@ -5,5 +5,9 @@ declare module '*.vue' {
   export default vueComponent
 }
 
-declare module 'plotly.js-dist-min'
+declare module 'plotly.js-dist-min' {
+  import Plotly from 'plotly.js'
+
+  export default Plotly
+}
 declare type ElementID = string // 元素 ID
