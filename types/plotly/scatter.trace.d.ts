@@ -44,4 +44,10 @@ export interface ScatterTrace extends PlotData {
    * @default 1
    */
   dy: number
+
+  /**
+   * 描述数据点的额外信息。可用于texttemplate、hovertemplate等属性。
+   * @default ''
+   */
+  meta: string | number | string[]
 }

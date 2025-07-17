@@ -73,12 +73,22 @@ export interface PlotData {
   xy: Float32Array
   error_x: ErrorBar
   error_y: ErrorBar
+
+  /**
+   * 指定x轴要采用哪种layout.yaxis配置。值为‘x’时，指向layout.yaxis。值为'x2'时，指向layout.yaxis2，以此类推
+   * @default 'x'
+   */
   xaxis: string
+
+  /**
+   * x轴与layout.xaxis的映射关系。值为‘x’时，指向layout.xaxis。值为'x2'时，指向layout.xaxis2，以此类推
+   * @default 'x'
+   */
   yaxis: string
 
   /**
-   * 描述数据点的文本
-   * @default ''
+   * 指定y轴要采用哪种layout.xaxis配置。值为‘x’时，指向layout.xaxis。值为'x2'时，指向layout.xaxis2，以此类推
+   * @default 'x'
    */
   text: string | string[]
   lat: Datum[]
@@ -90,12 +100,42 @@ export interface PlotData {
   'line.shape': 'linear' | 'spline' | 'hv' | 'vh' | 'hvh' | 'vhv'
   'line.smoothing': number
   'line.simplify': boolean
+
+  /**
+   * 数据点样式
+   */
   marker: Partial<PlotMarker> | Partial<BoxPlotMarker>
+
+  /**
+   * 数据点类型，分为空心圆、实心圆、三角形等等。
+   * 详见： https://plotly.com/javascript/reference/scatter/#scatter-marker-symbol
+   * @default 'circle'
+   */
   'marker.symbol': MarkerSymbol | MarkerSymbol[]
+
+  /**
+   * 数据点颜色
+   * 既可以具体某个颜色，也可以是候为数组，数组长度必须等于数据长度。
+   */
   'marker.color': Color
   'marker.colorscale': ColorScale | ColorScale[]
+
+  /**
+   * 数据点透明度
+   * 既可以是具体某个透明度，也可以是候为数组，数组长度必须等于数据长度。
+   */
   'marker.opacity': number | number[]
+
+  /**
+   * 数据点大小
+   * 既可以是具体某个大小，也可以是候为数组，数组长度必须等于数据长度。
+   */
   'marker.size': number | number[] | number[][]
+
+  /**
+   * 数据点最大显示数量。0表示无限制。
+   * @default 0
+   */
   'marker.maxdisplayed': number
   'marker.sizeref': number
   'marker.sizemax': number
@@ -133,6 +173,11 @@ export interface PlotData {
   histfunc: 'count' | 'sum' | 'avg' | 'min' | 'max'
   histnorm: '' | 'percent' | 'probability' | 'density' | 'probability density'
   hoveron: 'points' | 'fills'
+
+  /**
+   * 设置hover弹窗显示的信息。
+   * @default 'all'
+   */
   hoverinfo:
     | 'all'
     | 'name'
@@ -171,13 +216,50 @@ export interface PlotData {
     | 'z+x+y+text'
     | 'z+x+y+name'
   hoverlabel: Partial<HoverLabel>
+
+  /**
+   * hover显示模板
+   * 需通过`%{variable}`接收变量，如："y: %{y}"。此属性会覆盖hoverinfo属性。
+   * @default ''
+   */
   hovertemplate: string | string[]
+
+  /**
+   * hover显示文本
+   * @default ''
+   */
   hovertext: string | string[]
   hoverongaps: boolean
+
+  /**
+   * x轴数据格式化模板
+   * @default ''
+   */
   xhoverformat: string
+
+  /**
+   * y轴数据格式化模板
+   * @default ''
+   */
   yhoverformat: string
+
+  /**
+   * z轴数据格式化模板
+   * @default ''
+   */
   zhoverformat: string
+
+  /**
+   * 文本模板
+   * 需通过`%{variable}`接收变量，如："y: %{y}"
+   * @default ''
+   */
   texttemplate: string | string[]
+
+  /**
+   * 设置text信息的构成
+   * @default 'label+text'
+   */
   textinfo:
     | 'label'
     | 'label+text'
@@ -300,7 +382,25 @@ export interface PlotData {
    * @default ''
    */
   name: string
+
+  /**
+   * 堆叠组名称
+   * 将多个散点轨迹（位于同一子图中）设置为相同的堆叠组，以便将其y值（若`orientation`为“h”则为x值）相加。
+   * 若此项为空或省略，则该轨迹将不会被堆叠。默认情况下，堆叠会启用`fill`，若`orientation`为“h”（“v”），
+   * 则使用“tonexty”（“tonextx”），并将默认`mode`设置为“lines”，无论点数多少。堆叠仅适用于数值（线性或对数）轴。
+   * 同一`stackgroup`中的轨迹仅会填充或被填充到同组中的其他轨迹。在存在多个`stackgroup`或部分轨迹堆叠而部分未堆叠的情况下，
+   * 若填充关联的轨迹未连续排列，后续轨迹将在绘制顺序中被下移。
+   * @default ''
+   */
   stackgroup: string
+
+  /**
+   * 堆叠模式。需配合stackgroup属性。
+   * 当值为'fraction'|'percent'时，堆叠模式为会改为计算当前方向上每个stack的占比。
+   * 'fraction'小数值表示占比。'percent'百分比值表示占比。
+   *
+   * @default ''
+   */
   groupnorm: '' | 'fraction' | 'percent'
   stackgaps: 'infer zero' | 'interpolate'
   connectgaps: boolean
@@ -314,6 +414,11 @@ export interface PlotData {
   delta: Partial<Delta>
   gauge: Partial<Gauge>
   number: Partial<PlotNumber>
+
+  /**
+   * 堆叠图的朝向，需搭配 stackgroup 属性使用。
+   * @default 'v'
+   */
   orientation: 'v' | 'h'
   width: number | number[]
   boxmean: boolean | 'sd'
@@ -348,6 +453,10 @@ export interface PlotData {
   rotation: number
   theta: Datum[]
   r: Datum[]
+
+  /**
+   * 自定义数据项
+   */
   customdata: Datum[] | Datum[][]
   selectedpoints: Datum[]
   domain: Partial<{
