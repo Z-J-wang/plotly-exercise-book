@@ -6,12 +6,11 @@ import {
   DataTitle,
   Datum,
   Delta,
-  ErrorBar,
-  Font,
   Gauge,
   HoverLabel,
   MarkerSymbol,
   Pattern,
+  Font as BaseFont,
   PlotMarker,
   PlotNumber,
   PlotType,
@@ -59,6 +58,108 @@ export type Icons =
   | 'pencil'
   | 'newplotlylogo'
 
+export interface Font extends BaseFont {
+  /**
+   * 修饰线的位置
+   * @default 'none'
+   */
+  lineposition:
+    | 'none'
+    | 'under'
+    | 'over'
+    | 'through'
+    | 'under+over'
+    | 'under+through'
+    | 'over+through'
+    | 'over+through+under'
+
+  /**
+   * 单词样式。分斜体和正常两种。
+   * @default 'normal'
+   */
+  style: 'italic' | 'normal'
+
+  /**
+   * 字体大小写。分正常、大写、大写、小写四种。
+   * @default 'normal'
+   */
+  textcase: 'normal' | 'word caps' | 'upper' | 'lower'
+
+  /**
+   * 字体变体。
+   *
+   * 值域说明：
+   *    'normal': 关闭一切特殊字符变体的使用。
+   *    'small-caps': 允许小型大写字母的使用（OpenType 特性：smcp）。小型大写字母指使用大写形式，但尺寸与对应小写字母相同的字母。
+   *    'all-small-caps': 将大小写字母全部转化为小型大写字母。
+   *    'all-petite-caps': 将大小写字母全部转化为小型大写字母。
+   *    'petite-caps': 允许特小型大写字母的使用。
+   *    'unicase': 允许将大写字母转化为小型大写字母与普通小写字母的混用。
+   *
+   * @default 'normal'
+   */
+  variant: 'normal' | 'normal' | 'small-caps' | 'all-small-caps' | 'all-petite-caps' | 'petite-caps' | 'unicase'
+}
+
+/**
+ * 误差信息配置项
+ */
+export interface ErrorOptions {
+  visible: boolean
+
+  /**
+   * 误差条左右对称
+   */
+  symmetric: boolean
+  color: Color
+
+  /**
+   * 误差条的厚度
+   * @default 2
+   */
+  thickness: number
+
+  /**
+   * 误差条两端横杠宽度
+   * @default 1
+   */
+  width: number
+}
+
+export type ErrorBar = Partial<ErrorOptions> &
+  (
+    | {
+        /**
+         * 明确用于生成误差条的规则：
+         * 1. 若选择“constant”选项，误差条的长度将维持恒定不变。请在“value”字段中设置该常量数值。
+         * 2. 若选择“percent”选项，误差条的长度与基础数据呈百分比对应关系。需在“value”字段中设定此百分比数值。
+         * 3. 若选择“data”选项，误差条的长度依据所设置的“array”数据来确定。
+         */
+        type: 'constant' | 'percent'
+        value: number
+        /**
+         * 为每个误差条的left/bottom（水平/垂直方向上）设置长度。数值相对于 value 数据。
+         * value 数据只是定义了误差条的right/top（水平/垂直方向上）的长度。由于
+         * 默认采用开启左右对称模式（即，symmetric=true）,系统自动根据 value 补充了arrayminus（即自动填充了left/bottom 的数据）。
+         *
+         * @default undefined
+         */
+        valueminus?: number | undefined
+      }
+    | {
+        type: 'data'
+        array: Datum[]
+        /**
+         * 为每个误差条的left/bottom（水平/垂直方向上）设置长度。数值相对于 array 数据。
+         * 实际上，array 数据只是定义了误差条的right/top（水平/垂直方向上）的长度。由于
+         * 默认采用开启左右对称模式（即，symmetric=true）,系统自动根据array补充了arrayminus（即自动填充了left/bottom 的数据）。
+         *
+         * @default undefined
+         */
+        arrayminus?: Datum[] | undefined
+      }
+  )
+
 export interface PlotData {
   type: PlotType
   /**
@@ -71,7 +172,15 @@ export interface PlotData {
   j: TypedArray
   k: TypedArray
   xy: Float32Array
+
+  /**
+   * x轴误差条设置
+   */
   error_x: ErrorBar
+
+  /**
+   * y轴误差条设置
+   */
   error_y: ErrorBar
 
   /**
@@ -93,10 +202,24 @@ export interface PlotData {
   text: string | string[]
   lat: Datum[]
   lon: Datum[]
+
+  /**
+   * 折线的样式设置
+   */
   line: Partial<ScatterLine>
   'line.color': Color
   'line.width': number
+
+  /**
+   * 折线样式。可将折现设置为实线、虚线等等。
+   * @default 'solid'
+   */
   'line.dash': Dash
+
+  /**
+   * 折线形状。例如：锐角线，抛物线等等
+   * @default 'linear'
+   */
   'line.shape': 'linear' | 'spline' | 'hv' | 'vh' | 'hvh' | 'vhv'
   'line.smoothing': number
   'line.simplify': boolean
@@ -118,6 +241,10 @@ export interface PlotData {
    * 既可以具体某个颜色，也可以是候为数组，数组长度必须等于数据长度。
    */
   'marker.color': Color
+
+  /**
+   * 数据点色阶，只有 marker.color的值为数字数组时，marker.colorscale才有效。
+   */
   'marker.colorscale': ColorScale | ColorScale[]
 
   /**
@@ -129,6 +256,7 @@ export interface PlotData {
   /**
    * 数据点大小
    * 既可以是具体某个大小，也可以是候为数组，数组长度必须等于数据长度。
+   * @default 6
    */
   'marker.size': number | number[] | number[][]
 
@@ -137,15 +265,65 @@ export interface PlotData {
    * @default 0
    */
   'marker.maxdisplayed': number
+
+  /**
+   * 用于确定标记点渲染大小的缩放因子。
+   * 只有在将 `marker.size` 设置为数值数组时才有效。
+   * 与 `sizemin` 和 `sizemode` 一起使用。
+   */
   'marker.sizeref': number
+
+  /**
+   * 数据点最大尺寸
+   * 只有在将 `marker.size` 设置为数值数组时才有效。
+   * TODO 无效
+   */
   'marker.sizemax': number
+
+  /**
+   * 数据点最小尺寸
+   * 只有在将 `marker.size` 设置为数值数组时才有效。
+   * @default 0
+   */
   'marker.sizemin': number
+
+  /**
+   * 设置将 `size` 中的数据转换为像素的规则。
+   * 只有将 `marker.size` 设置为数值数组时才有效。
+   * 可选择：
+   *  'diameter' - 以直径计算大小。
+   *  'area' - 以面积计算大小。
+   * @default 'diameter'
+   */
   'marker.sizemode': 'diameter' | 'area'
+
+  /**
+   * 是否显示数据点颜色条
+   * 只有marker.color为数值数组时，marker.showscale才有效。
+   */
   'marker.showscale': boolean
+
+  /**
+   * 数据点边框样式
+   */
   'marker.line': Partial<ScatterMarkerLine>
+
+  /**
+   * 数据点边框颜色
+   */
   'marker.line.color': Color
+
+  /**
+   * 数据点边框色阶。
+   * 只有marker.line.color为数值数组时，marker.line.colorscale才有效。
+   */
   'marker.line.colorscale': ColorScale | ColorScale[]
+
+  /**
+   * 数据点颜色条
+   */
   'marker.colorbar': {}
+
   'marker.pad.t': number
   'marker.pad.b': number
   'marker.pad.l': number
@@ -172,6 +350,14 @@ export interface PlotData {
     | 'gauge+delta'
   histfunc: 'count' | 'sum' | 'avg' | 'min' | 'max'
   histnorm: '' | 'percent' | 'probability' | 'density' | 'probability density'
+
+  /**
+   * 鼠标悬浮触发位置
+   * 值域：
+   *  + 'points'：鼠标悬浮到点上时，显示数据点信息
+   *  + 'fills'：鼠标悬浮到填充区域上时，显示区域信息
+   * @default 'points+fills'
+   */
   hoveron: 'points' | 'fills'
 
   /**
@@ -215,6 +401,10 @@ export interface PlotData {
     | 'z+x+y'
     | 'z+x+y+text'
     | 'z+x+y+name'
+
+  /***
+   * hover 弹窗label样式设置
+   */
   hoverlabel: Partial<HoverLabel>
 
   /**
@@ -295,12 +485,41 @@ export interface PlotData {
     | 'outside'
     | 'auto'
     | 'none'
+
+  /**
+   * text 属性文本样式
+   */
   textfont: Partial<Font>
   textangle: 'auto' | number
   insidetextanchor: 'end' | 'middle' | 'start'
   constraintext: 'inside' | 'outside' | 'both' | 'none'
+
+  /**
+   * 设置用于填充的区域颜色。
+   * 默认情况下为“none”。如果此轨迹是堆叠的，'orientation = v'则默认值为 tonexty;
+   *    'orientation = h'则默认值为 tonextx。
+   * 不同填充模式的具体行为
+   * + “tozerox”和“tozeroy”模式：“tozerox”模式下，填充将进行至 x = 0 的位置；“tozeroy”模式下，填充将进行至 y = 0 的位置。
+   * + “tonextx”和“tonexty”模式：这两种模式下，填充区域位于本轨迹的端点与前一轨迹的端点之间，通过直线连接这些端点来生成堆叠区域图。若此前不存在轨迹，“tonextx”和“tonexty”的行为与“tozerox”和“tozeroy”相同，即分别填充至 x = 0 和 y = 0 的位置。
+   * + “toself”模式：此模式会将轨迹的端点（若轨迹存在间隔，则为轨迹的每个段）连接形成一个封闭图形。需注意，“toself”模式不适用于一个轨迹未完全包围另一个轨迹的情况。
+   * + “tonext”模式：当两个轨迹中一个完全包围另一个（如连续的等高线情况）时，“tonext”模式会在这两个轨迹之间填充空间，其行为与“toself”类似。若此前没有轨迹，“tonext”的行为与“tozerox”和“tozeroy”相同，即分别填充至 x = 0 和 y = 0 的位置。
+   *
+   * stackgroup”相关规则
+   * + 处于“stackgroup”中的轨迹，其填充操作仅针对同一组中的其他轨迹，即只会填充到同一组中的其他轨迹，或被同一组中的其他轨迹填充。
+   * + 在存在多个“stackgroup”，或部分轨迹堆叠而部分未堆叠的复杂情况下，如果填充关联的轨迹尚未连续，那么在绘制顺序中，较晚出现的轨迹将向下移动，以确保填充效果的合理性与准确性。
+   */
   fill: 'none' | 'tozeroy' | 'tozerox' | 'tonexty' | 'tonextx' | 'toself' | 'tonext'
+
+  /**
+   * 设置填充颜色。
+   * 默认情况下，会使用线条颜色、标记颜色或标记线条颜色的半透明变体（视可用性而定）。
+   * 如果指定了“fillgradient”，则“fillcolor”将被忽略，但会用于设置鼠标悬停标签的背景颜色（如果有）。
+   */
   fillcolor: string
+
+  /**
+   * 设置填充区域的图案以及样式
+   */
   fillpattern: Partial<Pattern>
 
   /**
@@ -323,50 +542,7 @@ export interface PlotData {
    */
   legendgrouptitle: {
     text: string // default: ''。标题文案
-    font?: Partial<
-      Font & {
-        /**
-         * 修饰线的位置
-         * @default 'none'
-         */
-        lineposition:
-          | 'none'
-          | 'under'
-          | 'over'
-          | 'through'
-          | 'under+over'
-          | 'under+through'
-          | 'over+through'
-          | 'over+through+under'
-
-        /**
-         * 单词样式。分斜体和正常两种。
-         * @default 'normal'
-         */
-        style: 'italic' | 'normal'
-
-        /**
-         * 字体大小写。分正常、大写、大写、小写四种。
-         * @default 'normal'
-         */
-        textcase: 'normal' | 'word caps' | 'upper' | 'lower'
-
-        /**
-         * 字体变体。
-         *
-         * 值域说明：
-         *    'normal': 关闭一切特殊字符变体的使用。
-         *    'small-caps': 允许小型大写字母的使用（OpenType 特性：smcp）。小型大写字母指使用大写形式，但尺寸与对应小写字母相同的字母。
-         *    'all-small-caps': 将大小写字母全部转化为小型大写字母。
-         *    'all-petite-caps': 将大小写字母全部转化为小型大写字母。
-         *    'petite-caps': 允许特小型大写字母的使用。
-         *    'unicase': 允许将大写字母转化为小型大写字母与普通小写字母的混用。
-         *
-         * @default 'normal'
-         */
-        variant: 'normal' | 'normal' | 'small-caps' | 'all-small-caps' | 'all-petite-caps' | 'petite-caps' | 'unicase'
-      }
-    >
+    font?: Partial<Font>
   }
 
   /**
@@ -402,7 +578,21 @@ export interface PlotData {
    * @default ''
    */
   groupnorm: '' | 'fraction' | 'percent'
+
+  /**
+   * 只有在使用“stackgroup”时才适用，并且只会使用“stackgroup”中找到的第一个“stackgaps”。
+   * 堆叠模式下，如何处理本组中其他图例项有数据而本项没有的数据位置。
+   * 使用“infer zero”时，在这些位置插入一个零值。
+   * 使用“interpolate”时，我们在现有值之间进行线性插值，并在现有值之外进行恒定值的外推。
+   * @default 'infer zero'
+   */
   stackgaps: 'infer zero' | 'interpolate'
+
+  /**
+   * 是否连接缺失数据点。
+   * 即，如果x或者y轴数据有缺失值，则将缺失值设置前后数值的平均值。
+   * @default false
+   */
   connectgaps: boolean
 
   /**
@@ -458,6 +648,12 @@ export interface PlotData {
    * 自定义数据项
    */
   customdata: Datum[] | Datum[][]
+
+  /**
+   * 选中的数据项
+   * 建议使用数据点下标
+   * @default []
+   */
   selectedpoints: Datum[]
   domain: Partial<{
     row: number
@@ -473,6 +669,11 @@ export interface PlotData {
    */
   ids: string[]
   level: string
+
+  /**
+   * 确定标记和文本节点是否围绕子图坐标轴进行裁剪。
+   * @default true
+   */
   cliponaxis: boolean
   automargin: boolean
   locationmode: 'ISO-3' | 'USA-states' | 'country names' | 'geojson-id'
