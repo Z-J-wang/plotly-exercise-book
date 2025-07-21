@@ -6,6 +6,16 @@ const nav = [
     title: 'Scatter plots',
     icon: IconMenu,
     to: { name: 'ScatterPlotsView' }
+  },
+  {
+    title: 'Bar plots',
+    icon: IconMenu,
+    to: { name: 'BarPlotsView' }
+  },
+  {
+    title: 'Pie plots',
+    icon: IconMenu,
+    to: { name: 'PiePlotsView' }
   }
 ]
 </script>

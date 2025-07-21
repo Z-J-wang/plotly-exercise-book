@@ -1,57 +1,52 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue'
 import { usePlotly } from '../utils/usePlotly'
+import { vi } from 'element-plus/es/locales.mjs'
 
 onMounted(() => {
   var trace1: PlotlyTypes.ScatterTrace = {
-    x: [1, 2, 3, 4],
+    x: 0,
+    dx: 1,
     y: [10, 15, 13, 17],
-    mode: 'markers',
-    type: 'scatter',
-    legendrank: 1200,
-    legendgroup: 'group1',
-    legendgrouptitle: {
-      text: 'group12122222222',
-      font: {
-        color: 'blue',
-        style: 'italic',
-        variant: 'all-petite-caps'
-      }
+    offsetgroup: '2',
+    text: ['As可接受的的接口', 'B', 'C', 'D'],
+    textangle: 45,
+    insidetextanchor: 'middle',
+    textposition: 'outside',
+    // insidetextfont: {
+    //   family: 'Arial',
+    //   size: 12,
+    //   color: 'red'
+    // },
+    type: 'bar',
+    marker: {
+      color: 'red'
     }
   }
 
   var trace2: PlotlyTypes.ScatterTrace = {
     x: [2, 3, 4, 5],
     y: [16, 5, 11, 9],
-    legendgroup: 'group1',
+    offsetgroup: '2',
     mode: 'lines',
-    type: 'scatter'
+    x2: [9, 8, 6, 2],
+    groupnorm: 'fraction',
+    type: 'bar',
+    zorder: 2
   }
 
   var trace3: PlotlyTypes.ScatterTrace = {
-    x: [1, 2, 3, 4],
-    y: [12, 9, 15, 12],
-    text: 'group1',
+    x: [1, 2, 3, 4, 5],
+    y: [12, 9, 15, null, 12],
     mode: 'lines+markers+text',
-    opacity: 0.7,
-    type: 'scatter'
+    offsetgroup: '3',
+    type: 'bar',
+    groupnorm: 'fraction'
   }
 
   var data = [trace1, trace2, trace3]
 
-  usePlotly(
-    'myDiv',
-    data,
-    false,
-    {
-      title: {
-        text: 'Scatter Plot'
-      }
-    },
-    {
-      displayModeBar: true
-    }
-  )
+  usePlotly('myDiv', data, false)
 })
 </script>
 

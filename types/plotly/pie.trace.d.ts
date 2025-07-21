@@ -1,14 +1,101 @@
-import { Color, PlotMarker } from 'plotly.js'
+import { Color, DataTitle, Datum, PlotMarker } from 'plotly.js'
 import { Font, PlotData } from './base'
-export interface BarTrace extends Omit<PlotData, 'mode'> {
-  type: 'scattergl' // webGL绘制的散点图
+
+export interface PieTrace extends Omit<PlotData, 'mode' | 'x' | 'y' | 'z'> {
+  type: 'pie' // webGL绘制的散点图
+
+  /**
+   * 设置饼图各个区域的值。
+   */
+  values: Datum[]
+
+  /**
+   * 饼图各个区域的标签。
+   * 如果出现重复标签，则标签会自动相加label对应的value。
+   */
+  labels: Datum[]
+
+  /**
+   * 如果未提供 lables，则使用序号充当 label。
+   * 默认以0为起始值。可通过 label0 改变起始值。
+   * @default 0
+   */
+  label0: number
+
+  /**
+   * 设置 label 序号步长。详见 label0。
+   */
+  dlabel: number
+
+  /**
+   * 饼图标题。
+   */
+  title: Partial<DataTitle>
+
+  /**
+   * 将指定数据点对应的饼块拉出（远离圆心）。
+   * @default 0
+   */
+  pull: number | number[]
+
   legend: string // default: 'legend'。layout的legend属性的名称。layout的legend属性用于描述了图例的布局，允许定义多个legend属性，如：'legend’（默认），'legend1’，'legend2’
 
   /**
-   * trace 图层权重
+   * 将渲染区域划分为网格布局，并指定饼图的如何渲染，包含位置，以及渲染范围。
+   * 属性row和column将染区域分割成多个区域，并指定饼图的位置。
+   * 属性x和y则将以百分比划分为整个渲染区域，并指定饼图的渲染范围。
+   */
+  domain: Partial<{
+    /**
+     * 网格布局中的行索引
+     */
+    row: number
+
+    /**
+     * 网格布局中的列索引
+     */
+    column: number
+    /**
+     * 当前饼图的允许的渲染范围。
+     * 将x轴可渲染区域当作 1，通过指定起始点和终点来指定x轴可渲染区域。
+     * 例如：[0.5, 1]表示可以在x轴的后半部分渲染饼图。
+     *
+     * @default [0, 1]
+     */
+    x: number[]
+
+    /**
+     * 当前饼图的允许的渲染范围。
+     * 将y轴可渲染区域当作 1，通过指定起始点和终点来指定y轴可渲染区域。
+     * 例如：[0.5, 1]表示可以在y轴的后半部分渲染饼图。
+     *
+     * @default [0, 1]
+     */
+    y: number[]
+  }>
+
+  /**
+   * 自动调节外边距。
+   * 当textposition="outside"且automargin=true时，为了保证饼图外文字可见，饼图会自动缩小直径，即增大外边距。
+   * @default true
+   */
+  automargin: boolean
+
+  /**
+   * 设置饼图数据的渲染方向
+   * 值域：
+   * + 'clockwise'：顺时针
+   * + 'counterclockwise'：逆时针
+   *
+   * @default 'counterclockwise'
+   */
+  direction: 'clockwise' | 'counterclockwise'
+
+  /**
+   * 设置饼图中间需要裁剪的半径比例，用于绘制环形饼图
    * @default 0
    */
-  zorder: number
+  hole: number
 
   /**
    * 描述数据点的额外信息。可用于texttemplate、hovertemplate等属性。
@@ -65,9 +152,9 @@ export interface BarTrace extends Omit<PlotData, 'mode'> {
    * + auto: 尝试将文案置于条形内部，但如果条形过小且没有其他条形叠加在此条形上，文本就会被移到外部。
    * + none: 不显示文案
    * @default 'auto'
+
    */
   textposition: 'inside' | 'outside' | 'auto' | 'none'
-
   /**
    * 设置text文案的旋转角度
    * @default 'auto'
@@ -97,4 +184,28 @@ export interface BarTrace extends Omit<PlotData, 'mode'> {
    * @default 'auto'
    */
   outsidetextfont: Partial<Font>
+
+  /**
+   * 饼图内部文字的显示方向
+   * 值域：
+   * + horizontal：平行于底部显示
+   * + radial：沿着扇形显示
+   * + tangential：垂直于圆心显示
+   * + auto：自动选取合适的方式渲染
+   */
+  insidetextorientation: 'horizontal' | 'radial' | 'tangential' | 'auto'
+
+  /**
+   * 设置饼图的旋转角度
+   * @default 0
+   */
+  rotation: number
+
+  /**
+   * 对数据进行升序排序
+   * + true：升序排序
+   * + false：降序排序
+   * @default true
+   */
+  sort: boolean
 }
