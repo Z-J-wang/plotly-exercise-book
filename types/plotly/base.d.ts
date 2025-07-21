@@ -195,10 +195,6 @@ export interface PlotData {
    */
   yaxis: string
 
-  /**
-   * 指定y轴要采用哪种layout.xaxis配置。值为‘x’时，指向layout.xaxis。值为'x2'时，指向layout.xaxis2，以此类推
-   * @default 'x'
-   */
   text: string | string[]
   lat: Datum[]
   lon: Datum[]
@@ -419,6 +415,11 @@ export interface PlotData {
    * @default ''
    */
   hovertext: string | string[]
+
+  /**
+   * 确定数据集“z”中的空缺值（即 {nan} 或缺失值）是否具有对应的悬停标签。
+   * @default true
+   */
   hoverongaps: boolean
 
   /**
@@ -621,10 +622,33 @@ export interface PlotData {
    * @default 1
    */
   opacity: number
+
+  /**
+   * 是否显示颜色条
+   */
   showscale: boolean
+
+  /**
+   * 设置颜色渐变范围。
+   * 颜色渐变范围必须是一个包含数组的数组，其中每个数组将一个标准化值映射到一个 rgb、rgba、hex、hsl、hsv 或命名颜色字符串。
+   * 至少需要为最低值（0）和最高值（1）提供一个映射。例如，`[[0， 'rgb(0，0，255)']， [1， 'rgb(255，0，0)']]`。若要控制
+   * 颜色渐变范围在颜色空间中的界限，请使用 `zmin` 和 `zmax`。另外，`colorscale` 可以是以下列表中颜色调色板名称字符串：
+   * Blackbody、Bluered、Blues、Cividis、Earth、Electric、Greens、Greys、Hot、Jet、Picnic、Portland、Rainbow、RdBu、Reds、Viridis、YlGnBu、YlOrRd。
+   */
   colorscale: ColorScale
+
+  /**
+   * 选择一种平滑算法来对“z”数据进行平滑处理。
+   */
   zsmooth: 'fast' | 'best' | false
+
+  /**
+   * 设置颜色域的下限值。该值应与“z”中的单位相同，若设置此值，则“zmax”也必须进行设置。
+   */
   zmin: number
+  /**
+   * 设置颜色域的上限值。该值应与“z”中的单位相同，若设置此值，则“zmin”也必须进行设置。
+   */
   zmax: number
   ygap: number
   xgap: number
@@ -678,7 +702,15 @@ export interface PlotData {
   automargin: boolean
   locationmode: 'ISO-3' | 'USA-states' | 'country names' | 'geojson-id'
   locations: Datum[]
+
+  /**
+   * 颜色反转
+   */
   reversescale: boolean
+
+  /**
+   * 颜色条配置
+   */
   colorbar: Partial<ColorBar>
   offset: number | number[]
   contours: Partial<{

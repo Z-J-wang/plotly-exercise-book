@@ -5,24 +5,27 @@ import { usePlotly } from '../utils/usePlotly'
 onMounted(() => {
   var data = [
     {
-      type: 'pie',
-      values: [2, 4, 4, 1],
-      labels: ['Wages', 'Operating expenses', 'Cost of sales', 'Insurance'],
-      textinfo: 'label+percent',
-      sort: true
+      z: [
+        [1, 20, 30, 50],
+        [20, 1, 60, 80],
+        [30, 60, 1, 90]
+      ],
+      text: [
+        ['A1', 'A2', 'A3'],
+        ['B1', 'B2', 'B3'],
+        ['C1', 'C2', 'C3']
+      ],
+      type: 'heatmap'
     }
   ]
 
-  var layout = {
-    margin: { t: 0, b: 0, l: 0, r: 0 }
-  }
-
-  usePlotly('myDiv', data, false, layout)
+  usePlotly('myDiv', data, false)
 })
 </script>
 
 <template>
   <div class="scatter-plots-view">
+    <h1>散点图</h1>
     <div id="myDiv"></div>
   </div>
 </template>

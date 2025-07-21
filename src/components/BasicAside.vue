@@ -16,6 +16,11 @@ const nav = [
     title: 'Pie plots',
     icon: IconMenu,
     to: { name: 'PiePlotsView' }
+  },
+  {
+    title: 'Heatmap plots',
+    icon: IconMenu,
+    to: { name: 'HeatmapPlotsView' }
   }
 ]
 </script>
