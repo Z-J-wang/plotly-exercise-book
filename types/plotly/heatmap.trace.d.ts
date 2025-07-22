@@ -1,5 +1,5 @@
-import { Color, DataTitle, Datum, PlotMarker } from 'plotly.js'
-import { Font, PlotData } from './base'
+import { Datum } from 'plotly.js'
+import { PlotData } from './base'
 
 export interface HeatmapTrace extends Omit<PlotData, 'mode' | 'text'> {
   type: 'heatmap' // webGL绘制的散点图

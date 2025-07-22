@@ -18,9 +18,9 @@ const nav = [
     to: { name: 'PiePlotsView' }
   },
   {
-    title: 'Heatmap plots',
+    title: 'Contour plots',
     icon: IconMenu,
-    to: { name: 'HeatmapPlotsView' }
+    to: { name: 'ContourPlotsView' }
   }
 ]
 </script>
