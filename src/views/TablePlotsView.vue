@@ -23,8 +23,10 @@ onMounted(() => {
       },
       cells: {
         values: values,
+        format: [null, '$,.0f', '$,.0f', '$,.0f', '$,.0f'],
         align: 'center',
         line: { color: 'black', width: 1 },
+        suffix: ['', '$', '$', '$', '$'],
         font: { family: 'Arial', size: 11, color: ['black'] }
       }
     }

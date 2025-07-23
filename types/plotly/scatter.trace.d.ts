@@ -47,12 +47,6 @@ export interface ScatterGLTrace extends PlotData {
   dy: number
 
   /**
-   * 描述数据点的额外信息。可用于texttemplate、hovertemplate等属性。
-   * @default ''
-   */
-  meta: string | number | string[]
-
-  /**
    * 选中数据项的样式
    */
   selected: { marker: Pick<PlotMarker, 'color' | 'size' | 'opacity'>; textfont: { color: Color } }

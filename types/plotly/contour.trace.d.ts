@@ -1,4 +1,4 @@
-import { Color, Datum } from 'plotly.js'
+import { Datum } from 'plotly.js'
 import { Font, PlotData } from './base'
 
 /**
@@ -176,7 +176,7 @@ export interface ContourTrace extends Omit<PlotData, 'mode' | 'text'> {
   /**
    *  当 contours.type 为 constraint 时有效，用于设置阴影的颜色。
    */
-  fillcolor: Color
+  fillcolor: string
 
   /**
    * 设置等高线最大数量，用于计算等高线间得区间。

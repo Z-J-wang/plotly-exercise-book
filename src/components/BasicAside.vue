@@ -2,26 +2,11 @@
 import { Menu as IconMenu } from '@element-plus/icons-vue'
 
 const nav = [
-  {
-    title: 'Scatter plots',
-    icon: IconMenu,
-    to: { name: 'ScatterPlotsView' }
-  },
-  {
-    title: 'Bar plots',
-    icon: IconMenu,
-    to: { name: 'BarPlotsView' }
-  },
-  {
-    title: 'Pie plots',
-    icon: IconMenu,
-    to: { name: 'PiePlotsView' }
-  },
-  {
-    title: 'Contour plots',
-    icon: IconMenu,
-    to: { name: 'ContourPlotsView' }
-  }
+  { title: 'Scatter plots', icon: IconMenu, to: { name: 'ScatterPlotsView' } },
+  { title: 'Bar plots', icon: IconMenu, to: { name: 'BarPlotsView' } },
+  { title: 'Pie plots', icon: IconMenu, to: { name: 'PiePlotsView' } },
+  { title: 'Contour plots', icon: IconMenu, to: { name: 'ContourPlotsView' } },
+  { title: 'Table plots', icon: IconMenu, to: { name: 'TablePlotsView' } }
 ]
 </script>
 

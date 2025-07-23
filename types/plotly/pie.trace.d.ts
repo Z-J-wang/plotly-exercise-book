@@ -41,40 +41,6 @@ export interface PieTrace extends Omit<PlotData, 'mode' | 'x' | 'y' | 'z'> {
   legend: string // default: 'legend'。layout的legend属性的名称。layout的legend属性用于描述了图例的布局，允许定义多个legend属性，如：'legend’（默认），'legend1’，'legend2’
 
   /**
-   * 将渲染区域划分为网格布局，并指定饼图的如何渲染，包含位置，以及渲染范围。
-   * 属性row和column将染区域分割成多个区域，并指定饼图的位置。
-   * 属性x和y则将以百分比划分为整个渲染区域，并指定饼图的渲染范围。
-   */
-  domain: Partial<{
-    /**
-     * 网格布局中的行索引
-     */
-    row: number
-
-    /**
-     * 网格布局中的列索引
-     */
-    column: number
-    /**
-     * 当前饼图的允许的渲染范围。
-     * 将x轴可渲染区域当作 1，通过指定起始点和终点来指定x轴可渲染区域。
-     * 例如：[0.5, 1]表示可以在x轴的后半部分渲染饼图。
-     *
-     * @default [0, 1]
-     */
-    x: number[]
-
-    /**
-     * 当前饼图的允许的渲染范围。
-     * 将y轴可渲染区域当作 1，通过指定起始点和终点来指定y轴可渲染区域。
-     * 例如：[0.5, 1]表示可以在y轴的后半部分渲染饼图。
-     *
-     * @default [0, 1]
-     */
-    y: number[]
-  }>
-
-  /**
    * 自动调节外边距。
    * 当textposition="outside"且automargin=true时，为了保证饼图外文字可见，饼图会自动缩小直径，即增大外边距。
    * @default true
