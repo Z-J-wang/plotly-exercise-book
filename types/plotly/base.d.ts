@@ -20,6 +20,45 @@ import {
 } from 'plotly.js'
 import { BoxPlotMarker } from 'plotly.js/lib/box'
 
+export interface Label {
+  /** Sets the background color of all hover labels on graph. */
+  bgcolor: string
+
+  /** Sets the border color of all hover labels on graph. */
+  bordercolor: string
+
+  /** Sets the default hover label font used by all traces on the graph. */
+  font: Partial<Font>
+}
+
+export interface Margin {
+  /**
+   * @default 100
+   */
+  t: number
+
+  /**
+   * @default 80
+   */
+  b: number
+
+  /**
+   * @default 80
+   */
+  l: number
+
+  /**
+   * @default 80
+   */
+  r: number
+
+  /**
+   * 设置绘图区域与坐标轴线之间的填充量（单位为像素）
+   * @default 0
+   */
+  pad: number
+}
+
 // Plotly 支持的图表类型
 export type PlotlyGraphType =
   | 'cartesian' // 笛卡尔图表
