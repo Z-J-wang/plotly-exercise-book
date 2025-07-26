@@ -290,6 +290,11 @@ export interface Layout {
    * 在英语区域设置中，默认设置为“.,”，但其他区域设置可能会更改此默认值。
    */
   separators: string
+
+  /**
+   * 决定是否在图表的右下角放置一个引用数据来源的文本链接。
+   * 此设置仅对通过 Chart Studio Cloud（网址为 https://chart-studio.plotly.com 或本地部署）生成的图表有效。
+   */
   hidesources: boolean
   xaxis: Partial<LayoutAxis>
   xaxis2: Partial<LayoutAxis>
@@ -353,6 +358,10 @@ export interface Layout {
    * hover 文案样式
    */
   hoverlabel: Partial<HoverLabel>
+
+  /**
+   * 设置用于在整个图表中解析和显示日期的默认日历系统。
+   */
   calendar: Calendar
 
   // these are just the most common nested property updates that you might
@@ -420,10 +429,42 @@ export interface Layout {
   scene7: Partial<Scene>
   scene8: Partial<Scene>
   scene9: Partial<Scene>
+
+  /**
+   * 确定同一位置坐标处的条形图在图表上的显示方式。
+   * stack：条形图将相互堆叠；
+   * relative：条形图同样相互堆叠，负值位于坐标轴下方，正值位于上方；
+   * group：条形图将围绕共享位置居中并相互并列绘制；
+   * overlay：条形图将相互重叠绘制，若要查看多个条形图，可能需要降低“不透明度”。
+   * @default 'group'
+   */
   barmode: 'stack' | 'group' | 'overlay' | 'relative'
+
+  /**
+   * 设置图表中柱形图的归一化设置。
+   * fraction：每个柱形的值会除以该位置坐标处所有值的总和。
+   * percent：操作与fraction相同，但会乘以 100 以显示百分比。
+   */
   barnorm: '' | 'fraction' | 'percent'
+
+  /**
+   * 设置柱状图之间的间隔
+   * 取值范围：0-1
+   */
   bargap: number
+
+  /**
+   * 设置柱状图组之间的间隔
+   * 取值范围：0-1
+   */
   bargroupgap: number
+
+  /**
+   * 确定处于相同位置坐标的箱体在图表上的显示方式。
+   * group: 箱体将围绕共享位置居中并彼此相邻绘制。
+   * overlay：箱体将相互叠加绘制，此时可能需要设置“不透明度”才能看到多个箱体。
+   * 对已设置“宽度”的轨迹无影响。
+   */
   boxmode: 'group' | 'overlay'
 
   /**
@@ -456,22 +497,101 @@ export interface Layout {
      */
     mode: 'immediate' | 'gradual'
   }
+
+  /**
+   * “hiddenlabels”与“visible：‘legendonly’”的功能类似，
+   * 是用于显示漏斗区域和饼图的选项，但它能够包含多个标签，并且能够同时隐藏多个饼图/漏斗区域图表中的部分。
+   */
   hiddenlabels: string[]
+
+  /**
+   * 设置网格布局
+   */
   grid: Partial<{
+    /**
+     * 网格中的行数。
+     * 如果您提供了二维的“子图”数组或“坐标轴”数组，其长度将被用作默认值。
+     * 但也可以有不同的长度，如果您希望在末尾留出一列用于非笛卡尔坐标系的子图的话。
+     */
     rows: number
+
+    /**
+     *设置第一行的位置
+     */
     roworder: 'top to bottom' | 'bottom to top'
+
+    /**
+     * 网格中的列数。
+     * 如果您提供了二维的“子图”数组或“坐标轴”数组，其长度将被用作默认值。
+     * 但也可以长度，如果您希望在末尾留出一列用于非笛卡尔坐标系的子图的话。
+
+     */
     columns: number
+
+    /**
+     * 描述子图布局。
+     * 已弃用。
+     */
     subplots: string[]
+
+    /**
+     * 与 `yaxes` 一起使用时，适用于 x 轴和 y 轴在列和行之间共用的情况。
+     * 每个条目应为 x 轴的标识符，例如“x”、“x2”等，或者“”以不在此列中添加 x 轴。
+     * 除了空字符串之外的其他条目必须是唯一的。如果存在 `subplots` 则会被忽略。
+     * 如果缺失但存在 `yaxes`，则会生成连续的标识符。
+     */
     xaxes: string[]
+
+    /**
+     * 同 xaxes
+     */
     yaxes: string[]
+
+    /**
+     * 若未指定“subplots”、“xaxes”或“yaxes”，但指定了“rows”和“columns”，
+     * 则可通过两种方式，使用连续的轴 ID 生成默认设置：
+     * “coupled”模式为每列分配一个 x 轴，为每行分配一个 y 轴;
+     * “independent”模式为每个单元格使用一组新的 xy 轴对，按照从左到右的顺序逐行分配，行的遍历顺序由“行序”参数决定。
+     *
+     * @default 'coupled'
+     */
     pattern: 'independent' | 'coupled'
+
+    /**
+     * 列间隔
+     */
     xgap: number
+
+    /**
+     * 行间隔
+     */
     ygap: number
+
+    /**
+     * 设置子图的绘图区域在整个绘图区域的哪部分
+     * 默认子图的绘图区域占整个绘图区域
+     */
     domain: Partial<{
+      /**
+       * x 轴绘图范围
+       * 例如 [0, 0.5] 表示在 x 轴左边到中线的范围绘制子图
+       */
       x: number[]
+
+      /**
+       * y 轴绘图范围
+       * 例如 [0, 0.5] 表示在 y 轴下边到中线的范围绘制子图
+       */
       y: number[]
     }>
+    /**
+     * x 轴的位置
+     */
     xside: 'bottom' | 'bottom plot' | 'top plot' | 'top'
+
+    /**
+     * y 轴的位置
+     */
     yside: 'left' | 'left plot' | 'right plot' | 'right'
   }>
   polar: Partial<PolarLayout>
