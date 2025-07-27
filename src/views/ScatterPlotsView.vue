@@ -7,23 +7,12 @@ onMounted(() => {
     x: [1, 2, 3, 4],
     y: [10, 15, 13, 17],
     mode: 'markers',
-    type: 'scatter',
-    legendrank: 1200,
-    legendgroup: 'group1',
-    legendgrouptitle: {
-      text: 'group12122222222',
-      font: {
-        color: 'blue',
-        style: 'italic',
-        variant: 'all-petite-caps'
-      }
-    }
+    type: 'scatter'
   }
 
   var trace2: PlotlyTypes.ScatterTrace = {
-    x: [2, 3, 4, 5],
+    x: [2, 3, 4, 5.5],
     y: [16, 5, 11, 9],
-    legendgroup: 'group1',
     mode: 'lines',
     type: 'scatter'
   }
@@ -37,15 +26,35 @@ onMounted(() => {
     type: 'scatter'
   }
 
-  var data = [trace1, trace2, trace3]
+  var data = [trace1, trace2]
 
-  usePlotly(
+  const { plotlyTemplate } = usePlotly(
     'myDiv',
     data,
     false,
     {
       title: {
-        text: 'Scatter Plot'
+        text: 'Scatter Plot',
+        subtitle: {
+          text: 'Subtitle'
+        }
+      },
+      legend: {
+        borderwidth: 2,
+        valign: 'bottom',
+        xanchor: 'right',
+        traceorder: 'grouped'
+      },
+      xaxis: {
+        title: {
+          text: 'X Axis Title'
+        }
+      },
+      grid: {
+        rows: 2,
+        pattern: 'coupled',
+        columns: 2,
+        xside: 'top plot'
       }
     },
     {

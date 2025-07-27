@@ -1,18 +1,19 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue'
 import { usePlotly } from '../utils/usePlotly'
-import { vi } from 'element-plus/es/locales.mjs'
 
 onMounted(() => {
   var trace1: PlotlyTypes.ScatterTrace = {
-    x: 0,
-    dx: 1,
+    x: [1, 2, 3, 4],
     y: [10, 15, 13, 17],
     offsetgroup: '2',
     text: ['As可接受的的接口', 'B', 'C', 'D'],
     textangle: 45,
     insidetextanchor: 'middle',
     textposition: 'outside',
+    groupnorm: 'fraction',
+    visible: 'legendonly',
+
     // insidetextfont: {
     //   family: 'Arial',
     //   size: 12,
@@ -37,16 +38,18 @@ onMounted(() => {
 
   var trace3: PlotlyTypes.ScatterTrace = {
     x: [1, 2, 3, 4, 5],
-    y: [12, 9, 15, null, 12],
+    y: [12, 9, 15, -3, 12],
     mode: 'lines+markers+text',
-    offsetgroup: '3',
+    offsetgroup: '2',
     type: 'bar',
     groupnorm: 'fraction'
   }
 
   var data = [trace1, trace2, trace3]
 
-  usePlotly('myDiv', data, false)
+  usePlotly('myDiv', data, false, {
+    hiddenlabels: ['trace112312', 'trace2']
+  })
 })
 </script>
 
