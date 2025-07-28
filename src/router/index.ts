@@ -1,8 +1,6 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import { h, resolveComponent } from 'vue'
+import { createRouter, createWebHistory, RouterView } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-
-const RouterView = resolveComponent('RouterView')
+import { h } from 'vue'
 
 const files = import.meta.glob('../views/example/**/*.vue')
 const exampleRoutes = Object.entries(files).map(([key, value]) => {
@@ -35,12 +33,12 @@ const router = createRouter({
     {
       path: '/docs',
       name: 'Documents',
-      component: () => h(RouterView),
+      component: { render: () => h(RouterView) },
       children: [
         {
           path: 'options/',
           name: 'Options',
-          component: () => import('../views/OptionsView.vue')
+          component: () => import('../views/options/IndexView.vue')
         },
         {
           path: 'api/',
@@ -52,7 +50,8 @@ const router = createRouter({
     {
       path: '/examples',
       name: 'Examples',
-      component: () => h(RouterView),
+      // 简化写法，直接使用h函数创建RouterView组件
+      component: { render: () => h(RouterView) },
       children: [...exampleRoutes]
     }
   ]

@@ -1,58 +1,123 @@
-export default class Attribute {
-  private _parent: Attribute | null
+import type { Component } from 'vue'
 
+export interface AttributeController {
+  /**
+   * 类型
+   */
+  type: string
+  /**
+   * 属性默认值
+   */
+  default: any
+  /**
+   * 属性是否可选
+   */
+  options?: string[]
+}
+
+export interface AttributePath {
+  label: string
+  value: string
+}
+
+export default class Attribute {
+  private _parent: Attribute | null // 当前属性的父属性
   get parent(): Attribute | null {
     return this._parent
   }
+
+  /**
+   * 属性名称
+   */
   private _name: string
   public get name(): string {
     return this._name
   }
 
+  /**
+   * 属性类型
+   */
   private _type: string
   public get type(): string {
     return this._type
   }
-  private _description: string
-  public get description(): string {
+
+  /**
+   * 描述属性用途，支持HTML字符串、vue组件
+   */
+  private _description: string | Component
+  public get description(): string | Component {
     return this._description
   }
 
-  private _defaultValue: string
-  public get defaultValue(): string {
-    return this._defaultValue
-  }
-
-  private _children: Attribute[]
+  /**
+   * 子属性
+   */
+  private _children: Attribute[] = []
   public get children(): Attribute[] {
     return this._children
   }
+  public set children(value: Attribute[]) {
+    this._children = value
+  }
 
-  public get path(): string {
+  private _controller: AttributeController | null
+  public get controller(): AttributeController | null {
+    return this._controller
+  }
+
+  /**
+   * 属性ID
+   */
+  public get id(): string {
     if (this._parent) {
-      return this._parent.path + '.' + this._name
+      return this._parent.id + '.' + this._name
     } else {
       return this._name
     }
   }
 
-  get label(): string {
-    return this._name
+  /**
+   * 属性路径
+   */
+  public get path(): AttributePath[] {
+    const path: AttributePath = {
+      label: this._name,
+      value: this.id
+    }
+    if (this._parent) {
+      return [...this._parent.path, path]
+    } else {
+      return [path]
+    }
   }
 
   constructor(
+    parent: Attribute | null,
     name: string,
     type: string,
-    description: string,
-    defaultValue: any,
-    parent: Attribute | null,
+    description: string | Component,
+    controller: AttributeController | null = null,
     children: Attribute[] = []
   ) {
     this._name = name
     this._type = type
     this._description = description
-    this._defaultValue = defaultValue
-    this._children = children
     this._parent = parent
+    this._controller = controller
+    if (children?.length) this._children = children
+  }
+
+  /**
+   * 添加子属性
+   * @param child 添加的子属性
+   */
+  public addChild(child: Attribute) {
+    this._children.push(child)
+  }
+
+  public removeChild(childName: string) {
+    const index = this._children.findIndex((child) => child.name === childName)
+    if (index > -1) this._children.splice(index, 1)
   }
 }

@@ -1,10 +1,26 @@
 <script lang="ts" setup>
-import options from 'bll/options'
+import { useRoute } from 'vue-router'
+import { useOptionsStore } from '../stores/options'
 import Attribute from 'entities/attribute'
+import { ref, watch } from 'vue'
+import { updateHash } from '@/utils'
+
+const optionsStore = useOptionsStore()
+const treeData = optionsStore.options
+
+const route = useRoute()
+const currentNodeKey = ref('')
+
+watch(
+  () => route.hash,
+  (value) => {
+    currentNodeKey.value = value.replace('#', '')
+    console.log(currentNodeKey.value)
+  }
+)
 
 const handleNodeClick = (data: Attribute) => {
-  const { origin, pathname } = location
-  location.href = origin + pathname + '#' + data.path
+  updateHash(data.id)
 }
 
 const defaultProps = {
@@ -16,10 +32,11 @@ const defaultProps = {
 <template>
   <el-tree
     style="max-width: 600px"
-    :data="options"
-    node-key="path"
+    :data="treeData"
+    node-key="id"
     default-expand-all
     highlight-current
+    :current-node-key="currentNodeKey"
     :props="defaultProps"
     @node-click="handleNodeClick"
   />
