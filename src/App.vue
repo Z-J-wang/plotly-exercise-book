@@ -1,30 +1,27 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import BasicAside from './components/BasicAside.vue'
 
-const activeIndex = ref('1')
+const activeIndex = ref('/')
+
+onMounted(() => {
+  activeIndex.value = window.location.pathname
+})
 </script>
 
 <template>
   <el-container class="basic-layout">
     <el-header>
-      <el-menu :default-active="activeIndex" mode="horizontal" :ellipsis="false">
-        <el-menu-item index="0">
-          <RouterLink :to="{ name: 'HomeView' }" class="font-bold text-xl">Plotly.js 习题册</RouterLink>
+      <el-menu :default-active="activeIndex" mode="horizontal" :ellipsis="false" router>
+        <el-menu-item index="/">
+          <RouterLink :to="{ name: 'Home' }" class="font-bold text-xl no-underline">Plotly.js 习题册</RouterLink>
         </el-menu-item>
-        <el-menu-item index="1">Processing Center</el-menu-item>
-        <el-sub-menu index="2">
-          <template #title>Workspace</template>
-          <el-menu-item index="2-1">item one</el-menu-item>
-          <el-menu-item index="2-2">item two</el-menu-item>
-          <el-menu-item index="2-3">item three</el-menu-item>
-          <el-sub-menu index="2-4">
-            <template #title>item four</template>
-            <el-menu-item index="2-4-1">item one</el-menu-item>
-            <el-menu-item index="2-4-2">item two</el-menu-item>
-            <el-menu-item index="2-4-3">item three</el-menu-item>
-          </el-sub-menu>
+        <el-menu-item index="1">案例</el-menu-item>
+        <el-sub-menu index="/docs">
+          <template #title>文档</template>
+          <el-menu-item index="/docs/options">配置</el-menu-item>
+          <el-menu-item index="/docs/api">Api</el-menu-item>
         </el-sub-menu>
       </el-menu>
     </el-header>
