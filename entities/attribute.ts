@@ -1,25 +1,5 @@
 import type { Component } from 'vue'
 
-export interface AttributeController {
-  /**
-   * 类型
-   */
-  type: string
-  /**
-   * 属性默认值
-   */
-  default: any
-  /**
-   * 属性是否可选
-   */
-  options?: string[]
-}
-
-export interface AttributePath {
-  label: string
-  value: string
-}
-
 export default class Attribute {
   private _parent: Attribute | null // 当前属性的父属性
   get parent(): Attribute | null {
@@ -43,10 +23,10 @@ export default class Attribute {
   }
 
   /**
-   * 描述属性用途，支持HTML字符串、vue组件
+   * 描述属性用途，支持字符串、HTML、markdown以及vue组件
    */
-  private _description: string | Component
-  public get description(): string | Component {
+  private _description: Attribute.Description
+  public get description(): Attribute.Description {
     return this._description
   }
 
@@ -61,8 +41,8 @@ export default class Attribute {
     this._children = value
   }
 
-  private _controller: AttributeController | null
-  public get controller(): AttributeController | null {
+  private _controller: Attribute.Controller | null
+  public get controller(): Attribute.Controller | null {
     return this._controller
   }
 
@@ -80,8 +60,8 @@ export default class Attribute {
   /**
    * 属性路径
    */
-  public get path(): AttributePath[] {
-    const path: AttributePath = {
+  public get path(): Attribute.Path[] {
+    const path: Attribute.Path = {
       label: this._name,
       value: this.id
     }
@@ -96,8 +76,8 @@ export default class Attribute {
     parent: Attribute | null,
     name: string,
     type: string,
-    description: string | Component,
-    controller: AttributeController | null = null,
+    description: Attribute.Description,
+    controller: Attribute.Controller | null = null,
     children: Attribute[] = []
   ) {
     this._name = name

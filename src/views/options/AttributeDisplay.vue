@@ -9,15 +9,23 @@ defineProps({
 </script>
 
 <template>
-  <div class="attribute-display">
-    <h5>
+  <div class="attribute-display w-full">
+    <h4>
       <el-breadcrumb separator=".">
         <el-breadcrumb-item v-for="{ label, value } in data.path" :key="value">
           <a class="cursor-pointer" :href="createUrlHash(value)">{{ label }}</a>
         </el-breadcrumb-item>
       </el-breadcrumb>
-    </h5>
-    <div>{{ data.description }}</div>
+    </h4>
+    <div class="mt-2">
+      <span>数据类型：</span> <el-tag type="primary" size="small">{{ data.type }}</el-tag>
+    </div>
+    <div class="mt-2" v-if="data.controller?.default">
+      <span>默认值：</span> <el-tag type="primary" size="small">{{ data.controller?.default }}</el-tag>
+    </div>
+    <!--TODO 适配String、MD、Component三种类型数据的渲染 -->
+    <div class="mt-2" v-if="data.description.type === 'String'">{{ data.description }}</div>
+    <ElDivider class="my-2" />
   </div>
 </template>
 
@@ -26,8 +34,12 @@ defineProps({
   height: auto;
 
   .el-breadcrumb {
+    span {
+      margin: 0;
+    }
+
     .el-breadcrumb__item a {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: lighter;
       color: var(--el-color-primary-light-3);
     }
@@ -37,7 +49,7 @@ defineProps({
     }
 
     .el-breadcrumb__item:last-child a {
-      font-size: 18px;
+      font-size: 20px;
       font-weight: bold;
       color: var(--el-color-primary);
       cursor: pointer;

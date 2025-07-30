@@ -31,8 +31,10 @@ onMounted(() => {
           <BasicAside />
         </el-scrollbar>
       </el-aside>
-      <el-main class="bg-gray-50">
-        <RouterView />
+      <el-main class="bg-gray-50 p-0">
+        <el-scrollbar height="calc(100vh - 60px)">
+          <RouterView />
+        </el-scrollbar>
       </el-main>
     </el-container>
   </el-container>
