@@ -1,5 +1,3 @@
-import type { Component } from 'vue'
-
 export default class Attribute {
   private _parent: Attribute | null // 当前属性的父属性
   get parent(): Attribute | null {
@@ -23,7 +21,7 @@ export default class Attribute {
   }
 
   /**
-   * 描述属性用途，支持字符串、HTML、markdown以及vue组件
+   * 描述属性用途，支持字符串、HTML以及vue组件
    */
   private _description: Attribute.Description
   public get description(): Attribute.Description {

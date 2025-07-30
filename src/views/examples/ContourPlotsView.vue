@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue'
-import { usePlotly } from '../utils/usePlotly'
+import { usePlotly } from '@/utils/usePlotly'
 
 onMounted(() => {
   var values = [

@@ -35,7 +35,7 @@ declare namespace Attribute {
   }
 
   export interface Description {
-    type: 'String' | 'Markdown' | 'Component'
+    type: 'String' | 'Component'
     value: string | Component
   }
 }

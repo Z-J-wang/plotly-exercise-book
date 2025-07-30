@@ -23,8 +23,10 @@ defineProps({
     <div class="mt-2" v-if="data.controller?.default">
       <span>默认值：</span> <el-tag type="primary" size="small">{{ data.controller?.default }}</el-tag>
     </div>
-    <!--TODO 适配String、MD、Component三种类型数据的渲染 -->
-    <div class="mt-2" v-if="data.description.type === 'String'">{{ data.description }}</div>
+    <div class="mt-2">
+      <span v-if="data.description.type === 'String'" v-html="data.description.value" />
+      <component v-else-if="data.description.type === 'Component'" :is="data.description.value" />
+    </div>
     <ElDivider class="my-2" />
   </div>
 </template>
