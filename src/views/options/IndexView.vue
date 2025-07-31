@@ -1,9 +1,23 @@
 <script setup lang="ts">
 import { useOptionsStore } from '@/stores/options'
 import AttributeDisplay from './AttributeDisplay.vue'
+import PlotlyDisplay from '@/components/plot.display/index.vue'
+import { computed, ref } from 'vue'
+import { useWindowSize } from '@vueuse/core'
 
+const { width } = useWindowSize()
 const optionsStore = useOptionsStore()
 const options = optionsStore.options
+const code = ref('')
+
+const direction = computed(() => {
+  // 朝向：horizontal （水平） / vertical （垂直）
+  return width.value > 1400 ? 'horizontal' : 'vertical'
+})
+
+const rightSideClass = computed(() => {
+  return direction.value === 'horizontal' ? 'h-screen sticky top-0 w-2/5' : 'sticky bottom-0 left-0 w-full h-full'
+})
 
 const defaultProps = {
   children: 'children',
@@ -13,12 +27,21 @@ const defaultProps = {
 </script>
 
 <template>
-  <div class="options-view m-4 p-4 bg-white">
-    <el-tree :data="options" node-key="id" default-expand-all :props="defaultProps">
-      <template #default="{ node, data }">
-        <AttributeDisplay :data="data" :node="node" />
-      </template>
-    </el-tree>
+  <div class="options-view flex" :class="{ 'flex-col': direction === 'vertical' }">
+    <div class="flex-grow p-4 bg-white">
+      <el-tree :data="options" node-key="id" default-expand-all :props="defaultProps">
+        <template #default="{ node, data }">
+          <AttributeDisplay :data="data" :node="node" />
+        </template>
+      </el-tree>
+    </div>
+    <div
+      class="flex-initial bg-white"
+      :class="rightSideClass"
+      :style="{ height: direction === 'horizontal' ? 'calc(100vh - 50px)' : '40vh' }"
+    >
+      <PlotlyDisplay v-model="code" :direction="direction" />
+    </div>
   </div>
 </template>
 

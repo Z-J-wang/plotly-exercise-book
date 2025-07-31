@@ -26,7 +26,7 @@ onMounted(() => {
       </el-menu>
     </el-header>
     <el-container>
-      <el-aside width="250px" class="border-r-2">
+      <el-aside width="250px" class="shadow-lg z-10">
         <el-scrollbar height="calc(100vh - 60px)">
           <BasicAside />
         </el-scrollbar>
