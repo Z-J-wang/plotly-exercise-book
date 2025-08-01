@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import CodeEditor from '../CodeEditor.vue'
-import { CloseBold } from '@element-plus/icons-vue'
+import { Monitor, CloseBold } from '@element-plus/icons-vue'
+
+const openDisplay = ref(false)
 
 defineOptions({
   name: 'PlotDisplay'
@@ -21,14 +23,23 @@ const code = ref('')
 </script>
 
 <template>
+  <div class="fixed top-1/2 -right-3" v-if="!openDisplay" @click="openDisplay = true">
+    <el-button round plain type="primary" class="pr-2 shadow-md">
+      <el-icon><Monitor /></el-icon><span class="mx-2">预览</span>
+    </el-button>
+  </div>
   <div
-    class="plot-display flex p-2 rounded h-full flex-col"
-    :class="direction === 'horizontal' ? 'shadow-xl' : 'shadow-2xl'"
+    class="plot-display flex p-2 rounded h-full flex-col transition-all"
+    :class="{
+      'shadow-xl translate-x-full ': direction === 'horizontal',
+      'shadow-2xl translate-y-full': direction === 'vertical',
+      'translate-x-0 translate-y-0': openDisplay
+    }"
   >
     <div class="flex-initial flex justify-between items-center">
       <h3>配置项预览效果</h3>
       <div>
-        <el-button circle>
+        <el-button circle @click="openDisplay = false">
           <el-icon size="20"><CloseBold /></el-icon>
         </el-button>
       </div>
