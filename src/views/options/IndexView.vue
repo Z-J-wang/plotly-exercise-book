@@ -4,11 +4,37 @@ import AttributeDisplay from './AttributeDisplay.vue'
 import PlotlyDisplay from '@/components/plot.display/index.vue'
 import { computed, ref } from 'vue'
 import { useWindowSize } from '@vueuse/core'
+import type { PlotlyConfig } from '@/components/plot.display/index.vue'
 
 const { width } = useWindowSize()
 const optionsStore = useOptionsStore()
 const options = optionsStore.options
-const code = ref('')
+const plotlyConfig = ref<PlotlyConfig>({
+  data: [
+    {
+      x: [1, 2, 3, 4],
+      y: [10, 15, 13, 17],
+      mode: 'markers',
+      title: {
+        font: {
+          size: 50
+        }
+      },
+      type: 'scatter'
+    },
+    {
+      x: [1, 2, 3, 4],
+      y: [10, 15, 13, 17],
+      mode: 'markers',
+      type: 'scatter'
+    }
+  ],
+  layout: {
+    title: {
+      text: 'Heatmap Plot'
+    }
+  }
+})
 
 const direction = computed(() => {
   // 朝向：horizontal （水平） / vertical （垂直）
@@ -40,7 +66,7 @@ const defaultProps = {
       :class="rightSideClass"
       :style="{ height: direction === 'horizontal' ? 'calc(100vh - 50px)' : '40vh' }"
     >
-      <PlotlyDisplay v-model="code" :direction="direction" />
+      <PlotlyDisplay v-model="plotlyConfig" :direction="direction" />
     </div>
   </div>
 </template>
