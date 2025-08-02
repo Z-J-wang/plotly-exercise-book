@@ -1,3 +1,4 @@
+import type { Config, Data, Layout } from 'plotly.js'
 import Plotly from 'plotly.js-dist-min'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
@@ -13,27 +14,20 @@ export interface UsePlotly {
    * @param {object} config 描述图表的配置
    * 详见：https://plotly.com/javascript/plotlyjs-function-reference/#plotlyreact
    */
-  react: (
-    data: Plotly.Data[],
-    layout?: Partial<PlotlyTypes.Layout>,
-    config?: Partial<PlotlyTypes.Config>
-  ) => Promise<Plotly.PlotlyHTMLElement>
+  react: (data: Plotly.Data[], layout?: Partial<Layout>, config?: Partial<Config>) => Promise<Plotly.PlotlyHTMLElement>
 
   /**
    * 重新绘制指定的trace
    * @param tracesData trace 描述信息，注意不能传递x,y,z轴数据
    * @param traceIndices 指定要重新绘制的trace的索引，索引起始值为0
    */
-  restyle: (
-    traceData: Partial<Omit<PlotlyTypes.TraceData, 'x' | 'y' | 'z'>>,
-    traceIndices?: number | number[]
-  ) => Promise<Plotly.PlotlyHTMLElement>
+  restyle: (traceData: Data, traceIndices?: number | number[]) => Promise<Plotly.PlotlyHTMLElement>
 
   /**
    * 根据新的layout，重新绘制当前图表
    * @param layout 描述图表的布局
    */
-  relayout: (layout: Partial<Partial<PlotlyTypes.Layout>>) => Promise<Plotly.PlotlyHTMLElement>
+  relayout: (layout: Partial<Partial<Layout>>) => Promise<Plotly.PlotlyHTMLElement>
 
   /**
    * restyle 和 relayout 的结合体
@@ -42,8 +36,8 @@ export interface UsePlotly {
    * @param traceIndices 指定要重新绘制的trace的索引，索引起始值为0
    */
   update: (
-    traceData: Partial<Omit<PlotlyTypes.TraceData, 'x' | 'y' | 'z'>>,
-    layout: Partial<Partial<PlotlyTypes.Layout>>,
+    traceData: Partial<Data>,
+    layout: Partial<Partial<Layout>>,
     traceIndices?: number | number[]
   ) => Promise<Plotly.PlotlyHTMLElement>
 
@@ -52,7 +46,7 @@ export interface UsePlotly {
    * @param template
    * @returns 校验结果
    */
-  validateTemplate: (template: Partial<PlotlyTypes.Template>) => PlotlyTypes.ValidateTemplateResult
+  validateTemplate: (template: Plotly.Template) => Plotly.ValidateTemplateResult[]
 
   /**
    * 添加新的 trace 数据
@@ -150,7 +144,7 @@ export interface UsePlotly {
    */
   animate: (
     frameOrGroupNameOrFrameList: string | string[] | Partial<Plotly.Frame> | Partial<Plotly.Frame>[],
-    animationOpts?: PlotlyTypes.AnimationOpts
+    animationOpts?: Partial<Plotly.AnimationOpts>
   ) => Promise<void>
 
   /**
@@ -164,14 +158,14 @@ export interface UsePlotly {
    * @param opts 图片配置信息
    * @returns 图片 Base64 字符串
    */
-  toImage: (opts: Omit<PlotlyTypes.ToImageOptions, 'filename'>) => Promise<Base64URLString>
+  toImage: (opts: Plotly.ToImgopts) => Promise<Base64URLString>
 
   /**
    * 下载图片
    * @param opts 图片配置信息
    * @returns 图片名
    */
-  downloadImage: (opts: Omit<PlotlyTypes.ToImageOptions, 'scale'>) => Promise<string>
+  downloadImage: (opts: Plotly.DownloadImgopts) => Promise<string>
 }
 
 /**
@@ -185,10 +179,10 @@ export interface UsePlotly {
  */
 export function usePlotly(
   gd: Plotly.Root,
-  data: Partial<PlotlyTypes.TraceData>[],
+  data: Partial<Data>[],
   useReact: boolean = false,
-  layout?: Partial<PlotlyTypes.Layout>,
-  config?: Partial<PlotlyTypes.Config>
+  layout?: Partial<Layout>,
+  config?: Partial<Config>
 ): UsePlotly {
   let plotly: Promise<Plotly.PlotlyHTMLElement>
   const plotlyTemplate = ref<Plotly.Template | null>(null)
@@ -203,7 +197,7 @@ export function usePlotly(
 
   function _updateTemplate(plotElement: Plotly.PlotlyHTMLElement) {
     _plotElement = plotElement
-    plotlyTemplate.value = Plotly.makeTemplate(plotElement) as PlotlyTypes.Template
+    plotlyTemplate.value = Plotly.makeTemplate(plotElement)
   }
 
   return {
@@ -230,8 +224,7 @@ export function usePlotly(
       return promise
     },
     validateTemplate(template) {
-      const result = Plotly.validateTemplate(_plotElement, template)
-      return result === undefined ? true : result
+      return Plotly.validateTemplate(_plotElement, template)
     },
     addTraces(traces, newIndices) {
       const promise = Plotly.addTraces(_plotElement, traces, newIndices)
