@@ -1,13 +1,29 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import CodeEditor from '../CodeEditor.vue'
 import { Monitor, CloseBold } from '@element-plus/icons-vue'
+import { usePlotly } from '@/utils/usePlotly'
+import { useStorage } from '@vueuse/core'
 
-const openDisplay = ref(false)
+const openDisplay = useStorage('plotly-open-display', true)
 
 defineOptions({
   name: 'PlotDisplay'
 })
+
+const plotlyConfig = defineModel<PlotlyConfig>({
+  default: () => {
+    return {
+      data: []
+    }
+  }
+})
+
+export interface PlotlyConfig {
+  data: Partial<Plotly.Data>[]
+  layout?: Partial<Plotly.Layout>
+  config?: Partial<Plotly.Config>
+}
 
 defineProps({
   direction: {
@@ -17,6 +33,20 @@ defineProps({
       return ['horizontal', 'vertical'].includes(value)
     }
   }
+})
+
+watch(
+  () => plotlyConfig,
+  (plotlyConfig) => {
+    const { data, layout, config } = plotlyConfig.value
+    usePlotly('myDiv', data, false, layout, config)
+  }
+)
+
+onMounted(() => {
+  const { data, layout, config } = plotlyConfig.value
+
+  usePlotly('PlotContainer', data, false, layout, config)
 })
 
 const code = ref('')
@@ -31,8 +61,8 @@ const code = ref('')
   <div
     class="plot-display flex p-2 rounded h-full flex-col transition-all"
     :class="{
-      'shadow-xl translate-x-full ': direction === 'horizontal',
-      'shadow-2xl translate-y-full': direction === 'vertical',
+      'shadow-xl translate-x-full ': direction === 'horizontal' && !openDisplay,
+      'shadow-2xl translate-y-full': direction === 'vertical' && !openDisplay,
       'translate-x-0 translate-y-0': openDisplay
     }"
   >
@@ -45,7 +75,7 @@ const code = ref('')
       </div>
     </div>
     <div class="flex-grow" :class="direction === 'horizontal' ? '' : 'columns-2'">
-      <div ref="PlotContainer" class="plot-container h-1/2 w-full"></div>
+      <div id="PlotContainer" class="plot-container h-1/2 w-full"></div>
       <CodeEditor
         class="w-full"
         :customStyle="{ height: direction === 'horizontal' ? '50%' : '100%' }"
