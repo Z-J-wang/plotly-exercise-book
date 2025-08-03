@@ -59,15 +59,15 @@ const code = ref('')
     </el-button>
   </div>
   <div
-    class="plot-display flex p-2 rounded h-full flex-col transition-all"
+    class="plot-display flex p-2 h-full flex-col transition-all shadow-xl outline outline-gray-100"
     :class="{
       'shadow-xl translate-x-full ': direction === 'horizontal' && !openDisplay,
       'shadow-2xl translate-y-full': direction === 'vertical' && !openDisplay,
       'translate-x-0 translate-y-0': openDisplay
     }"
   >
-    <div class="flex-initial flex justify-between items-center">
-      <h3>配置项预览效果</h3>
+    <div class="flex-initial flex justify-between items-center pt-2 px-4 pb-4">
+      <h3 class="font-bold">配置项预览效果</h3>
       <div>
         <el-button circle @click="openDisplay = false">
           <el-icon size="20"><CloseBold /></el-icon>
