@@ -1,11 +1,18 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { nextTick, onMounted, ref, watch } from 'vue'
 import CodeEditor from '../CodeEditor.vue'
 import { Monitor, CloseBold } from '@element-plus/icons-vue'
 import { usePlotly } from '@/utils/usePlotly'
 import { useStorage } from '@vueuse/core'
 
 const openDisplay = useStorage('plotly-open-display', true)
+
+/**
+ * 暴露给父组件的属性
+ */
+defineExpose({
+  openDisplay
+})
 
 defineOptions({
   name: 'PlotDisplay'
@@ -35,18 +42,21 @@ defineProps({
   }
 })
 
-watch(
-  () => plotlyConfig,
-  (plotlyConfig) => {
+watch([() => plotlyConfig, openDisplay], ([plotlyConfig, openDisplay]) => {
+  console.log(openDisplay)
+
+  if (!openDisplay) return
+  nextTick(() => {
     const { data, layout, config } = plotlyConfig.value
-    usePlotly('myDiv', data, false, layout, config)
-  }
-)
+    usePlotly('PlotContainer', data, false, layout, config)
+  })
+})
 
 onMounted(() => {
-  const { data, layout, config } = plotlyConfig.value
-
-  usePlotly('PlotContainer', data, false, layout, config)
+  nextTick(() => {
+    const { data, layout, config } = plotlyConfig.value
+    usePlotly('PlotContainer', data, false, layout, config)
+  })
 })
 
 const code = ref('')

@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import { useRoute } from 'vue-router'
-import { useOptionsStore } from '../stores/options'
+import { useAttributeStore } from '../stores/attribute'
 import Attribute from 'entities/attribute'
 import { ref, watch } from 'vue'
 import { updateHash } from '@/utils'
 
-const optionsStore = useOptionsStore()
-const treeData = optionsStore.options
+const optionsStore = useAttributeStore()
+const treeData = optionsStore.attribute
 
 const route = useRoute()
 const currentNodeKey = ref('')
@@ -15,7 +15,6 @@ watch(
   () => route.hash,
   (value) => {
     currentNodeKey.value = value.replace('#', '')
-    console.log(currentNodeKey.value)
   }
 )
 

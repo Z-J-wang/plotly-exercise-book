@@ -18,6 +18,7 @@ export default class LayoutAttributes {
         { type: 'String', value: '标题内容' },
         {
           type: 'string',
+          value: '',
           default: ''
         }
       )
@@ -32,6 +33,7 @@ export default class LayoutAttributes {
         { type: 'String', value: '副标题内容' },
         {
           type: 'string',
+          value: '',
           default: ''
         }
       )

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useOptionsStore } from '@/stores/options'
+import { useAttributeStore } from '@/stores/attribute'
 import AttributeDisplay from './AttributeDisplay.vue'
 import PlotlyDisplay from '@/components/plot.display/index.vue'
 import { computed, ref } from 'vue'
@@ -7,8 +7,9 @@ import { useWindowSize } from '@vueuse/core'
 import type { PlotlyConfig } from '@/components/plot.display/index.vue'
 
 const { width } = useWindowSize()
-const optionsStore = useOptionsStore()
-const options = optionsStore.options
+const attributeStore = useAttributeStore()
+
+const { attribute, updateAttribute } = attributeStore
 const plotlyConfig = ref<PlotlyConfig>({
   data: [
     {
@@ -33,6 +34,18 @@ const plotlyConfig = ref<PlotlyConfig>({
     title: {
       text: 'Heatmap Plot'
     }
+  },
+  config: {
+    responsive: true
+  }
+})
+
+const plotlyDisplay = ref<InstanceType<typeof PlotlyDisplay> | null>(null)
+const openDisplay = computed(() => {
+  if (plotlyDisplay.value) {
+    return plotlyDisplay.value.openDisplay
+  } else {
+    return false
   }
 })
 
@@ -42,7 +55,9 @@ const direction = computed(() => {
 })
 
 const rightSideClass = computed(() => {
-  return direction.value === 'horizontal' ? 'h-screen sticky top-0 w-2/5' : 'sticky bottom-0 left-0 w-full h-full'
+  return direction.value === 'horizontal'
+    ? `h-screen sticky top-0${openDisplay.value ? ' w-v-40' : ''}`
+    : 'sticky bottom-0 left-0 w-full h-full'
 })
 
 const defaultProps = {
@@ -55,9 +70,13 @@ const defaultProps = {
 <template>
   <div class="options-view flex" :class="{ 'flex-col': direction === 'vertical' }">
     <div class="flex-grow p-4 bg-white">
-      <el-tree :data="options" node-key="id" default-expand-all :props="defaultProps">
+      <el-tree :data="attribute" node-key="id" default-expand-all :props="defaultProps">
         <template #default="{ node, data }">
-          <AttributeDisplay :data="data" :node="node" />
+          <AttributeDisplay
+            :model-value="data"
+            :node="node"
+            @update:model-value="(val) => updateAttribute(data.path, val)"
+          />
         </template>
       </el-tree>
     </div>
@@ -66,7 +85,7 @@ const defaultProps = {
       :class="rightSideClass"
       :style="{ height: direction === 'horizontal' ? 'calc(100vh - 50px)' : '40vh' }"
     >
-      <PlotlyDisplay v-model="plotlyConfig" :direction="direction" />
+      <PlotlyDisplay ref="plotlyDisplay" v-model="plotlyConfig" :direction="direction" />
     </div>
   </div>
 </template>

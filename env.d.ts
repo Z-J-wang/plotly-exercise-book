@@ -14,15 +14,20 @@ declare module 'plotly.js-dist-min' {
 declare type ElementID = string // 元素 ID
 
 declare namespace Attribute {
+  export type Type = 'string' | 'number' | 'boolean' | 'array' | 'color' | 'select'
+
   export interface Controller {
     /**
      * 类型
      */
-    type: string
+    type: Type
     /**
      * 属性默认值
      */
     default: any
+
+    value: any
+
     /**
      * 属性是否可选
      */

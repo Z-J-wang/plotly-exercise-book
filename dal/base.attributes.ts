@@ -11,7 +11,8 @@ export class Font extends Attribute {
         'Color',
         { type: 'String', value: '字体颜色' },
         {
-          type: 'string',
+          type: 'color',
+          value: 'white',
           default: 'white'
         }
       )
@@ -24,6 +25,7 @@ export class Font extends Attribute {
         { type: 'String', value: '字体' },
         {
           type: 'select',
+          value: 'Arial, sans-serif',
           default: 'Arial, sans-serif'
         }
       )
@@ -36,6 +38,7 @@ export class Font extends Attribute {
         { type: 'String', value: '修饰线的位置' },
         {
           type: 'select',
+          value: 'none',
           default: 'none',
           options: [
             'under',
@@ -58,6 +61,7 @@ export class Font extends Attribute {
         { type: 'String', value: '字体阴影' },
         {
           type: 'string',
+          value: 'none',
           default: 'none'
         }
       )
@@ -70,6 +74,7 @@ export class Font extends Attribute {
         { type: 'String', value: '字体大小' },
         {
           type: 'number',
+          value: 13,
           default: 13
         }
       )
@@ -82,6 +87,7 @@ export class Font extends Attribute {
         { type: 'String', value: '字重' },
         {
           type: 'number',
+          value: 400,
           default: 400
         }
       )
@@ -94,6 +100,7 @@ export class Font extends Attribute {
         { type: 'String', value: '字体样式' },
         {
           type: 'select',
+          value: 'normal',
           default: 'normal',
           options: ['normal', 'italic']
         }
@@ -107,6 +114,7 @@ export class Font extends Attribute {
         { type: 'String', value: '字体变形' },
         {
           type: 'select',
+          value: 'normal',
           default: 'normal',
           options: ['normal', 'small-caps', 'all-small-caps', 'all-petite-caps', 'petite-caps', 'unicase']
         }

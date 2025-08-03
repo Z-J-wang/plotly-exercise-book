@@ -1,22 +1,34 @@
 <script setup lang="ts">
 import Attribute from 'entities/attribute'
 import { createUrlHash } from '@/utils'
+import AttributeControl from '@/components/AttributeControl.vue'
 
 defineProps({
-  data: { type: Attribute, required: true },
   node: { type: Object, required: true }
+})
+
+const data = defineModel<Attribute>({
+  required: true
 })
 </script>
 
 <template>
   <div class="attribute-display w-full">
-    <h4>
-      <el-breadcrumb separator=".">
-        <el-breadcrumb-item v-for="{ label, value } in data.path" :key="value">
-          <a class="cursor-pointer" :href="createUrlHash(value)">{{ label }}</a>
-        </el-breadcrumb-item>
-      </el-breadcrumb>
-    </h4>
+    <div class="flex justify-between w-full">
+      <h4>
+        <el-breadcrumb separator=".">
+          <el-breadcrumb-item v-for="{ label, value } in data.path" :key="value">
+            <a class="cursor-pointer" :href="createUrlHash(value)">{{ label }}</a>
+          </el-breadcrumb-item>
+        </el-breadcrumb>
+      </h4>
+      <AttributeControl
+        v-if="data.controller"
+        v-model="data.controller.value"
+        :type="data.controller.type"
+        :options="data.controller.options"
+      />
+    </div>
     <div class="mt-2">
       <span>数据类型：</span> <el-tag type="primary" size="small">{{ data.type }}</el-tag>
     </div>
