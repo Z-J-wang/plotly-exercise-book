@@ -1,12 +1,39 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
-import { RouterLink, RouterView } from 'vue-router'
+import { onMounted, ref, watch } from 'vue'
+import { RouterLink, RouterView, useRoute } from 'vue-router'
 import BasicAside from './components/BasicAside.vue'
 
 const activeIndex = ref('/')
+const route = useRoute()
+
+watch(
+  () => route.hash,
+  () => {
+    scrollIntoView()
+  }
+)
+
+function scrollIntoView() {
+  /**
+   * 延迟执行，等待路由加载完成
+   */
+  const hash = route.hash.substring(1) // 去掉 # 号
+  if (hash) {
+    const targetEl = document.querySelector(`.${hash}`)
+    if (targetEl) {
+      targetEl.scrollIntoView({
+        behavior: 'smooth', // 平滑滚动
+        block: 'start' // 对齐到视口顶部
+      })
+    }
+  }
+}
 
 onMounted(() => {
   activeIndex.value = window.location.pathname
+  setTimeout(() => {
+    scrollIntoView()
+  }, 1000)
 })
 </script>
 

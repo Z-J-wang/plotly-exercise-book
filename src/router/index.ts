@@ -54,7 +54,16 @@ const router = createRouter({
       component: { render: () => h(RouterView) },
       children: [...exampleRoutes]
     }
-  ]
+  ],
+  scrollBehavior(to) {
+    if (to.hash) {
+      return {
+        selector: to.hash,
+        behavior: 'smooth'
+      }
+    }
+    return { x: 0, y: 0, behavior: 'smooth' } // 全局启用
+  }
 })
 
 export default router

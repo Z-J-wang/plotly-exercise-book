@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Attribute from 'entities/attribute'
 import { createUrlHash } from '@/utils'
 import AttributeControl from '@/components/AttributeControl.vue'
 
@@ -12,7 +11,7 @@ defineProps({
 <template>
   <div class="attribute-display w-full">
     <div class="flex justify-between w-full">
-      <h4>
+      <h4 :class="data.id">
         <el-breadcrumb separator=".">
           <el-breadcrumb-item v-for="{ name, value } in data.path" :key="value">
             <a class="cursor-pointer" :href="createUrlHash(value)">{{ name }}</a>

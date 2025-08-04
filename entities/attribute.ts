@@ -49,7 +49,7 @@ export default class Attribute {
    */
   public get id(): string {
     if (this._parent) {
-      return this._parent.id + '.' + this._name
+      return this._parent.id + '-' + this._name
     } else {
       return this._name
     }
