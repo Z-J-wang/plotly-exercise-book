@@ -70,9 +70,9 @@ const defaultProps = {
 <template>
   <div class="options-view flex" :class="{ 'flex-col': direction === 'vertical' }">
     <div class="flex-grow p-4 bg-white">
-      <el-tree :data="attribute" node-key="id" default-expand-all :props="defaultProps">
+      <el-tree :data="attribute" node-key="id" default-expand-all :expand-on-click-node="false" :props="defaultProps">
         <template #default="{ node, data }">
-          <AttributeDisplay :data="data" :node="node" @update="updateAttribute" />
+          <AttributeDisplay class="cursor-default" :data="data" :node="node" @update="updateAttribute" />
         </template>
       </el-tree>
     </div>

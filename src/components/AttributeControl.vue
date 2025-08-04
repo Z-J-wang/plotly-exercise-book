@@ -14,9 +14,8 @@ const modelValue = defineModel<any>()
 </script>
 
 <template>
-  <div class="attribute-control" style="width: 200px">
+  <div class="attribute-control text-right" style="width: 200px">
     <el-input v-if="type === 'string'" v-model="modelValue" placeholder="请输入内容" />
-
     <el-switch
       v-else-if="type === 'boolean'"
       v-model="modelValue"
