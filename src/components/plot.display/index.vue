@@ -63,20 +63,13 @@ const code = ref('')
 </script>
 
 <template>
-  <div class="h-full" :class="openDisplay ? 'w-v-40' : 'w-0'">
-    <div class="fixed top-1/2 -right-3" v-if="!openDisplay" @click="openDisplay = true">
-      <el-button round plain type="primary" class="pr-2 shadow-md">
-        <el-icon><Monitor /></el-icon><span class="mx-2">预览</span>
-      </el-button>
-    </div>
-    <div
-      class="plot-display flex p-2 h-full flex-col transition-all shadow-xl outline outline-gray-100"
-      :class="{
-        'shadow-xl translate-x-full ': direction === 'horizontal' && !openDisplay,
-        'shadow-2xl translate-y-full': direction === 'vertical' && !openDisplay,
-        'translate-x-0 translate-y-0': openDisplay
-      }"
-    >
+  <div class="fixed top-1/2 -right-3" v-if="!openDisplay" @click="openDisplay = true">
+    <el-button round plain type="primary" class="pr-2 shadow-md">
+      <el-icon><Monitor /></el-icon><span class="mx-2">预览</span>
+    </el-button>
+  </div>
+  <Transition name="slide-fade">
+    <div v-if="openDisplay" class="plot-display flex p-2 h-full flex-col shadow-xl outline outline-gray-100">
       <div class="flex-initial flex justify-between items-center pt-2 px-4 pb-4">
         <h3 class="font-bold">配置项预览效果</h3>
         <div>
@@ -94,5 +87,5 @@ const code = ref('')
         />
       </div>
     </div>
-  </div>
+  </Transition>
 </template>
