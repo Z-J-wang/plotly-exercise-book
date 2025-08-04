@@ -65,6 +65,10 @@ const defaultProps = {
   label: 'name',
   class: () => 'tree-node'
 }
+
+function updateConfig(id: string, value: any) {
+  console.log(id, value)
+}
 </script>
 
 <template>
@@ -72,7 +76,13 @@ const defaultProps = {
     <div class="flex-grow p-4 bg-white">
       <el-tree :data="attribute" node-key="id" default-expand-all :expand-on-click-node="false" :props="defaultProps">
         <template #default="{ node, data }">
-          <AttributeDisplay class="cursor-default" :data="data" :node="node" @update="updateAttribute" />
+          <AttributeDisplay
+            class="cursor-default"
+            :data="data"
+            :node="node"
+            @update="updateAttribute"
+            @update-config="updateConfig"
+          />
         </template>
       </el-tree>
     </div>

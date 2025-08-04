@@ -13,17 +13,17 @@ const modelValue = defineModel<any>()
 
 <template>
   <div class="attribute-control text-right" style="width: 200px">
-    <el-input v-if="type === 'string'" v-model="modelValue" placeholder="请输入内容" />
-    <el-input-number v-else-if="type === 'number'" v-model="modelValue" :min="min" :max="max" :step="step" />
+    <el-input v-if="type === 'string'" v-model.lazy.trim="modelValue" placeholder="请输入内容" />
+    <el-input-number v-else-if="type === 'number'" v-model.lazy.trim="modelValue" :min="min" :max="max" :step="step" />
     <el-switch
       v-else-if="type === 'boolean'"
-      v-model="modelValue"
+      v-model.lazy="modelValue"
       size="small"
       active-text="Open"
       inactive-text="Close"
     />
-    <el-color-picker v-else-if="type === 'color'" v-model="modelValue" />
-    <el-select v-else-if="type === 'select'" v-model="modelValue" placeholder="Select">
+    <el-color-picker v-else-if="type === 'color'" v-model.lazy="modelValue" />
+    <el-select v-else-if="type === 'select'" v-model.lazy="modelValue" placeholder="Select">
       <el-option v-for="item in options" :key="item" :label="item" :value="item" />
     </el-select>
   </div>
