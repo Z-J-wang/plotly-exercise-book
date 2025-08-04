@@ -32,6 +32,10 @@ declare namespace Attribute {
      * 属性是否可选
      */
     options?: string[]
+
+    min?: number
+    max?: number
+    step?: number
   }
 
   export interface Path {

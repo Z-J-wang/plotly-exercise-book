@@ -24,7 +24,7 @@ export class Font extends Attribute {
         'string',
         { type: 'String', value: '字体' },
         {
-          type: 'select',
+          type: 'string',
           value: 'Arial, sans-serif',
           default: 'Arial, sans-serif'
         }
@@ -75,7 +75,9 @@ export class Font extends Attribute {
         {
           type: 'number',
           value: 13,
-          default: 13
+          default: 13,
+          min: 8,
+          step: 2
         }
       )
     )
@@ -86,9 +88,24 @@ export class Font extends Attribute {
         'number',
         { type: 'String', value: '字重' },
         {
-          type: 'number',
-          value: 400,
-          default: 400
+          type: 'select',
+          value: 'normal',
+          default: 'normal',
+          options: [
+            '100',
+            '200',
+            '300',
+            '400',
+            '500',
+            '600',
+            '700',
+            '800',
+            '900',
+            'normal',
+            'bold',
+            'bolder',
+            'lighter'
+          ]
         }
       )
     )
