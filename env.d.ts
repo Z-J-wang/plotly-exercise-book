@@ -35,7 +35,7 @@ declare namespace Attribute {
   }
 
   export interface Path {
-    label: string
+    name: string
     value: string
   }
 

@@ -4,11 +4,8 @@ import { createUrlHash } from '@/utils'
 import AttributeControl from '@/components/AttributeControl.vue'
 
 defineProps({
+  data: { type: Object, required: true },
   node: { type: Object, required: true }
-})
-
-const data = defineModel<Attribute>({
-  required: true
 })
 </script>
 
@@ -17,16 +14,17 @@ const data = defineModel<Attribute>({
     <div class="flex justify-between w-full">
       <h4>
         <el-breadcrumb separator=".">
-          <el-breadcrumb-item v-for="{ label, value } in data.path" :key="value">
-            <a class="cursor-pointer" :href="createUrlHash(value)">{{ label }}</a>
+          <el-breadcrumb-item v-for="{ name, value } in data.path" :key="value">
+            <a class="cursor-pointer" :href="createUrlHash(value)">{{ name }}</a>
           </el-breadcrumb-item>
         </el-breadcrumb>
       </h4>
       <AttributeControl
         v-if="data.controller"
-        v-model="data.controller.value"
+        :model-value="data.controller.value"
         :type="data.controller.type"
         :options="data.controller.options"
+        @update:model-value="(val) => $emit('update', data.path, val)"
       />
     </div>
     <div class="mt-2">

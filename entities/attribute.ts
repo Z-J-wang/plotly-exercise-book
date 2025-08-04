@@ -60,7 +60,7 @@ export default class Attribute {
    */
   public get path(): Attribute.Path[] {
     const path: Attribute.Path = {
-      label: this._name,
+      name: this._name,
       value: this.id
     }
     if (this._parent) {

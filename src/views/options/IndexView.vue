@@ -72,11 +72,7 @@ const defaultProps = {
     <div class="flex-grow p-4 bg-white">
       <el-tree :data="attribute" node-key="id" default-expand-all :props="defaultProps">
         <template #default="{ node, data }">
-          <AttributeDisplay
-            :model-value="data"
-            :node="node"
-            @update:model-value="(val) => updateAttribute(data.path, val)"
-          />
+          <AttributeDisplay :data="data" :node="node" @update="updateAttribute" />
         </template>
       </el-tree>
     </div>
