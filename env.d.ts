@@ -13,6 +13,12 @@ declare module 'plotly.js-dist-min' {
 
 declare type ElementID = string // 元素 ID
 
+declare interface PlotlyConfig {
+  data?: Partial<Plotly.Data>
+  layout?: Partial<Plotly.Layout>
+  config?: Partial<Plotly.Config>
+}
+
 declare namespace Attribute {
   export type Type = 'string' | 'number' | 'boolean' | 'array' | 'color' | 'select'
 

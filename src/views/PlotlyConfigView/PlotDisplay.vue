@@ -1,11 +1,15 @@
 <script setup lang="ts">
-import { nextTick, onMounted, ref, watch } from 'vue'
-import CodeEditor from '../CodeEditor.vue'
+import { nextTick, onMounted, watch } from 'vue'
+import CodeEditor from '@/components/CodeEditor.vue'
 import { Monitor, CloseBold } from '@element-plus/icons-vue'
 import { usePlotly } from '@/utils/usePlotly'
 import { useStorage } from '@vueuse/core'
+import { usePloyConfigStore } from '@/stores/ploy.config'
+import { storeToRefs } from 'pinia'
 
 const openDisplay = useStorage('plotly-open-display', true)
+const ployConfigStore = usePloyConfigStore()
+const { config: plotlyConfig, code } = storeToRefs(ployConfigStore)
 
 /**
  * 暴露给父组件的属性
@@ -13,24 +17,6 @@ const openDisplay = useStorage('plotly-open-display', true)
 defineExpose({
   openDisplay
 })
-
-defineOptions({
-  name: 'PlotDisplay'
-})
-
-const plotlyConfig = defineModel<PlotlyConfig>({
-  default: () => {
-    return {
-      data: []
-    }
-  }
-})
-
-export interface PlotlyConfig {
-  data: Partial<Plotly.Data>[]
-  layout?: Partial<Plotly.Layout>
-  config?: Partial<Plotly.Config>
-}
 
 defineProps({
   direction: {
@@ -42,24 +28,27 @@ defineProps({
   }
 })
 
-watch([() => plotlyConfig, openDisplay], ([plotlyConfig, openDisplay]) => {
-  console.log(openDisplay)
+watch(
+  [() => plotlyConfig.value, openDisplay],
+  () => {
+    renderPlot()
+  },
+  { deep: true }
+)
 
-  if (!openDisplay) return
+function renderPlot() {
+  if (!openDisplay.value) return
   nextTick(() => {
-    const { data, layout, config } = plotlyConfig.value
-    usePlotly('PlotContainer', data, false, layout, config)
+    const { data = {}, layout, config } = JSON.parse(JSON.stringify(plotlyConfig.value))
+    console.log(data, layout, config)
+
+    usePlotly('PlotContainer', [data], false, layout, config)
   })
-})
+}
 
 onMounted(() => {
-  nextTick(() => {
-    const { data, layout, config } = plotlyConfig.value
-    usePlotly('PlotContainer', data, false, layout, config)
-  })
+  renderPlot()
 })
-
-const code = ref('')
 </script>
 
 <template>
@@ -84,6 +73,7 @@ const code = ref('')
           class="w-full"
           :customStyle="{ height: direction === 'horizontal' ? '50%' : '100%' }"
           v-model="code"
+          disabled
         />
       </div>
     </div>

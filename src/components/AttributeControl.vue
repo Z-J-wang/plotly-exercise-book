@@ -2,7 +2,7 @@
 import type { PropType } from 'vue'
 
 defineProps({
-  options: { type: [], default: () => [] },
+  options: { type: Array as PropType<string[]>, default: () => [] },
   type: { type: String as PropType<Attribute.Type>, required: true },
   min: { type: Number, default: Number.MIN_SAFE_INTEGER },
   max: { type: Number, default: Number.MAX_SAFE_INTEGER },
@@ -13,8 +13,15 @@ const modelValue = defineModel<any>()
 
 <template>
   <div class="attribute-control text-right" style="width: 200px">
-    <el-input v-if="type === 'string'" v-model.lazy.trim="modelValue" placeholder="请输入内容" />
-    <el-input-number v-else-if="type === 'number'" v-model.lazy.trim="modelValue" :min="min" :max="max" :step="step" />
+    <el-input v-if="type === 'string'" v-model.lazy.trim="modelValue" placeholder="请输入内容" autocomplete="off" />
+    <el-input-number
+      v-else-if="type === 'number'"
+      v-model.lazy.trim="modelValue"
+      :min="min"
+      :max="max"
+      :step="step"
+      autocomplete="off"
+    />
     <el-switch
       v-else-if="type === 'boolean'"
       v-model.lazy="modelValue"

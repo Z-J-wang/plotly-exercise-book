@@ -1,44 +1,23 @@
 <script setup lang="ts">
 import { useAttributeStore } from '@/stores/attribute'
 import AttributeDisplay from './AttributeDisplay.vue'
-import PlotlyDisplay from '@/components/plot.display/index.vue'
+import PlotlyDisplay from './PlotDisplay.vue'
 import { computed, ref } from 'vue'
 import { useWindowSize } from '@vueuse/core'
-import type { PlotlyConfig } from '@/components/plot.display/index.vue'
+import { usePloyConfigStore } from '@/stores/ploy.config'
+import { storeToRefs } from 'pinia'
+
+defineOptions({
+  name: 'PlotlyConfigView'
+})
 
 const { width } = useWindowSize()
 const attributeStore = useAttributeStore()
+const ployConfigStore = usePloyConfigStore()
+const plotlyConfig = ployConfigStore.config as PlotlyConfig
 
-const { attribute, updateAttribute } = attributeStore
-const plotlyConfig = ref<PlotlyConfig>({
-  data: [
-    {
-      x: [1, 2, 3, 4],
-      y: [10, 15, 13, 17],
-      mode: 'markers',
-      title: {
-        font: {
-          size: 50
-        }
-      },
-      type: 'scatter'
-    },
-    {
-      x: [1, 2, 3, 4],
-      y: [10, 15, 13, 17],
-      mode: 'markers',
-      type: 'scatter'
-    }
-  ],
-  layout: {
-    title: {
-      text: 'Heatmap Plot'
-    }
-  },
-  config: {
-    responsive: true
-  }
-})
+const { updateAttribute } = attributeStore
+const { branch } = storeToRefs(attributeStore)
 
 const plotlyDisplay = ref<InstanceType<typeof PlotlyDisplay> | null>(null)
 const openDisplay = computed(() => {
@@ -74,7 +53,7 @@ function updateConfig(id: string, value: any) {
 <template>
   <div class="options-view flex" :class="{ 'flex-col': direction === 'vertical' }">
     <div class="flex-grow p-4 bg-white">
-      <el-tree :data="attribute" node-key="id" default-expand-all :expand-on-click-node="false" :props="defaultProps">
+      <el-tree :data="branch" node-key="id" default-expand-all :expand-on-click-node="false" :props="defaultProps">
         <template #default="{ node, data }">
           <AttributeDisplay
             class="cursor-default"

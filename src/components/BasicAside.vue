@@ -38,7 +38,7 @@ function changeHandler(item: TabPaneName) {
 <template>
   <div class="p-2">
     <el-tabs v-model="activeTab" stretch @tab-change="changeHandler">
-      <el-tab-pane label="配置" name="/docs/options">
+      <el-tab-pane label="配置" name="/docs/config">
         <OptionsAside />
       </el-tab-pane>
       <el-tab-pane label="Api" name="/docs/api">Api</el-tab-pane>

@@ -39,7 +39,7 @@ export default class LayoutAttributes {
       )
     )
     subTitle.addChild(new Font(subTitle))
-
-    this._attributes = [title, subTitle]
+    title.addChild(subTitle)
+    this._attributes = [title]
   }
 }

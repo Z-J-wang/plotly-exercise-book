@@ -47,7 +47,7 @@ onMounted(() => {
         <el-menu-item index="1">案例</el-menu-item>
         <el-sub-menu index="/docs">
           <template #title>文档</template>
-          <el-menu-item index="/docs/options">配置</el-menu-item>
+          <el-menu-item index="/docs/config">配置</el-menu-item>
           <el-menu-item index="/docs/api">Api</el-menu-item>
         </el-sub-menu>
       </el-menu>

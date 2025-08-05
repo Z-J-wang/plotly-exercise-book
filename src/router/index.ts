@@ -36,9 +36,9 @@ const router = createRouter({
       component: { render: () => h(RouterView) },
       children: [
         {
-          path: 'options/',
-          name: 'Options',
-          component: () => import('../views/options/IndexView.vue')
+          path: 'config/',
+          name: 'PlotlyConfig',
+          component: () => import('../views/PlotlyConfigView/index.vue')
         },
         {
           path: 'api/',

@@ -1,6 +1,6 @@
 <template>
   <codemirror
-    :value="modelValue"
+    v-model="code"
     placeholder="Code goes here..."
     :style="customStyle"
     :autofocus="true"
@@ -24,17 +24,12 @@ import type { EditorState } from '@codemirror/state'
 import type { EditorView } from 'codemirror'
 
 defineProps({
-  modelValue: {
-    type: String,
-    default: 'console.log("Hello, world!")'
-  },
-  customStyle: {
-    type: Object,
-    default: () => ({ height: '400px' })
-  }
+  customStyle: { type: Object, default: () => ({ height: '400px' }) }
 })
 
-defineEmits(['update:modelValue'])
+const code = defineModel<string>({
+  default: 'console.log("Hello, world!")'
+})
 
 const extensions = [javascript(), oneDark]
 

@@ -6,8 +6,9 @@ interface Config {
   [key: string]: any
 }
 
-export const usePloyConfigStore = defineStore('ployConfig', () => {
-  const config = ref<Config>({})
+export const usePloyConfigStore = defineStore('ployConfig', (initialConfig: PlotlyConfig = {}) => {
+  const config = ref<Config>(initialConfig)
+  const code = ref('')
 
   function updateConfig(id: string, value: any) {
     const props = id.split('-')
@@ -24,7 +25,13 @@ export const usePloyConfigStore = defineStore('ployConfig', () => {
         currentLevel = currentLevel[prop]
       }
     })
+
+    code.value = JSON.stringify(config.value, null, 2)
   }
 
-  return { config, updateConfig }
+  function initConfig(initialConfig: PlotlyConfig = {}) {
+    config.value = initialConfig
+  }
+
+  return { config, code, updateConfig, initConfig }
 })

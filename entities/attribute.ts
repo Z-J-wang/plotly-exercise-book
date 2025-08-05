@@ -44,6 +44,11 @@ export default class Attribute {
     return this._controller
   }
 
+  private _initialConfig: PlotlyConfig | null
+  public get initialConfig(): PlotlyConfig | null {
+    return this._initialConfig
+  }
+
   /**
    * 属性ID
    */
@@ -76,7 +81,8 @@ export default class Attribute {
     type: string,
     description: Attribute.Description,
     controller: Attribute.Controller | null = null,
-    children: Attribute[] = []
+    children: Attribute[] = [],
+    initialConfig: PlotlyConfig | null = null
   ) {
     this._name = name
     this._type = type
@@ -84,6 +90,7 @@ export default class Attribute {
     this._parent = parent
     this._controller = controller
     if (children?.length) this._children = children
+    this._initialConfig = initialConfig // 图表初始化配置，仅在根节点设置
   }
 
   /**

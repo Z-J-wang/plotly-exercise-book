@@ -1,10 +1,35 @@
 import { defineStore } from 'pinia'
 import optionsData from 'bll/options'
 import Attribute from 'entities/attribute'
-import { ref } from 'vue'
+import { ref, watch, type Ref } from 'vue'
+import { useRoute } from 'vue-router'
+import { usePloyConfigStore } from './ploy.config'
 
-export const useAttributeStore = defineStore('attribute', () => {
-  const attribute = ref<Attribute[]>(optionsData)
+// 显式定义 store 返回类型
+interface AttributeStore {
+  tree: Ref<Attribute[]>
+  branch: Ref<Attribute[]>
+  updateAttribute: (path: Attribute.Path[], value: any) => void
+}
+
+export const useAttributeStore = defineStore('attribute', (): AttributeStore => {
+  const tree = ref<Attribute[]>(optionsData) as Ref<Attribute[]>
+  const branch = ref<Attribute[]>() as Ref<Attribute[]>
+  const currentRootID = ref('')
+  const route = useRoute()
+  const ployConfigStore = usePloyConfigStore()
+  const { initConfig } = ployConfigStore
+  watch(
+    () => route.hash,
+    (value) => {
+      const rootID = value.split('-')[0].replace('#', '')
+      if (currentRootID.value === rootID) return
+      currentRootID.value = rootID
+      const temp = tree.value.find((item: Attribute) => item.id === rootID) || tree.value[0]
+      temp.initialConfig && initConfig(temp.initialConfig)
+      branch.value = [temp]
+    }
+  )
 
   /**
    * 根据路径更新指定属性
@@ -12,7 +37,7 @@ export const useAttributeStore = defineStore('attribute', () => {
    * @param value
    */
   function updateAttribute(path: Attribute.Path[], value: any) {
-    let currentLevel = { children: attribute.value } as Attribute // 构造一个虚拟根节点
+    let currentLevel = { children: tree.value } as Attribute // 构造一个虚拟根节点
     const len = path.length
 
     for (let i = 0; i < len; i++) {
@@ -34,5 +59,5 @@ export const useAttributeStore = defineStore('attribute', () => {
     }
   }
 
-  return { attribute, updateAttribute }
+  return { tree, branch, updateAttribute }
 })

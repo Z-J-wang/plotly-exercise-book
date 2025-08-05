@@ -4,9 +4,10 @@ import { useAttributeStore } from '../stores/attribute'
 import Attribute from 'entities/attribute'
 import { ref, watch } from 'vue'
 import { updateHash } from '@/utils'
+import { storeToRefs } from 'pinia'
 
 const optionsStore = useAttributeStore()
-const treeData = optionsStore.attribute
+const { tree: treeData } = storeToRefs(optionsStore)
 
 const route = useRoute()
 const currentNodeKey = ref('')
