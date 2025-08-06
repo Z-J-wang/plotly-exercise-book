@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, ref, watch } from 'vue'
 import { RouterLink, RouterView, useRoute } from 'vue-router'
-import BasicAside from './components/BasicAside.vue'
 
 const activeIndex = ref('/')
 const route = useRoute()
@@ -52,18 +51,7 @@ onMounted(() => {
         </el-sub-menu>
       </el-menu>
     </el-header>
-    <el-container>
-      <el-aside width="250px" class="shadow-lg z-10">
-        <el-scrollbar height="calc(100vh - 60px)">
-          <BasicAside />
-        </el-scrollbar>
-      </el-aside>
-      <el-main class="bg-gray-50 p-0">
-        <el-scrollbar height="calc(100vh - 60px)">
-          <RouterView />
-        </el-scrollbar>
-      </el-main>
-    </el-container>
+    <RouterView />
   </el-container>
 </template>
 

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useRoute } from 'vue-router'
-import { useAttributeStore } from '../stores/attribute'
+import { useAttributeStore } from '@/stores/attribute'
 import Attribute from 'entities/attribute'
 import { ref, watch } from 'vue'
 import { updateHash } from '@/utils'
@@ -37,6 +37,7 @@ const defaultProps = {
     default-expand-all
     highlight-current
     :current-node-key="currentNodeKey"
+    :expand-on-click-node="false"
     :props="defaultProps"
     @node-click="handleNodeClick"
   />

@@ -1,3 +1,5 @@
+export * from './global.variable'
+
 export function updateHash(hash: string) {
   window.location.hash = hash
 }

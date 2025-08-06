@@ -6,16 +6,19 @@ import { usePlotly } from '@/utils/usePlotly'
 import { useStorage } from '@vueuse/core'
 import { usePloyConfigStore } from '@/stores/ploy.config'
 import { storeToRefs } from 'pinia'
+import { Position } from '@/utils'
 
 const openDisplay = useStorage('plotly-open-display', true)
 const ployConfigStore = usePloyConfigStore()
 const { config: plotlyConfig, code } = storeToRefs(ployConfigStore)
+const position = useStorage<Position>('plotly-position', Position.Auto) // 显示位置
 
 /**
  * 暴露给父组件的属性
  */
 defineExpose({
-  openDisplay
+  openDisplay,
+  position
 })
 
 defineProps({
@@ -40,8 +43,6 @@ function renderPlot() {
   if (!openDisplay.value) return
   nextTick(() => {
     const { data = {}, layout, config } = JSON.parse(JSON.stringify(plotlyConfig.value))
-    console.log(data, layout, config)
-
     usePlotly('PlotContainer', [data], false, layout, config)
   })
 }
@@ -62,6 +63,23 @@ onMounted(() => {
       <div class="flex-initial flex justify-between items-center pt-2 px-4 pb-4">
         <h3 class="font-bold">配置项预览效果</h3>
         <div>
+          <el-button-group class="mr-4">
+            <el-tooltip content="自动布局" effect="light">
+              <el-button type="primary" :plain="position !== Position.Auto" @click="position = Position.Auto"
+                ><span class="text-xs">A</span></el-button
+              >
+            </el-tooltip>
+            <el-tooltip content="右侧布局" effect="light">
+              <el-button type="primary" :plain="position !== Position.Right" @click="position = Position.Right"
+                ><span class="text-xs">R</span></el-button
+              >
+            </el-tooltip>
+            <el-tooltip content="底部布局" effect="light">
+              <el-button type="primary" :plain="position !== Position.Bottom" @click="position = Position.Bottom"
+                ><span class="text-xs">B</span></el-button
+              >
+            </el-tooltip>
+          </el-button-group>
           <el-button circle @click="openDisplay = false">
             <el-icon size="20"><CloseBold /></el-icon>
           </el-button>
