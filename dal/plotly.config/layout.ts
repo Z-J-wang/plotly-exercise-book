@@ -1,15 +1,11 @@
 import Attribute from 'entities/attribute'
-import { Font } from './base.attributes'
+import { Font } from './base'
 import AttributeController from 'entities/attribute.controller'
+import { BaseConfig } from './base'
 
-export default class LayoutAttributes {
-  private _attributes: Attribute[]
-
-  public get attributes(): Attribute[] {
-    return this._attributes
-  }
-
+export default class Layout extends BaseConfig {
   constructor(parent: Attribute | null) {
+    super(parent)
     const title = new Attribute('title', 'LayoutTitle', {
       parent: parent,
       description: { type: 'String', value: '标题' }
@@ -41,6 +37,6 @@ export default class LayoutAttributes {
     )
     subTitle.addChild(new Font(subTitle))
     title.addChild(subTitle)
-    this._attributes = [title]
+    this.insertAttribute(title)
   }
 }

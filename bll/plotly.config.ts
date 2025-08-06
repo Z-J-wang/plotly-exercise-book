@@ -1,4 +1,4 @@
-import LayoutAttributes from 'dal/layout.attributes'
+import LayoutAttributes from 'dal/plotly.config/layout'
 import Attribute from 'entities/attribute'
 
 const layout = new Attribute('layout', 'Layout', {

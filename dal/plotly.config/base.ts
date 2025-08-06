@@ -1,6 +1,30 @@
 import Attribute from 'entities/attribute'
 import AttributeController from 'entities/attribute.controller'
 
+/**
+ * Plotly 配置基类，该类用于维护配置清单
+ */
+export class BaseConfig {
+  private _parent!: Attribute | null
+
+  public get parent(): Attribute | null {
+    return this._parent
+  }
+  private _attributes: Attribute[] = []
+
+  public get attributes(): Attribute[] {
+    return this._attributes
+  }
+
+  public insertAttribute(newAttribute: Attribute) {
+    this._attributes.push(newAttribute)
+  }
+
+  constructor(parent: Attribute | null) {
+    this._parent = parent
+  }
+}
+
 export class Font extends Attribute {
   constructor(parent: Attribute | null, description?: Attribute.Description) {
     if (!description) description = { type: 'String', value: '字体设置' }

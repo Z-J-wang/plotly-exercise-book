@@ -16,25 +16,25 @@ export default class AttributeController {
   public get default(): any {
     return this._default
   }
-  private _options!: string[]
+  private _options: string[] = []
   public get options(): string[] {
     return this._options
   }
-  private _min!: number
-  public get min(): number {
+  private _min: number | undefined
+  public get min(): number | undefined {
     return this._min
   }
-  private _max!: number
-  public get max(): number {
+  private _max: number | undefined
+  public get max(): number | undefined {
     return this._max
   }
-  private _step!: number
-  public get step(): number {
+  private _step: number | undefined
+  public get step(): number | undefined {
     return this._step
   }
 
-  constructor(inital: Attribute.InitialController) {
-    const { type, default: defaultValue, options, min, max, step } = inital
+  constructor(initial: Attribute.InitialController) {
+    const { type, default: defaultValue, options, min, max, step } = initial
     this._type = type
     this._default = defaultValue
     if (options) this._options = options
