@@ -1,4 +1,3 @@
-import { de } from 'element-plus/es/locales.mjs'
 import Attribute from 'entities/attribute'
 import AttributeController from 'entities/attribute.controller'
 

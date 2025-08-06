@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import optionsData from 'bll/options'
+import plotlyConfigData from 'bll/plotly.config'
 import Attribute from 'entities/attribute'
 import { ref, watch, type Ref } from 'vue'
 import { useRoute } from 'vue-router'
@@ -13,7 +13,7 @@ interface AttributeStore {
 }
 
 export const useAttributeStore = defineStore('attribute', (): AttributeStore => {
-  const tree = ref<Attribute[]>(optionsData) as Ref<Attribute[]>
+  const tree = ref<Attribute[]>(plotlyConfigData) as Ref<Attribute[]>
   const branch = ref<Attribute[]>() as Ref<Attribute[]>
   const currentRootID = ref('')
   const route = useRoute()
