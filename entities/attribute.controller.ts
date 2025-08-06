@@ -1,0 +1,45 @@
+export default class AttributeController {
+  private _type: string
+  public get type(): string {
+    return this._type
+  }
+  private _value: any
+  public get value(): any {
+    return this._value
+  }
+
+  public set value(value: any) {
+    this._value = value
+  }
+
+  private _default: any
+  public get default(): any {
+    return this._default
+  }
+  private _options!: string[]
+  public get options(): string[] {
+    return this._options
+  }
+  private _min!: number
+  public get min(): number {
+    return this._min
+  }
+  private _max!: number
+  public get max(): number {
+    return this._max
+  }
+  private _step!: number
+  public get step(): number {
+    return this._step
+  }
+
+  constructor(inital: Attribute.InitialController) {
+    const { type, default: defaultValue, options, min, max, step } = inital
+    this._type = type
+    this._default = defaultValue
+    if (options) this._options = options
+    if (min) this._min = min
+    if (max) this._max = max
+    if (step) this._step = step
+  }
+}

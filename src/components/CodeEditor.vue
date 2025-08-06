@@ -40,5 +40,7 @@ const handleReady = (payload: { view: EditorView; state: EditorState; container:
   view.value = payload.view
 }
 
-const log = (eventName: string, payload: any) => {}
+const log = (eventName: string, payload: any) => {
+  console.log(eventName, payload)
+}
 </script>

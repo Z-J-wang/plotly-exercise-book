@@ -20,19 +20,19 @@ declare interface PlotlyConfig {
 }
 
 declare namespace Attribute {
+  import AttributeEntity from 'entities/attribute'
   export type Type = 'string' | 'number' | 'boolean' | 'array' | 'color' | 'select'
 
-  export interface Controller {
+  export interface InitialController {
     /**
      * 类型
      */
     type: Type
+
     /**
      * 属性默认值
      */
     default: any
-
-    value: any
 
     /**
      * 属性是否可选
@@ -52,5 +52,13 @@ declare namespace Attribute {
   export interface Description {
     type: 'String' | 'Component'
     value: string | Component
+  }
+
+  export interface Options {
+    parent?: AttributeEntity
+    description?: Description
+    controller?: Controller
+    children?: AttributeEntity[]
+    initialConfig?: PlotlyConfig
   }
 }

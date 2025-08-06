@@ -1,6 +1,7 @@
+import AttributeController from './attribute.controller'
 export default class Attribute {
-  private _parent: Attribute | null // 当前属性的父属性
-  get parent(): Attribute | null {
+  private _parent!: Attribute // 当前属性的父属性
+  get parent(): Attribute {
     return this._parent
   }
 
@@ -23,7 +24,7 @@ export default class Attribute {
   /**
    * 描述属性用途，支持字符串、HTML以及vue组件
    */
-  private _description: Attribute.Description
+  private _description: Attribute.Description = { type: 'String', value: '' }
   public get description(): Attribute.Description {
     return this._description
   }
@@ -39,13 +40,13 @@ export default class Attribute {
     this._children = value
   }
 
-  private _controller: Attribute.Controller | null
-  public get controller(): Attribute.Controller | null {
+  private _controller!: AttributeController
+  public get controller(): AttributeController {
     return this._controller
   }
 
-  private _initialConfig: PlotlyConfig | null
-  public get initialConfig(): PlotlyConfig | null {
+  private _initialConfig!: PlotlyConfig
+  public get initialConfig(): PlotlyConfig {
     return this._initialConfig
   }
 
@@ -75,22 +76,18 @@ export default class Attribute {
     }
   }
 
-  constructor(
-    parent: Attribute | null,
-    name: string,
-    type: string,
-    description: Attribute.Description,
-    controller: Attribute.Controller | null = null,
-    children: Attribute[] = [],
-    initialConfig: PlotlyConfig | null = null
-  ) {
+  constructor(name: string, type: string, options: Attribute.Options) {
     this._name = name
     this._type = type
-    this._description = description
-    this._parent = parent
-    this._controller = controller
-    if (children?.length) this._children = children
-    this._initialConfig = initialConfig // 图表初始化配置，仅在根节点设置
+
+    if (options) {
+      const { description, controller, children, initialConfig, parent } = options
+      if (parent) this._parent = parent
+      if (description) this._description = description
+      if (controller) this._controller = controller
+      if (children?.length) this._children = children || []
+      if (initialConfig) this._initialConfig = initialConfig // 图表初始化配置，仅在根节点设置
+    }
   }
 
   /**
