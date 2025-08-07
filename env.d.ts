@@ -34,6 +34,7 @@ declare namespace Attribute {
      */
     default: any
 
+    disabled?: boolean
     /**
      * 属性是否可选
      */

@@ -268,6 +268,44 @@ class Legend extends Attribute {
         })
       })
     )
+
+    this.addChild(
+      new Attribute('entrywidthmode', '"fraction" | "pixels"', {
+        parent: this,
+        description: {
+          type: 'string',
+          value: '<span class="font-bold">使用有异常待认证！</span><br/>' + '图例项宽度的模式。'
+        },
+        controller: new AttributeController({
+          type: 'select',
+          default: 'pixels',
+          disabled: true,
+          options: ['fraction', 'pixels']
+        })
+      })
+    )
+
+    this.addChild(
+      new Attribute('entrywidth', 'number', {
+        parent: this,
+        description: {
+          type: 'string',
+          value:
+            '<span class="font-bold">使用有异常待认证！</span><br/>' +
+            '设置图例的宽度（以像素或分数表示）。当<code>entrywidthmode</code>设置为<code>pixels</code>时，' +
+            '使用 0 可根据文本宽度来确定条目的大小。'
+        },
+        controller: new AttributeController({
+          type: 'number',
+          default: 0,
+          min: 0,
+          step: 1,
+          disabled: true
+        })
+      })
+    )
+
+    this.addChild(new Font(this, { type: 'string', value: '设置图例字体样式。' }))
   }
 }
 

@@ -64,6 +64,7 @@ function openEdit() {
           :max="data.controller.max"
           :min="data.controller.min"
           :step="data.controller.step"
+          :disabled="data.controller.disabled"
         />
       </div>
     </div>
