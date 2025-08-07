@@ -78,7 +78,7 @@ function updateConfig(id: string, value: any) {
           :class="{ 'flex-col': direction === 'vertical' }"
           :style="{ minHeight: 'calc(100vh - 60px)' }"
         >
-          <div class="flex-grow p-4 bg-white">
+          <div class="flex-auto p-4 bg-white min-w-0">
             <el-tree
               :data="branch"
               node-key="id"
@@ -98,7 +98,7 @@ function updateConfig(id: string, value: any) {
             </el-tree>
           </div>
           <div
-            class="flex-initial bg-white"
+            class="flex-shrink-0 bg-white"
             :class="rightSideClass"
             :style="{ height: direction === 'horizontal' ? 'calc(100vh - 60px)' : '40vh' }"
           >

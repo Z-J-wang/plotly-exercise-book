@@ -13,7 +13,7 @@ const ployConfigStore = usePloyConfigStore()
 const { updateConfig } = ployConfigStore
 
 const trying = ref(false)
-const attribute = ref<any>(props.data.controller?.default)
+const attribute = ref<any>(props.data.controller?.value)
 
 watch(attribute, (value) => {
   updateConfig(props.data.id, value)
@@ -49,7 +49,7 @@ function openEdit() {
           <span>默认值：</span> <el-tag type="primary" size="small">{{ data.controller?.default }}</el-tag>
         </div>
         <div class="mt-2">
-          <span v-if="data.description.type === 'String'" v-html="data.description.value" />
+          <span class="whitespace-normal" v-if="data.description.type === 'string'" v-html="data.description.value" />
           <component v-else-if="data.description.type === 'Component'" :is="data.description.value" />
         </div>
       </div>
@@ -61,6 +61,9 @@ function openEdit() {
           v-model="attribute"
           :type="data.controller.type"
           :options="data.controller.options"
+          :max="data.controller.max"
+          :min="data.controller.min"
+          :step="data.controller.step"
         />
       </div>
     </div>
@@ -78,7 +81,7 @@ function openEdit() {
     }
 
     .el-breadcrumb__item a {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: lighter;
       color: var(--el-color-primary-light-3);
     }
