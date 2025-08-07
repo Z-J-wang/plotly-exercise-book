@@ -3,10 +3,16 @@ import Attribute from 'entities/attribute'
 
 const layout = new Attribute('layout', 'Layout', {
   description: {
-    type: 'String',
-    value: '布局属性'
+    type: 'string',
+    value: '图表布局相关设置。例如：标题、内外边距等等。'
   },
   initialConfig: {
+    data: {
+      x: [1, 2, 3, 4],
+      y: [10, 15, 13, 17],
+      mode: 'markers',
+      type: 'scatter'
+    },
     layout: {
       title: {
         text: '标题',
@@ -21,7 +27,7 @@ const layoutAttributes = new LayoutAttributes(layout).attributes
 layout.children = layoutAttributes
 
 const config = new Attribute('config', 'Config', {
-  description: { type: 'String', value: '配置属性' },
+  description: { type: 'string', value: '配置属性' },
   initialConfig: {
     config: {
       displayModeBar: true

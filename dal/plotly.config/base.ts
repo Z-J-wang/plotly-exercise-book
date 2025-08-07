@@ -27,32 +27,32 @@ export class BaseConfig {
 
 export class Font extends Attribute {
   constructor(parent: Attribute | null, description?: Attribute.Description) {
-    if (!description) description = { type: 'String', value: '字体设置' }
+    if (!description) description = { type: 'string', value: '字体设置' }
     super('font', 'Font', { parent, description })
-    super.addChild(
+    this.addChild(
       new Attribute('color', 'Color', {
         parent: this,
-        description: { type: 'String', value: '字体颜色' },
+        description: { type: 'string', value: '字体颜色' },
         controller: new AttributeController({
           type: 'color',
           default: 'white'
         })
       })
     )
-    super.addChild(
+    this.addChild(
       new Attribute('family', 'string', {
         parent: this,
-        description: { type: 'String', value: '字体' },
+        description: { type: 'string', value: '字体' },
         controller: new AttributeController({
           type: 'string',
           default: 'Arial, sans-serif'
         })
       })
     )
-    super.addChild(
+    this.addChild(
       new Attribute('lineposition', 'Lineposition', {
         parent: this,
-        description: { type: 'String', value: '修饰线的位置' },
+        description: { type: 'string', value: '修饰线的位置' },
         controller: new AttributeController({
           type: 'select',
           default: 'none',
@@ -69,20 +69,20 @@ export class Font extends Attribute {
         })
       })
     )
-    super.addChild(
+    this.addChild(
       new Attribute('shadow', 'string', {
         parent: this,
-        description: { type: 'String', value: '字体阴影' },
+        description: { type: 'string', value: '字体阴影' },
         controller: new AttributeController({
           type: 'string',
           default: 'none'
         })
       })
     )
-    super.addChild(
+    this.addChild(
       new Attribute('size', 'number', {
         parent: this,
-        description: { type: 'String', value: '字体大小' },
+        description: { type: 'string', value: '字体大小' },
         controller: new AttributeController({
           type: 'number',
           default: 13,
@@ -91,10 +91,10 @@ export class Font extends Attribute {
         })
       })
     )
-    super.addChild(
+    this.addChild(
       new Attribute('weight', 'number', {
         parent: this,
-        description: { type: 'String', value: '字重' },
+        description: { type: 'string', value: '字重' },
         controller: new AttributeController({
           type: 'select',
           default: 'normal',
@@ -116,10 +116,10 @@ export class Font extends Attribute {
         })
       })
     )
-    super.addChild(
+    this.addChild(
       new Attribute('style', '"normal" | "italic"', {
         parent: this,
-        description: { type: 'String', value: '字体样式' },
+        description: { type: 'string', value: '字体样式' },
         controller: new AttributeController({
           type: 'select',
           default: 'normal',
@@ -127,13 +127,13 @@ export class Font extends Attribute {
         })
       })
     )
-    super.addChild(
+    this.addChild(
       new Attribute(
         'variant',
         '"normal" | "small-caps" | "all-small-caps" | "all-petite-caps" | "petite-caps" | "unicase"',
         {
           parent: this,
-          description: { type: 'String', value: '字体变形' },
+          description: { type: 'string', value: '字体变形' },
           controller: new AttributeController({
             type: 'select',
             default: 'normal',

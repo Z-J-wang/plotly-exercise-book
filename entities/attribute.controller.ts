@@ -37,6 +37,7 @@ export default class AttributeController {
     const { type, default: defaultValue, options, min, max, step } = initial
     this._type = type
     this._default = defaultValue
+    this._value = defaultValue
     if (options) this._options = options
     if (min) this._min = min
     if (max) this._max = max

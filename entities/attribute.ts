@@ -24,7 +24,7 @@ export default class Attribute {
   /**
    * 描述属性用途，支持字符串、HTML以及vue组件
    */
-  private _description: Attribute.Description = { type: 'String', value: '' }
+  private _description: Attribute.Description = { type: 'string', value: '' }
   public get description(): Attribute.Description {
     return this._description
   }

@@ -50,7 +50,7 @@ declare namespace Attribute {
   }
 
   export interface Description {
-    type: 'String' | 'Component'
+    type: 'string' | 'Component'
     value: string | Component
   }
 
