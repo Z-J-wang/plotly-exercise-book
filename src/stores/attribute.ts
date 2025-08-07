@@ -23,12 +23,13 @@ export const useAttributeStore = defineStore('attribute', (): AttributeStore => 
     () => route.hash,
     (value) => {
       const rootID = value.split('-')[0].replace('#', '')
-      if (currentRootID.value === rootID) return
+      if (currentRootID.value && currentRootID.value === rootID) return
       currentRootID.value = rootID
       const temp = tree.value.find((item: Attribute) => item.id === rootID) || tree.value[0]
       temp.initialConfig && initConfig(temp.initialConfig)
       branch.value = [temp]
-    }
+    },
+    { immediate: true }
   )
 
   /**
