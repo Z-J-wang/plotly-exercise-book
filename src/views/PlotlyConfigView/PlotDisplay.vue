@@ -87,7 +87,7 @@ onMounted(() => {
           </el-button>
         </div>
       </div>
-      <div class="flex-grow" :class="direction === 'horizontal' ? '' : 'columns-2'">
+      <div class="flex-grow min-h-0 min-w-0" :class="direction === 'horizontal' ? '' : 'columns-2'">
         <div id="PlotContainer" class="plot-container h-1/2 w-full"></div>
         <CodeEditor
           class="w-full"

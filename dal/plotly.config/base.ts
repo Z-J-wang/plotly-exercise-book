@@ -26,9 +26,10 @@ export class BaseConfig {
 }
 
 export class Font extends Attribute {
-  constructor(parent: Attribute | null, description?: Attribute.Description) {
+  constructor(parent: Attribute | null, description?: Attribute.Description, name: string = 'font') {
     if (!description) description = { type: 'string', value: '字体设置' }
-    super('font', 'Font', { parent, description })
+
+    super(name, 'Font', { parent, description })
     this.addChild(
       new Attribute('color', 'Color', {
         parent: this,

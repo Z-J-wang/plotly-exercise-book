@@ -2,7 +2,7 @@
 import type { PropType } from 'vue'
 
 defineProps({
-  options: { type: Array as PropType<string[]>, default: () => [] },
+  options: { type: Array as PropType<Attribute.ControllerOption[]>, default: () => [] },
   type: { type: String as PropType<Attribute.ControllerType>, required: true },
   min: { type: Number, default: Number.MIN_SAFE_INTEGER },
   max: { type: Number, default: Number.MAX_SAFE_INTEGER },
@@ -40,7 +40,7 @@ const modelValue = defineModel<any>()
     />
     <el-color-picker v-else-if="type === 'color'" v-model.lazy="modelValue" :disabled="disabled" />
     <el-select v-else-if="type === 'select'" v-model.lazy="modelValue" :disabled="disabled">
-      <el-option v-for="item in options" :key="item" :label="item" :value="item" />
+      <el-option v-for="{ label, value } in options" :key="label" :label="label" :value="value" />
     </el-select>
   </div>
 </template>

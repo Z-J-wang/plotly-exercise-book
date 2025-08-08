@@ -26,9 +26,13 @@ declare namespace Attribute {
    * Attribute类型
    * Attribute类型分为string和enum。除了枚举值，其他都是字符串。
    */
-  export type Type = { type: 'string' | 'enum'; value: string | string[] }
+  export type Type = { type: 'string' | 'enum'; value: string | any[] }
 
   export type ControllerType = 'string' | 'number' | 'boolean' | 'array' | 'color' | 'select'
+  export interface ControllerOption {
+    label: string
+    value: any
+  }
 
   export interface InitialController {
     /**
@@ -45,7 +49,7 @@ declare namespace Attribute {
     /**
      * 属性是否可选
      */
-    options?: string[]
+    options?: any[]
 
     min?: number
     max?: number

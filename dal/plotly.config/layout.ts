@@ -293,12 +293,11 @@ class Legend extends Attribute {
           parent: this,
           description: {
             type: 'string',
-            value: '<span class="font-bold">使用有异常待认证！</span><br/>' + '图例项宽度的模式。'
+            value: '<span class="font-bold">未试验出实际效果，需进一步核验！</span><br/>' + '图例项宽度的模式。'
           },
           controller: new AttributeController({
             type: 'select',
             default: 'pixels',
-            disabled: true,
             options: ['fraction', 'pixels']
           })
         }
@@ -311,7 +310,7 @@ class Legend extends Attribute {
         description: {
           type: 'string',
           value:
-            '<span class="font-bold">使用有异常待认证！</span><br/>' +
+            '<span class="font-bold">未试验出实际效果，需进一步核验！</span><br/>' +
             '设置图例的宽度（以像素或分数表示）。当<code>entrywidthmode</code>设置为<code>pixels</code>时，' +
             '使用 0 可根据文本宽度来确定条目的大小。'
         },
@@ -319,8 +318,7 @@ class Legend extends Attribute {
           type: 'number',
           default: 0,
           min: 0,
-          step: 1,
-          disabled: true
+          step: 1
         })
       })
     )
@@ -330,10 +328,7 @@ class Legend extends Attribute {
     this.addChild(
       new Attribute(
         'groupclick',
-        {
-          type: 'enum',
-          value: ['toggleitem', 'togglegroup']
-        },
+        { type: 'enum', value: ['toggleitem', 'togglegroup'] },
         {
           parent: this,
           description: {
@@ -353,6 +348,146 @@ class Legend extends Attribute {
         }
       )
     )
+
+    this.addChild(new Font(this, { type: 'string', value: '图例组标题字体样式设置。' }, 'grouptitlefont'))
+
+    this.addChild(
+      new Attribute('indentation', 'number', {
+        parent: this,
+        description: { type: 'string', value: '图例组标题缩进量，单位为像素。其值需大于等于<code>-15</code>。' },
+        controller: new AttributeController({ type: 'number', default: 0, min: -15, step: 1 })
+      })
+    )
+
+    this.addChild(
+      new Attribute(
+        'itemclick',
+        { type: 'enum', value: ['toggle', 'toggleothers', false] },
+        {
+          parent: this,
+          description: {
+            type: 'string',
+            value:
+              '图例组点击事件。<br />' +
+              '<ul>' +
+              '<li><code>toggle</code> - 默认值。点击图例组时，图例组内所有图例项都会被切换。</li>' +
+              '<li><code>toggleothers</code> - 点击图例组时，除了当前图例组，其他图例组都会被切换。</li>' +
+              '<li><code>false</code> - 禁用点击</li>' +
+              '</ul>'
+          },
+          controller: new AttributeController({
+            type: 'select',
+            default: 'toggle',
+            options: ['toggle', 'toggleothers', false]
+          })
+        }
+      )
+    )
+
+    this.addChild(
+      new Attribute(
+        'itemdoubleclick',
+        { type: 'enum', value: ['toggle', 'toggleothers', false] },
+        {
+          parent: this,
+          description: {
+            type: 'string',
+            value:
+              '图例组双击击事件。<br />' +
+              '<ul>' +
+              '<li><code>toggle</code> - 默认值。双击图例组时，图例组内所有图例项都会被切换。</li>' +
+              '<li><code>toggleothers</code> - 双击图例组时，除了当前图例组，其他图例组都会被切换。</li>' +
+              '<li><code>false</code> - 禁用双击</li>' +
+              '</ul>'
+          },
+          controller: new AttributeController({
+            type: 'select',
+            default: 'toggleothers',
+            options: ['toggle', 'toggleothers', false]
+          })
+        }
+      )
+    )
+
+    this.addChild(
+      new Attribute(
+        'itemsizing',
+        { type: 'enum', value: ['trace', 'constant'] },
+        {
+          parent: this,
+          description: {
+            type: 'string',
+            value:
+              '图例项大小设置: <br />' +
+              '<ul>' +
+              '<li><code>trace</code> - 图例项大小会根据图例项的符号的宽度或高度而变化。</li>' +
+              '<li><code>constant</code> - 图例项大小不会根据图例项的符号的宽度或高度而变化。</li>' +
+              '</ul>'
+          },
+          controller: new AttributeController({ type: 'select', default: 'trace', options: ['trace', 'constant'] })
+        }
+      )
+    )
+
+    this.addChild(
+      new Attribute('itemwidth', 'number', {
+        parent: this,
+        description: { type: 'string', value: '图例项宽度，单位<code>px</code>。其值<code>>=30</code>' },
+        controller: new AttributeController({ type: 'number', default: 30, min: 30, step: 1 })
+      })
+    )
+
+    this.addChild(
+      new Attribute(
+        'orientation',
+        { type: 'enum', value: ['v', 'h'] },
+        {
+          parent: this,
+          description: { type: 'string', value: '图例项排布方向。分为垂直<code>v</code>和水平<code>h</code>两种。' },
+          controller: new AttributeController({ type: 'select', default: 'v', options: ['v', 'h'] })
+        }
+      )
+    )
+
+    this.addChild(new LegendTitle(this))
+  }
+}
+
+class LegendTitle extends Attribute {
+  constructor(parent: Attribute | null) {
+    super('title', 'LegendTitle', {
+      parent,
+      description: { type: 'string', value: '设置图例模块的总标题。' }
+    })
+    this.addChild(
+      new Attribute('text', 'string', {
+        parent: this,
+        description: { type: 'string', value: '图例模块标题文本' },
+        controller: new AttributeController({ type: 'string', default: '' })
+      })
+    )
+    this.addChild(
+      new Attribute(
+        'side',
+        { type: 'enum', value: ['top', 'left', 'top left', 'top center', 'top right'] },
+        {
+          parent: this,
+          description: {
+            type: 'string',
+            value:
+              '确定图例标题相对于图例项的位置。当<code>orientation="h"</code>（水平方向）时，默认位置为<code>top</code>；' +
+              '当<code>orientation="v"</code>（垂直方向）时，默认位置为<code>left</code>。' +
+              '<code>top left</code>选项可用于扩展，<code>top center</code>和<code>top right</code>选项用于在水平对齐的图例区域中同时进行 x 轴和 y 轴方向的定位。'
+          },
+          controller: new AttributeController({
+            type: 'select',
+            default: 'top | left',
+            options: ['top', 'left', 'top left', 'top center', 'top right']
+          })
+        }
+      )
+    )
+    this.addChild(new Font(this, { type: 'string', value: '设置图例模块标题字体样式。' }))
   }
 }
 

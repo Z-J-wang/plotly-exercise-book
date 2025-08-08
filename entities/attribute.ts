@@ -76,7 +76,7 @@ export default class Attribute {
     }
   }
 
-  constructor(name: string, type: string | Attribute.Type, options: Attribute.Options) {
+  constructor(name: string, type: string | Attribute.Type, options?: Attribute.Options) {
     this._name = name
 
     if (typeof type === 'string') {

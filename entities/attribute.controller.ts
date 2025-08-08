@@ -20,8 +20,8 @@ export default class AttributeController {
   public get disabled(): boolean {
     return this._disabled
   }
-  private _options: string[] = []
-  public get options(): string[] {
+  private _options: Attribute.ControllerOption[] = []
+  public get options(): Attribute.ControllerOption[] {
     return this._options
   }
   private _min: number | undefined
@@ -42,7 +42,7 @@ export default class AttributeController {
     this._type = type
     this._default = defaultValue
     this._value = defaultValue
-    if (options) this._options = options
+    if (options) this._options = options.map((item) => ({ label: item.toString(), value: item }))
     if (min) this._min = min
     if (max) this._max = max
     if (step) this._step = step
