@@ -39,18 +39,22 @@ class Tittle extends Attribute {
     )
 
     this.addChild(
-      new Attribute('xref', "'container' | 'paper'", {
-        parent: this,
-        description: {
-          type: 'string',
-          value: '设置标题容器的宽度由什么决定。container：整个图表元素的宽度; paper：绘图区域宽度。'
-        },
-        controller: new AttributeController({
-          type: 'select',
-          default: 'container',
-          options: ['container', 'paper']
-        })
-      })
+      new Attribute(
+        'xref',
+        { type: 'enum', value: ['container', 'paper'] },
+        {
+          parent: this,
+          description: {
+            type: 'string',
+            value: '设置标题容器的宽度由什么决定。container：整个图表元素的宽度; paper：绘图区域宽度。'
+          },
+          controller: new AttributeController({
+            type: 'select',
+            default: 'container',
+            options: ['container', 'paper']
+          })
+        }
+      )
     )
 
     this.addChild(
@@ -75,33 +79,41 @@ class Tittle extends Attribute {
     )
 
     this.addChild(
-      new Attribute('xanchor', "'auto' | 'left' | 'center' | 'right'", {
-        parent: this,
-        description: {
-          type: 'string',
-          value: '设置标题在水平方向上相对于<code>layout.title.x</code>属性设置的位置的对齐方式。'
-        },
-        controller: new AttributeController({
-          type: 'select',
-          default: 'auto',
-          options: ['auto', 'left', 'center', 'right']
-        })
-      })
+      new Attribute(
+        'xanchor',
+        { type: 'enum', value: ['auto', 'left', 'center', 'right'] },
+        {
+          parent: this,
+          description: {
+            type: 'string',
+            value: '设置标题在水平方向上相对于<code>layout.title.x</code>属性设置的位置的对齐方式。'
+          },
+          controller: new AttributeController({
+            type: 'select',
+            default: 'auto',
+            options: ['auto', 'left', 'center', 'right']
+          })
+        }
+      )
     )
 
     this.addChild(
-      new Attribute('yref', "'container' | 'paper'", {
-        parent: this,
-        description: {
-          type: 'string',
-          value: '设置标题容器的高度由什么决定。container：整个图表元素的高度; paper：绘图区域高度。'
-        },
-        controller: new AttributeController({
-          type: 'select',
-          default: 'container',
-          options: ['container', 'paper']
-        })
-      })
+      new Attribute(
+        'yref',
+        { type: 'enum', value: ['container', 'paper'] },
+        {
+          parent: this,
+          description: {
+            type: 'string',
+            value: '设置标题容器的高度由什么决定。container：整个图表元素的高度; paper：绘图区域高度。'
+          },
+          controller: new AttributeController({
+            type: 'select',
+            default: 'container',
+            options: ['container', 'paper']
+          })
+        }
+      )
     )
 
     this.addChild(
@@ -126,18 +138,22 @@ class Tittle extends Attribute {
     )
 
     this.addChild(
-      new Attribute('yanchor', "'auto' | 'top' | 'middle' | 'bottom'", {
-        parent: this,
-        description: {
-          type: 'string',
-          value: '设置标题在垂直方向上相对于<code>layout.title.y</code>属性设置的位置的对齐方式。'
-        },
-        controller: new AttributeController({
-          type: 'select',
-          default: 'auto',
-          options: ['auto', 'top', 'middle', 'bottom']
-        })
-      })
+      new Attribute(
+        'yanchor',
+        { type: 'enum', value: ['auto', 'top', 'middle', 'bottom'] },
+        {
+          parent: this,
+          description: {
+            type: 'string',
+            value: '设置标题在垂直方向上相对于<code>layout.title.y</code>属性设置的位置的对齐方式。'
+          },
+          controller: new AttributeController({
+            type: 'select',
+            default: 'auto',
+            options: ['auto', 'top', 'middle', 'bottom']
+          })
+        }
+      )
     )
     this.addChild(
       new Pad(this, {
@@ -270,19 +286,23 @@ class Legend extends Attribute {
     )
 
     this.addChild(
-      new Attribute('entrywidthmode', '"fraction" | "pixels"', {
-        parent: this,
-        description: {
-          type: 'string',
-          value: '<span class="font-bold">使用有异常待认证！</span><br/>' + '图例项宽度的模式。'
-        },
-        controller: new AttributeController({
-          type: 'select',
-          default: 'pixels',
-          disabled: true,
-          options: ['fraction', 'pixels']
-        })
-      })
+      new Attribute(
+        'entrywidthmode',
+        { type: 'enum', value: ['fraction', 'pixels'] },
+        {
+          parent: this,
+          description: {
+            type: 'string',
+            value: '<span class="font-bold">使用有异常待认证！</span><br/>' + '图例项宽度的模式。'
+          },
+          controller: new AttributeController({
+            type: 'select',
+            default: 'pixels',
+            disabled: true,
+            options: ['fraction', 'pixels']
+          })
+        }
+      )
     )
 
     this.addChild(

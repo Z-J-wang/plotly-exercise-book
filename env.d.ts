@@ -21,13 +21,20 @@ declare interface PlotlyConfig {
 
 declare namespace Attribute {
   import AttributeEntity from 'entities/attribute'
-  export type Type = 'string' | 'number' | 'boolean' | 'array' | 'color' | 'select'
+
+  /**
+   * Attribute类型
+   * Attribute类型分为string和enum。除了枚举值，其他都是字符串。
+   */
+  export type Type = { type: 'string' | 'enum'; value: string | string[] }
+
+  export type ControllerType = 'string' | 'number' | 'boolean' | 'array' | 'color' | 'select'
 
   export interface InitialController {
     /**
      * 类型
      */
-    type: Type
+    type: ControllerType
 
     /**
      * 属性默认值

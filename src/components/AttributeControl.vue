@@ -3,7 +3,7 @@ import type { PropType } from 'vue'
 
 defineProps({
   options: { type: Array as PropType<string[]>, default: () => [] },
-  type: { type: String as PropType<Attribute.Type>, required: true },
+  type: { type: String as PropType<Attribute.ControllerType>, required: true },
   min: { type: Number, default: Number.MIN_SAFE_INTEGER },
   max: { type: Number, default: Number.MAX_SAFE_INTEGER },
   step: { type: Number, default: 1 },

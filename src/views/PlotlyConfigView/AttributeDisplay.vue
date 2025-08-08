@@ -4,6 +4,7 @@ import AttributeControl from '@/components/AttributeControl.vue'
 import { ref, watch } from 'vue'
 import { Edit } from '@element-plus/icons-vue'
 import { usePloyConfigStore } from '@/stores/ploy.config'
+import { InfoFilled } from '@element-plus/icons-vue'
 
 const props = defineProps({
   data: { type: Object, required: true },
@@ -42,8 +43,22 @@ function openEdit() {
             </el-breadcrumb>
           </h4>
         </div>
-        <div class="mt-2">
-          <span>数据类型：</span> <el-tag type="primary" size="small">{{ data.type }}</el-tag>
+        <div class="mt-2 flex items-center">
+          <span>数据类型：</span>
+          <template v-if="data.type.type === 'string'">
+            <el-tag type="primary" size="small">{{ data.type.value }}</el-tag>
+          </template>
+          <template v-else-if="data.type.type === 'enum'">
+            <el-tag type="primary" size="small">{{ data.type.type }}</el-tag>
+            <el-tooltip effect="light" placement="right">
+              <el-icon class="ml-2 cursor-pointer"><InfoFilled /></el-icon>
+              <template #content>
+                <div class="flex space-x-2 flex-wrap">
+                  <el-tag v-for="item in data.type.value" :key="item">{{ item }}</el-tag>
+                </div>
+              </template>
+            </el-tooltip>
+          </template>
         </div>
         <div class="mt-2" v-if="data.controller?.default">
           <span>默认值：</span> <el-tag type="primary" size="small">{{ data.controller?.default }}</el-tag>

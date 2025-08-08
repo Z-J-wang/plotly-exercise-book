@@ -11,13 +11,14 @@ const layout = new Attribute('layout', 'Layout', {
       x: [1, 2, 3, 4],
       y: [10, 15, 13, 17],
       mode: 'markers',
-      type: 'scatter'
+      type: 'scatter',
+      name: 'scatter trace'
     },
     layout: {
       title: {
-        text: '标题',
+        text: 'Layout Title',
         subtitle: {
-          text: '子标题'
+          text: 'subtitle'
         }
       }
     }

@@ -16,8 +16,8 @@ export default class Attribute {
   /**
    * 属性类型
    */
-  private _type: string
-  public get type(): string {
+  private _type: Attribute.Type
+  public get type(): Attribute.Type {
     return this._type
   }
 
@@ -76,9 +76,14 @@ export default class Attribute {
     }
   }
 
-  constructor(name: string, type: string, options: Attribute.Options) {
+  constructor(name: string, type: string | Attribute.Type, options: Attribute.Options) {
     this._name = name
-    this._type = type
+
+    if (typeof type === 'string') {
+      this._type = { type: 'string', value: type }
+    } else {
+      this._type = type
+    }
 
     if (options) {
       const { description, controller, children, initialConfig, parent } = options

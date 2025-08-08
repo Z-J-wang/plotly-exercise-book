@@ -117,20 +117,52 @@ export class Font extends Attribute {
       })
     )
     this.addChild(
-      new Attribute('style', '"normal" | "italic"', {
-        parent: this,
-        description: { type: 'string', value: '字体样式' },
-        controller: new AttributeController({
-          type: 'select',
-          default: 'normal',
-          options: ['normal', 'italic']
-        })
-      })
+      new Attribute(
+        'style',
+        { type: 'enum', value: ['normal', 'italic'] },
+        {
+          parent: this,
+          description: { type: 'string', value: '字体样式' },
+          controller: new AttributeController({
+            type: 'select',
+            default: 'normal',
+            options: ['normal', 'italic']
+          })
+        }
+      )
+    )
+    this.addChild(
+      new Attribute(
+        'textcase',
+        { type: 'enum', value: ['normal', 'word caps', 'upper', 'lower'] },
+        {
+          parent: this,
+          description: {
+            type: 'string',
+            value:
+              '文本大小写设置: <br />' +
+              '<ul>' +
+              '<li><code>normal</code> - 默认值。</li>' +
+              '<li><code>word caps</code> - 每个单词首字母大写。</li>' +
+              '<li><code>upper</code> - 全大写。</li>' +
+              '<li><code>lower</code> - 全小写。</li>' +
+              '</ul>'
+          },
+          controller: new AttributeController({
+            type: 'select',
+            default: 'normal',
+            options: ['normal', 'word caps', 'upper', 'lower']
+          })
+        }
+      )
     )
     this.addChild(
       new Attribute(
         'variant',
-        '"normal" | "small-caps" | "all-small-caps" | "all-petite-caps" | "petite-caps" | "unicase"',
+        {
+          type: 'enum',
+          value: ['normal', 'small-caps', 'all-small-caps', 'all-petite-caps', 'petite-caps', 'unicase']
+        },
         {
           parent: this,
           description: { type: 'string', value: '字体变形' },
