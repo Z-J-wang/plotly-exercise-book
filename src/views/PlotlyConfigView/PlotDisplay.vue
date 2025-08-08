@@ -43,7 +43,9 @@ function renderPlot() {
   if (!openDisplay.value) return
   nextTick(() => {
     const { data = {}, layout, config } = JSON.parse(JSON.stringify(plotlyConfig.value))
-    usePlotly('PlotContainer', [data], false, layout, config)
+
+    const traces = Array.isArray(data) ? data : [data]
+    usePlotly('PlotContainer', traces, false, layout, config)
   })
 }
 

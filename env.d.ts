@@ -14,7 +14,7 @@ declare module 'plotly.js-dist-min' {
 declare type ElementID = string // 元素 ID
 
 declare interface PlotlyConfig {
-  data?: Partial<Plotly.Data>
+  data?: Partial<Plotly.Data> | Partial<Plotly.Data>[]
   layout?: Partial<Plotly.Layout>
   config?: Partial<Plotly.Config>
 }

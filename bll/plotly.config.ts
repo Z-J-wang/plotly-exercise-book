@@ -7,13 +7,28 @@ const layout = new Attribute('layout', 'Layout', {
     value: '图表布局相关设置。例如：标题、内外边距等等。'
   },
   initialConfig: {
-    data: {
-      x: [1, 2, 3, 4],
-      y: [10, 15, 13, 17],
-      mode: 'markers',
-      type: 'scatter',
-      name: 'scatter trace'
-    },
+    data: [
+      {
+        x: [1, 2, 3, 4],
+        y: [10, 15, 13, 17],
+        mode: 'markers',
+        type: 'scatter',
+        name: 'scatter trace'
+      },
+      {
+        x: [2, 3, 4, 5.5],
+        y: [16, 5, 11, 9],
+        mode: 'lines',
+        type: 'scatter'
+      },
+      {
+        x: [1, 2, 3, 4],
+        y: [12, 9, 15, 12],
+        text: ['Text A', 'Text B', 'Text C', 'Text D'],
+        mode: 'lines+markers',
+        type: 'scatter'
+      }
+    ],
     layout: {
       title: {
         text: 'Layout Title',

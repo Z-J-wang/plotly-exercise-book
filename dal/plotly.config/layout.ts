@@ -326,6 +326,33 @@ class Legend extends Attribute {
     )
 
     this.addChild(new Font(this, { type: 'string', value: '设置图例字体样式。' }))
+
+    this.addChild(
+      new Attribute(
+        'groupclick',
+        {
+          type: 'enum',
+          value: ['toggleitem', 'togglegroup']
+        },
+        {
+          parent: this,
+          description: {
+            type: 'string',
+            value:
+              '图例分组点击单击形式设置' +
+              '<ul>' +
+              '<li><code>toggleitem</code> - 显示/隐藏点击的 item。</li>' +
+              '<li><code>togglegroup</code> - 显示/隐藏点击的 group。</li>' +
+              '</ul>'
+          },
+          controller: new AttributeController({
+            type: 'select',
+            default: 'togglegroup',
+            options: ['toggleitem', 'togglegroup']
+          })
+        }
+      )
+    )
   }
 }
 
