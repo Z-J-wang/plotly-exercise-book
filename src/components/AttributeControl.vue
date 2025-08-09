@@ -13,6 +13,7 @@ const modelValue = defineModel<any>()
 </script>
 
 <template>
+  <!-- TODO 新增重置功能，清空按钮 -->
   <div class="attribute-control text-right" style="width: 200px">
     <el-input
       v-if="type === 'string'"
