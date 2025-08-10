@@ -28,7 +28,7 @@ declare namespace Attribute {
    */
   export type Type = { type: 'string' | 'enum'; value: string | any[] }
 
-  export type ControllerType = 'string' | 'number' | 'boolean' | 'array' | 'color' | 'select'
+  export type ControllerType = 'string' | 'number' | 'boolean' | 'color' | 'colorlist' | 'select'
   export interface ControllerOption {
     label: string
     value: any
@@ -51,7 +51,7 @@ declare namespace Attribute {
      * 属性是否可选
      */
     options?: any[]
-
+    multiple?: boolean
     min?: number
     max?: number
     step?: number

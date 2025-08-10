@@ -7,13 +7,13 @@ defineProps({
   min: { type: Number, default: Number.MIN_SAFE_INTEGER },
   max: { type: Number, default: Number.MAX_SAFE_INTEGER },
   step: { type: Number, default: 1 },
-  disabled: { type: Boolean, default: false }
+  disabled: { type: Boolean, default: false },
+  multiple: { type: Boolean, default: false }
 })
 const modelValue = defineModel<any>()
 </script>
 
 <template>
-  <!-- TODO 新增重置功能，清空按钮 -->
   <div class="attribute-control text-right" style="width: 200px">
     <el-input
       v-if="type === 'string'"
@@ -41,8 +41,17 @@ const modelValue = defineModel<any>()
       :disabled="disabled"
     />
     <el-color-picker v-else-if="type === 'color'" v-model.lazy="modelValue" :disabled="disabled" />
-    <el-select v-else-if="type === 'select'" v-model.lazy="modelValue" :disabled="disabled" clearable>
+    <el-select
+      v-else-if="type === 'select'"
+      v-model.lazy="modelValue"
+      :disabled="disabled"
+      clearable
+      :multiple="multiple"
+    >
       <el-option v-for="{ label, value } in options" :key="label" :label="label" :value="value" />
     </el-select>
+    <template v-else-if="type === 'colorlist'">
+      <!-- TODO 新增颜色范围取色器 -->
+    </template>
   </div>
 </template>

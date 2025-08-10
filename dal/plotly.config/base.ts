@@ -177,3 +177,51 @@ export class Font extends Attribute {
     )
   }
 }
+
+export class Margin extends Attribute {
+  constructor(parent: Attribute | null, description?: Attribute.Description, name: string = 'margin') {
+    if (!description) description = { type: 'string', value: '设置外边距' }
+
+    super(name, 'Margin', { parent, description })
+
+    this.addChild(
+      new Attribute('t', 'number', {
+        parent: this,
+        description: { type: 'string', value: '上外边距' },
+        controller: new AttributeController({ type: 'number', default: 100 })
+      })
+    )
+
+    this.addChild(
+      new Attribute('b', 'number', {
+        parent: this,
+        description: { type: 'string', value: '下外边距' },
+        controller: new AttributeController({ type: 'number', default: 80 })
+      })
+    )
+
+    this.addChild(
+      new Attribute('l', 'number', {
+        parent: this,
+        description: { type: 'string', value: '左外边距' },
+        controller: new AttributeController({ type: 'number', default: 80 })
+      })
+    )
+
+    this.addChild(
+      new Attribute('r', 'number', {
+        parent: this,
+        description: { type: 'string', value: '右外边距' },
+        controller: new AttributeController({ type: 'number', default: 80 })
+      })
+    )
+
+    this.addChild(
+      new Attribute('pad', 'number', {
+        parent: this,
+        description: { type: 'string', value: '内边距' },
+        controller: new AttributeController({ type: 'number', default: 0 })
+      })
+    )
+  }
+}

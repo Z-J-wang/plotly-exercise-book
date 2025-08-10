@@ -24,6 +24,10 @@ export default class AttributeController {
   public get options(): Attribute.ControllerOption[] {
     return this._options
   }
+  private _multiple: boolean = false
+  public get multiple(): boolean {
+    return this._multiple
+  }
   private _min: number | undefined
   public get min(): number | undefined {
     return this._min
@@ -38,7 +42,7 @@ export default class AttributeController {
   }
 
   constructor(initial: Attribute.InitialController) {
-    const { type, default: defaultValue, options, min, max, step, disabled } = initial
+    const { type, default: defaultValue, options, min, max, step, disabled, multiple } = initial
     this._type = type
     this._default = defaultValue
     this._value = defaultValue
@@ -47,5 +51,6 @@ export default class AttributeController {
     if (max) this._max = max
     if (step) this._step = step
     if (disabled) this._disabled = disabled
+    if (multiple) this._multiple = multiple
   }
 }

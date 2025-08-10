@@ -82,6 +82,7 @@ function openEdit() {
           :min="data.controller.min"
           :step="data.controller.step"
           :disabled="data.controller.disabled"
+          :multiple="data.controller.multiple"
         />
       </div>
     </div>
