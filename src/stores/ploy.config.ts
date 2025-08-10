@@ -29,9 +29,28 @@ export const usePloyConfigStore = defineStore('ployConfig', (initialConfig: Plot
     code.value = JSON.stringify(config.value, null, 2)
   }
 
+  function removeConfig(id: string) {
+    const props = id.split('-')
+    let currentLevel = config.value
+    props.forEach((prop, index) => {
+      if (index === props.length - 1) {
+        // 最后一级属性，直接删除
+        delete currentLevel[prop]
+      } else {
+        // 非最后一级，确保对象存在
+        if (!currentLevel[prop]) {
+          throw new Error(`属性 ${prop} 不存在。请检查路径是否正确。`)
+        }
+        currentLevel = currentLevel[prop]
+      }
+    })
+
+    code.value = JSON.stringify(config.value, null, 2)
+  }
+
   function initConfig(initialConfig: PlotlyConfig = {}) {
     config.value = initialConfig
   }
 
-  return { config, code, updateConfig, initConfig }
+  return { config, code, updateConfig, removeConfig, initConfig }
 })

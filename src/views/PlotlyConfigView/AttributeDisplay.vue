@@ -11,7 +11,7 @@ const props = defineProps({
   node: { type: Object, required: true }
 })
 const ployConfigStore = usePloyConfigStore()
-const { updateConfig } = ployConfigStore
+const { updateConfig, removeConfig } = ployConfigStore
 
 const trying = ref(false)
 const attribute = ref<any>(props.data.controller?.value)
@@ -22,10 +22,12 @@ watch(attribute, (value) => {
 
 function openEdit() {
   trying.value = !trying.value
+  const { id, controller } = props.data
   if (trying.value) {
-    const { id, controller } = props.data
     const { value } = controller
     updateConfig(id, value)
+  } else {
+    removeConfig(props.data.id)
   }
 }
 </script>

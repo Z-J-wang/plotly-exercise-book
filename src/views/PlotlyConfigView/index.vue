@@ -15,12 +15,7 @@ defineOptions({
 
 const { width } = useWindowSize()
 const attributeStore = useAttributeStore()
-const ployConfigStore = usePloyConfigStore()
-const plotlyConfig = ployConfigStore.config as PlotlyConfig
-
-const { updateAttribute } = attributeStore
 const { branch } = storeToRefs(attributeStore)
-
 const plotlyDisplay = ref<InstanceType<typeof PlotlyDisplay> | null>(null)
 
 const openDisplay = computed(() => {
@@ -58,10 +53,6 @@ const defaultProps = {
   label: 'name',
   class: () => 'tree-node'
 }
-
-function updateConfig(id: string, value: any) {
-  console.log(id, value)
-}
 </script>
 
 <template>
@@ -87,13 +78,7 @@ function updateConfig(id: string, value: any) {
               :props="defaultProps"
             >
               <template #default="{ node, data }">
-                <AttributeDisplay
-                  class="cursor-default"
-                  :data="data"
-                  :node="node"
-                  @update="updateAttribute"
-                  @update-config="updateConfig"
-                />
+                <AttributeDisplay class="cursor-default" :data="data" :node="node" />
               </template>
             </el-tree>
           </div>
@@ -102,7 +87,7 @@ function updateConfig(id: string, value: any) {
             :class="rightSideClass"
             :style="{ height: direction === 'horizontal' ? 'calc(100vh - 60px)' : '40vh' }"
           >
-            <PlotlyDisplay ref="plotlyDisplay" v-model="plotlyConfig" :direction="direction" />
+            <PlotlyDisplay ref="plotlyDisplay" :direction="direction" />
           </div>
         </div>
       </el-scrollbar>

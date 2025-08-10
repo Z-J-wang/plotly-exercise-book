@@ -17,7 +17,7 @@ const modelValue = defineModel<any>()
   <div class="attribute-control text-right" style="width: 200px">
     <el-input
       v-if="type === 'string'"
-      v-model.lazy.trim="modelValue"
+      v-model.lazy="modelValue"
       placeholder="请输入内容"
       autocomplete="off"
       :disabled="disabled"
