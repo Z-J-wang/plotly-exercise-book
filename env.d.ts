@@ -42,7 +42,7 @@ declare namespace Attribute {
 
     /**
      * 属性默认值
-     * 当值为 null 时，则表示默认值不固定
+     * 当默认值不固定时，需将默认值设置为null
      */
     default: any
 

@@ -21,6 +21,7 @@ const modelValue = defineModel<any>()
       placeholder="请输入内容"
       autocomplete="off"
       :disabled="disabled"
+      clearable
     />
     <el-input-number
       v-else-if="type === 'number'"
@@ -40,7 +41,7 @@ const modelValue = defineModel<any>()
       :disabled="disabled"
     />
     <el-color-picker v-else-if="type === 'color'" v-model.lazy="modelValue" :disabled="disabled" />
-    <el-select v-else-if="type === 'select'" v-model.lazy="modelValue" :disabled="disabled">
+    <el-select v-else-if="type === 'select'" v-model.lazy="modelValue" :disabled="disabled" clearable>
       <el-option v-for="{ label, value } in options" :key="label" :label="label" :value="value" />
     </el-select>
   </div>
