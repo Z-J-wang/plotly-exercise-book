@@ -6,50 +6,41 @@ onMounted(() => {
   var trace1: PlotlyTypes.ScatterTrace = {
     x: [1, 2, 3, 4],
     y: [10, 15, 13, 17],
-    offsetgroup: '2',
-    text: ['As可接受的的接口', 'B', 'C', 'D'],
-    textangle: 45,
-    insidetextanchor: 'middle',
-    textposition: 'outside',
-    groupnorm: 'fraction',
-    visible: 'legendonly',
-
-    // insidetextfont: {
-    //   family: 'Arial',
-    //   size: 12,
-    //   color: 'red'
-    // },
-    type: 'bar',
-    marker: {
-      color: 'red'
-    }
+    type: 'bar'
   }
 
   var trace2: PlotlyTypes.ScatterTrace = {
     x: [2, 3, 4, 5],
     y: [16, 5, 11, 9],
-    offsetgroup: '2',
-    mode: 'lines',
-    x2: [9, 8, 6, 2],
-    groupnorm: 'fraction',
-    type: 'bar',
-    zorder: 2
+    type: 'bar'
   }
 
   var trace3: PlotlyTypes.ScatterTrace = {
     x: [1, 2, 3, 4, 5],
     y: [12, 9, 15, -3, 12],
     mode: 'lines+markers+text',
-    offsetgroup: '2',
-    type: 'bar',
-    groupnorm: 'fraction'
+    type: 'bar'
   }
 
   var data = [trace1, trace2, trace3]
 
-  usePlotly('myDiv', data, false, {
-    hiddenlabels: ['trace112312', 'trace2']
+  const { react } = usePlotly('myDiv', data, false, {
+    title: {
+      text: 'Bar Plots'
+    },
+    datarevision: 0,
+    uirevision: 'fixed_key'
   })
+  setTimeout(() => {
+    react(data, {
+      title: {
+        text: 'new Plots'
+      },
+      datarevision: 0,
+      uirevision: 'fixed_key'
+    })
+  }, 10000)
+  console.log(1)
 })
 </script>
 

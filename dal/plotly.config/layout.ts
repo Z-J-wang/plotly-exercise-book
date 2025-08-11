@@ -8,6 +8,7 @@ import LayoutUniformtext from './layout.uniformtext'
 import LayoutModeBar from './layout.mode.bar'
 import LayoutInteraction from './layout.interaction'
 import LayoutHoverLabel from './layout.hover.label'
+import datarevision from '@/components/doc/layout/DataRevision.vue'
 
 export default class Layout extends BaseConfig {
   constructor(parent: Attribute) {
@@ -162,6 +163,13 @@ export default class Layout extends BaseConfig {
       new Transition('transition', 'Transition', {
         parent,
         description: { type: 'string', value: '设置在<code>Plotly.react</code>更新过程中的过渡效果。' }
+      })
+    )
+
+    this.insertAttribute(
+      new Attribute('datarevision', 'number|string', {
+        parent,
+        description: { type: 'Component', value: datarevision }
       })
     )
   }
