@@ -2,7 +2,7 @@ import { createRouter, createWebHistory, RouterView } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import { h } from 'vue'
 
-const files = import.meta.glob('../views/example/**/*.vue')
+const files = import.meta.glob('../views/examples/**/*.vue')
 const exampleRoutes = Object.entries(files).map(([key, value]) => {
   const name = key.replace(/^.*[\\\/]/, '').replace(/\.vue$/, '')
   return {
