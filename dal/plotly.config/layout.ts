@@ -1,6 +1,6 @@
 import Attribute from 'entities/attribute'
 import AttributeController from 'entities/attribute.controller'
-import { BaseConfig } from './base'
+import { BaseConfig, Transition } from './base'
 import LayoutTitle from './layout.title'
 import LayoutLegend from './layout.legend'
 import { Margin, Font } from './base'
@@ -158,5 +158,11 @@ export default class Layout extends BaseConfig {
 
     new LayoutInteraction(this, parent)
     this.insertAttribute(new LayoutHoverLabel(parent))
+    this.insertAttribute(
+      new Transition('transition', 'Transition', {
+        parent,
+        description: { type: 'string', value: '设置在<code>Plotly.react</code>更新过程中的过渡效果。' }
+      })
+    )
   }
 }

@@ -1,3 +1,4 @@
+import { easing } from '@/utils/global.variable'
 import Attribute from 'entities/attribute'
 import AttributeController from 'entities/attribute.controller'
 
@@ -295,5 +296,62 @@ export class Label extends Attribute {
       })
     )
     this.addChild(new Font('font', 'Font', { parent: this, description: { type: 'string', value: '字体设置' } }))
+  }
+}
+
+/**
+ * 过渡效果属性类
+ * 子属性: 'duration' | 'easing' | 'ordering'
+ */
+export class Transition extends Attribute {
+  constructor(name: string, type: string, options: Attribute.Options) {
+    super(name, type, options)
+
+    this.addChild(
+      new Attribute('duration', 'number', {
+        parent: this,
+        description: { type: 'string', value: '过渡持续时间。单位为毫秒。' },
+        controller: new AttributeController({ type: 'number', default: 500, min: 0 })
+      })
+    )
+
+    this.addChild(
+      new Attribute(
+        'easing',
+        { type: 'enum', value: easing },
+        {
+          parent: this,
+          description: { type: 'string', value: '过渡的缓动函数。' },
+          controller: new AttributeController({
+            type: 'select',
+            default: 'cubic-in-out',
+            options: easing
+          })
+        }
+      )
+    )
+
+    this.addChild(
+      new Attribute(
+        'ordering',
+        { type: 'enum', value: ['layout first', 'traces first'] },
+        {
+          parent: this,
+          description: {
+            type: 'string',
+            value:
+              '在进行会使轨迹和布局都发生变化的更新操作时，指定过渡的顺序优先顺序。<br />' +
+              '<ul>' +
+              '<li><code>layout first</code> - 先更新布局，再更新轨迹。</li>' +
+              '<li><code>traces first</code> - 先更新轨迹，再更新布局。</li>' +
+              '</ul>'
+          },
+          controller: new AttributeController({
+            type: 'select',
+            default: 'layout first'
+          })
+        }
+      )
+    )
   }
 }
