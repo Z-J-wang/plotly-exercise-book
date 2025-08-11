@@ -6,9 +6,11 @@ import LayoutLegend from './layout.legend'
 import { Margin, Font } from './base'
 import LayoutUniformtext from './layout.uniformtext'
 import LayoutModeBar from './layout.mode.bar'
+import LayoutInteraction from './layout.interaction'
+import LayoutHoverLabel from './layout.hover.label'
 
 export default class Layout extends BaseConfig {
-  constructor(parent: Attribute | null) {
+  constructor(parent: Attribute) {
     super(parent)
     this.insertAttribute(new LayoutTitle(parent))
     this.insertAttribute(
@@ -32,10 +34,14 @@ export default class Layout extends BaseConfig {
     )
     this.insertAttribute(new LayoutLegend(parent))
 
-    const margin = new Margin(parent, {
-      type: 'string',
-      value: '设置绘图区域外边距，即绘图区域与容器的边界之间的距离。'
+    const margin = new Margin('margin', 'Margin', {
+      parent: parent,
+      description: {
+        type: 'string',
+        value: '设置绘图区域外边距，即绘图区域与容器的边界之间的距离。'
+      }
     })
+
     margin.addChild(
       new Attribute('autoexpand', 'boolean', {
         parent: margin,
@@ -94,9 +100,12 @@ export default class Layout extends BaseConfig {
     )
 
     this.insertAttribute(
-      new Font(parent, {
-        type: 'string',
-        value: '全局字体样式。其他<code>Font</code>属性将继承此处的值并覆盖。'
+      new Font('font', 'Font', {
+        parent,
+        description: {
+          type: 'string',
+          value: '全局字体样式。其他<code>Font</code>属性将继承此处的值并覆盖。'
+        }
       })
     )
 
@@ -146,5 +155,8 @@ export default class Layout extends BaseConfig {
     )
 
     this.insertAttribute(new LayoutModeBar(parent))
+
+    new LayoutInteraction(this, parent)
+    this.insertAttribute(new LayoutHoverLabel(parent))
   }
 }

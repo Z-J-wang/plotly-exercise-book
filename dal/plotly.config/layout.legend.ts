@@ -36,15 +36,14 @@ class LegendTitle extends Attribute {
         }
       )
     )
-    this.addChild(new Font(this, { type: 'string', value: '设置图例模块标题字体样式。' }))
+    this.addChild(
+      new Font('font', 'Font', { parent: this, description: { type: 'string', value: '设置图例模块标题字体样式。' } })
+    )
   }
 }
 
 export default class Legend extends Attribute {
-  constructor(
-    parent: Attribute | null,
-    description: Attribute.Description = { type: 'string', value: '图例样式定义。' }
-  ) {
+  constructor(parent: Attribute, description: Attribute.Description = { type: 'string', value: '图例样式定义。' }) {
     super('legend', 'Legend', { parent, description })
 
     this.addChild(
@@ -129,7 +128,9 @@ export default class Legend extends Attribute {
       })
     )
 
-    this.addChild(new Font(this, { type: 'string', value: '设置图例字体样式。' }))
+    this.addChild(
+      new Font('font', 'Font', { parent: this, description: { type: 'string', value: '设置图例字体样式。' } })
+    )
 
     this.addChild(
       new Attribute(
@@ -155,7 +156,12 @@ export default class Legend extends Attribute {
       )
     )
 
-    this.addChild(new Font(this, { type: 'string', value: '图例组标题字体样式设置。' }, 'grouptitlefont'))
+    this.addChild(
+      new Font('grouptitlefont', 'Font', {
+        parent: this,
+        description: { type: 'string', value: '图例组标题字体样式设置。' }
+      })
+    )
 
     this.addChild(
       new Attribute('indentation', 'number', {

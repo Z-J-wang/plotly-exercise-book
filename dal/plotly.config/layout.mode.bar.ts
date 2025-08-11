@@ -3,7 +3,7 @@ import Attribute from 'entities/attribute'
 import AttributeController from 'entities/attribute.controller'
 
 export default class LayoutModeBar extends Attribute {
-  constructor(parent: Attribute | null) {
+  constructor(parent: Attribute) {
     super('modebar', 'Modebar', { parent, description: { type: 'string', value: '右上角模式（工具）栏设置' } })
     this.addChild(
       new Attribute('activecolor', 'Color', {

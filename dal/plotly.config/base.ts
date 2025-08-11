@@ -20,16 +20,18 @@ export class BaseConfig {
     this._attributes.push(newAttribute)
   }
 
-  constructor(parent: Attribute | null) {
+  constructor(parent: Attribute) {
     this._parent = parent
   }
 }
 
+/**
+ * 字体属性类，可继承扩展
+ * 子属性：'color' | 'family' | 'size' | 'weight' | 'style' | 'variant' | 'lineposition' | 'shadow' | 'textcase'
+ */
 export class Font extends Attribute {
-  constructor(parent: Attribute | null, description?: Attribute.Description, name: string = 'font') {
-    if (!description) description = { type: 'string', value: '字体设置' }
-
-    super(name, 'Font', { parent, description })
+  constructor(name: string, type: string, options: Attribute.Options) {
+    super(name, type, options)
     this.addChild(
       new Attribute('color', 'Color', {
         parent: this,
@@ -178,11 +180,13 @@ export class Font extends Attribute {
   }
 }
 
+/**
+ * 外边距属性类，可继承扩展
+ * 属性：'t' | 'b | 'l' | 'r' | 'pad'
+ */
 export class Margin extends Attribute {
-  constructor(parent: Attribute | null, description?: Attribute.Description, name: string = 'margin') {
-    if (!description) description = { type: 'string', value: '设置外边距' }
-
-    super(name, 'Margin', { parent, description })
+  constructor(name: string, type: string, options: Attribute.Options) {
+    super(name, type, options)
 
     this.addChild(
       new Attribute('t', 'number', {
@@ -223,5 +227,73 @@ export class Margin extends Attribute {
         controller: new AttributeController({ type: 'number', default: 0 })
       })
     )
+  }
+}
+
+/**
+ * 线条属性类，可继承扩展。子属性：'color' | 'width' | 'dash'
+ */
+export class Line extends Attribute {
+  constructor(name: string, type: string, options: Attribute.Options) {
+    super(name, type, options)
+
+    this.addChild(
+      new Attribute('color', 'Color', {
+        parent: this,
+        description: { type: 'string', value: '线条颜色' },
+        controller: new AttributeController({ type: 'color', default: null })
+      })
+    )
+
+    this.addChild(
+      new Attribute('width', 'number', {
+        parent: this,
+        description: { type: 'string', value: '线条宽度。单位为<code>px</code>。' },
+        controller: new AttributeController({ type: 'number', default: 1, min: 1 })
+      })
+    )
+
+    this.addChild(
+      new Attribute(
+        'dash',
+        { type: 'enum', value: ['solid', 'dot', 'dash', 'longdash', 'dashdot', 'longdashdot'] },
+        {
+          parent: this,
+          description: { type: 'string', value: '线条样式' },
+          controller: new AttributeController({
+            type: 'select',
+            default: 'dot',
+            options: ['solid', 'dot', 'dash', 'longdash', 'dashdot', 'longdashdot']
+          })
+        }
+      )
+    )
+  }
+}
+
+/**
+ * 标题属性类，可继承扩展
+ * 子属性：'bgcolor' | 'bordercolor' | 'font'
+ */
+export class Label extends Attribute {
+  constructor(name: string, type: string, options: Attribute.Options) {
+    super(name, type, options)
+
+    this.addChild(
+      new Attribute('bgcolor', 'Color', {
+        parent: this,
+        description: { type: 'string', value: '标签背景颜色' },
+        controller: new AttributeController({ type: 'color', default: null })
+      })
+    )
+
+    this.addChild(
+      new Attribute('bordercolor', 'Color', {
+        parent: this,
+        description: { type: 'string', value: '标签边框颜色' },
+        controller: new AttributeController({ type: 'color', default: null })
+      })
+    )
+    this.addChild(new Font('font', 'Font', { parent: this, description: { type: 'string', value: '字体设置' } }))
   }
 }

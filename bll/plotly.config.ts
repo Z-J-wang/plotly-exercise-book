@@ -12,13 +12,24 @@ const layout = new Attribute('layout', 'Layout', {
     },
     data: [
       { x: [1, 2, 3, 4], y: [10, 15, 13, 17], mode: 'markers', type: 'scatter', name: 'scatter trace' },
-      { x: [2, 3, 4, 5.5], y: [16.5, 5.5, 11.5, 9.5], mode: 'lines', type: 'scatter', name: 'line trace' },
+      {
+        x: [2, 3, 4, 5.5],
+        y: [16.5, 5.5, 11.5, 9.5],
+        mode: 'lines',
+        type: 'scatter',
+        name: 'line trace',
+        legendgroup: 'group one'
+      },
       {
         x: [1, 2, 3, 4],
         y: [12, 9, 15, 12],
         text: ['text A', 'text B', 'text C', 'text D'],
         mode: 'text+lines+markers',
-        type: 'scatter'
+        type: 'scatter',
+        legendgroup: 'group one',
+        legendgrouptitle: {
+          text: 'Group One'
+        }
       }
     ]
   }
