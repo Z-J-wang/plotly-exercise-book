@@ -61,6 +61,7 @@ onMounted(() => {
         方法来重新渲染图表时，如果设置了
         <code>layout.editrevision</code> 属性且更新前后该值一致，则用户在图表上的编辑内容不会被重置。
       </p>
+      <p><span>注意：</span>轨迹名称和坐标轴名称不会被保留。</p>
       <div class="example">
         <p class="mt-4 font-bold">示例:</p>
         <div class="toolbar mt-2">

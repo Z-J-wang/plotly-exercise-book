@@ -8,7 +8,6 @@ import LayoutUniformtext from './layout.uniformtext'
 import LayoutModeBar from './layout.mode.bar'
 import LayoutInteraction from './layout.interaction'
 import LayoutHoverLabel from './layout.hover.label'
-import DataRevisionComp from '@/components/doc/layout/DataRevision.vue'
 import { defineAsyncComponent } from 'vue'
 
 export default class Layout extends BaseConfig {
