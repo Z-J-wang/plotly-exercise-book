@@ -23,7 +23,7 @@ export default class LayoutModeBar extends Attribute {
           type: 'string',
           value:
             '向模式栏添加预设按钮。<br />' +
-            '请注意，这些按钮只有在它们与图表中使用的所有跟踪类型兼容时才会显示。' +
+            '请注意，这些按钮只有在它们与图表中使用的所有轨迹类型兼容时才会显示。' +
             '该属性与<a href="#config-modeBarButtonsToAdd"><code>config.modeBarButtonsToAdd</code></a>选项类似。'
         },
         controller: new AttributeController({
@@ -76,7 +76,7 @@ export default class LayoutModeBar extends Attribute {
           type: 'string',
           value:
             '从模式栏中删除预设按钮。<br />' +
-            '请注意，这些按钮只有在它们与图表中使用的所有跟踪类型兼容时才会显示。' +
+            '请注意，这些按钮只有在它们与图表中使用的所有轨迹类型兼容时才会显示。' +
             '该属性与<a href="#config-modeBarButtonsToRemove"><code>config.modeBarButtonsToRemove</code>'
         },
         controller: new AttributeController({

@@ -8,7 +8,8 @@ import LayoutUniformtext from './layout.uniformtext'
 import LayoutModeBar from './layout.mode.bar'
 import LayoutInteraction from './layout.interaction'
 import LayoutHoverLabel from './layout.hover.label'
-import datarevision from '@/components/doc/layout/DataRevision.vue'
+import DataRevisionComp from '@/components/doc/layout/DataRevision.vue'
+import { defineAsyncComponent } from 'vue'
 
 export default class Layout extends BaseConfig {
   constructor(parent: Attribute) {
@@ -169,7 +170,40 @@ export default class Layout extends BaseConfig {
     this.insertAttribute(
       new Attribute('datarevision', 'number|string', {
         parent,
-        description: { type: 'Component', value: datarevision }
+        description: {
+          type: 'Component',
+          value: defineAsyncComponent(() => import('@/components/doc/layout/DataRevision.vue'))
+        }
+      })
+    )
+
+    this.insertAttribute(
+      new Attribute('uirevision', 'number|string', {
+        parent,
+        description: {
+          type: 'Component',
+          value: defineAsyncComponent(() => import('@/components/doc/layout/UiRevision.vue'))
+        }
+      })
+    )
+
+    this.insertAttribute(
+      new Attribute('editrevision', 'number | string', {
+        parent,
+        description: {
+          type: 'Component',
+          value: defineAsyncComponent(() => import('@/components/doc/layout/EditRevision.vue'))
+        }
+      })
+    )
+
+    this.insertAttribute(
+      new Attribute('selectionrevision', 'number | string', {
+        parent,
+        description: {
+          type: 'Component',
+          value: defineAsyncComponent(() => import('@/components/doc/layout/SelectionRevision.vue'))
+        }
       })
     )
   }
