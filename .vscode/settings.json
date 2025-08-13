@@ -52,7 +52,17 @@
   "[scss]": {
     "editor.defaultFormatter": "stylelint.vscode-stylelint"
   },
-  "cSpell.words": ["datarevision", "editrevision", "plotly", "relayout"],
+  "cSpell.words": [
+    "datarevision",
+    "editrevision",
+    "plotly",
+    "relayout",
+    "roworder",
+    "xaxes",
+    "xside",
+    "yaxes",
+    "yside"
+  ],
   "diffEditor.ignoreTrimWhitespace": false,
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": true,

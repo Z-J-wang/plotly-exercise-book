@@ -8,7 +8,17 @@ const layout = new Attribute('layout', 'Layout', {
   },
   initialConfig: {
     layout: {
-      title: { text: 'Layout Title', subtitle: { text: 'subtitle' } }
+      title: { text: 'Layout Title', subtitle: { text: 'subtitle' } },
+      grid: {
+        rows: 2,
+        columns: 1,
+        roworder: 'bottom to top',
+        subplots: [],
+        xaxes: [],
+        yaxes: [],
+        xgap: 0.02,
+        pattern: 'coupled'
+      }
     },
     data: [
       { x: [1, 2, 3, 4], y: [10, 15, 13, 17], mode: 'markers', type: 'scatter', name: 'scatter trace' },

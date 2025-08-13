@@ -9,6 +9,7 @@ import LayoutModeBar from './layout.mode.bar'
 import LayoutInteraction from './layout.interaction'
 import LayoutHoverLabel from './layout.hover.label'
 import { defineAsyncComponent } from 'vue'
+import LayoutGrid from './layout.grid'
 
 export default class Layout extends BaseConfig {
   constructor(parent: Attribute) {
@@ -205,5 +206,17 @@ export default class Layout extends BaseConfig {
         }
       })
     )
+
+    this.insertAttribute(
+      new Attribute('template', 'Template', {
+        parent,
+        description: {
+          type: 'Component',
+          value: defineAsyncComponent(() => import('@/components/doc/layout/Template.vue'))
+        }
+      })
+    )
+
+    this.insertAttribute(new LayoutGrid(parent))
   }
 }
