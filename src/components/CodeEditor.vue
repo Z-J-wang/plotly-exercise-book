@@ -24,7 +24,7 @@ import type { EditorState } from '@codemirror/state'
 import type { EditorView } from 'codemirror'
 
 defineProps({
-  customStyle: { type: Object, default: () => ({ height: '400px' }) }
+  customStyle: { type: Object, default: () => ({ height: 'auto', maxHeight: '500px' }) }
 })
 
 const code = defineModel<string>({
