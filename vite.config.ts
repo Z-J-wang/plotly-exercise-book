@@ -5,7 +5,8 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  publicDir: '/render-jupyter-notebook-vue/',
+  publicDir: '/plotly-exercise-book/',
+  base: '/plotly-exercise-book/',
   plugins: [vue()],
   resolve: {
     alias: {
