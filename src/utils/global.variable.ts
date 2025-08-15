@@ -90,3 +90,22 @@ export const easing = [
   'back-in-out',
   'bounce-in-out'
 ]
+
+export const calendar = [
+  'chinese',
+  'coptic',
+  'discworld',
+  'ethiopian',
+  'gregorian',
+  'hebrew',
+  'islamic',
+  'jalali',
+  'julian',
+  'mayan',
+  'nanakshahi',
+  'nepali',
+  'persian',
+  'taiwan',
+  'thai',
+  'ummalqura'
+]

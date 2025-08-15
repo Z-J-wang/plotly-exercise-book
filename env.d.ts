@@ -28,7 +28,7 @@ declare namespace Attribute {
    */
   export type Type = { type: 'string' | 'enum'; value: string | any[] }
 
-  export type ControllerType = 'string' | 'number' | 'boolean' | 'color' | 'colorlist' | 'select'
+  export type ControllerType = 'string' | 'number' | 'boolean' | 'color' | 'colorlist' | 'select' | 'slider'
   export interface ControllerOption {
     label: string
     value: any
@@ -36,15 +36,20 @@ declare namespace Attribute {
 
   export interface InitialController {
     /**
-     * 类型
-     */
-    type: ControllerType
-
-    /**
      * 属性默认值
      * 当默认值不固定时，需将默认值设置为null
      */
     default: any
+
+    /**
+     * 类型
+     */
+    type?: ControllerType
+
+    /**
+     * 属性值。该值缺失时将采用默认值。
+     */
+    value?: any
 
     disabled?: boolean
     /**

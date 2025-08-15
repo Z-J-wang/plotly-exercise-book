@@ -10,6 +10,7 @@ import LayoutInteraction from './layout.interaction'
 import LayoutHoverLabel from './layout.hover.label'
 import { defineAsyncComponent } from 'vue'
 import LayoutGrid from './layout.grid'
+import { calendar } from '@/utils'
 
 export default class Layout extends BaseConfig {
   constructor(parent: Attribute) {
@@ -218,5 +219,37 @@ export default class Layout extends BaseConfig {
     )
 
     this.insertAttribute(new LayoutGrid(parent))
+
+    this.insertAttribute(
+      new Attribute(
+        'calendar',
+        { type: 'enum', value: calendar },
+        {
+          parent,
+          description: { type: 'string', value: '设置默认日历系统。将影响日期的显示。' },
+          controller: new AttributeController({
+            type: 'select',
+            default: 'gregorian',
+            options: calendar
+          })
+        }
+      )
+    )
+
+    this.insertAttribute(
+      new Attribute('hidesources', 'boolean', {
+        parent,
+        description: {
+          type: 'string',
+          value:
+            '是否在图表的右下角放置一个引用数据来源的文本链接。<br />' +
+            '此设置仅对通过 Chart Studio Cloud（网址为 https://chart-studio.plotly.com 或本地部署）生成的图表有效。'
+        },
+        controller: new AttributeController({
+          type: 'boolean',
+          default: false
+        })
+      })
+    )
   }
 }

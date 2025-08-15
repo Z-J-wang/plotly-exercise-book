@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { PropType } from 'vue'
+import { computed, type PropType } from 'vue'
 
-defineProps({
+const props = defineProps({
   options: { type: Array as PropType<Attribute.ControllerOption[]>, default: () => [] },
   type: { type: String as PropType<Attribute.ControllerType>, required: true },
   min: { type: Number, default: Number.MIN_SAFE_INTEGER },
@@ -11,6 +11,14 @@ defineProps({
   multiple: { type: Boolean, default: false }
 })
 const modelValue = defineModel<any>()
+
+const sliderMin = computed(() => {
+  return props.min === Number.MIN_SAFE_INTEGER ? 0 : props.min
+})
+
+const sliderMxa = computed(() => {
+  return props.max === Number.MAX_SAFE_INTEGER ? 0 : props.max
+})
 </script>
 
 <template>
@@ -53,5 +61,15 @@ const modelValue = defineModel<any>()
     <template v-else-if="type === 'colorlist'">
       <!-- TODO 新增颜色范围取色器 -->
     </template>
+
+    <el-slider
+      v-else-if="type === 'slider'"
+      v-model="modelValue"
+      range
+      show-stops
+      :min="sliderMin"
+      :max="sliderMxa"
+      :step="step"
+    />
   </div>
 </template>

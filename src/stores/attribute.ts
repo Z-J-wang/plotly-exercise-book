@@ -9,7 +9,7 @@ import { usePloyConfigStore } from './ploy.config'
 interface AttributeStore {
   tree: Ref<Attribute[]>
   branch: Ref<Attribute[]>
-  updateAttribute: (path: Attribute.Path[], value: any) => void
+  resetPlotlyConfig: (path: Attribute.Path[]) => void
 }
 
 export const useAttributeStore = defineStore('attribute', (): AttributeStore => {
@@ -19,6 +19,7 @@ export const useAttributeStore = defineStore('attribute', (): AttributeStore => 
   const route = useRoute()
   const ployConfigStore = usePloyConfigStore()
   const { initConfig } = ployConfigStore
+
   watch(
     () => route.hash,
     (value) => {
@@ -37,9 +38,10 @@ export const useAttributeStore = defineStore('attribute', (): AttributeStore => 
    * @param path
    * @param value
    */
-  function updateAttribute(path: Attribute.Path[], value: any) {
+  function resetPlotlyConfig(path: Attribute.Path[]) {
     let currentLevel = { children: tree.value } as Attribute // 构造一个虚拟根节点
     const len = path.length
+    let newPlotlyConfig!: PlotlyConfig
 
     for (let i = 0; i < len; i++) {
       const name = path[i].name
@@ -49,16 +51,13 @@ export const useAttributeStore = defineStore('attribute', (): AttributeStore => 
       if (!target) throw new Error(`属性 ${name} 不存在。请检查路径是否正确。`)
       currentLevel = target
 
-      // 如果是最后一层，则更新属性值
-      if (i === len - 1) {
-        if (currentLevel.controller) {
-          currentLevel.controller.value = value
-        } else {
-          throw new Error(`属性 ${name} 的控制器不存在。`)
-        }
-      }
+      // 记录路径中节点的initialConfig，子节点的initialConfig会覆盖父节点的initialConfig
+      if (target.initialConfig) newPlotlyConfig = target.initialConfig
     }
+
+    // 初始化图表
+    initConfig(newPlotlyConfig)
   }
 
-  return { tree, branch, updateAttribute }
+  return { tree, branch, resetPlotlyConfig }
 })

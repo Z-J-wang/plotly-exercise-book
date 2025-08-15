@@ -5,6 +5,7 @@ import { ref, watch } from 'vue'
 import { Edit } from '@element-plus/icons-vue'
 import { usePloyConfigStore } from '@/stores/ploy.config'
 import { InfoFilled } from '@element-plus/icons-vue'
+import { useAttributeStore } from '@/stores/attribute'
 
 const props = defineProps({
   data: { type: Object, required: true },
@@ -12,6 +13,9 @@ const props = defineProps({
 })
 const ployConfigStore = usePloyConfigStore()
 const { updateConfig, removeConfig } = ployConfigStore
+
+const optionsStore = useAttributeStore()
+const { resetPlotlyConfig } = optionsStore
 
 const trying = ref(false)
 const attribute = ref<any>(props.data.controller?.value)
@@ -22,9 +26,10 @@ watch(attribute, (value) => {
 
 function openEdit() {
   trying.value = !trying.value
-  const { id, controller } = props.data
+  const { id, controller, path } = props.data
   if (trying.value) {
     const { value } = controller
+    resetPlotlyConfig(path)
     updateConfig(id, value)
   } else {
     removeConfig(props.data.id)
@@ -35,7 +40,7 @@ function openEdit() {
 <template>
   <div class="attribute-display w-full">
     <div class="flex">
-      <div class="flex-auto">
+      <div class="flex-auto min-w-0">
         <div class="flex justify-between w-full">
           <h4 :class="data.id">
             <el-breadcrumb separator=".">
@@ -70,7 +75,7 @@ function openEdit() {
           <component v-else-if="data.description.type === 'Component'" :is="data.description.value" />
         </div>
       </div>
-      <div class="flex-initial text-right" v-if="data.controller">
+      <div class="flex-initial text-right" v-if="data.controller?.type">
         <el-button :type="trying ? 'primary' : ''" :icon="Edit" circle @click="openEdit" />
         <AttributeControl
           v-if="trying"

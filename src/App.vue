@@ -32,7 +32,7 @@ onMounted(() => {
   activeIndex.value = window.location.pathname
   setTimeout(() => {
     scrollIntoView()
-  }, 1000)
+  }, 2000)
 })
 </script>
 

@@ -3,7 +3,7 @@ import { useRoute } from 'vue-router'
 import { useAttributeStore } from '@/stores/attribute'
 import Attribute from 'entities/attribute'
 import { ref, watch } from 'vue'
-import { updateHash } from '@/utils'
+import { updateUrlHash } from '@/utils'
 import { storeToRefs } from 'pinia'
 
 const optionsStore = useAttributeStore()
@@ -20,7 +20,7 @@ watch(
 )
 
 const handleNodeClick = (data: Attribute) => {
-  updateHash(data.id)
+  updateUrlHash(data.id)
 }
 
 const defaultProps = {

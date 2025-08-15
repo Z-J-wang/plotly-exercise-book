@@ -1,5 +1,11 @@
+/**
+ * 图表配置 store
+ * 用于Plotly图表绘制
+ */
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { type Hash, generateHash } from '../utils'
+import { cloneDeep } from 'lodash'
 
 // 定义配置对象的类型
 interface Config {
@@ -7,8 +13,9 @@ interface Config {
 }
 
 export const usePloyConfigStore = defineStore('ployConfig', (initialConfig: PlotlyConfig = {}) => {
-  const config = ref<Config>(initialConfig)
-  const code = ref('')
+  const config = ref<Config>(cloneDeep(initialConfig))
+  const code = ref(JSON.stringify(config.value, null, 2))
+  const configHash = ref<Hash>('')
 
   function updateConfig(id: string, value: any) {
     const props = id.split('-')
@@ -48,9 +55,24 @@ export const usePloyConfigStore = defineStore('ployConfig', (initialConfig: Plot
     code.value = JSON.stringify(config.value, null, 2)
   }
 
-  function initConfig(initialConfig: PlotlyConfig = {}) {
-    config.value = initialConfig
+  /**
+   * 初始化图表配置
+   * @param initialConfig
+   */
+  async function initConfig(initialConfig: PlotlyConfig = {}) {
+    const hash = await generateHash(JSON.stringify(initialConfig))
+    if (configHash.value !== hash) {
+      configHash.value = hash
+      config.value = cloneDeep(initialConfig)
+      code.value = JSON.stringify(config.value, null, 2)
+    }
   }
 
-  return { config, code, updateConfig, removeConfig, initConfig }
+  onMounted(() => {
+    generateHash(JSON.stringify(initialConfig)).then((hash) => {
+      configHash.value = hash
+    })
+  })
+
+  return { config, code, configHash, updateConfig, removeConfig, initConfig }
 })
