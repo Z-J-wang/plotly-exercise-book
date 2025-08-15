@@ -3,7 +3,7 @@ import { onMounted } from 'vue'
 import { usePlotly } from '@/utils/usePlotly'
 
 onMounted(() => {
-  var data = [
+  const data: any[] = [
     {
       z: [
         [1, 20, 30, 50],

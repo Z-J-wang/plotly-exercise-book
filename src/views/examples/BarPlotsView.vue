@@ -3,28 +3,11 @@ import { onMounted } from 'vue'
 import { usePlotly } from '@/utils/usePlotly'
 
 onMounted(() => {
-  var trace1: PlotlyTypes.ScatterTrace = {
-    x: [1, 2, 3, 4],
-    y: [10, 15, 13, 17],
-    type: 'bar'
-  }
+  const trace1: Plotly.Data = { x: [1, 2, 3, 4], y: [10, 15, 13, 17], type: 'bar' }
+  const trace2: Plotly.Data = { x: [2, 3, 4, 5], y: [16, 5, 11, 9], type: 'bar' }
+  const trace3: Plotly.Data = { x: [1, 2, 3, 4, 5], y: [12, 9, 15, -3, 12], mode: 'text+lines+markers', type: 'bar' }
 
-  var trace2: PlotlyTypes.ScatterTrace = {
-    x: [2, 3, 4, 5],
-    y: [16, 5, 11, 9],
-    type: 'bar'
-  }
-
-  var trace3: PlotlyTypes.ScatterTrace = {
-    x: [1, 2, 3, 4, 5],
-    y: [12, 9, 15, -3, 12],
-    mode: 'lines+markers+text',
-    type: 'bar'
-  }
-
-  var data = [trace1, trace2, trace3]
-
-  const { react } = usePlotly('myDiv', data, false, {
+  const { react } = usePlotly('myDiv', [trace1, trace2, trace3], false, {
     title: {
       text: 'Bar Plots'
     },
@@ -32,7 +15,7 @@ onMounted(() => {
     uirevision: 'fixed_key'
   })
   setTimeout(() => {
-    react(data, {
+    react([trace1, trace2, trace3], {
       title: {
         text: 'new Plots'
       },
@@ -40,7 +23,6 @@ onMounted(() => {
       uirevision: 'fixed_key'
     })
   }, 10000)
-  console.log(1)
 })
 </script>
 
