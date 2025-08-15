@@ -12,10 +12,31 @@ declare module 'plotly.js-dist-min' {
 }
 
 declare type ElementID = string // 元素 ID
+declare type Base64URLString = string
+
+interface Layout extends Omit<Plotly.Layout, 'grid'> {
+  grid: Partial<{
+    rows: number
+    roworder: 'top to bottom' | 'bottom to top'
+    columns: number
+    subplots: string[] | string[][]
+    xaxes: string[]
+    yaxes: string[]
+    pattern: 'independent' | 'coupled'
+    xgap: number
+    ygap: number
+    domain: Partial<{
+      x: number[]
+      y: number[]
+    }>
+    xside: 'bottom' | 'bottom plot' | 'top plot' | 'top'
+    yside: 'left' | 'left plot' | 'right plot' | 'right'
+  }>
+}
 
 declare interface PlotlyConfig {
   data?: Partial<Plotly.Data> | Partial<Plotly.Data>[]
-  layout?: Partial<Plotly.Layout>
+  layout?: Partial<Layout>
   config?: Partial<Plotly.Config>
 }
 

@@ -3,7 +3,7 @@ import { onMounted } from 'vue'
 import { usePlotly } from '@/utils/usePlotly'
 
 onMounted(() => {
-  var values = [
+  const values = [
     ['Salaries', 'Office', 'Merchandise', 'Legal', '<b>TOTAL</b>'],
     [1200000, 20000, 80000, 2000, 12120000],
     [1300000, 20000, 70000, 2000, 130902000],
@@ -11,7 +11,7 @@ onMounted(() => {
     [1400000, 20000, 90000, 2000, 14102000]
   ]
 
-  var data = [
+  const data: any[] = [
     {
       type: 'table',
       header: {
