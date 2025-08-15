@@ -1,0 +1,75 @@
+<script setup lang="ts">
+import { computed, type PropType } from 'vue'
+
+const props = defineProps({
+  options: { type: Array as PropType<Attribute.ControllerOption[]>, default: () => [] },
+  type: { type: String as PropType<Attribute.ControllerType>, required: true },
+  min: { type: Number, default: Number.MIN_SAFE_INTEGER },
+  max: { type: Number, default: Number.MAX_SAFE_INTEGER },
+  step: { type: Number, default: 1 },
+  disabled: { type: Boolean, default: false },
+  multiple: { type: Boolean, default: false }
+})
+const modelValue = defineModel<any>()
+
+const sliderMin = computed(() => {
+  return props.min === Number.MIN_SAFE_INTEGER ? 0 : props.min
+})
+
+const sliderMxa = computed(() => {
+  return props.max === Number.MAX_SAFE_INTEGER ? 0 : props.max
+})
+</script>
+
+<template>
+  <div class="attribute-control text-right" style="width: 200px">
+    <el-input
+      v-if="type === 'string'"
+      v-model.lazy="modelValue"
+      placeholder="请输入内容"
+      autocomplete="off"
+      :disabled="disabled"
+      clearable
+    />
+    <el-input-number
+      v-else-if="type === 'number'"
+      v-model.lazy.trim="modelValue"
+      :min="min"
+      :max="max"
+      :step="step"
+      autocomplete="off"
+      :disabled="disabled"
+    />
+    <el-switch
+      v-else-if="type === 'boolean'"
+      v-model.lazy="modelValue"
+      size="small"
+      active-text="Open"
+      inactive-text="Close"
+      :disabled="disabled"
+    />
+    <el-color-picker v-else-if="type === 'color'" v-model.lazy="modelValue" :disabled="disabled" />
+    <el-select
+      v-else-if="type === 'select'"
+      v-model.lazy="modelValue"
+      :disabled="disabled"
+      clearable
+      :multiple="multiple"
+    >
+      <el-option v-for="{ label, value } in options" :key="label" :label="label" :value="value" />
+    </el-select>
+    <template v-else-if="type === 'colorlist'">
+      <!-- TODO 新增颜色范围取色器 -->
+    </template>
+
+    <el-slider
+      v-else-if="type === 'slider'"
+      v-model="modelValue"
+      range
+      show-stops
+      :min="sliderMin"
+      :max="sliderMxa"
+      :step="step"
+    />
+  </div>
+</template>

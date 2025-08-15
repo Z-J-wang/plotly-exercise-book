@@ -74,3 +74,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+code {
+  border-radius: 2px;
+  padding: 3px 4px;
+  font-family: "Fira Code", Consolas, "Courier New", monospace;
+  color: var(--el-color-primary);
+  background-color: var(--el-color-primary-light-8);
+}

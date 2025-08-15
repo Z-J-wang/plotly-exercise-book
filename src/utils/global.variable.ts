@@ -1,0 +1,111 @@
+/**
+ * 在此文件定义全局变量
+ *
+ * @module 全局变量
+ */
+export enum Position {
+  Top = 'top',
+  Right = 'right',
+  Bottom = 'bottom',
+  Left = 'left',
+  Auto = 'auto'
+}
+
+export const modeBarDefaultButtons = [
+  'lasso2d',
+  'select2d',
+  'sendDataToCloud',
+  'zoom2d',
+  'pan2d',
+  'zoomIn2d',
+  'zoomOut2d',
+  'autoScale2d',
+  'resetScale2d',
+  'hoverClosestCartesian',
+  'hoverCompareCartesian',
+  'zoom3d',
+  'pan3d',
+  'orbitRotation',
+  'tableRotation',
+  'handleDrag3d',
+  'resetCameraDefault3d',
+  'resetCameraLastSave3d',
+  'hoverClosest3d',
+  'zoomInGeo',
+  'zoomOutGeo',
+  'resetGeo',
+  'hoverClosestGeo',
+  'hoverClosestGl2d',
+  'hoverClosestPie',
+  'toggleHover',
+  'toImage',
+  'resetViews',
+  'toggleSpikelines',
+  'zoomInMapbox',
+  'zoomOutMapbox',
+  'resetViewMapbox',
+  'togglespikelines',
+  'togglehover',
+  'hovercompare',
+  'hoverclosest',
+  'v1hovermode'
+]
+
+// 过渡动画函数
+export const easing = [
+  'linear',
+  'quad',
+  'cubic',
+  'sin',
+  'exp',
+  'circle',
+  'elastic',
+  'back',
+  'bounce',
+  'linear-in',
+  'quad-in',
+  'cubic-in',
+  'sin-in',
+  'exp-in',
+  'circle-in',
+  'elastic-in',
+  'back-in',
+  'bounce-in',
+  'linear-out',
+  'quad-out',
+  'cubic-out',
+  'sin-out',
+  'exp-out',
+  'circle-out',
+  'elastic-out',
+  'back-out',
+  'bounce-out',
+  'linear-in-out',
+  'quad-in-out',
+  'cubic-in-out',
+  'sin-in-out',
+  'exp-in-out',
+  'circle-in-out',
+  'elastic-in-out',
+  'back-in-out',
+  'bounce-in-out'
+]
+
+export const calendar = [
+  'chinese',
+  'coptic',
+  'discworld',
+  'ethiopian',
+  'gregorian',
+  'hebrew',
+  'islamic',
+  'jalali',
+  'julian',
+  'mayan',
+  'nanakshahi',
+  'nepali',
+  'persian',
+  'taiwan',
+  'thai',
+  'ummalqura'
+]
