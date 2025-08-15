@@ -11,6 +11,7 @@ import LayoutHoverLabel from './layout.hover.label'
 import { defineAsyncComponent } from 'vue'
 import LayoutGrid from './layout.grid'
 import { calendar } from '@/utils'
+import LayoutBar from './layout.bar'
 
 export default class Layout extends BaseConfig {
   constructor(parent: Attribute) {
@@ -250,6 +251,54 @@ export default class Layout extends BaseConfig {
           default: false
         })
       })
+    )
+
+    new LayoutBar(this, parent)
+
+    this.insertAttribute(
+      new Attribute('hiddenlabels', 'string[]', {
+        parent,
+        description: {
+          type: 'string',
+          value:
+            '通过指定标签名称数组，隐藏饼图中对应的扇形区域以及标签。<br />' +
+            '<span>注意：</span>仅适用于饼图和面积漏斗图。'
+        },
+        controller: new AttributeController({
+          type: 'string',
+          default: "['香蕉', '葡萄']",
+          disabled: true
+        }),
+        initialConfig: {
+          data: [
+            { type: 'pie', values: [30, 25, 20, 15, 10], labels: ['苹果', '香蕉', '橙子', '葡萄', '芒果'], hole: 0.4 }
+          ],
+          layout: {
+            title: { text: '水果销量占比（默认隐藏香蕉、葡萄）' },
+            hiddenlabels: ['香蕉', '葡萄']
+          }
+        }
+      })
+    )
+
+    this.insertAttribute(
+      new Attribute(
+        'boxmode',
+        { type: 'enum', value: ['group', 'overlay'] },
+        {
+          parent,
+          description: {
+            type: 'string',
+            value:
+              '用于控制分组箱线图（Grouped Box Plots） 或分组小提琴图（Grouped Violin Plots） 中不同类别（或分组）的显示方式。<br />' +
+              '可选项：' +
+              '<ul>' +
+              '<li><code>group</code> - 默认值。同一位置的不同分组并排显示。</li>' +
+              '<li><code>overlay</code> - 同一位置的不同分组重叠显示，通过半透明效果区分。。</li>' +
+              '</ul>'
+          }
+        }
+      )
     )
   }
 }
