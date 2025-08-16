@@ -29,7 +29,7 @@ function scrollIntoView() {
 }
 
 onMounted(() => {
-  activeIndex.value = window.location.pathname
+  activeIndex.value = window.location.pathname.replace(import.meta.env.VITE_BASE, '')
   setTimeout(() => {
     scrollIntoView()
   }, 2000)
@@ -44,11 +44,12 @@ onMounted(() => {
           <RouterLink :to="{ name: 'Home' }" class="font-bold text-xl no-underline">Plotly.js 习题册</RouterLink>
         </el-menu-item>
         <el-menu-item index="1">案例</el-menu-item>
-        <el-sub-menu index="/docs">
-          <template #title>文档</template>
-          <el-menu-item index="/docs/config">配置</el-menu-item>
-          <el-menu-item index="/docs/api">Api</el-menu-item>
-        </el-sub-menu>
+        <el-menu-item index="/docs/config">
+          <router-link :to="{ name: 'PlotlyConfig' }">配置项</router-link>
+        </el-menu-item>
+        <el-menu-item index="/docs/api">
+          <router-link :to="{ name: 'Api' }">API</router-link>
+        </el-menu-item>
       </el-menu>
     </el-header>
     <RouterView />
