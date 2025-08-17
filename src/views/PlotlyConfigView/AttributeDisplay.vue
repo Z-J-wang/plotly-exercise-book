@@ -5,7 +5,6 @@ import { Edit } from '@element-plus/icons-vue'
 import { usePloyConfigStore } from '@/stores/ploy.config'
 import { InfoFilled } from '@element-plus/icons-vue'
 import { useAttributeStore } from '@/stores/attribute'
-import { useRouter } from 'vue-router'
 
 const props = defineProps({
   data: { type: Object, required: true },
