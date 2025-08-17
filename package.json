@@ -3,6 +3,16 @@
   "version": "0.0.0",
   "license": "MIT",
   "private": false,
+  "homepage": "https://z-j-wang.github.io/plotly-exercise-book/",
+  "repository": "https://github.com/Z-J-wang/plotly-exercise-book",
+  "author": "wangzhijie <1356573671@qq.com>",
+  "description": "plotly",
+  "keywords": [
+    "plotly",
+    "plotly.js",
+    "document",
+    "plotly 文档"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check build-only",
