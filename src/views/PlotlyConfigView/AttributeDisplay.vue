@@ -19,7 +19,6 @@ const { resetPlotlyConfig } = optionsStore
 
 const trying = ref(false)
 const attribute = ref<any>(props.data.controller?.value)
-const router = useRouter()
 
 watch(attribute, (value) => {
   updateConfig(props.data.id, value)
