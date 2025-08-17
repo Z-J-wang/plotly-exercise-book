@@ -4,11 +4,6 @@ export function updateUrlHash(hash: string) {
   window.location.hash = hash
 }
 
-export function createUrlHash(hash: string) {
-  const { origin, pathname } = window.location
-  return origin + pathname + '#' + hash
-}
-
 export type Algorithm = 'SHA-1' | 'SHA-256' | 'SHA-384' | 'SHA-512'
 export type Hash = string
 /**

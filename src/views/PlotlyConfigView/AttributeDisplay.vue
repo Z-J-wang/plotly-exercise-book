@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { createUrlHash } from '@/utils'
 import AttributeControl from '@/components/AttributeControl.vue'
 import { ref, watch } from 'vue'
 import { Edit } from '@element-plus/icons-vue'
 import { usePloyConfigStore } from '@/stores/ploy.config'
 import { InfoFilled } from '@element-plus/icons-vue'
 import { useAttributeStore } from '@/stores/attribute'
+import { useRouter } from 'vue-router'
 
 const props = defineProps({
   data: { type: Object, required: true },
@@ -19,6 +19,7 @@ const { resetPlotlyConfig } = optionsStore
 
 const trying = ref(false)
 const attribute = ref<any>(props.data.controller?.value)
+const router = useRouter()
 
 watch(attribute, (value) => {
   updateConfig(props.data.id, value)
@@ -45,7 +46,7 @@ function openEdit() {
           <h4 :class="data.id">
             <el-breadcrumb separator=".">
               <el-breadcrumb-item v-for="{ name, value } in data.path" :key="value">
-                <a class="cursor-pointer" :href="createUrlHash(value)">{{ name }}</a>
+                <router-link :to="{ name: 'PlotlyConfig', query: { id: value } }">{{ name }}</router-link>
               </el-breadcrumb-item>
             </el-breadcrumb>
           </h4>
