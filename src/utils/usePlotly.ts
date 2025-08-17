@@ -1,5 +1,5 @@
 import type { Config, Data, Layout } from 'plotly.js'
-import Plotly from 'plotly.js-dist-min'
+import Plotly from 'plotly.js-cartesian-dist-min'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 
