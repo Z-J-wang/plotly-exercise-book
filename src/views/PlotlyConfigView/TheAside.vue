@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useAttributeStore } from '@/stores/attribute'
 import Attribute from 'entities/attribute'
 import { ref, watch } from 'vue'
-import { updateUrlHash } from '@/utils'
 import { storeToRefs } from 'pinia'
 
 const optionsStore = useAttributeStore()
 const { tree: treeData } = storeToRefs(optionsStore)
 
 const route = useRoute()
+const router = useRouter()
 const currentNodeKey = ref('')
 
 watch(
@@ -20,7 +20,7 @@ watch(
 )
 
 const handleNodeClick = (data: Attribute) => {
-  updateUrlHash(data.id)
+  router.push({ query: { id: data.id } })
 }
 
 const defaultProps = {

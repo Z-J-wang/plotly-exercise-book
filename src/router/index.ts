@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouterView } from 'vue-router'
+import { createRouter, RouterView, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import { h } from 'vue'
 
@@ -18,7 +18,7 @@ const exampleRoutes = Object.entries(files).map(([key, value]) => {
 })
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(),
   routes: [
     {
       path: '/',
