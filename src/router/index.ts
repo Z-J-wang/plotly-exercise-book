@@ -34,6 +34,7 @@ const router = createRouter({
       path: '/docs',
       name: 'Documents',
       component: { render: () => h(RouterView) },
+      redirect: '/docs/config',
       children: [
         {
           path: 'config/',
