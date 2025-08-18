@@ -1,6 +1,6 @@
 # plotly exercise book
 
-plotly.js 习题册。以中文形式较为系统的描述 plotly.js 以及其使用方法，对常用的配置项提供了交互式的程序示例，以便直观的感受和了解 plotly.js 的使用方法。
+plotly.js 习题册较为系统的描述 plotly.js 以及其使用方法，对常用的配置项提供了交互式的程序示例，以便直观的感受和了解 plotly.js 的使用方法。
 
 项目网址：https://z-j-wang.github.io/plotly-exercise-book/#/
 

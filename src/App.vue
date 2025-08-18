@@ -41,7 +41,7 @@ onMounted(() => {
     <el-header>
       <el-menu :default-active="activeIndex" mode="horizontal" :ellipsis="false" router>
         <el-menu-item index="/">
-          <RouterLink :to="{ name: 'Home' }" class="font-bold text-xl no-underline">Plotly.js 习题册</RouterLink>
+          <RouterLink :to="{ name: 'Home' }" class="font-bold text-xl no-underline">Plotly Exercise Book</RouterLink>
         </el-menu-item>
         <el-menu-item index="1">案例</el-menu-item>
         <el-menu-item index="/docs/config">

@@ -52,7 +52,7 @@
 
 body {
   min-height: 100vh;
-  font-size: 15px;
+  font-size: 16px;
   font-family:
     Inter,
     -apple-system,
@@ -67,7 +67,7 @@ body {
     'Helvetica Neue',
     sans-serif;
   color: var(--color-text);
-  background: var(--color-background);
+  background: var(--vt-c-white-mute);
   transition: color 0.5s, background-color 0.5s;
   line-height: 1.6;
   text-rendering: optimizelegibility;
