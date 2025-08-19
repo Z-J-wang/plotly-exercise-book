@@ -44,12 +44,17 @@ onMounted(() => {
       >
       <div class="flex items-center gap-2">
         <el-menu mode="horizontal" :ellipsis="false" router>
-          <el-menu-item index="1">案例</el-menu-item>
+          <el-menu-item index="/">
+            <router-link class="no-underline" :to="{ name: 'Home' }">首页</router-link>
+          </el-menu-item>
           <el-menu-item index="/docs/config">
             <router-link class="no-underline" :to="{ name: 'PlotlyConfig' }">配置项</router-link>
           </el-menu-item>
           <el-menu-item index="/docs/api">
             <router-link class="no-underline" :to="{ name: 'Api' }">API</router-link>
+          </el-menu-item>
+          <el-menu-item index="/example">
+            <a href="https://plotly.com/javascript/" target="_blank" rel="noopener noreferrer">案例</a>
           </el-menu-item>
         </el-menu>
         <el-divider direction="vertical" />
