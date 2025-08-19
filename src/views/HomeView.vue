@@ -41,20 +41,18 @@ declare module 'plotly.js-dist' {
   <main>
     <section class="m-full bg-white">
       <div class="max-w-screen-xl w-full mx-auto py-6">
-        <h2 class="text-5xl font-bold mt-10 mb-10">Plotly Exercise Book</h2>
-        <p>
-          Plotly Exercise Book（Plotly 练习册）旨在帮助前端开发人员更好的学习和使用 Plotly，较为系统的描述 plotly.js
-          以及其使用方法，对常用的配置项提供了交互式的程序示例，以便直观的感受和了解 plotly.js 的使用方法。
+        <h2 class="text-6xl font-bold mt-10 mb-10 text-primary">Plotly Exercise Book</h2>
+        <p class="w-2/3 text-xl">
+          Plotly Exercise Book（Plotly 练习册）旨在帮助前端开发人员更好的学习和使用 Plotly，系统性描述 plotly.js
+          使用方法，对常用的配置项提供了交互式的程序示例，以便直观的感受和了解 plotly.js 的使用方法。
         </p>
-        <div class="md:columns-3 sm:columns-1 mt-10">
-          <el-card shadow="hover">
+        <div class="md:columns-3 sm:columns-1 mt-20 mb-8">
+          <el-card shadow="hover" class="rounded-lg" header-class="bg-stone-100" body-class="bg-stone-100">
             <template #header>
-              <el-text type="primary" size="large" class="font-bold">Plotly.js API 的全面介绍。</el-text>
+              <el-text size="large" class="font-bold">配置项说明</el-text>
             </template>
-            <el-tooltip content="每个配置项都提供了与之相对的示例，直观的了解特性。" placement="top">
-              <el-text truncate line-clamp="2">每个配置项都提供了与之相对的示例，直观的了解特性。</el-text>
-            </el-tooltip>
-            <div class="flex justify-end mt-4">
+            <el-text truncate line-clamp="2">每个配置项都提供了与之相对的示例，直观的了解特性。</el-text>
+            <div class="flex justify-end mt-8">
               <RouterLink :to="{ name: 'PlotlyConfig' }">
                 <el-button type="text">
                   查看文档<el-icon class="ml-1" size="16"><Right /></el-icon>
@@ -62,14 +60,12 @@ declare module 'plotly.js-dist' {
               </RouterLink>
             </div>
           </el-card>
-          <el-card shadow="hover">
+          <el-card shadow="hover" header-class="bg-stone-100" body-class="bg-stone-100">
             <template #header>
-              <el-text type="primary" size="large" class="font-bold">Api</el-text>
+              <el-text size="large" class="font-bold">Api 说明</el-text>
             </template>
-            <el-tooltip content="Plotly.js API 的全面介绍。" placement="top">
-              <el-text truncate line-clamp="2">Plotly.js API 的全面介绍。</el-text>
-            </el-tooltip>
-            <div class="flex justify-end mt-4">
+            <el-text truncate line-clamp="2">Plotly.js API 的全面介绍。</el-text>
+            <div class="flex justify-end mt-8">
               <RouterLink :to="{ name: 'Api' }">
                 <el-button type="text">
                   查看文档<el-icon class="ml-1" size="16"><Right /></el-icon>
@@ -77,14 +73,12 @@ declare module 'plotly.js-dist' {
               </RouterLink>
             </div>
           </el-card>
-          <el-card shadow="hover">
+          <el-card shadow="hover" header-class="bg-stone-100" body-class="bg-stone-100">
             <template #header>
-              <el-text type="primary" size="large" class="font-bold">案例</el-text>
+              <el-text size="large" class="font-bold">案例</el-text>
             </template>
-            <el-tooltip content="Plotly.js 各个图表的使用案例。" placement="top">
-              <el-text truncate line-clamp="2">Plotly.js 各个图表的使用案例</el-text>
-            </el-tooltip>
-            <div class="flex justify-end mt-4">
+            <el-text truncate line-clamp="2">Plotly.js 各个图表的使用案例。</el-text>
+            <div class="flex justify-end mt-8">
               <el-button class="no-underline" type="text" href="https://plotly.com/javascript/" target="_blank" tag="a">
                 查看文档<el-icon class="ml-1" size="16"><Right /></el-icon>
               </el-button>
