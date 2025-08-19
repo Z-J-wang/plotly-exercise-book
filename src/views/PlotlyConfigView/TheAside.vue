@@ -34,7 +34,6 @@ const defaultProps = {
     style="max-width: 600px"
     :data="treeData"
     node-key="id"
-    default-expand-all
     highlight-current
     :current-node-key="currentNodeKey"
     :expand-on-click-node="false"

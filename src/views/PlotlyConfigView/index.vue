@@ -56,7 +56,7 @@ const defaultProps = {
 
 <template>
   <el-container>
-    <el-aside width="250px" class="shadow-lg z-10">
+    <el-aside width="250px" class="shadow-lg z-10 bg-white">
       <el-scrollbar height="calc(100vh - 60px)">
         <TheAside />
       </el-scrollbar>

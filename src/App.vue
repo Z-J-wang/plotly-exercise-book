@@ -2,7 +2,6 @@
 import { onMounted, ref, watch } from 'vue'
 import { RouterLink, RouterView, useRoute } from 'vue-router'
 
-const activeIndex = ref('/')
 const route = useRoute()
 const year = ref(new Date().getFullYear())
 
