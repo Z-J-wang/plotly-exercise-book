@@ -6,3 +6,7 @@
 .w-v-40 {
   width: 40vw;
 }
+
+.router-link-active {
+  color: var(--el-color-primary) !important;
+}

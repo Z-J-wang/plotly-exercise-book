@@ -61,7 +61,7 @@ const defaultProps = {
         <TheAside />
       </el-scrollbar>
     </el-aside>
-    <el-main class="bg-gray-50 p-0">
+    <el-main class="bg-gray-50 !pr-0">
       <el-scrollbar height="calc(100vh - 60px)">
         <div
           class="options-view flex"
