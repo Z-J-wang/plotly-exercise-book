@@ -71,7 +71,7 @@ onMounted(() => {
         </div>
         <div id="EditRevisionPlotly"></div>
         <p class="mt-4 mb-2 font-bold">代码示例：</p>
-        <CodeEditor v-model="code" />
+        <CodeEditor :model-value="code" disabled />
       </div>
     </div>
   </div>

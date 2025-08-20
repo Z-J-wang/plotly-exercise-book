@@ -16,5 +16,5 @@ interface Template {
 <template>
   <p>设置图表的模板。模板属性将覆盖默认属性。</p>
   <p>可通过<code>Plotly.makeTemplate</code>方法基于现有图表快速创建模板。</p>
-  <CodeEditor v-model="code" />
+  <CodeEditor :model-value="code" disabled />
 </template>
