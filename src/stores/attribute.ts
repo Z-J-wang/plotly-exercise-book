@@ -21,9 +21,11 @@ export const useAttributeStore = defineStore('attribute', (): AttributeStore => 
   const { initConfig } = ployConfigStore
 
   watch(
-    () => route.hash,
-    (value) => {
-      const rootID = value.split('-')[0].replace('#', '')
+    () => route.query,
+    (query) => {
+      const id = query?.id || ''
+      if (!id || typeof id !== 'string') return
+      const rootID = id.split('-')[0]
       if (currentRootID.value && currentRootID.value === rootID) return
       currentRootID.value = rootID
       const temp = tree.value.find((item: Attribute) => item.id === rootID) || tree.value[0]

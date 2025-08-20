@@ -24,7 +24,7 @@ export default class LayoutModeBar extends Attribute {
           value:
             '向模式栏添加预设按钮。<br />' +
             '请注意，这些按钮只有在它们与图表中使用的所有轨迹类型兼容时才会显示。' +
-            '该属性与<a href="#config-modeBarButtonsToAdd"><code>config.modeBarButtonsToAdd</code></a>选项类似。'
+            '该属性与<a href="/#/docs/config/?id=config-modeBarButtonsToAdd"><code>config.modeBarButtonsToAdd</code></a>选项类似。'
         },
         controller: new AttributeController({
           type: 'select',
@@ -77,7 +77,7 @@ export default class LayoutModeBar extends Attribute {
           value:
             '从模式栏中删除预设按钮。<br />' +
             '请注意，这些按钮只有在它们与图表中使用的所有轨迹类型兼容时才会显示。' +
-            '该属性与<a href="#config-modeBarButtonsToRemove"><code>config.modeBarButtonsToRemove</code>'
+            '该属性与<a href="/#/docs/config/?id=config-modeBarButtonsToRemove"><code>config.modeBarButtonsToRemove</code>'
         },
         controller: new AttributeController({
           type: 'select',
@@ -96,7 +96,7 @@ export default class LayoutModeBar extends Attribute {
           value:
             '控制与模式栏相关的用户驱动更改的持久性，包括“悬停模式”、' +
             '“拖动模式”和“显示尖峰”在根级别以及子图内部的设置。默认值等于' +
-            '<a href="#layout-uirevision"><code>layout.uirevision</code></a>属性值。'
+            '<a href="/#/docs/config/?id=layout-uirevision"><code>layout.uirevision</code></a>属性值。'
         }
       })
     )

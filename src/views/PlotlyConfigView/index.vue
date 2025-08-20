@@ -2,19 +2,21 @@
 import { useAttributeStore } from '@/stores/attribute'
 import AttributeDisplay from './AttributeDisplay.vue'
 import PlotlyDisplay from './PlotDisplay.vue'
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useWindowSize } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import TheAside from './TheAside.vue'
 import { Position } from '@/utils'
+import { useRoute, useRouter } from 'vue-router'
 
-defineOptions({
-  name: 'PlotlyConfigView'
-})
+defineOptions({ name: 'PlotlyConfigView' })
+
+const route = useRoute()
+const router = useRouter()
 
 const { width } = useWindowSize()
 const attributeStore = useAttributeStore()
-const { branch } = storeToRefs(attributeStore)
+const { branch, tree } = storeToRefs(attributeStore)
 const plotlyDisplay = ref<InstanceType<typeof PlotlyDisplay> | null>(null)
 
 const openDisplay = computed(() => {
@@ -52,6 +54,16 @@ const defaultProps = {
   label: 'name',
   class: () => 'tree-node'
 }
+
+onMounted(() => {
+  const treeRoots = tree.value.map((item) => item.id) // 提取全部根节点id
+  let id = ((route.query.id as string) || '').split('-')[0]
+
+  // 如果query.id不存在或者不在treeRoots中，则跳转到treeRoots[0]
+  if (!id || !treeRoots.includes(id)) {
+    router.push({ query: { id: treeRoots[0] } })
+  }
+})
 </script>
 
 <template>
@@ -61,7 +73,7 @@ const defaultProps = {
         <TheAside />
       </el-scrollbar>
     </el-aside>
-    <el-main class="bg-gray-50 !pr-0">
+    <el-main class="bg-gray-50 !p-0">
       <el-scrollbar height="calc(100vh - 60px)">
         <div
           class="options-view flex"

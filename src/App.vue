@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { RouterLink, RouterView, useRoute } from 'vue-router'
 
 const route = useRoute()
@@ -12,6 +12,11 @@ watch(
   }
 )
 
+const showFooter = computed(() => {
+  const blackList = ['/docs']
+  return !route.matched.some((item) => blackList.includes(item.path))
+})
+
 function scrollIntoView() {
   /**
    * 延迟执行，等待路由加载完成
@@ -22,7 +27,7 @@ function scrollIntoView() {
     if (targetEl) {
       targetEl.scrollIntoView({
         behavior: 'smooth', // 平滑滚动
-        block: 'start' // 对齐到视口顶部
+        block: 'center' // 对齐到视口顶部
       })
     }
   }
@@ -89,7 +94,7 @@ onMounted(() => {
       </div>
     </el-header>
     <RouterView />
-    <el-footer class="bg-white text-center mt-4 h-full" height="auto">
+    <el-footer v-if="showFooter" class="bg-white text-center mt-4 h-full" height="auto">
       <div class="py-4">
         <p>
           Released under the
