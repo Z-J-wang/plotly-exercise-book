@@ -51,7 +51,8 @@ export default class Legend extends Attribute {
         parent: this,
         description: {
           type: 'string',
-          value: '图例背景颜色。默认值等同于<a href="/#/docs/config/?id=layout-paper_bgcolor"><code>layout.paper_bgcolor</code></a>的值。'
+          value:
+            '图例背景颜色。默认值等同于<a href="/#/docs/config/?id=layout-paper_bgcolor"><code>layout.paper_bgcolor</code></a>的值。'
         },
         controller: new AttributeController({
           type: 'color',
