@@ -2,7 +2,7 @@ import type { BaseConfig } from './base'
 import Attribute from 'entities/attribute'
 import AttributeController from 'entities/attribute.controller'
 
-export default class LayoutInteraction {
+export default class LayoutBar {
   constructor(config: BaseConfig, parent: Attribute) {
     config.insertAttribute(
       new Attribute('bargap', 'number', {

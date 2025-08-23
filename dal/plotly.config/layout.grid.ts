@@ -38,8 +38,8 @@ export default class LayoutGrid extends Attribute {
         description: {
           type: 'string',
           value:
-            '指定网格布局中的行数。如果还同时设置的<a href="layout-grid-subplots"><code>layout.grid.subplots</code></a>' +
-            '或者<a href="layout-grid-yaxes"><code>layout.grid.yaxes</code></a>，则去三者中的最大值来充当默认行数。'
+            '指定网格布局中的行数。如果还同时设置的<a href="/#/docs/config/?id=layout-grid-subplots"><code>layout.grid.subplots</code></a>' +
+            '或者<a href="/#/docs/config/?id=layout-grid-yaxes"><code>layout.grid.yaxes</code></a>，则去三者中的最大值来充当默认行数。'
         },
         controller: new AttributeController({ type: 'number', default: 1, min: 1, value: 2 })
       })
@@ -51,8 +51,8 @@ export default class LayoutGrid extends Attribute {
         description: {
           type: 'string',
           value:
-            '指定网格布局中的列数。如果还同时设置的<a href="layout-grid-subplots"><code>layout.grid.subplots</code></a>' +
-            '或者<a href="layout-grid-xaxes"><code>layout.grid.xaxes</code></a>，则去三者中的最大值来充当默认行数。'
+            '指定网格布局中的列数。如果还同时设置的<a href="/#/docs/config/?id=layout-grid-subplots"><code>layout.grid.subplots</code></a>' +
+            '或者<a href="/#/docs/config/?id=layout-grid-xaxes"><code>layout.grid.xaxes</code></a>，则去三者中的最大值来充当默认行数。'
         },
         controller: new AttributeController({ type: 'number', default: 1, min: 1, value: 2 })
       })
@@ -142,11 +142,11 @@ export default class LayoutGrid extends Attribute {
           description: {
             type: 'string',
             value:
-              '如果没有设置<a href="layout-grid-subplots"><code>layout.grid.subplots</code></a>、' +
-              '<a href="layout-grid-xaxes"><code>layout.grid.xaxes</code></a>或' +
-              '<a href="layout-grid-yaxes"><code>layout.grid.yaxes</code></a>，' +
-              '但指定了<a href="layout-grid-rows"><code>layout.grid.rows</code></a>和' +
-              '<a href="layout-grid-columns"><code>layout.grid.columns</code></a>。' +
+              '如果没有设置<a href="/#/docs/config/?id=layout-grid-subplots"><code>layout.grid.subplots</code></a>、' +
+              '<a href="/#/docs/config/?id=layout-grid-xaxes"><code>layout.grid.xaxes</code></a>或' +
+              '<a href="/#/docs/config/?id=layout-grid-yaxes"><code>layout.grid.yaxes</code></a>，' +
+              '但指定了<a href="/#/docs/config/?id=layout-grid-rows"><code>layout.grid.rows</code></a>和' +
+              '<a href="/#/docs/config/?id=layout-grid-columns"><code>layout.grid.columns</code></a>。' +
               'Plotly将根据连续的轴编号来生成默认设置，有两种方式：' +
               '<ul>' +
               '<li><code>coupled</code> - 默认值。每列分配一个 x 轴，为每行分配一个 y 轴</li>' +

@@ -40,10 +40,12 @@ layout.children = new LayoutAttributes(layout).attributes
 const config = new Attribute('config', 'Config', {
   description: {
     type: 'string',
-    value: '<code>config</code>用于设置诸如模式栏按钮以及图表中的交互性等属性。'
+    value:
+      '<code>config</code>用于设置诸如模式栏按钮以及图表中的交互性等属性。' +
+      '更多使用示例，可跳转查看：<a href="https://plotly.com/javascript/configuration-options/" target="_blank">Configuration Options in JavaScript</a>'
   },
   initialConfig: {
-    config: { displayModeBar: true },
+    config: { displayModeBar: 'hover' },
     data: [{ x: [1, 2, 3, 4], y: [10, 15, 13, 17], mode: 'lines+markers', type: 'scatter', name: 'scatter trace' }],
     layout: { title: { text: 'Config Title' }, showlegend: true }
   }
