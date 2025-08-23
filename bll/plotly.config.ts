@@ -1,5 +1,6 @@
 import LayoutAttributes from 'dal/plotly.config/layout'
 import Attribute from 'entities/attribute'
+import ConfigureAttribute from 'dal/plotly.config/configure'
 
 const layout = new Attribute('layout', 'Layout', {
   description: {
@@ -34,16 +35,21 @@ const layout = new Attribute('layout', 'Layout', {
     ]
   }
 })
-const layoutAttributes = new LayoutAttributes(layout).attributes
-layout.children = layoutAttributes
+layout.children = new LayoutAttributes(layout).attributes
 
 const config = new Attribute('config', 'Config', {
-  description: { type: 'string', value: '配置属性' },
+  description: {
+    type: 'string',
+    value:
+      '<code>config</code>用于设置诸如模式栏按钮以及图表中的交互性等属性。' +
+      '更多使用示例，可跳转查看：<a href="https://plotly.com/javascript/configuration-options/" target="_blank">Configuration Options in JavaScript</a>'
+  },
   initialConfig: {
-    config: {
-      displayModeBar: true
-    }
+    config: { displayModeBar: 'hover' },
+    data: [{ x: [1, 2, 3, 4], y: [10, 15, 13, 17], mode: 'lines+markers', type: 'scatter', name: 'scatter trace' }],
+    layout: { title: { text: 'Config Title' }, showlegend: true }
   }
 })
+config.children = new ConfigureAttribute(config).attributes
 
 export default [layout, config]

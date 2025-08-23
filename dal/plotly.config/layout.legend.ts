@@ -51,7 +51,8 @@ export default class Legend extends Attribute {
         parent: this,
         description: {
           type: 'string',
-          value: '图例背景颜色。默认值等同于<a href="#layout-paper_bgcolor"><code>layout.paper_bgcolor</code></a>的值。'
+          value:
+            '图例背景颜色。默认值等同于<a href="/#/docs/config/?id=layout-paper_bgcolor"><code>layout.paper_bgcolor</code></a>的值。'
         },
         controller: new AttributeController({
           type: 'color',
@@ -353,7 +354,7 @@ export default class Legend extends Attribute {
         description: {
           type: 'string',
           value:
-            '设置图例模块在参考系的水平方向上的位置。参考系由<a href="#layout-legend-xref"><code>layout.legend.xref</code></a>的值决定。具体如下：<br />' +
+            '设置图例模块在参考系的水平方向上的位置。参考系由<a href="/#/docs/config/?id=layout-legend-xref"><code>layout.legend.xref</code></a>的值决定。具体如下：<br />' +
             '<ul>' +
             "<li><code>layout.legend.xref = 'paper'</code>时，" +
             '值域为<code>[-2, 3]</code>。' +
@@ -418,7 +419,7 @@ export default class Legend extends Attribute {
         description: {
           type: 'string',
           value:
-            '设置图例模块在参考系的垂直方向上的位置。参考系由<a href="#layout-legend-yref"><code>layout.legend.yref</code></a>的值决定。具体如下：<br />' +
+            '设置图例模块在参考系的垂直方向上的位置。参考系由<a href="/#/docs/config/?id=layout-legend-yref"><code>layout.legend.yref</code></a>的值决定。具体如下：<br />' +
             '<ul>' +
             "<li><code>layout.legend.yref = 'paper'</code>时，" +
             '值域为<code>[-2, 3]</code>。' +

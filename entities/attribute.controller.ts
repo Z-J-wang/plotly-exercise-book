@@ -51,12 +51,12 @@ export default class AttributeController {
     const { type, default: defaultValue, options, min, max, step, disabled, multiple, value } = initial
     this._default = defaultValue
     this._value = value ? value : defaultValue
-    if (type) this._type = type
-    if (options) this._options = options.map((item) => ({ label: item.toString(), value: item }))
-    if (min) this._min = min
-    if (max) this._max = max
-    if (step) this._step = step
-    if (disabled) this._disabled = disabled
-    if (multiple) this._multiple = multiple
+    if (type !== undefined) this._type = type
+    if (options !== undefined) this._options = options.map((item) => ({ label: item.toString(), value: item }))
+    if (min !== undefined) this._min = min
+    if (max !== undefined) this._max = max
+    if (step !== undefined) this._step = step
+    if (disabled !== undefined) this._disabled = disabled
+    if (multiple !== undefined) this._multiple = multiple
   }
 }

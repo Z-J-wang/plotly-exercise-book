@@ -29,6 +29,7 @@ export default defineConfig(async () => {
       }
     },
     build: {
+      minify: 'terser',
       rollupOptions: {
         output: {
           chunkFileNames: 'assets/chunks/[name]-[hash].js',
@@ -42,6 +43,8 @@ export default defineConfig(async () => {
       },
       terserOptions: {
         compress: {
+          reduce_vars: true, // 优化变量使用（减少重复声明）
+          booleans_as_integers: true, // 将布尔值转为 0/1 进一步压缩
           drop_console: true, // 删除所有console
           drop_debugger: true // 删除所有debugger
         },

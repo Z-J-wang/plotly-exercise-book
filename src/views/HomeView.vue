@@ -115,11 +115,11 @@ declare module 'plotly.js-dist' {
         <p>如果您的项目是一个 npm 的工程化项目，推荐通过安装 npm 包的形式引入 Plotly.js。</p>
         <p>运行以下命令安装<code>plotly.js-dist-min</code>包</p>
         <div class="my-2">
-          <CodeEditor :model-value="`npm install plotly.js-dist-min`" />
+          <CodeEditor :model-value="'npm install plotly.js-dist-min'" />
         </div>
         <p>或</p>
         <div class="my-2">
-          <CodeEditor :model-value="`yarn add plotly.js-dist-min`" />
+          <CodeEditor :model-value="'yarn add plotly.js-dist-min'" />
         </div>
         <p>接着在`.js`文件中引入</p>
         <div class="my-2">

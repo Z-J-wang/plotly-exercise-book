@@ -24,7 +24,7 @@ onMounted(() => {
         <div ref="Plot"></div>
       </el-tab-pane>
       <el-tab-pane label="Plotly 配置" name="code">
-        <CodeEditor v-model="codeString" />
+        <CodeEditor :model-value="codeString" />
       </el-tab-pane>
     </el-tabs>
   </div>

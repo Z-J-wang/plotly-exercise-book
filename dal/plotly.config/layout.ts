@@ -69,7 +69,7 @@ export default class Layout extends BaseConfig {
           value:
             '图表宽度，单位为<code>px</code>，其值需大于<code>10</code>。<br />' +
             '未设置时，默认为<code>700</code>，但是会根据容器宽度进行自适应' +
-            '（除非<a href="#layout-autosize"><code>layout.autosize=false</code></a>）。'
+            '（除非<a href="/#/docs/config/?id=layout-autosize"><code>layout.autosize=false</code></a>）。'
         },
         controller: new AttributeController({ type: 'number', default: 700, min: 10 })
       })
@@ -82,7 +82,7 @@ export default class Layout extends BaseConfig {
           value:
             '图表高度，单位为<code>px</code>，其值需大于<code>10</code>。<br />' +
             '未设置时，默认为<code>450</code>，但是会根据容器宽高度度进行自适应' +
-            '（除非<a href="#layout-autosize"><code>layout.autosize=false</code></a>）。'
+            '（除非<a href="/#/docs/config/?id=layout-autosize"><code>layout.autosize=false</code></a>）。'
         },
         controller: new AttributeController({ type: 'number', default: 450, min: 10 })
       })
@@ -95,7 +95,7 @@ export default class Layout extends BaseConfig {
           type: 'string',
           value:
             '开启后，图表会对未进行显性声明的' +
-            '<a href="#layout-width"><code>layout.width</code></a>和<a href="#layout-height"><code>layout.height</code></a>' +
+            '<a href="/#/docs/config/?id=layout-width"><code>layout.width</code></a>和<a href="/#/docs/config/?id=layout-height"><code>layout.height</code></a>' +
             '进行自动调整以适应容器。<br />' +
             '注意，无论开或关闭，在初始化时都会对未进行声明的宽高进行自动调整。'
         },

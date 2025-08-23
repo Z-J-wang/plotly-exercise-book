@@ -87,11 +87,11 @@ export default class Attribute {
 
     if (options) {
       const { description, controller, children, initialConfig, parent } = options
-      if (parent) this._parent = parent
-      if (description) this._description = description
-      if (controller) this._controller = controller
+      if (parent !== undefined) this._parent = parent
+      if (description !== undefined) this._description = description
+      if (controller !== undefined) this._controller = controller
       if (children?.length) this._children = children || []
-      if (initialConfig) this._initialConfig = initialConfig // 图表初始化配置，仅在根节点设置
+      if (initialConfig !== undefined) this._initialConfig = initialConfig // 图表初始化配置，仅在根节点设置
     }
   }
 
