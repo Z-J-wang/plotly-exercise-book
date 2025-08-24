@@ -1,5 +1,5 @@
 import { modeBarDefaultButtons } from '@/utils'
-import type { BaseConfig } from './base'
+import type { BaseConfig } from '../base'
 import Attribute from 'entities/attribute'
 import AttributeController from 'entities/attribute.controller'
 import ConfigureImageOptions from './configure.Image.options'
