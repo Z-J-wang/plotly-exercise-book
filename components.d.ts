@@ -48,6 +48,7 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     SelectionRevision: typeof import('./src/components/doc/layout/SelectionRevision.vue')['default']
     Template: typeof import('./src/components/doc/layout/Template.vue')['default']
+    TraceData: typeof import('./src/components/doc/TraceData.vue')['default']
     UiRevision: typeof import('./src/components/doc/layout/UiRevision.vue')['default']
   }
 }
