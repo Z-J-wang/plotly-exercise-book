@@ -1,7 +1,7 @@
-import type { BaseConfig } from './base'
+import type { BaseConfig } from '../base'
 import Attribute from 'entities/attribute'
 import AttributeController from 'entities/attribute.controller'
-import { Line } from './base'
+import { Line } from '../base'
 
 class ActiveSelection extends Attribute {
   constructor(parent: Attribute) {
