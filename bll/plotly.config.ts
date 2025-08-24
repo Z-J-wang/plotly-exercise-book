@@ -1,6 +1,6 @@
-import LayoutAttributes from 'dal/plotly.config/layout'
+import LayoutAttributes from 'dal/plotly.config/layout/index'
 import Attribute from 'entities/attribute'
-import ConfigureAttribute from 'dal/plotly.config/configure'
+import ConfigureAttribute from 'dal/plotly.config/configure/index'
 
 const layout = new Attribute('layout', 'Layout', {
   description: {
