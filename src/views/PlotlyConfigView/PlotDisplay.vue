@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { nextTick, onMounted, watch } from 'vue'
+import { nextTick, onMounted, ref, watch } from 'vue'
 import CodeEditor from '@/components/CodeEditor.vue'
 import { Monitor, CloseBold } from '@element-plus/icons-vue'
 import { usePlotly } from '@/utils/usePlotly'
@@ -8,7 +8,8 @@ import { usePloyConfigStore } from '@/stores/ploy.config'
 import { storeToRefs } from 'pinia'
 import { Position } from '@/utils'
 
-const openDisplay = useStorage('plotly-open-display', true)
+// const openDisplay = useStorage('plotly-open-display', true)
+const openDisplay = ref(false)
 const ployConfigStore = usePloyConfigStore()
 const { config: plotlyConfig, code } = storeToRefs(ployConfigStore)
 const position = useStorage<Position>('plotly-position', Position.Auto) // 显示位置

@@ -98,7 +98,7 @@ onMounted(() => {
             :class="rightSideClass"
             :style="{ height: direction === 'horizontal' ? 'calc(100vh - 60px)' : '40vh' }"
           >
-            <!-- <PlotlyDisplay ref="plotlyDisplay" :direction="direction" /> -->
+            <PlotlyDisplay ref="plotlyDisplay" :direction="direction" />
           </div>
         </div>
       </el-scrollbar>
