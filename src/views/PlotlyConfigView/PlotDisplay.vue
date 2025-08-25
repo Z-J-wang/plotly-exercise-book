@@ -34,7 +34,7 @@ defineProps({
 watch(
   [() => plotlyConfig.value, openDisplay],
   () => {
-    // renderPlot()
+    renderPlot()
   },
   { deep: true }
 )
@@ -49,9 +49,9 @@ function renderPlot() {
   })
 }
 
-// onMounted(() => {
-//   renderPlot()
-// })
+onMounted(() => {
+  renderPlot()
+})
 </script>
 
 <template>
