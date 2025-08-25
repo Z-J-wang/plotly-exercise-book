@@ -1,5 +1,5 @@
 import Attribute from 'entities/attribute'
-import { BaseConfig } from './base'
+import { BaseConfig } from '../base'
 import ConfigEdits from './configure.edit'
 import AttributeController from 'entities/attribute.controller'
 import ConfigureModeBar from './configure.mode.bar'

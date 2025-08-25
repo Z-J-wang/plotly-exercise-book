@@ -25,12 +25,41 @@ export const useAttributeStore = defineStore('attribute', (): AttributeStore => 
     (query) => {
       const id = query?.id || ''
       if (!id || typeof id !== 'string') return
-      const rootID = id.split('-')[0]
-      if (currentRootID.value && currentRootID.value === rootID) return
-      currentRootID.value = rootID
-      const temp = tree.value.find((item: Attribute) => item.id === rootID) || tree.value[0]
-      temp.initialConfig && initConfig(temp.initialConfig)
-      branch.value = [temp]
+
+      const ids = id.split('-')
+      let branchData!: Attribute
+      let rootID = ''
+
+      /**
+       * 为了优化性能，将 traces 节点和 traces 子节点做分离。避免 branchData过长。
+       */
+      if (id === 'traces') {
+        // 单独提取 traces 节点
+        rootID = 'traces'
+        if (currentRootID.value && currentRootID.value === rootID) return
+
+        currentRootID.value = rootID
+        const tracesData = tree.value.find((item: Attribute) => item.id === rootID) as Attribute
+        const { type, name, description, parent, controller, initialConfig } = tracesData
+        branchData = new Attribute(name, type, { description, controller, parent, initialConfig })
+      } else if (ids[0] === 'traces') {
+        rootID = `${ids[0]}-${ids[1]}`
+        if (currentRootID.value && currentRootID.value === rootID) return
+
+        const traces = tree.value.find((item: Attribute) => item.id === 'traces')
+        if (traces) {
+          // 提取 traces 节点下的子节点
+          branchData = traces.children.find((item: Attribute) => item.id === rootID) as Attribute
+        }
+      } else {
+        rootID = ids[0]
+        if (currentRootID.value && currentRootID.value === rootID) return
+        currentRootID.value = rootID
+        branchData = tree.value.find((item: Attribute) => item.id === rootID) || tree.value[0]
+      }
+
+      branchData.initialConfig && initConfig(branchData.initialConfig)
+      branch.value = [branchData]
     },
     { immediate: true }
   )

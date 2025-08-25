@@ -1,6 +1,8 @@
-import LayoutAttributes from 'dal/plotly.config/layout'
+import LayoutAttributes from 'dal/plotly.config/layout/index'
 import Attribute from 'entities/attribute'
-import ConfigureAttribute from 'dal/plotly.config/configure'
+import ConfigureAttribute from 'dal/plotly.config/configure/index'
+import TracesAttributes from 'dal/plotly.config/traces/index'
+import { defineAsyncComponent } from 'vue'
 
 const layout = new Attribute('layout', 'Layout', {
   description: {
@@ -52,4 +54,13 @@ const config = new Attribute('config', 'Config', {
 })
 config.children = new ConfigureAttribute(config).attributes
 
-export default [layout, config]
+const traces = new Attribute('traces', 'TraceData[]', {
+  description: {
+    type: 'Component',
+    value: defineAsyncComponent(() => import('@/components/doc/TraceData.vue'))
+  }
+})
+
+traces.children = new TracesAttributes(traces).attributes
+
+export default [layout, config, traces]

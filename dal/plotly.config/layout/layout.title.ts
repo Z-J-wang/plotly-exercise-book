@@ -1,5 +1,5 @@
 import Attribute from 'entities/attribute'
-import { Font } from './base'
+import { Font } from '../base'
 import AttributeController from 'entities/attribute.controller'
 
 class SubTittle extends Attribute {

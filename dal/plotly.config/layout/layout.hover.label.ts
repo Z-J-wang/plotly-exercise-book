@@ -1,6 +1,6 @@
 import Attribute from 'entities/attribute'
 import AttributeController from 'entities/attribute.controller'
-import { Label } from './base'
+import { Label } from '../base'
 
 export default class LayoutHoverLabel extends Label {
   constructor(parent: Attribute) {
