@@ -39,15 +39,15 @@ watch(
   { deep: true }
 )
 
-// function renderPlot() {
-//   if (!openDisplay.value) return
-//   nextTick(() => {
-//     const { data = {}, layout, config } = JSON.parse(JSON.stringify(plotlyConfig.value))
+function renderPlot() {
+  if (!openDisplay.value) return
+  nextTick(() => {
+    const { data = {}, layout, config } = JSON.parse(JSON.stringify(plotlyConfig.value))
 
-//     const traces = Array.isArray(data) ? data : [data]
-//     usePlotly('PlotContainer', traces, false, layout, config)
-//   })
-// }
+    const traces = Array.isArray(data) ? data : [data]
+    usePlotly('PlotContainer', traces, false, layout, config)
+  })
+}
 
 // onMounted(() => {
 //   renderPlot()
