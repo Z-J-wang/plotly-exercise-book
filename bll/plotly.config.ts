@@ -52,5 +52,4 @@ const config = new Attribute('config', 'Config', {
 })
 config.children = new ConfigureAttribute(config).attributes
 
-// export default [layout, config]
-export default []
+export default [layout, config]
