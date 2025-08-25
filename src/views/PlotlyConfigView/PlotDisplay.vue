@@ -51,7 +51,7 @@ function renderPlot() {
 }
 
 onMounted(() => {
-  renderPlot()
+  // renderPlot()
 })
 </script>
 
