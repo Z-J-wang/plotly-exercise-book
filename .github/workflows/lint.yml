@@ -1,12 +1,12 @@
 name: Lint
 run-name: ${{ github.actor }} running lint action by ${{ github.event_name }}
 on:
-  push:
-    branches:
-      - '!master'
-      - '!main'
-  pull_request:
-    branches: ['master', 'main']
+  # push:
+  #   branches:
+  #     - '!master'
+  #     - '!main'
+  # pull_request:
+  #   branches: ['master', 'main']
   workflow_dispatch:
 
 # gitHub Actions 禁用 Husky
