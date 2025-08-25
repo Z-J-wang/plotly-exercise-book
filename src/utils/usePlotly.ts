@@ -187,7 +187,6 @@ export function usePlotly(
   let plotly: Promise<Plotly.PlotlyHTMLElement>
   const plotlyTemplate = ref<Plotly.Template | null>(null)
   let _plotElement: Plotly.Root
-  console.log(gd, data, layout, config)
 
   if (useReact) {
     plotly = Plotly.react(gd, data, layout, config)
