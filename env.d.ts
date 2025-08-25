@@ -5,7 +5,7 @@ declare module '*.vue' {
   export default vueComponent
 }
 
-declare module 'plotly.js-cartesian-dist' {
+declare module 'plotly.js-dist' {
   import Plotly from 'plotly.js'
 
   export default Plotly
