@@ -3444,10 +3444,10 @@ pkg-types@^2.0.1, pkg-types@^2.2.0:
     exsolve "^1.0.7"
     pathe "^2.0.3"
 
-plotly.js-dist@^3.1.0:
+plotly.js-cartesian-dist-min@^3.1.0:
   version "3.1.0"
-  resolved "https://registry.npmmirror.com/plotly.js-dist/-/plotly.js-dist-3.1.0.tgz#5313c302bb8fcea17acb1082a0f7024b73002804"
-  integrity sha512-rxxqPveB1uzMvv8qfhhYXTBpoX1wreRgpFbrMdbraOuFtw3TXWwD+/qWwtphzPw4mtLZT6ND3K4sl/DN9Qgkuw==
+  resolved "https://registry.npmmirror.com/plotly.js-cartesian-dist-min/-/plotly.js-cartesian-dist-min-3.1.0.tgz#f74a32a28ffe4bc75aa326d1002752736448d5bc"
+  integrity sha512-oghZswsEGrj4AGtnbbNTF0tq8o4MWgOyLxIur5y1UHNzXiLWzbENk51N7fF3dCM+AAQr7X7ldqhGQvaCRQssfA==
 
 postcss-html@^1.8.0:
   version "1.8.0"
