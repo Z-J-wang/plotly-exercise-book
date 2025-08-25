@@ -81,7 +81,7 @@ onMounted(() => {
           :style="{ minHeight: 'calc(100vh - 60px)' }"
         >
           <div class="flex-auto p-4 bg-white min-w-0">
-            <el-tree
+            <!-- <el-tree
               :data="branch"
               node-key="id"
               default-expand-all
@@ -91,7 +91,7 @@ onMounted(() => {
               <template #default="{ node, data }">
                 <AttributeDisplay class="cursor-default" :data="data" :node="node" />
               </template>
-            </el-tree>
+            </el-tree> -->
           </div>
           <div
             class="flex-shrink-0 bg-white"
