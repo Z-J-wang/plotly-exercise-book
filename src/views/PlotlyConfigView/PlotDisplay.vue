@@ -2,7 +2,7 @@
 import { nextTick, onMounted, watch } from 'vue'
 import CodeEditor from '@/components/CodeEditor.vue'
 import { Monitor, CloseBold } from '@element-plus/icons-vue'
-import { usePlotly } from '@/utils/usePlotly'
+// import { usePlotly } from '@/utils/usePlotly'
 import { useStorage } from '@vueuse/core'
 import { usePloyConfigStore } from '@/stores/ploy.config'
 import { storeToRefs } from 'pinia'
@@ -39,15 +39,15 @@ watch(
   { deep: true }
 )
 
-function renderPlot() {
-  if (!openDisplay.value) return
-  nextTick(() => {
-    const { data = {}, layout, config } = JSON.parse(JSON.stringify(plotlyConfig.value))
+// function renderPlot() {
+//   if (!openDisplay.value) return
+//   nextTick(() => {
+//     const { data = {}, layout, config } = JSON.parse(JSON.stringify(plotlyConfig.value))
 
-    const traces = Array.isArray(data) ? data : [data]
-    usePlotly('PlotContainer', traces, false, layout, config)
-  })
-}
+//     const traces = Array.isArray(data) ? data : [data]
+//     usePlotly('PlotContainer', traces, false, layout, config)
+//   })
+// }
 
 // onMounted(() => {
 //   renderPlot()
