@@ -22,18 +22,14 @@ export default class Layout extends BaseConfig {
         parent: parent,
         description: {
           type: 'string',
-          value: [
-            '是否显示图例。<br />',
-            '默认情况下，满足以下任意条件则会显示图例：<br />',
-            '1. 默认情况下，两个或多个图表。<br />',
-            '2. 渲染一个饼状图。<br />',
-            '3. 明确通过<code>showlegend:true</code>声明。<br />'
-          ]
+          value:
+            '是否显示图例。<br />' +
+            '默认情况下，满足以下任意条件则会显示图例：<br />' +
+            '1. 默认情况下，两个或多个图表。<br />' +
+            '2. 渲染一个饼状图。<br />' +
+            '3. 明确通过<code>showlegend:true</code>声明。'
         },
-        controller: new AttributeController({
-          type: 'boolean',
-          default: true
-        })
+        controller: new AttributeController({ type: 'boolean', default: true })
       })
     )
     this.insertAttribute(new LayoutLegend(parent))

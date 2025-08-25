@@ -56,6 +56,8 @@
     "datarevision",
     "editrevision",
     "hidesources",
+    "legendonly",
+    "legendrank",
     "modebar",
     "plotly",
     "relayout",

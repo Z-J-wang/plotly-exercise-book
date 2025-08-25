@@ -1,4 +1,5 @@
 import Attribute from 'entities/attribute'
+import { TraceName, TraceVisible, TraceLegendAbout } from '../base'
 
 export default class TraceScatter extends Attribute {
   constructor(parent: Attribute) {
@@ -14,5 +15,9 @@ export default class TraceScatter extends Attribute {
         layout: { title: { text: 'Config Title' }, showlegend: true }
       }
     })
+
+    this.addChild(new TraceName(this))
+    this.addChild(new TraceVisible(this))
+    new TraceLegendAbout(this)
   }
 }

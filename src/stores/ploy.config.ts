@@ -18,8 +18,13 @@ export const usePloyConfigStore = defineStore('ployConfig', (initialConfig: Plot
   const configHash = ref<Hash>('')
 
   function updateConfig(id: string, value: any) {
-    const props = id.split('-')
+    let props = id.split('-')
     let currentLevel = config.value
+    if (props[0] === 'traces') {
+      props = props.slice(2, props.length)
+      currentLevel = currentLevel.data[0]
+    }
+
     props.forEach((prop, index) => {
       if (index === props.length - 1) {
         // 最后一级属性，直接赋值
@@ -37,8 +42,13 @@ export const usePloyConfigStore = defineStore('ployConfig', (initialConfig: Plot
   }
 
   function removeConfig(id: string) {
-    const props = id.split('-')
+    let props = id.split('-')
     let currentLevel = config.value
+    if (props[0] === 'traces') {
+      props = props.slice(2, props.length)
+      currentLevel = currentLevel.data[0]
+    }
+
     props.forEach((prop, index) => {
       if (index === props.length - 1) {
         // 最后一级属性，直接删除
