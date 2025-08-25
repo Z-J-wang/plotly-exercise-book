@@ -2,7 +2,7 @@
 import { nextTick, onMounted, watch } from 'vue'
 import CodeEditor from '@/components/CodeEditor.vue'
 import { Monitor, CloseBold } from '@element-plus/icons-vue'
-// import { usePlotly } from '@/utils/usePlotly'
+import { usePlotly } from '@/utils/usePlotly'
 import { useStorage } from '@vueuse/core'
 import { usePloyConfigStore } from '@/stores/ploy.config'
 import { storeToRefs } from 'pinia'
