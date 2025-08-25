@@ -45,7 +45,7 @@ function renderPlot() {
     const { data = {}, layout, config } = JSON.parse(JSON.stringify(plotlyConfig.value))
 
     const traces = Array.isArray(data) ? data : [data]
-    usePlotly('PlotContainer', traces, false, layout, config)
+    // usePlotly('PlotContainer', traces, false, layout, config)
   })
 }
 
