@@ -181,18 +181,17 @@ export function usePlotly(
   gd: Plotly.Root,
   data: Partial<Data>[],
   useReact: boolean = false,
-  layout?: Partial<Layout>,
-  config?: Partial<Config>
+  layout: Partial<Layout> = {},
+  config: Partial<Config> = {}
 ): UsePlotly {
   let plotly: Promise<Plotly.PlotlyHTMLElement>
   const plotlyTemplate = ref<Plotly.Template | null>(null)
   let _plotElement: Plotly.Root
-  console.log('usePlotly', gd, data, layout, config)
 
   if (useReact) {
-    plotly = Plotly.react(gd, data, layout)
+    plotly = Plotly.react(gd, data, layout, config)
   } else {
-    plotly = Plotly.newPlot(gd, data, layout)
+    plotly = Plotly.newPlot(gd, data, layout, config)
   }
 
   plotly.then((element: Plotly.PlotlyHTMLElement) => _updateTemplate(element))
