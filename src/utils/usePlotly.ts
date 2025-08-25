@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import type { Ref } from 'vue'
 
 export interface UsePlotly {
+  plotly: Promise<Plotly.PlotlyHTMLElement>
   plotlyTemplate: Ref<Plotly.Template | null>
 
   /**
@@ -188,13 +189,13 @@ export function usePlotly(
   let _plotElement: Plotly.Root
   console.log('usePlotly', gd, data, layout, config)
 
-  // if (useReact) {
-  //   plotly = Plotly.react(gd, data, layout, config)
-  // } else {
-  //   plotly = Plotly.newPlot(gd, data, layout, config)
-  // }
+  if (useReact) {
+    plotly = Plotly.react(gd, data, layout)
+  } else {
+    plotly = Plotly.newPlot(gd, data, layout)
+  }
 
-  // plotly.then((element: Plotly.PlotlyHTMLElement) => _updateTemplate(element))
+  plotly.then((element: Plotly.PlotlyHTMLElement) => _updateTemplate(element))
 
   function _updateTemplate(plotElement: Plotly.PlotlyHTMLElement) {
     _plotElement = plotElement
@@ -202,6 +203,7 @@ export function usePlotly(
   }
 
   return {
+    plotly,
     plotlyTemplate,
     react(data, layout, config) {
       const promise = Plotly.react(gd, data, layout, config)
