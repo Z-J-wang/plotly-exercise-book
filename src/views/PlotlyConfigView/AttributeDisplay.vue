@@ -66,7 +66,7 @@ function openEdit() {
             </el-tooltip>
           </template>
         </div>
-        <div class="mt-2" v-if="data.controller?.default !== undefined">
+        <div class="mt-2" v-if="![undefined, null].includes(data.controller?.default)">
           <span>默认值：</span> <el-tag type="primary" size="small">{{ data.controller?.default }}</el-tag>
         </div>
         <div class="mt-2">

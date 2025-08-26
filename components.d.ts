@@ -9,6 +9,9 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AttributeControl: typeof import('./src/components/AttributeControl.vue')['default']
+    'Base.ids': typeof import('./src/components/doc/traces/base.ids.vue')['default']
+    BaseIds: typeof import('./src/components/doc/traces/BaseIds.vue')['default']
+    BaseX0: typeof import('./src/components/doc/traces/BaseX0.vue')['default']
     BasicAside: typeof import('./src/components/BasicAside.vue')['default']
     CodeAndPlot: typeof import('./src/components/CodeAndPlot.vue')['default']
     CodeEditor: typeof import('./src/components/CodeEditor.vue')['default']
