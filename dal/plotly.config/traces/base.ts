@@ -142,3 +142,58 @@ export class TraceZorder extends Attribute {
     })
   }
 }
+
+export class TraceMeta extends Attribute {
+  constructor(parent: Attribute) {
+    super('meta', 'string | number | string[] | number[]', {
+      parent,
+      description: {
+        type: 'string',
+        value:
+          '设置轨迹的元数据。元数据用于存储轨迹或者数据点的额外信息。元信息可用于各自文本属性中。' +
+          '如：<code>texttemplate</code>、<code>hovertemplate</code>等等。<br />' +
+          '使用方法如下：<code>%{meta[i]}</code>'
+      }
+    })
+  }
+}
+
+export class TraceCustomdata extends Attribute {
+  constructor(parent: Attribute) {
+    super('customdata', 'string | number | string[] | number[]', {
+      parent,
+      description: {
+        type: 'string',
+        value: '为每个数据点附加额外的数据。这些数据不会用于绘制轨迹，但可以在悬停、点击以及选择事件中使用这些数据。'
+      }
+    })
+  }
+}
+
+export class TraceXaxis extends Attribute {
+  constructor(parent: Attribute) {
+    super('xaxis', 'string', {
+      parent,
+      description: {
+        type: 'string',
+        value:
+          '设置轨迹 X 轴的轴配置。轴配置在 <code>layout</code> 中定义。默认<code>x</code>。' +
+          '<code>x</code> 对应 <code>layout.xaxis</code>；<code>x2</code> 对应 <code>layout.xaxis2</code> ，以此类推。'
+      }
+    })
+  }
+}
+
+export class TraceYaxis extends Attribute {
+  constructor(parent: Attribute) {
+    super('yaxis', 'string', {
+      parent,
+      description: {
+        type: 'string',
+        value:
+          '设置轨迹 Y 轴的轴配置。轴配置在 <code>layout</code> 中定义。默认<code>y</code>。' +
+          '<code>y</code> 对应 <code>layout.yaxis</code>；<code>y2</code> 对应 <code>layout.yaxis2</code> ，以此类推。'
+      }
+    })
+  }
+}

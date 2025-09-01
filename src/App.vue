@@ -9,6 +9,9 @@ watch(
   () => route.query.id,
   () => {
     scrollIntoView()
+  },
+  {
+    immediate: true
   }
 )
 

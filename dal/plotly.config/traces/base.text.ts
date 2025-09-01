@@ -68,7 +68,8 @@ export default class BaseText {
             '<li>数字，支持<a href="https://github.com/d3/d3-format/tree/v1.4.5#d3-format" target="_blank">d3-format</a>语法。</li>' +
             '<li>日期，支持<a href="https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format" target="_blank">d3-time-format</a>语法。</li>' +
             '</ul>'
-        }
+        },
+        controller: new AttributeController({ type: 'string', default: '' })
       })
     )
   }

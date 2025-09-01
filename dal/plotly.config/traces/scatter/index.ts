@@ -1,8 +1,20 @@
 import Attribute from 'entities/attribute'
-import { TraceName, TraceVisible, TraceLegendAbout, TraceOpacity, TraceIds, TraceZorder } from '../base'
+import {
+  TraceName,
+  TraceVisible,
+  TraceLegendAbout,
+  TraceOpacity,
+  TraceIds,
+  TraceZorder,
+  TraceMeta,
+  TraceXaxis,
+  TraceYaxis
+} from '../base'
 import BaseData from '../base.data'
 import AttributeController from 'entities/attribute.controller'
 import BaseText from '../base.text'
+import BaseHover from '../base.hover'
+import BaseStack from '../base.stack'
 
 export default class TraceScatter extends Attribute {
   constructor(parent: Attribute) {
@@ -19,6 +31,7 @@ export default class TraceScatter extends Attribute {
             mode: 'text+lines+markers',
             type: 'scatter',
             name: 'scatter trace',
+            customdata: [90, 80, 70, 90],
             textposition: 'bottom center'
           }
         ],
@@ -80,5 +93,15 @@ export default class TraceScatter extends Attribute {
     new BaseData(this)
 
     new BaseText(this)
+
+    new BaseHover(this)
+
+    this.addChild(new TraceMeta(this))
+
+    this.addChild(new TraceXaxis(this))
+
+    this.addChild(new TraceYaxis(this))
+
+    new BaseStack(this)
   }
 }

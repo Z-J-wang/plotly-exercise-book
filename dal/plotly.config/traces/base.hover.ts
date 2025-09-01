@@ -91,12 +91,12 @@ export default class BaseHover {
     )
 
     parent.addChild(
-      new Attribute('texttemplate', 'string', {
+      new Attribute('hovertemplate', 'string', {
         parent,
         description: {
           type: 'string',
           value:
-            '文本渲染模板模板.' +
+            'hover 文本渲染模板模板.' +
             '说明：' +
             '<ul>' +
             '<li>支持HTML标签</li>' +
@@ -105,7 +105,42 @@ export default class BaseHover {
             '<li>数字，支持<a href="https://github.com/d3/d3-format/tree/v1.4.5#d3-format" target="_blank">d3-format</a>语法。</li>' +
             '<li>日期，支持<a href="https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format" target="_blank">d3-time-format</a>语法。</li>' +
             '</ul>'
-        }
+        },
+        controller: new AttributeController({ type: 'string', default: '' })
+      })
+    )
+
+    parent.addChild(
+      new Attribute('xhoverformat', 'string', {
+        parent,
+        description: {
+          type: 'string',
+          value:
+            '设置 x 轴数据格式化模板。例如：<code>.2f</code>保留两位小数。<br />' +
+            '说明：' +
+            '<ul>' +
+            '<li>数字，支持<a href="https://github.com/d3/d3-format/tree/v1.4.5#d3-format" target="_blank">d3-format</a>语法。</li>' +
+            '<li>日期，支持<a href="https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format" target="_blank">d3-time-format</a>语法。</li>' +
+            '</ul>'
+        },
+        controller: new AttributeController({ type: 'string', default: '' })
+      })
+    )
+
+    parent.addChild(
+      new Attribute('yhoverformat', 'string', {
+        parent,
+        description: {
+          type: 'string',
+          value:
+            '设置 y 轴数据格式化模板。例如：<code>.2f</code>保留两位小数。<br />' +
+            '说明：' +
+            '<ul>' +
+            '<li>数字，支持<a href="https://github.com/d3/d3-format/tree/v1.4.5#d3-format" target="_blank">d3-format</a>语法。</li>' +
+            '<li>日期，支持<a href="https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format" target="_blank">d3-time-format</a>语法。</li>' +
+            '</ul>'
+        },
+        controller: new AttributeController({ type: 'string', default: '' })
       })
     )
   }
