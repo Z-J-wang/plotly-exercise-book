@@ -114,7 +114,7 @@ export class TraceOpacity extends Attribute {
     super('opacity', 'number', {
       parent,
       description: { type: 'string', value: '设置轨迹的不透明度。' },
-      controller: new AttributeController({ type: 'number', default: 1, min: 0, max: 1 })
+      controller: new AttributeController({ type: 'number', default: 1, min: 0, max: 1, step: 0.1 })
     })
   }
 }

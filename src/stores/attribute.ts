@@ -9,7 +9,7 @@ import { usePloyConfigStore } from './ploy.config'
 interface AttributeStore {
   tree: Ref<Attribute[]>
   branch: Ref<Attribute[]>
-  resetPlotlyConfig: (path: Attribute.Path[]) => void
+  resetPlotlyConfig: (path: Attribute.Path[]) => Promise<void>
 }
 
 export const useAttributeStore = defineStore('attribute', (): AttributeStore => {
@@ -65,29 +65,33 @@ export const useAttributeStore = defineStore('attribute', (): AttributeStore => 
   )
 
   /**
-   * 根据路径更新指定属性
+   * 根据路径重置图表配置
    * @param path
    * @param value
    */
   function resetPlotlyConfig(path: Attribute.Path[]) {
-    let currentLevel = { children: tree.value } as Attribute // 构造一个虚拟根节点
-    const len = path.length
-    let newPlotlyConfig!: PlotlyConfig
+    return new Promise<void>((resolve) => {
+      let currentLevel = { children: tree.value } as Attribute // 构造一个虚拟根节点
+      const len = path.length
+      let newPlotlyConfig!: PlotlyConfig
 
-    for (let i = 0; i < len; i++) {
-      const name = path[i].name
+      for (let i = 0; i < len; i++) {
+        const name = path[i].name
 
-      // 根据路径自上而下找到对应层级的节点
-      const target = currentLevel.children.find((item) => item.name === name)
-      if (!target) throw new Error(`属性 ${name} 不存在。请检查路径是否正确。`)
-      currentLevel = target
+        // 根据路径自上而下找到对应层级的节点
+        const target = currentLevel.children.find((item) => item.name === name)
+        if (!target) throw new Error(`属性 ${name} 不存在。请检查路径是否正确。`)
+        currentLevel = target
 
-      // 记录路径中节点的initialConfig，子节点的initialConfig会覆盖父节点的initialConfig
-      if (target.initialConfig) newPlotlyConfig = target.initialConfig
-    }
+        // 记录路径中节点的initialConfig，子节点的initialConfig会覆盖父节点的initialConfig
+        if (target.initialConfig) newPlotlyConfig = target.initialConfig
+      }
 
-    // 初始化图表
-    initConfig(newPlotlyConfig)
+      // 初始化图表
+      initConfig(newPlotlyConfig)
+
+      setTimeout(() => resolve(), 300) // 延迟300ms，等待图表初始化完成
+    })
   }
 
   return { tree, branch, resetPlotlyConfig }

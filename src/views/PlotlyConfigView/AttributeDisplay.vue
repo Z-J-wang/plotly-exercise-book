@@ -23,12 +23,12 @@ watch(attribute, (value) => {
   updateConfig(props.data.id, value)
 })
 
-function openEdit() {
+async function openEdit() {
   trying.value = !trying.value
   const { id, controller, path } = props.data
   if (trying.value) {
     const { value } = controller
-    resetPlotlyConfig(path)
+    await resetPlotlyConfig(path)
     updateConfig(id, value)
   } else {
     removeConfig(props.data.id)

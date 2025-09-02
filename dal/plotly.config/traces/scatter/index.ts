@@ -15,6 +15,7 @@ import AttributeController from 'entities/attribute.controller'
 import BaseText from '../base.text'
 import BaseHover from '../base.hover'
 import BaseStack from '../base.stack'
+import BaseMarker from '../base.marker'
 
 export default class TraceScatter extends Attribute {
   constructor(parent: Attribute) {
@@ -31,8 +32,7 @@ export default class TraceScatter extends Attribute {
             mode: 'text+lines+markers',
             type: 'scatter',
             name: 'scatter trace',
-            customdata: [90, 80, 70, 90],
-            textposition: 'bottom center'
+            textposition: 'top center'
           }
         ],
         layout: { title: { text: 'The example of scatter trace' } }
@@ -103,5 +103,7 @@ export default class TraceScatter extends Attribute {
     this.addChild(new TraceYaxis(this))
 
     new BaseStack(this)
+
+    this.addChild(new BaseMarker(this))
   }
 }
