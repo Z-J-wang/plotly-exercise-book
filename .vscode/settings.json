@@ -89,6 +89,7 @@
     "stackgroup",
     "textposition",
     "texttemplate",
+    "ticklabeloverflow",
     "tickmode",
     "ticktext",
     "tickvals",

@@ -326,5 +326,51 @@ export default class BaseMarkerColoBar extends Attribute {
         })
       })
     )
+
+    this.addChild(
+      new Attribute(
+        'ticks',
+        { type: 'enum', value: ['outside', 'inside', ''] },
+        {
+          parent: this,
+          description: {
+            type: 'string',
+            value:
+              '是否绘制刻度。值域：' +
+              '<ul>' +
+              "<li><code>''</code> - 默认值。不绘制。</li>" +
+              '<li><code>inside</code> - 在颜色条内部绘制。</li>' +
+              '<li><code>outside</code> - 在颜色条外部绘制。</li>' +
+              '</ul>'
+          },
+          controller: new AttributeController({
+            type: 'select',
+            default: "''",
+            value: '',
+            options: ['outside', 'inside', '']
+          })
+        }
+      )
+    )
+
+    this.addChild(
+      new Attribute(
+        'ticklabeloverflow',
+        { type: 'enum', value: ['allow', 'hide past div', 'hide past domain'] },
+        {
+          parent: this,
+          description: {
+            type: 'string',
+            value:
+              '控制刻度标签溢出时怎么显示。值域：' +
+              '<ul>' +
+              '<li><code>allow</code> - 强制显示。</li>' +
+              '<li><code>hide past div</code> - 隐藏超出图表区域的标签。（非内部刻度标签，默认值为此）</li>' +
+              '<li><code>hide past domain</code> - 隐藏超出坐标轴范围的标签。（内部刻度标签，默认值为此）</li>' +
+              '</ul>'
+          }
+        }
+      )
+    )
   }
 }
