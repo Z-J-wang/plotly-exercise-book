@@ -49,7 +49,15 @@ declare namespace Attribute {
    */
   export type Type = { type: 'string' | 'enum'; value: string | any[] }
 
-  export type ControllerType = 'string' | 'number' | 'boolean' | 'color' | 'colorlist' | 'select' | 'slider'
+  export type ControllerType =
+    | 'string'
+    | 'number'
+    | 'boolean'
+    | 'color'
+    | 'colorlist'
+    | 'select'
+    | 'slider'
+    | 'jsonString'
   export interface ControllerOption {
     label: string
     value: any

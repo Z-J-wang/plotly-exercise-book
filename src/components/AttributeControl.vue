@@ -58,6 +58,16 @@ const sliderMxa = computed(() => {
     >
       <el-option v-for="{ label, value } in options" :key="label" :label="label" :value="value" />
     </el-select>
+    <el-input
+      v-if="type === 'jsonString'"
+      :model-value="JSON.stringify(modelValue)"
+      placeholder="请输入数组或对象的JSON字符串"
+      autocomplete="off"
+      :disabled="disabled"
+      type="textarea"
+      clearable
+      @change="modelValue = JSON.parse($event)"
+    />
     <template v-else-if="type === 'colorlist'">
       <!-- TODO 新增颜色范围取色器 -->
     </template>
