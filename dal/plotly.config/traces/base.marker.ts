@@ -2,6 +2,8 @@ import Attribute from 'entities/attribute'
 import AttributeController from 'entities/attribute.controller'
 import { merge } from 'lodash'
 import BaseMarkerColoBar from './base.marker.colorbar'
+import BaseMarkerGradient from './base.marker.gradient'
+import BaseMarkerLine from './base.marker.line'
 
 const markerSymbol = [
   'circle',
@@ -300,7 +302,7 @@ export default class BaseMarker extends Attribute {
         description: {
           type: 'string',
           value:
-            '确定数据点颜域是根据<code>marker.color`</code>计算得出的，' +
+            '确定数据点颜域是根据<code>marker.color</code>计算得出的，' +
             '还是根据在 <code>marker.cmin</code> 和 <code>marker.cmax</code> 中设定的范围计算得出的。' +
             '只有当 <code>marker.color</code> 被设置为数值数组时，此设置才有效。' +
             '当用户通过 <code>marker.cmin</code> 和 <code>marker.cmax</code> 进行设置时，默认值为 <code>false</code> 。'
@@ -437,8 +439,6 @@ export default class BaseMarker extends Attribute {
       })
     )
 
-    this.addChild(new BaseMarkerColoBar(this, undefined, initialConfigOfMarkerColor))
-
     this.addChild(
       new Attribute('maxdisplayed', 'number', {
         parent: this,
@@ -449,5 +449,11 @@ export default class BaseMarker extends Attribute {
         controller: new AttributeController({ type: 'number', default: 0, min: 0 })
       })
     )
+
+    this.addChild(new BaseMarkerColoBar(this, undefined, initialConfigOfMarkerColor))
+
+    this.addChild(new BaseMarkerGradient(this, undefined, initialConfigOfMarkerColor))
+
+    this.addChild(new BaseMarkerLine(this, undefined, initialConfigOfMarkerColor))
   }
 }

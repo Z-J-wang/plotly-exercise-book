@@ -13,6 +13,7 @@ import LayoutGrid from './layout.grid'
 import { calendar } from '@/utils'
 import LayoutBar from './layout.bar'
 import LayoutAxis from './layout.axis'
+import LayoutColorAxis from './layout.coloraxis'
 
 export default class Layout extends BaseConfig {
   constructor(parent: Attribute) {
@@ -305,11 +306,19 @@ export default class Layout extends BaseConfig {
           '对默认 X 轴进行自定义。<br />如需自定义多个 X 轴，请使用 <code>layout.xaxis2</code>、<code>layout.xaxis3</code> 等属性来定义。'
       })
     )
+
     this.insertAttribute(
       new LayoutAxis('yaxis', parent, {
         type: 'string',
         value:
           '对默认 Y 轴进行自定义。<br />如需自定义多个 Y 轴，请使用 <code>layout.yaxis2</code>、<code>layout.yaxis3</code> 等属性来定义。'
+      })
+    )
+    this.insertAttribute(
+      new LayoutColorAxis('coloraxis', parent, {
+        type: 'string',
+        value:
+          '对默认颜色轴进行自定义。<br />如需自定义多个颜色轴，请使用 <code>layout.coloraxis2</code>、<code>layout.coloraxis3</code> 等属性来定义。'
       })
     )
   }

@@ -355,3 +355,53 @@ export class Transition extends Attribute {
     )
   }
 }
+
+/**
+ * 内边距
+ */
+export class Pad extends Attribute {
+  constructor(parent: Attribute, description: Attribute.Description = { type: 'string', value: '标题的内边距' }) {
+    super('pad', 'Padding', { parent, description })
+
+    this.addChild(
+      new Attribute('b', 'number', {
+        parent: this,
+        description: { type: 'string', value: '底部边距，单位为<code>px</code>' },
+        controller: new AttributeController({
+          type: 'number',
+          default: 0
+        })
+      })
+    )
+    this.addChild(
+      new Attribute('l', 'number', {
+        parent: this,
+        description: { type: 'string', value: '左边边距，单位为<code>px</code>' },
+        controller: new AttributeController({
+          type: 'number',
+          default: 0
+        })
+      })
+    )
+    this.addChild(
+      new Attribute('r', 'number', {
+        parent: this,
+        description: { type: 'string', value: '右边边距，单位为<code>px</code>' },
+        controller: new AttributeController({
+          type: 'number',
+          default: 0
+        })
+      })
+    )
+    this.addChild(
+      new Attribute('t', 'number', {
+        parent: this,
+        description: { type: 'string', value: '顶部边距，单位为<code>px</code>' },
+        controller: new AttributeController({
+          type: 'number',
+          default: 0
+        })
+      })
+    )
+  }
+}

@@ -1,6 +1,6 @@
 import Attribute from 'entities/attribute'
 import AttributeController from 'entities/attribute.controller'
-import { merge } from 'lodash'
+import { Font } from '../base'
 
 export default class BaseMarkerColoBar extends Attribute {
   constructor(parent: Attribute, description?: Attribute.Description, initialConfig?: PlotlyConfig) {
@@ -372,5 +372,278 @@ export default class BaseMarkerColoBar extends Attribute {
         }
       )
     )
+
+    const ticklabelpositionOpts = [
+      'outside',
+      'inside',
+      'outside top',
+      'inside top',
+      'outside left',
+      'inside left',
+      'outside right',
+      'inside right',
+      'outside bottom',
+      'inside bottom'
+    ]
+
+    this.addChild(
+      new Attribute(
+        'ticklabelposition',
+        { type: 'enum', value: ticklabelpositionOpts },
+        {
+          parent: this,
+          description: {
+            type: 'string',
+            value:
+              '设置控制刻度标签的位置。其中左右布局适用于<code>orientation = "h"</code>，上下布局适用于<code>orientation = "v"</code>。'
+          },
+          controller: new AttributeController({ type: 'select', default: 'outside', options: ticklabelpositionOpts })
+        }
+      )
+    )
+
+    this.addChild(
+      new Attribute('ticklen', 'number', {
+        parent: this,
+        description: { type: 'string', value: '刻度的长度。' },
+        controller: new AttributeController({ type: 'number', default: 5, min: 0 })
+      })
+    )
+
+    this.addChild(
+      new Attribute('tickwidth', 'number', {
+        parent: this,
+        description: { type: 'string', value: '刻度的宽度。' },
+        controller: new AttributeController({ type: 'number', default: 1, min: 0 })
+      })
+    )
+
+    this.addChild(
+      new Attribute('tickcolor', 'string', {
+        parent: this,
+        description: { type: 'string', value: '刻度的颜色。' },
+        controller: new AttributeController({ type: 'string', default: '#444' })
+      })
+    )
+
+    this.addChild(
+      new Attribute('ticklabelstep', 'number', {
+        parent: this,
+        description: {
+          type: 'string',
+          value:
+            '设置刻度标签之间的间距与刻度之间的间距之间的比例关系。' +
+            '值为 1（默认值）表示每个刻度都有对应的标签；值为 2 表示每隔二个刻度显示一个标签；值 n 表示每 n 个刻度显示一个标签。'
+        },
+        controller: new AttributeController({ type: 'number', default: 1, min: 0 })
+      })
+    )
+
+    this.addChild(
+      new Attribute('showticklabels', 'boolean', {
+        parent: this,
+        description: { type: 'string', value: '是否显示刻度标签。' },
+        controller: new AttributeController({ type: 'boolean', default: true })
+      })
+    )
+
+    this.addChild(
+      new Attribute('labelalias', 'Object', {
+        parent: this,
+        description: {
+          type: 'string',
+          value: '刻度标签的别名。例如，将数字 10 映射为 “Ten”——<code>{ 10: "Ten" }</code> '
+        },
+        controller: new AttributeController({
+          type: 'jsonString',
+          default: null,
+          disabled: true,
+          value: { 10: 'Ten', 12: 'Twelve', 14: 'Fourteen', 16: 'Sixteen' }
+        })
+      })
+    )
+
+    this.addChild(
+      new Font('tickfont', 'Font', {
+        parent: this,
+        description: { type: 'string', value: '刻度标签的字体。' }
+      })
+    )
+
+    this.addChild(
+      new Attribute('tickangle', 'number', {
+        parent: this,
+        description: { type: 'string', value: '刻度标签的旋转角度。' },
+        controller: new AttributeController({ type: 'number', default: 0, min: -360, max: 360, step: 15 })
+      })
+    )
+
+    this.addChild(
+      new Attribute('tickformat', 'string', {
+        parent: this,
+        description: {
+          type: 'string',
+          value:
+            '设置刻度标签格式化规则。例如：<code>.2f</code>表示所有的刻度标签的数字保留两位小数。<br />' +
+            '说明：' +
+            '<ul>' +
+            '<li>数字，支持<a href="https://github.com/d3/d3-format/tree/v1.4.5#d3-format" target="_blank">d3-format</a>语法。</li>' +
+            '<li>日期，支持<a href="https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format" target="_blank">d3-time-format</a>语法。</li>' +
+            '</ul>'
+        },
+        controller: new AttributeController({ type: 'string', default: null, value: '.2f', disabled: true })
+      })
+    )
+
+    this.addChild(
+      new Attribute('tickprefix', 'string', {
+        parent: this,
+        description: { type: 'string', value: '刻度标签的前缀。' },
+        controller: new AttributeController({ type: 'string', default: null, value: '' })
+      })
+    )
+
+    this.addChild(
+      new Attribute(
+        'showtickprefix',
+        { type: 'enum', value: ['all', 'first', 'last', 'none'] },
+        {
+          parent: this,
+          description: { type: 'string', value: '刻度标签的前缀显示规则。' },
+          controller: new AttributeController({
+            type: 'select',
+            default: 'all',
+            options: ['all', 'first', 'last', 'none']
+          })
+        }
+      )
+    )
+
+    this.addChild(
+      new Attribute('ticksuffix', 'string', {
+        parent: this,
+        description: { type: 'string', value: '刻度标签的后缀。' },
+        controller: new AttributeController({ type: 'string', default: null, value: '' })
+      })
+    )
+
+    this.addChild(
+      new Attribute(
+        'showticksuffix',
+        { type: 'enum', value: ['all', 'first', 'last', 'none'] },
+        {
+          parent: this,
+          description: { type: 'string', value: '刻度标签的后缀显示规则。' },
+          controller: new AttributeController({
+            type: 'select',
+            default: 'all',
+            options: ['all', 'first', 'last', 'none']
+          })
+        }
+      )
+    )
+
+    this.addChild(
+      new Attribute('separatethousands', 'boolean', {
+        parent: this,
+        description: { type: 'string', value: '是否显示数字千分位分隔符。' },
+        controller: new AttributeController({ type: 'boolean', default: false })
+      })
+    )
+
+    this.addChild(
+      new Attribute(
+        'exponentformat',
+        { type: 'enum', value: ['none', 'e', 'E', 'power', 'SI', 'B'] },
+        {
+          parent: this,
+          description: {
+            type: 'string',
+            value:
+              '设置刻度值的指数形式的显示格式。<br />以<code>1000000000</code>为例： <br />' +
+              '<ul>' +
+              '<li><code>none</code> - 显示为<code>1,000,000,000</code></li>' +
+              '<li><code>e</code> - 显示为<code>1e+9</code></li>' +
+              '<li><code>E</code> - 显示为<code>1E+9</code></li>' +
+              '<li><code>power</code> - 显示为<code>1x10^9</code></li>' +
+              '<li><code>SI</code> - 显示为<code>1G</code></li>' +
+              '<li><code>B</code> - 显示为<code>1B</code></li>' +
+              '</ul>'
+          },
+          controller: new AttributeController({
+            type: 'select',
+            default: 'B',
+            options: ['none', 'e', 'E', 'power', 'SI', 'B']
+          }),
+          initialConfig: {
+            data: [
+              {
+                x: [1, 2, 3, 4],
+                y: [1000000000, 2000000000, 3000000000, 4000000000],
+                marker: { color: [1000000000, 2000000000, 3000000000, 4000000000] }
+              }
+            ]
+          }
+        }
+      )
+    )
+
+    this.addChild(
+      new Attribute(
+        'showexponent',
+        { type: 'enum', value: ['all', 'first', 'last', 'none'] },
+        {
+          parent: this,
+          description: { type: 'string', value: '刻度指数规则生效规则' },
+          controller: new AttributeController({
+            type: 'select',
+            default: 'all',
+            options: ['all', 'first', 'last', 'none']
+          }),
+          initialConfig: {
+            data: [
+              {
+                x: [1, 2, 3, 4],
+                y: [1000000000, 2000000000, 3000000000, 4000000000],
+                marker: { color: [1000000000, 2000000000, 3000000000, 4000000000] }
+              }
+            ]
+          }
+        }
+      )
+    )
+
+    const title = new Attribute('title', 'Title', {
+      parent: this,
+      description: { type: 'string', value: '设置颜色条标题。' }
+    })
+
+    title.addChild(
+      new Attribute('text', 'string', {
+        parent: title,
+        description: { type: 'string', value: '标题内容' },
+        controller: new AttributeController({ type: 'string', default: '' })
+      })
+    )
+
+    title.addChild(new Font('font', 'Font', { parent: title, description: { type: 'string', value: '标题字体' } }))
+
+    title.addChild(
+      new Attribute(
+        'side',
+        { type: 'enum', value: ['top', 'bottom', 'right'] },
+        {
+          parent: title,
+          description: { type: 'string', value: '标题的位置。' },
+          controller: new AttributeController({
+            type: 'select',
+            default: null,
+            options: ['top', 'bottom', 'right']
+          })
+        }
+      )
+    )
+
+    this.addChild(title)
   }
 }

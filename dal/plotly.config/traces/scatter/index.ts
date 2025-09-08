@@ -16,6 +16,7 @@ import BaseText from '../base.text'
 import BaseHover from '../base.hover'
 import BaseStack from '../base.stack'
 import BaseMarker from '../base.marker'
+import ScatterLine from './scatter.line'
 
 export default class TraceScatter extends Attribute {
   constructor(parent: Attribute) {
@@ -105,5 +106,7 @@ export default class TraceScatter extends Attribute {
     new BaseStack(this)
 
     this.addChild(new BaseMarker(this))
+
+    this.addChild(new ScatterLine(this))
   }
 }
