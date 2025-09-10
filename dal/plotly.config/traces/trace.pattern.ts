@@ -1,7 +1,7 @@
 import Attribute from 'entities/attribute'
 import AttributeController from 'entities/attribute.controller'
 
-export default class BasePattern extends Attribute {
+export default class TracePattern extends Attribute {
   constructor(name: string, options?: Attribute.Options) {
     super(name, 'Pattern', options)
 

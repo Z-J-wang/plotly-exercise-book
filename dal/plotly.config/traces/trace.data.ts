@@ -2,7 +2,7 @@ import Attribute from 'entities/attribute'
 import AttributeController from 'entities/attribute.controller'
 import { defineAsyncComponent } from 'vue'
 
-export default class BaseData {
+export default class TraceData {
   constructor(parent: Attribute) {
     parent.addChild(new Attribute('x', 'number[]', { parent, description: { type: 'string', value: 'X轴数据。' } }))
 

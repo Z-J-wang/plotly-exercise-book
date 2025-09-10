@@ -22,7 +22,7 @@ const initialConfig: PlotlyConfig = {
   ]
 }
 
-export default class BaseStack {
+export default class TraceStack {
   constructor(parent: Attribute) {
     parent.addChild(
       new Attribute('stackgroup', 'string', {

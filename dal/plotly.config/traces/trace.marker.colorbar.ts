@@ -2,7 +2,7 @@ import Attribute from 'entities/attribute'
 import AttributeController from 'entities/attribute.controller'
 import { Font } from '../base'
 
-export default class BaseMarkerColoBar extends Attribute {
+export default class TraceMarkerColoBar extends Attribute {
   constructor(parent: Attribute, description?: Attribute.Description, initialConfig?: PlotlyConfig) {
     super('colorbar', 'ColorBar', {
       parent,

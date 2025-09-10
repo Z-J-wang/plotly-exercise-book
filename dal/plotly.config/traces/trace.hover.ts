@@ -1,7 +1,7 @@
 import Attribute from 'entities/attribute'
 import AttributeController from 'entities/attribute.controller'
 
-export default class BaseHover {
+export default class TraceHover {
   constructor(parent: Attribute) {
     parent.addChild(
       new Attribute('hovertext', 'string | string[]', {

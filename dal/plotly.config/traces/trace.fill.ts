@@ -4,8 +4,7 @@
  */
 import Attribute from 'entities/attribute'
 import AttributeController from 'entities/attribute.controller'
-import BasePattern from './base.pattern'
-import { merge } from 'lodash'
+import TracePattern from './trace.pattern'
 
 export class TraceFill extends Attribute {
   constructor(parent: Attribute) {
@@ -53,12 +52,12 @@ export class TraceFillColor extends Attribute {
   }
 }
 
-export class BaseFill {
+export class TraceFillAssemble {
   constructor(parent: Attribute) {
     parent.addChild(new TraceFill(parent))
     parent.addChild(new TraceFillColor(parent))
     parent.addChild(
-      new BasePattern('fillpattern', {
+      new TracePattern('fillpattern', {
         parent,
         description: {
           type: 'string',

@@ -1,9 +1,9 @@
 import Attribute from 'entities/attribute'
 import AttributeController from 'entities/attribute.controller'
 import { merge } from 'lodash'
-import BaseMarkerColoBar from './base.marker.colorbar'
-import BaseMarkerGradient from './base.marker.gradient'
-import BaseMarkerLine from './base.marker.line'
+import TraceMarkerColoBar from './trace.marker.colorbar'
+import TraceMarkerGradient from './trace.marker.gradient'
+import TraceMarkerLine from './trace.marker.line'
 
 const markerSymbol = [
   'circle',
@@ -187,7 +187,7 @@ const initialConfigOfMarkerColor: PlotlyConfig = {
   ]
 }
 
-export default class BaseMarker extends Attribute {
+export default class TraceMarker extends Attribute {
   constructor(parent: Attribute, description?: Attribute.Description) {
     super('marker', 'Marker', {
       parent,
@@ -450,10 +450,10 @@ export default class BaseMarker extends Attribute {
       })
     )
 
-    this.addChild(new BaseMarkerColoBar(this, undefined, initialConfigOfMarkerColor))
+    this.addChild(new TraceMarkerColoBar(this, undefined, initialConfigOfMarkerColor))
 
-    this.addChild(new BaseMarkerGradient(this, undefined, initialConfigOfMarkerColor))
+    this.addChild(new TraceMarkerGradient(this, undefined, initialConfigOfMarkerColor))
 
-    this.addChild(new BaseMarkerLine(this, undefined, initialConfigOfMarkerColor))
+    this.addChild(new TraceMarkerLine(this, undefined, initialConfigOfMarkerColor))
   }
 }

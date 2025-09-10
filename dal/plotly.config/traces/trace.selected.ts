@@ -1,7 +1,7 @@
 import Attribute from 'entities/attribute'
 import AttributeController from 'entities/attribute.controller'
 
-export default class BaseSelected extends Attribute {
+export default class TraceSelected extends Attribute {
   constructor(name: string, options?: Attribute.Options) {
     super(name, 'Selected', options)
 

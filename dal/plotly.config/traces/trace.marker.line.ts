@@ -2,7 +2,7 @@ import Attribute from 'entities/attribute'
 import AttributeController from 'entities/attribute.controller'
 import { merge } from 'lodash'
 
-export default class BaseMarkerLine extends Attribute {
+export default class TraceMarkerLine extends Attribute {
   constructor(parent: Attribute, description?: Attribute.Description, initialConfig?: PlotlyConfig) {
     super('line', 'BaseMarkerLine', {
       parent,

@@ -2,7 +2,7 @@ import Attribute from 'entities/attribute'
 import AttributeController from 'entities/attribute.controller'
 import { Font } from '../base'
 
-export default class BaseText {
+export default class TraceText {
   constructor(parent: Attribute) {
     parent.addChild(
       new Attribute('text', 'string | string[]', {

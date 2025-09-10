@@ -2,7 +2,7 @@ import Attribute from 'entities/attribute'
 import AttributeController from 'entities/attribute.controller'
 import { merge } from 'lodash'
 
-export default class BaseMarkerGradient extends Attribute {
+export default class TraceMarkerGradient extends Attribute {
   constructor(parent: Attribute, description?: Attribute.Description, initialConfig?: PlotlyConfig) {
     super('gradient', 'BaseMarkerGradient', {
       parent,

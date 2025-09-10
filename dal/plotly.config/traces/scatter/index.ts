@@ -12,17 +12,17 @@ import {
   TraceSelectedPoints,
   TraceCliponaxis,
   TraceConnectgaps
-} from '../base'
-import BaseData from '../base.data'
+} from '../trace.base'
+import TraceData from '../trace.data'
 import AttributeController from 'entities/attribute.controller'
-import BaseText from '../base.text'
-import BaseHover from '../base.hover'
-import BaseStack from '../base.stack'
-import BaseMarker from '../base.marker'
+import TraceText from '../trace.text'
+import TraceHover from '../trace.hover'
+import TraceStack from '../trace.stack'
+import TraceMarker from '../trace.marker'
 import ScatterLine from './scatter.line'
-import BaseErrorBar from '../base.error.bar'
-import BaseSelected from '../base.selected'
-import { BaseFill } from '../base.fill'
+import TraceErrorBar from '../trace.error.bar'
+import TraceSelected from '../trace.selected'
+import { TraceFillAssemble } from '../trace.fill'
 import BaseHoverLabel from '../../base.hover.label'
 
 export default class TraceScatter extends Attribute {
@@ -100,11 +100,11 @@ export default class TraceScatter extends Attribute {
 
     this.addChild(new TraceZorder(this))
 
-    new BaseData(this)
+    new TraceData(this)
 
-    new BaseText(this)
+    new TraceText(this)
 
-    new BaseHover(this)
+    new TraceHover(this)
 
     this.addChild(new TraceMeta(this))
 
@@ -112,21 +112,21 @@ export default class TraceScatter extends Attribute {
 
     this.addChild(new TraceYaxis(this))
 
-    new BaseStack(this)
+    new TraceStack(this)
 
-    this.addChild(new BaseMarker(this))
+    this.addChild(new TraceMarker(this))
 
     this.addChild(new ScatterLine(this))
 
     this.addChild(
-      new BaseErrorBar('error_x', {
+      new TraceErrorBar('error_x', {
         parent: this,
         description: { type: 'string', value: '设置数据点的在水平方向上的误差条。' }
       })
     )
 
     this.addChild(
-      new BaseErrorBar('error_y', {
+      new TraceErrorBar('error_y', {
         parent: this,
         description: { type: 'string', value: '设置数据点的垂直方向上的误差条。' }
       })
@@ -135,14 +135,14 @@ export default class TraceScatter extends Attribute {
     this.addChild(new TraceSelectedPoints(this))
 
     this.addChild(
-      new BaseSelected('selected', {
+      new TraceSelected('selected', {
         parent: this,
         description: { type: 'string', value: '设置数据点的选择样式。' }
       })
     )
 
     this.addChild(
-      new BaseSelected('unselected', {
+      new TraceSelected('unselected', {
         parent: this,
         description: { type: 'string', value: '设置数据点的未选择样式。' }
       })
@@ -152,7 +152,7 @@ export default class TraceScatter extends Attribute {
 
     this.addChild(new TraceConnectgaps(this))
 
-    new BaseFill(this)
+    new TraceFillAssemble(this)
 
     this.addChild(
       new BaseHoverLabel('hoverlabel', {
