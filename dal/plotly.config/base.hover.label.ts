@@ -1,13 +1,15 @@
 import Attribute from 'entities/attribute'
 import AttributeController from 'entities/attribute.controller'
-import { Label } from '../base'
+import { Label } from './base'
 
-export default class LayoutHoverLabel extends Label {
-  constructor(parent: Attribute) {
-    super('hoverlabel', 'LayoutHoverLabel', {
-      parent,
-      description: { type: 'string', value: '设置鼠标悬停时的标签样式。' }
-    })
+export default class BaseHoverLabel extends Label {
+  constructor(name: string, options: Attribute.Options) {
+    // super('hoverlabel', 'HoverLabel', {
+    //   parent,
+    //   description: { type: 'string', value: '设置鼠标悬停时的标签样式。' }
+    // })
+
+    super(name, 'HoverLabel', options)
 
     this.addChild(
       new Attribute(

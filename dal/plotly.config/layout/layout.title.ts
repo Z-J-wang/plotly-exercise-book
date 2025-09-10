@@ -1,5 +1,5 @@
 import Attribute from 'entities/attribute'
-import { Font } from '../base'
+import { Font, Pad } from '../base'
 import AttributeController from 'entities/attribute.controller'
 
 class SubTittle extends Attribute {
@@ -17,53 +17,6 @@ class SubTittle extends Attribute {
       })
     )
     this.addChild(new Font('font', 'Font', { parent: this, description: { type: 'string', value: '字体设置' } }))
-  }
-}
-
-class Pad extends Attribute {
-  constructor(parent: Attribute, description: Attribute.Description = { type: 'string', value: '标题的内边距' }) {
-    super('pad', 'Padding', { parent, description })
-
-    this.addChild(
-      new Attribute('b', 'number', {
-        parent: this,
-        description: { type: 'string', value: '底部边距，单位为<code>px</code>' },
-        controller: new AttributeController({
-          type: 'number',
-          default: 0
-        })
-      })
-    )
-    this.addChild(
-      new Attribute('l', 'number', {
-        parent: this,
-        description: { type: 'string', value: '左边边距，单位为<code>px</code>' },
-        controller: new AttributeController({
-          type: 'number',
-          default: 0
-        })
-      })
-    )
-    this.addChild(
-      new Attribute('r', 'number', {
-        parent: this,
-        description: { type: 'string', value: '右边边距，单位为<code>px</code>' },
-        controller: new AttributeController({
-          type: 'number',
-          default: 0
-        })
-      })
-    )
-    this.addChild(
-      new Attribute('t', 'number', {
-        parent: this,
-        description: { type: 'string', value: '顶部边距，单位为<code>px</code>' },
-        controller: new AttributeController({
-          type: 'number',
-          default: 0
-        })
-      })
-    )
   }
 }
 

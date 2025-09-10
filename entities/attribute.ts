@@ -107,4 +107,16 @@ export default class Attribute {
     const index = this._children.findIndex((child) => child.name === childName)
     if (index > -1) this._children.splice(index, 1)
   }
+
+  // 挑选子属性
+  public pickChildren(childNames: string[]) {
+    const needDelete = this._children.filter((child) => !childNames.includes(child.name))
+    needDelete.forEach((child) => this.removeChild(child.name))
+  }
+
+  // 忽略子属性
+  public OmitChildren(childNames: string[]) {
+    const needDelete = this._children.filter((child) => childNames.includes(child.name))
+    needDelete.forEach((child) => this.removeChild(child.name))
+  }
 }

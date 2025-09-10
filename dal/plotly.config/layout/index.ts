@@ -7,11 +7,13 @@ import { Margin, Font } from '../base'
 import LayoutUniformtext from './layout.uniformtext'
 import LayoutModeBar from './layout.mode.bar'
 import LayoutInteraction from './layout.interaction'
-import LayoutHoverLabel from './layout.hover.label'
+import BaseHoverLabel from '../base.hover.label'
 import { defineAsyncComponent } from 'vue'
 import LayoutGrid from './layout.grid'
 import { calendar } from '@/utils'
 import LayoutBar from './layout.bar'
+import LayoutAxis from './layout.axis'
+import LayoutColorAxis from './layout.coloraxis'
 
 export default class Layout extends BaseConfig {
   constructor(parent: Attribute) {
@@ -22,18 +24,14 @@ export default class Layout extends BaseConfig {
         parent: parent,
         description: {
           type: 'string',
-          value: [
-            '是否显示图例。<br />',
-            '默认情况下，满足以下任意条件则会显示图例：<br />',
-            '1. 默认情况下，两个或多个图表。<br />',
-            '2. 渲染一个饼状图。<br />',
-            '3. 明确通过<code>showlegend:true</code>声明。<br />'
-          ]
+          value:
+            '是否显示图例。<br />' +
+            '默认情况下，满足以下任意条件则会显示图例：<br />' +
+            '1. 默认情况下，两个或多个图表。<br />' +
+            '2. 渲染一个饼状图。<br />' +
+            '3. 明确通过<code>showlegend:true</code>声明。'
         },
-        controller: new AttributeController({
-          type: 'boolean',
-          default: true
-        })
+        controller: new AttributeController({ type: 'boolean', default: true })
       })
     )
     this.insertAttribute(new LayoutLegend(parent))
@@ -161,7 +159,12 @@ export default class Layout extends BaseConfig {
     this.insertAttribute(new LayoutModeBar(parent))
 
     new LayoutInteraction(this, parent)
-    this.insertAttribute(new LayoutHoverLabel(parent))
+    this.insertAttribute(
+      new BaseHoverLabel('hoverlabel', {
+        parent,
+        description: { type: 'string', value: '设置鼠标悬停时的标签样式。' }
+      })
+    )
     this.insertAttribute(
       new Transition('transition', 'Transition', {
         parent,
@@ -299,6 +302,29 @@ export default class Layout extends BaseConfig {
           }
         }
       )
+    )
+
+    this.insertAttribute(
+      new LayoutAxis('xaxis', parent, {
+        type: 'string',
+        value:
+          '对默认 X 轴进行自定义。<br />如需自定义多个 X 轴，请使用 <code>layout.xaxis2</code>、<code>layout.xaxis3</code> 等属性来定义。'
+      })
+    )
+
+    this.insertAttribute(
+      new LayoutAxis('yaxis', parent, {
+        type: 'string',
+        value:
+          '对默认 Y 轴进行自定义。<br />如需自定义多个 Y 轴，请使用 <code>layout.yaxis2</code>、<code>layout.yaxis3</code> 等属性来定义。'
+      })
+    )
+    this.insertAttribute(
+      new LayoutColorAxis('coloraxis', parent, {
+        type: 'string',
+        value:
+          '对默认颜色轴进行自定义。<br />如需自定义多个颜色轴，请使用 <code>layout.coloraxis2</code>、<code>layout.coloraxis3</code> 等属性来定义。'
+      })
     )
   }
 }

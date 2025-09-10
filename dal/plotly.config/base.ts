@@ -37,12 +37,10 @@ export class Font extends Attribute {
       new Attribute('color', 'Color', {
         parent: this,
         description: { type: 'string', value: '字体颜色' },
-        controller: new AttributeController({
-          type: 'color',
-          default: 'white'
-        })
+        controller: new AttributeController({ type: 'color', default: null })
       })
     )
+
     this.addChild(
       new Attribute('family', 'string', {
         parent: this,
@@ -353,5 +351,69 @@ export class Transition extends Attribute {
         }
       )
     )
+  }
+}
+
+/**
+ * 内边距
+ */
+export class Pad extends Attribute {
+  constructor(parent: Attribute, description: Attribute.Description = { type: 'string', value: '标题的内边距' }) {
+    super('pad', 'Padding', { parent, description })
+
+    this.addChild(
+      new Attribute('b', 'number', {
+        parent: this,
+        description: { type: 'string', value: '底部边距，单位为<code>px</code>' },
+        controller: new AttributeController({
+          type: 'number',
+          default: 0
+        })
+      })
+    )
+    this.addChild(
+      new Attribute('l', 'number', {
+        parent: this,
+        description: { type: 'string', value: '左边边距，单位为<code>px</code>' },
+        controller: new AttributeController({
+          type: 'number',
+          default: 0
+        })
+      })
+    )
+    this.addChild(
+      new Attribute('r', 'number', {
+        parent: this,
+        description: { type: 'string', value: '右边边距，单位为<code>px</code>' },
+        controller: new AttributeController({
+          type: 'number',
+          default: 0
+        })
+      })
+    )
+    this.addChild(
+      new Attribute('t', 'number', {
+        parent: this,
+        description: { type: 'string', value: '顶部边距，单位为<code>px</code>' },
+        controller: new AttributeController({
+          type: 'number',
+          default: 0
+        })
+      })
+    )
+  }
+}
+
+export class BaseUirevision extends Attribute {
+  constructor(parent: Attribute) {
+    super('uirevision', 'string | number', {
+      parent,
+      description: {
+        type: 'string',
+        value:
+          '控制UI状态变化的持久性。' +
+          '具体说明，详见：<a href="/#/docs/config/?id=layout-uirevision"><code>layout.uirevision</code></a>。'
+      }
+    })
   }
 }
