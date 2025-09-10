@@ -11,7 +11,8 @@ import {
   TraceYaxis,
   TraceSelectedPoints,
   TraceCliponaxis,
-  TraceConnectgaps
+  TraceConnectgaps,
+  TraceHoveron
 } from '../trace.base'
 import TraceData from '../trace.data'
 import AttributeController from 'entities/attribute.controller'
@@ -24,6 +25,7 @@ import TraceErrorBar from '../trace.error.bar'
 import TraceSelected from '../trace.selected'
 import { TraceFillAssemble } from '../trace.fill'
 import BaseHoverLabel from '../../base.hover.label'
+import { BaseUirevision } from '../../base'
 
 export default class TraceScatter extends Attribute {
   constructor(parent: Attribute) {
@@ -160,5 +162,9 @@ export default class TraceScatter extends Attribute {
         description: { type: 'string', value: '设置鼠标悬停时的标签样式。' }
       })
     )
+
+    this.addChild(new TraceHoveron(this))
+
+    this.addChild(new BaseUirevision(this))
   }
 }

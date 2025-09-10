@@ -403,3 +403,17 @@ export class Pad extends Attribute {
     )
   }
 }
+
+export class BaseUirevision extends Attribute {
+  constructor(parent: Attribute) {
+    super('uirevision', 'string | number', {
+      parent,
+      description: {
+        type: 'string',
+        value:
+          '控制UI状态变化的持久性。' +
+          '具体说明，详见：<a href="/#/docs/config/?id=layout-uirevision"><code>layout.uirevision</code></a>。'
+      }
+    })
+  }
+}

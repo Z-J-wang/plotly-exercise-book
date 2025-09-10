@@ -238,3 +238,27 @@ export class TraceConnectgaps extends Attribute {
     })
   }
 }
+
+export class TraceHoveron extends Attribute {
+  constructor(parent: Attribute) {
+    super(
+      'hoveron',
+      { type: 'enum', value: ['points', 'fills', 'points+fills'] },
+      {
+        parent,
+        description: {
+          type: 'string',
+          value:
+            '设置鼠标悬浮触发位置。' +
+            '如果设置为 <code>points</code>，则鼠标悬浮到点上时，显示数据点信息。' +
+            '如果设置为 <code>fills</code>，则鼠标悬浮到填充区域上时，显示区域信息。'
+        },
+        controller: new AttributeController({
+          type: 'select',
+          default: 'points+fills',
+          options: ['points', 'fills', 'points+fills']
+        })
+      }
+    )
+  }
+}

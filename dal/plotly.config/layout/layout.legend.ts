@@ -306,7 +306,7 @@ export default class Legend extends Attribute {
           type: 'string',
           value:
             '控制与图例相关的显示状态变化的持久性，包括图例项和饼图标签的可见性。' +
-            '默认值等同于<code>layout.uirevision</code>属性的值。'
+            '默认值等同于<a href="/#/docs/config/?id=layout-uirevision"><code>layout.uirevision</code></a>属性的值。'
         }
       })
     )
