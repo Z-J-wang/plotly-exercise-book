@@ -197,3 +197,12 @@ export class TraceYaxis extends Attribute {
     })
   }
 }
+
+export class TraceSelectedPoints extends Attribute {
+  constructor(parent: Attribute) {
+    super('selectedpoints', 'Array', {
+      parent,
+      description: { type: 'string', value: '设置选中的数据点。建议使用数据点下标。仅对支持选择功能的轨迹有效。' }
+    })
+  }
+}

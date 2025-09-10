@@ -1,5 +1,6 @@
 import Attribute from 'entities/attribute'
 import AttributeController from 'entities/attribute.controller'
+import { Font } from '../base'
 
 export default class BaseText {
   constructor(parent: Attribute) {
@@ -70,6 +71,13 @@ export default class BaseText {
             '</ul>'
         },
         controller: new AttributeController({ type: 'string', default: '' })
+      })
+    )
+
+    parent.addChild(
+      new Font('textfont', 'Font', {
+        parent: parent,
+        description: { type: 'string', value: '设置<code>text</code>属性的字体。' }
       })
     )
   }

@@ -37,12 +37,10 @@ export class Font extends Attribute {
       new Attribute('color', 'Color', {
         parent: this,
         description: { type: 'string', value: '字体颜色' },
-        controller: new AttributeController({
-          type: 'color',
-          default: 'white'
-        })
+        controller: new AttributeController({ type: 'color', default: null })
       })
     )
+
     this.addChild(
       new Attribute('family', 'string', {
         parent: this,

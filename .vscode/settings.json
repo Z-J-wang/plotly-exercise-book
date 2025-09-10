@@ -53,6 +53,7 @@
     "editor.defaultFormatter": "stylelint.vscode-stylelint"
   },
   "cSpell.words": [
+    "arrayminus",
     "bgcolor",
     "bordercolor",
     "borderwidth",
@@ -85,6 +86,7 @@
     "relayout",
     "reversescale",
     "roworder",
+    "selectedpoints",
     "separatethousands",
     "showexponent",
     "showlegend",
@@ -96,6 +98,7 @@
     "sizemode",
     "stackgaps",
     "stackgroup",
+    "textfont",
     "textposition",
     "texttemplate",
     "tickcolor",
@@ -110,6 +113,7 @@
     "ticktext",
     "tickvals",
     "tickwidth",
+    "valueminus",
     "VITE",
     "xaxes",
     "xaxis",

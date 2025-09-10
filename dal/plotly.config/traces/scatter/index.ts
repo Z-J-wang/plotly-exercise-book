@@ -8,7 +8,8 @@ import {
   TraceZorder,
   TraceMeta,
   TraceXaxis,
-  TraceYaxis
+  TraceYaxis,
+  TraceSelectedPoints
 } from '../base'
 import BaseData from '../base.data'
 import AttributeController from 'entities/attribute.controller'
@@ -17,27 +18,31 @@ import BaseHover from '../base.hover'
 import BaseStack from '../base.stack'
 import BaseMarker from '../base.marker'
 import ScatterLine from './scatter.line'
+import BaseErrorBar from '../base.error.bar'
+import BaseSelected from '../base.selected'
 
 export default class TraceScatter extends Attribute {
   constructor(parent: Attribute) {
+    const baseInitialConfig: PlotlyConfig = {
+      data: [
+        {
+          x: [1, 2, 3, 4],
+          y: [10, 15, 13, 17],
+          text: ['A', 'B', 'C', 'D'],
+          hoverinfo: 'all',
+          mode: 'text+lines+markers',
+          type: 'scatter',
+          name: 'scatter trace',
+          textposition: 'top center'
+        }
+      ],
+      layout: { title: { text: 'The example of scatter trace' } }
+    }
+
     super('scatter', 'Scatter', {
       parent,
       description: { type: 'string', value: '<code>scatter</code> 轨迹图，用于可用于绘制散点图或者折线图。' },
-      initialConfig: {
-        data: [
-          {
-            x: [1, 2, 3, 4],
-            y: [10, 15, 13, 17],
-            text: ['A', 'B', 'C', 'D'],
-            hoverinfo: 'all',
-            mode: 'text+lines+markers',
-            type: 'scatter',
-            name: 'scatter trace',
-            textposition: 'top center'
-          }
-        ],
-        layout: { title: { text: 'The example of scatter trace' } }
-      }
+      initialConfig: baseInitialConfig
     })
 
     this.addChild(
@@ -108,5 +113,35 @@ export default class TraceScatter extends Attribute {
     this.addChild(new BaseMarker(this))
 
     this.addChild(new ScatterLine(this))
+
+    this.addChild(
+      new BaseErrorBar('error_x', {
+        parent: this,
+        description: { type: 'string', value: '设置数据点的在水平方向上的误差条。' }
+      })
+    )
+
+    this.addChild(
+      new BaseErrorBar('error_y', {
+        parent: this,
+        description: { type: 'string', value: '设置数据点的垂直方向上的误差条。' }
+      })
+    )
+
+    this.addChild(new TraceSelectedPoints(this))
+
+    this.addChild(
+      new BaseSelected('selected', {
+        parent: this,
+        description: { type: 'string', value: '设置数据点的选择样式。' }
+      })
+    )
+
+    this.addChild(
+      new BaseSelected('unselected', {
+        parent: this,
+        description: { type: 'string', value: '设置数据点的未选择样式。' }
+      })
+    )
   }
 }
