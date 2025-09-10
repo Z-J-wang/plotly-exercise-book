@@ -206,3 +206,35 @@ export class TraceSelectedPoints extends Attribute {
     })
   }
 }
+
+export class TraceCliponaxis extends Attribute {
+  constructor(parent: Attribute) {
+    super('cliponaxis', 'boolean', {
+      parent,
+      description: {
+        type: 'string',
+        value:
+          '设置轨迹元素是否在坐标轴上进行裁剪。' +
+          '如果设置为 <code>true</code>，则轨迹元素将只显示在坐标轴的绘图区域。' +
+          '如果设置为 <code>false</code>，则轨迹元素将显示在坐标轴的绘图区域之外。'
+      },
+      controller: new AttributeController({ type: 'boolean', default: true })
+    })
+  }
+}
+
+export class TraceConnectgaps extends Attribute {
+  constructor(parent: Attribute) {
+    super('connectgaps', 'boolean', {
+      parent,
+      description: {
+        type: 'string',
+        value:
+          '设置轨迹是否连接缺失数据点。' +
+          '如果设置为 <code>true</code>，则缺失数据点将用线段连接。即，如果x或者y轴数据有缺失值，则将缺失值设置前后数值的平均值。' +
+          '如果设置为 <code>false</code>，则缺失数据点将不连接。'
+      },
+      controller: new AttributeController({ default: false })
+    })
+  }
+}

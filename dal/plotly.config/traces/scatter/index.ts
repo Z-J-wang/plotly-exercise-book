@@ -9,7 +9,9 @@ import {
   TraceMeta,
   TraceXaxis,
   TraceYaxis,
-  TraceSelectedPoints
+  TraceSelectedPoints,
+  TraceCliponaxis,
+  TraceConnectgaps
 } from '../base'
 import BaseData from '../base.data'
 import AttributeController from 'entities/attribute.controller'
@@ -20,6 +22,7 @@ import BaseMarker from '../base.marker'
 import ScatterLine from './scatter.line'
 import BaseErrorBar from '../base.error.bar'
 import BaseSelected from '../base.selected'
+import { BaseFill } from '../base.fill'
 
 export default class TraceScatter extends Attribute {
   constructor(parent: Attribute) {
@@ -143,5 +146,11 @@ export default class TraceScatter extends Attribute {
         description: { type: 'string', value: '设置数据点的未选择样式。' }
       })
     )
+
+    this.addChild(new TraceCliponaxis(this))
+
+    this.addChild(new TraceConnectgaps(this))
+
+    new BaseFill(this)
   }
 }
