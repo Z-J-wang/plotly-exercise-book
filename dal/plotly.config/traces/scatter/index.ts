@@ -23,6 +23,7 @@ import ScatterLine from './scatter.line'
 import BaseErrorBar from '../base.error.bar'
 import BaseSelected from '../base.selected'
 import { BaseFill } from '../base.fill'
+import BaseHoverLabel from '../../base.hover.label'
 
 export default class TraceScatter extends Attribute {
   constructor(parent: Attribute) {
@@ -152,5 +153,12 @@ export default class TraceScatter extends Attribute {
     this.addChild(new TraceConnectgaps(this))
 
     new BaseFill(this)
+
+    this.addChild(
+      new BaseHoverLabel('hoverlabel', {
+        parent: this,
+        description: { type: 'string', value: '设置鼠标悬停时的标签样式。' }
+      })
+    )
   }
 }

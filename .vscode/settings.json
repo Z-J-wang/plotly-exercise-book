@@ -73,6 +73,7 @@
     "groupnorm",
     "hidesources",
     "hoverinfo",
+    "hoverlabel",
     "hovertemplate",
     "labelalias",
     "legendgroup",

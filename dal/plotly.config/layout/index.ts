@@ -7,7 +7,7 @@ import { Margin, Font } from '../base'
 import LayoutUniformtext from './layout.uniformtext'
 import LayoutModeBar from './layout.mode.bar'
 import LayoutInteraction from './layout.interaction'
-import LayoutHoverLabel from './layout.hover.label'
+import BaseHoverLabel from '../base.hover.label'
 import { defineAsyncComponent } from 'vue'
 import LayoutGrid from './layout.grid'
 import { calendar } from '@/utils'
@@ -159,7 +159,12 @@ export default class Layout extends BaseConfig {
     this.insertAttribute(new LayoutModeBar(parent))
 
     new LayoutInteraction(this, parent)
-    this.insertAttribute(new LayoutHoverLabel(parent))
+    this.insertAttribute(
+      new BaseHoverLabel('hoverlabel', {
+        parent,
+        description: { type: 'string', value: '设置鼠标悬停时的标签样式。' }
+      })
+    )
     this.insertAttribute(
       new Transition('transition', 'Transition', {
         parent,
