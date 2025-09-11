@@ -2,17 +2,19 @@
 import { useAttributeStore } from '@/stores/attribute'
 import AttributeDisplay from './AttributeDisplay.vue'
 import PlotlyDisplay from './PlotDisplay.vue'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useWindowSize } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import TheAside from './TheAside.vue'
 import { Position } from '@/utils'
 import { useRoute, useRouter } from 'vue-router'
+import { useScrollIntoViewByPlotlyConfig } from '@/utils/useScrollIntoViewByPlotlyConfig'
 
 defineOptions({ name: 'PlotlyConfigView' })
 
 const route = useRoute()
 const router = useRouter()
+const { scrollIntoView } = useScrollIntoViewByPlotlyConfig()
 
 const { width } = useWindowSize()
 const attributeStore = useAttributeStore()
@@ -48,6 +50,15 @@ const rightSideClass = computed(() => {
     ? `h-screen sticky top-0${openDisplay.value ? ' w-v-40' : ''}`
     : 'sticky bottom-0 left-0 w-full h-full'
 })
+
+watch(
+  () => branch.value,
+  () => {
+    setTimeout(() => {
+      scrollIntoView()
+    }, 1000)
+  }
+)
 
 const defaultProps = {
   children: 'children',

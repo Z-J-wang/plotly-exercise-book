@@ -1,45 +1,13 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import { RouterLink, RouterView, useRoute } from 'vue-router'
 
 const route = useRoute()
 const year = ref(new Date().getFullYear())
 
-watch(
-  () => route.query.id,
-  () => {
-    scrollIntoView()
-  },
-  {
-    immediate: true
-  }
-)
-
 const showFooter = computed(() => {
   const blackList = ['/docs']
   return !route.matched.some((item) => blackList.includes(item.path))
-})
-
-function scrollIntoView() {
-  /**
-   * 延迟执行，等待路由加载完成
-   */
-  const id = route.query.id
-  if (id) {
-    const targetEl = document.querySelector(`.${id}`)
-    if (targetEl) {
-      targetEl.scrollIntoView({
-        behavior: 'smooth', // 平滑滚动
-        block: 'center' // 对齐到视口顶部
-      })
-    }
-  }
-}
-
-onMounted(() => {
-  setTimeout(() => {
-    scrollIntoView()
-  }, 2000)
 })
 </script>
 
