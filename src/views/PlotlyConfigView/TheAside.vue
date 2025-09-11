@@ -2,7 +2,7 @@
 import { useRoute, useRouter } from 'vue-router'
 import { useAttributeStore } from '@/stores/attribute'
 import Attribute from 'entities/attribute'
-import { ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 
 const optionsStore = useAttributeStore()
@@ -11,15 +11,44 @@ const { tree: treeData } = storeToRefs(optionsStore)
 const route = useRoute()
 const router = useRouter()
 const currentNodeKey = ref('')
+const defaultExpandedKeys = ref([])
 
 watch(
-  () => route.hash,
+  () => route.query.id,
   (value) => {
-    currentNodeKey.value = value.replace('#', '')
+    if (value && typeof value === 'string') {
+      const id = value.replace('#', '')
+      currentNodeKey.value = id
+      convertToExpendedKeysByID(id)
+    }
+  },
+  {
+    immediate: true
   }
 )
 
-const handleNodeClick = (data: Attribute) => {
+function convertToExpendedKeysByID(id: string) {
+  if (!id) return
+  const ids = id.split('-')
+  const len = ids.length
+  const expandedKeys = []
+  for (let i = 0; i < len; i++) {
+    const idArr = []
+    if (i === 0) {
+      idArr.push(ids[i])
+    } else {
+      for (let j = 0; j <= i; j++) {
+        idArr.push(ids[j])
+      }
+    }
+    expandedKeys.push(idArr.join('-'))
+  }
+  console.log(expandedKeys)
+
+  return expandedKeys
+}
+
+function handleNodeClick(data: Attribute) {
   router.push({ query: { id: data.id } })
 }
 
@@ -33,6 +62,7 @@ const defaultProps = {
   <el-tree
     style="max-width: 600px"
     :data="treeData"
+    :default-expanded-keys="[currentNodeKey]"
     node-key="id"
     highlight-current
     :current-node-key="currentNodeKey"
