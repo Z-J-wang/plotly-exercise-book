@@ -106,7 +106,7 @@ export default class TraceHover {
             '<li>日期，支持<a href="https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format" target="_blank">d3-time-format</a>语法。</li>' +
             '</ul>'
         },
-        controller: new AttributeController({ type: 'string', default: '' })
+        controller: new AttributeController({ type: 'string', default: null })
       })
     )
 

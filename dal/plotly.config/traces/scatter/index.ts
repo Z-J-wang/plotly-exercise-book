@@ -56,7 +56,6 @@ export default class TraceScatter extends Attribute {
     )
     this.addChild(new TraceVisible(this))
     new TraceLegendAbout(this)
-    this.addChild(new TraceOpacity(this))
 
     this.addChild(
       new Attribute(
