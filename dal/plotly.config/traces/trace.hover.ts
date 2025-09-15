@@ -1,5 +1,6 @@
 import Attribute from 'entities/attribute'
 import AttributeController from 'entities/attribute.controller'
+import BaseHoverLabel from '../base.hover.label'
 
 export default class TraceHover {
   constructor(parent: Attribute) {
@@ -141,6 +142,13 @@ export default class TraceHover {
             '</ul>'
         },
         controller: new AttributeController({ type: 'string', default: '' })
+      })
+    )
+
+    parent.addChild(
+      new BaseHoverLabel('hoverlabel', {
+        parent,
+        description: { type: 'string', value: '设置鼠标悬停时的标签样式。' }
       })
     )
   }

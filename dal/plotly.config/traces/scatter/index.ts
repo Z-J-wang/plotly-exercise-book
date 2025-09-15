@@ -12,7 +12,8 @@ import {
   TraceSelectedPoints,
   TraceCliponaxis,
   TraceConnectgaps,
-  TraceHoveron
+  TraceHoveron,
+  TraceType
 } from '../trace.base'
 import TraceData from '../trace.data'
 import AttributeController from 'entities/attribute.controller'
@@ -24,7 +25,6 @@ import ScatterLine from './scatter.line'
 import TraceErrorBar from '../trace.error.bar'
 import TraceSelected from '../trace.selected'
 import { TraceFillAssemble } from '../trace.fill'
-import BaseHoverLabel from '../../base.hover.label'
 import { BaseUirevision } from '../../base'
 
 export default class TraceScatter extends Attribute {
@@ -47,9 +47,16 @@ export default class TraceScatter extends Attribute {
 
     super('scatter', 'Scatter', {
       parent,
-      description: { type: 'string', value: '<code>scatter</code> 轨迹图，用于可用于绘制散点图或者折线图。' },
+      description: {
+        type: 'string',
+        value:
+          '<code>scatter</code> 轨迹图，用于可用于绘制散点图或者折线图。<br />' +
+          '更多示例：<a href="https://plotly.com/javascript/line-and-scatter/" target="_blank">https://plotly.com/javascript/line-and-scatter/</a>'
+      },
       initialConfig: baseInitialConfig
     })
+
+    this.addChild(new TraceType(this, 'bar'))
 
     this.addChild(
       new TraceName(this, new AttributeController({ type: 'string', default: null, value: 'scatter trace' }))
@@ -105,6 +112,41 @@ export default class TraceScatter extends Attribute {
 
     new TraceText(this)
 
+    const textpositionOptions = [
+      'top left',
+      'top center',
+      'top right',
+      'middle left',
+      'middle center',
+      'middle right',
+      'bottom left',
+      'bottom center',
+      'bottom right',
+      'inside',
+      'outside',
+      'auto',
+      'none'
+    ]
+
+    this.addChild(
+      new Attribute(
+        'textposition',
+        {
+          type: 'enum',
+          value: textpositionOptions
+        },
+        {
+          parent: this,
+          description: { type: 'string', value: '文本模式下，设置文本相对于数据点的位置。' },
+          controller: new AttributeController({
+            type: 'select',
+            default: 'middle center',
+            options: textpositionOptions
+          })
+        }
+      )
+    )
+
     new TraceHover(this)
 
     this.addChild(new TraceMeta(this))
@@ -113,7 +155,26 @@ export default class TraceScatter extends Attribute {
 
     this.addChild(new TraceYaxis(this))
 
-    new TraceStack(this)
+    new TraceStack(this, {
+      data: [
+        {
+          x: [1, 2, 3, 4],
+          y: [10, 15, null, 17],
+          mode: 'lines+markers',
+          stackgroup: 'group1',
+          type: 'scatter',
+          name: 'scatter trace'
+        },
+        {
+          x: [2, 3, 4, 5],
+          y: [16, 5, 11, 9],
+          mode: 'lines+markers',
+          stackgroup: 'group1',
+          type: 'scatter',
+          name: 'scatter trace'
+        }
+      ]
+    })
 
     this.addChild(new TraceMarker(this))
 
@@ -154,13 +215,6 @@ export default class TraceScatter extends Attribute {
     this.addChild(new TraceConnectgaps(this))
 
     new TraceFillAssemble(this)
-
-    this.addChild(
-      new BaseHoverLabel('hoverlabel', {
-        parent: this,
-        description: { type: 'string', value: '设置鼠标悬停时的标签样式。' }
-      })
-    )
 
     this.addChild(new TraceHoveron(this))
 

@@ -3,6 +3,16 @@ import AttributeController from 'entities/attribute.controller'
 import { Font } from '../base'
 import { defineAsyncComponent } from 'vue'
 
+export class TraceType extends Attribute {
+  constructor(parent: Attribute, value: string) {
+    super('type', 'string', {
+      parent,
+      description: { type: 'string', value: '设置轨迹类型。其值必须为<code>' + value + '</code>。' },
+      controller: new AttributeController({ type: 'string', default: value, disabled: true })
+    })
+  }
+}
+
 export class TraceName extends Attribute {
   constructor(parent: Attribute, controller?: AttributeController) {
     super('name', 'string', {
@@ -260,5 +270,35 @@ export class TraceHoveron extends Attribute {
         })
       }
     )
+  }
+}
+
+export class TraceOrientation extends Attribute {
+  constructor(parent: Attribute) {
+    super(
+      'orientation',
+      { type: 'enum', value: ['v', 'h'] },
+      {
+        parent,
+        description: {
+          type: 'string',
+          value: '设置轨迹的显示方向。默认为 <code>v</code>。'
+        },
+        controller: new AttributeController({ type: 'select', default: 'v', options: ['v', 'h'] })
+      }
+    )
+  }
+}
+
+export class TraceTextAngle extends Attribute {
+  constructor(parent: Attribute) {
+    super('textangle', "number | 'auto'", {
+      parent,
+      description: {
+        type: 'string',
+        value: '设置文本的角度。' + '如果设置为 <code>auto</code>，则文本将自动旋转以适应文本内容。'
+      },
+      controller: new AttributeController({ type: 'number', default: 'auto', value: 0, step: 5 })
+    })
   }
 }
