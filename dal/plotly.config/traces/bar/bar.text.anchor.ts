@@ -26,14 +26,20 @@ export default class BarTextAnchor {
     parent.addChild(
       new Font('insidetextfont', 'Font', {
         parent,
-        description: { type: 'string', value: '设置条形图内部文字的字体样式。' }
+        description: {
+          type: 'string',
+          value: '设置条形图内部文字的字体样式。此属性优先级高于<code>bar.textfont</code>属性。'
+        }
       })
     )
 
     parent.addChild(
       new Font('outsidetextfont', 'Font', {
         parent,
-        description: { type: 'string', value: '设置条形图外部文字的字体样式。' }
+        description: {
+          type: 'string',
+          value: '设置条形图外部文字的字体样式。此属性优先级高于<code>bar.textfont</code>属性。'
+        }
       })
     )
   }

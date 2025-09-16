@@ -11,7 +11,6 @@ import {
   TraceYaxis,
   TraceSelectedPoints,
   TraceCliponaxis,
-  TraceHoveron,
   TraceOrientation,
   TraceTextAngle,
   TraceType
@@ -23,7 +22,6 @@ import TraceHover from '../trace.hover'
 import TraceMarker from '../trace.marker'
 import TraceErrorBar from '../trace.error.bar'
 import TraceSelected from '../trace.selected'
-import { TraceFillAssemble } from '../trace.fill'
 import { BaseUirevision } from '../../base'
 import BarTextAnchor from './bar.text.anchor'
 
@@ -122,7 +120,26 @@ export default class TraceBar extends Attribute {
 
     this.addChild(new TraceOrientation(this))
 
-    this.addChild(new TraceMarker(this))
+    this.addChild(
+      new TraceMarker(
+        this,
+        { type: 'string', value: '柱状图柱子的样式设置。注意，部分属性可能不生效。' },
+        {
+          data: [
+            {
+              x: ['giraffes', 'orangutans', 'monkeys'],
+              y: [20, 14, 23],
+              text: ['A', 'B', 'C'],
+              type: 'bar',
+              marker: {
+                color: [10, 15, 30],
+                size: [10, 30, 20]
+              }
+            }
+          ]
+        }
+      )
+    )
 
     this.addChild(
       new TraceErrorBar('error_x', {
