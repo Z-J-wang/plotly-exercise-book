@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue'
-import { usePlotly } from '@/utils/usePlotly'
+import { usePlotly } from '@/composables/usePlotly'
 
 onMounted(() => {
   const allLabels = ['1st', '2nd', '3rd', '4th', '5th']

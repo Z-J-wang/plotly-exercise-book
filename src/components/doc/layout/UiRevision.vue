@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { usePlotly } from '@/utils/usePlotly'
+import { usePlotly } from '@/composables/usePlotly'
 import CodeEditor from '@/components/CodeEditor.vue'
 
 const LABEL = {

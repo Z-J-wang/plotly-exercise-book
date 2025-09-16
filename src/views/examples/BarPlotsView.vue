@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue'
-import { usePlotly } from '@/utils/usePlotly'
+import { usePlotly } from '@/composables/usePlotly'
 
 onMounted(() => {
   const trace1: Plotly.Data = { x: [1, 2, 3, 4], y: [10, 15, 13, 17], type: 'bar' }
