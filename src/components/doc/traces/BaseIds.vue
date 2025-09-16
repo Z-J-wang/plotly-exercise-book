@@ -33,13 +33,13 @@ Plotly.react('chart', [{
       <li><span class="font-bold">精确事件处理</span>：识别用户交互的具体目标点。</li>
       <li><span class="font-bold">维护数据点身份</span>：即使数据顺序变化，也能正确追踪和操作特定数据点。</li>
     </ul>
-    <p class="mt-2"><code>ids</code>属性有如下要求：</p>
+    <p class="mt-2 font-bold"><code>ids</code>属性有如下要求：</p>
     <ol>
       <li>确保 <code>ids</code> 数组中的值在同一 trace 内的唯一性。</li>
       <li><code>ids</code> 数组的长度必须与其他数据数组（如 <code>x</code>, <code>y</code>）的长度严格一致。</li>
     </ol>
 
-    <p class="mt-2">代码示例</p>
+    <p class="mt-4 font-bold">如下折线图代码示例（其他图表同理）：</p>
     <CodeEditor :model-value="codeString" />
   </div>
 </template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import CodeEditor from '@/components/CodeEditor.vue'
-import { usePlotly } from '@/utils/usePlotly'
+import { usePlotly } from '@/composables/usePlotly'
 
 const props = defineProps(['plotlyConfig', 'code'])
 

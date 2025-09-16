@@ -8,7 +8,7 @@ import { storeToRefs } from 'pinia'
 import TheAside from './TheAside.vue'
 import { Position } from '@/utils'
 import { useRoute, useRouter } from 'vue-router'
-import { useScrollIntoViewByPlotlyConfig } from '@/utils/useScrollIntoViewByPlotlyConfig'
+import { useScrollIntoViewByPlotlyConfig } from '@/composables/useScrollIntoViewByPlotlyConfig'
 
 defineOptions({ name: 'PlotlyConfigView' })
 

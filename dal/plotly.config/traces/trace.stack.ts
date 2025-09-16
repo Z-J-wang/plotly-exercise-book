@@ -1,29 +1,8 @@
 import Attribute from 'entities/attribute'
 import AttributeController from 'entities/attribute.controller'
 
-const initialConfig: PlotlyConfig = {
-  data: [
-    {
-      x: [1, 2, 3, 4],
-      y: [10, 15, null, 17],
-      mode: 'lines+markers',
-      stackgroup: 'group1',
-      type: 'scatter',
-      name: 'scatter trace'
-    },
-    {
-      x: [2, 3, 4, 5],
-      y: [16, 5, 11, 9],
-      mode: 'lines+markers',
-      stackgroup: 'group1',
-      type: 'scatter',
-      name: 'scatter trace'
-    }
-  ]
-}
-
 export default class TraceStack {
-  constructor(parent: Attribute) {
+  constructor(parent: Attribute, initialConfig: PlotlyConfig) {
     parent.addChild(
       new Attribute('stackgroup', 'string', {
         parent,

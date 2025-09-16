@@ -24,7 +24,7 @@ const plotlyConfig: PlotlyConfig = {
       </li>
       <li>不要与<code>x</code>属性同时使用，否则无法生效。</li>
     </ul>
-
+    <p class="mt-4 font-bold">如下折线图案例（其他图表同理）：</p>
     <CodeAndPlot :plotly-config="plotlyConfig" />
   </div>
 </template>

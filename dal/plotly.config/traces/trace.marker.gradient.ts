@@ -1,18 +1,11 @@
 import Attribute from 'entities/attribute'
 import AttributeController from 'entities/attribute.controller'
-import { merge } from 'lodash'
 
 export default class TraceMarkerGradient extends Attribute {
-  constructor(parent: Attribute, description?: Attribute.Description, initialConfig?: PlotlyConfig) {
+  constructor(parent: Attribute, description?: Attribute.Description) {
     super('gradient', 'BaseMarkerGradient', {
       parent,
-      description: description || { type: 'string', value: '设置渐变色。' },
-      initialConfig: merge(
-        {
-          data: [{ marker: { size: 20 } }]
-        },
-        initialConfig
-      )
+      description: description || { type: 'string', value: '设置渐变色。' }
     })
 
     this.addChild(

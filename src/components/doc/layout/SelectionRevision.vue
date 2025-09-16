@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { usePlotly } from '@/utils/usePlotly'
+import { usePlotly } from '@/composables/usePlotly'
 import CodeEditor from '@/components/CodeEditor.vue'
 
 const code = `let selectionrevision: number = 0

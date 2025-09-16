@@ -4,11 +4,6 @@ import { Label } from './base'
 
 export default class BaseHoverLabel extends Label {
   constructor(name: string, options: Attribute.Options) {
-    // super('hoverlabel', 'HoverLabel', {
-    //   parent,
-    //   description: { type: 'string', value: '设置鼠标悬停时的标签样式。' }
-    // })
-
     super(name, 'HoverLabel', options)
 
     this.addChild(

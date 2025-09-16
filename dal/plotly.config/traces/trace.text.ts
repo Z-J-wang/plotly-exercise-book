@@ -13,45 +13,9 @@ export default class TraceText {
             '指定轨迹数据点的文本。其值，可以是字符串或者字符串数组。' +
             '如果是字符串，则表示所有数据点都使用相同的文本；' +
             '如果是字符串数组，则为每个数据点单独定义的文本。<br />' +
-            '默认情况下，鼠标悬停在数据点上时，会显示该数据点的文本。' +
-            '如果<code>mode</code>属性中包含<code>text</code>，数据点文本会显示在数据点处。'
+            '默认情况下，鼠标悬停在数据点上时，会显示该数据点的文本。'
         }
       })
-    )
-
-    const textpositionOptions = [
-      'top left',
-      'top center',
-      'top right',
-      'middle left',
-      'middle center',
-      'middle right',
-      'bottom left',
-      'bottom center',
-      'bottom right',
-      'inside',
-      'outside',
-      'auto',
-      'none'
-    ]
-
-    parent.addChild(
-      new Attribute(
-        'textposition',
-        {
-          type: 'enum',
-          value: textpositionOptions
-        },
-        {
-          parent,
-          description: { type: 'string', value: '文本模式下，设置文本相对于数据点的位置。' },
-          controller: new AttributeController({
-            type: 'select',
-            default: 'middle center',
-            options: textpositionOptions
-          })
-        }
-      )
     )
 
     parent.addChild(

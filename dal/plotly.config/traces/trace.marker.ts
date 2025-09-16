@@ -170,28 +170,12 @@ const markerSymbol = [
   'arrow-wide-open'
 ]
 
-// 用于 marker.size 的相关的初始配置
-const initialConfigOfMarkerSize: PlotlyConfig = {
-  data: [{ x: [1, 2, 3, 4], y: [10, 15, 13, 17], mode: 'markers', type: 'scatter', marker: { size: [10, 30, 20, 40] } }]
-}
-
-const initialConfigOfMarkerColor: PlotlyConfig = {
-  data: [
-    {
-      x: [1, 2, 3, 4],
-      y: [10, 15, 13, 17],
-      mode: 'markers',
-      type: 'scatter',
-      marker: { color: [10, 15, 13, 17] }
-    }
-  ]
-}
-
 export default class TraceMarker extends Attribute {
-  constructor(parent: Attribute, description?: Attribute.Description) {
+  constructor(parent: Attribute, description?: Attribute.Description, initialConfig?: PlotlyConfig) {
     super('marker', 'Marker', {
       parent,
-      description: description || { type: 'string', value: '数据点样式设置。' }
+      description: description || { type: 'string', value: '数据点样式设置。' },
+      initialConfig
     })
 
     this.addChild(
@@ -257,7 +241,7 @@ export default class TraceMarker extends Attribute {
           value: '数据点最小大小。只有<code>marker.size</code>的值是数组时，此属性才有效。'
         },
         controller: new AttributeController({ type: 'number', default: 0, min: 0 }),
-        initialConfig: initialConfigOfMarkerSize
+        initialConfig: initialConfig
       })
     )
 
@@ -269,7 +253,7 @@ export default class TraceMarker extends Attribute {
           value: '数据点大小模式。'
         },
         controller: new AttributeController({ type: 'select', default: 'diameter', options: ['diameter', 'area'] }),
-        initialConfig: initialConfigOfMarkerSize
+        initialConfig: initialConfig
       })
     )
 
@@ -281,7 +265,7 @@ export default class TraceMarker extends Attribute {
           value: '用于设置用于确定数据点渲染大小的比例因子。'
         },
         controller: new AttributeController({ type: 'number', default: 1, min: 0 }),
-        initialConfig: initialConfigOfMarkerSize
+        initialConfig: initialConfig
       })
     )
 
@@ -308,7 +292,7 @@ export default class TraceMarker extends Attribute {
             '当用户通过 <code>marker.cmin</code> 和 <code>marker.cmax</code> 进行设置时，默认值为 <code>false</code> 。'
         },
         controller: new AttributeController({ type: 'boolean', default: true }),
-        initialConfig: merge({ data: [{ marker: { cmin: 15, cmax: 20 } }] }, initialConfigOfMarkerColor)
+        initialConfig: merge({ data: [{ marker: { cmin: 15, cmax: 20 } }] }, initialConfig)
       })
     )
 
@@ -358,7 +342,7 @@ export default class TraceMarker extends Attribute {
             '</ul>'
         },
         controller: new AttributeController({ type: 'boolean', default: true }),
-        initialConfig: merge({ data: [{ marker: { colorscale: 'Hot' } }] }, initialConfigOfMarkerColor)
+        initialConfig: merge({ data: [{ marker: { colorscale: 'Hot' } }] }, initialConfig)
       })
     )
 
@@ -402,7 +386,7 @@ export default class TraceMarker extends Attribute {
           default: null,
           options: colorscaleName
         }),
-        initialConfig: initialConfigOfMarkerColor
+        initialConfig: initialConfig
       })
     )
 
@@ -414,7 +398,7 @@ export default class TraceMarker extends Attribute {
           value: '颜色标尺反转。只有当 <code>marker.color</code> 被设置为数值数组时，此设置才有效。'
         },
         controller: new AttributeController({ type: 'boolean', default: false }),
-        initialConfig: initialConfigOfMarkerColor
+        initialConfig: initialConfig
       })
     )
 
@@ -427,7 +411,7 @@ export default class TraceMarker extends Attribute {
             '是否显示颜色标尺。默认不显示，因为颜色卡尺需要在颜色条中显示，所以如果设置了<code>marker.colorbar</code>属性，则颜色标尺将自动显示。'
         },
         controller: new AttributeController({ type: 'boolean', default: false }),
-        initialConfig: initialConfigOfMarkerColor
+        initialConfig: initialConfig
       })
     )
 
@@ -450,10 +434,10 @@ export default class TraceMarker extends Attribute {
       })
     )
 
-    this.addChild(new TraceMarkerColoBar(this, undefined, initialConfigOfMarkerColor))
+    this.addChild(new TraceMarkerColoBar(this, undefined, initialConfig))
 
-    this.addChild(new TraceMarkerGradient(this, undefined, initialConfigOfMarkerColor))
+    this.addChild(new TraceMarkerGradient(this))
 
-    this.addChild(new TraceMarkerLine(this, undefined, initialConfigOfMarkerColor))
+    this.addChild(new TraceMarkerLine(this, undefined, initialConfig))
   }
 }
