@@ -5,26 +5,18 @@ import {
   TraceLegendAbout,
   TraceOpacity,
   TraceIds,
-  TraceZorder,
   TraceMeta,
-  TraceXaxis,
-  TraceYaxis,
-  TraceSelectedPoints,
-  TraceCliponaxis,
-  TraceOrientation,
-  TraceTextAngle,
-  TraceType
+  TraceType,
+  TraceCustomdata,
+  TraceAutoMargin
 } from '../trace.base'
-import TraceData from '../trace.data'
 import AttributeController from 'entities/attribute.controller'
 import TraceText from '../trace.text'
-import TraceHover from '../trace.hover'
 import TraceMarker from '../trace.marker'
-import TraceErrorBar from '../trace.error.bar'
-import TraceSelected from '../trace.selected'
 import PieHover from './pie.hover'
 import PieMarker from './pie.marker'
-import { BaseUirevision } from '../../base'
+import PieDomain from './pie.domain'
+import { BaseUirevision, Font } from '../../base'
 
 export default class TracePie extends Attribute {
   constructor(parent: Attribute) {
@@ -37,7 +29,7 @@ export default class TracePie extends Attribute {
           type: 'pie'
         }
       ],
-      layout: { title: { text: 'The example of pie trace' } }
+      layout: { title: { text: '饼图示例' } }
     }
 
     super('pie', 'Pie', {
@@ -161,6 +153,133 @@ export default class TracePie extends Attribute {
     new TraceMarker(this)
 
     this.addChild(new PieMarker(this))
+
+    this.addChild(new TraceMeta(this))
+
+    this.addChild(new TraceCustomdata(this))
+
+    this.addChild(new PieDomain(this))
+
+    this.addChild(new TraceAutoMargin(this))
+
+    this.addChild(
+      new Attribute(
+        'direction',
+        { type: 'enum', value: ['clockwise', 'counterclockwise'] },
+        {
+          parent: this,
+          description: { type: 'string', value: '设置饼图的方向。' },
+          controller: new AttributeController({
+            type: 'select',
+            default: 'clockwise',
+            options: ['clockwise', 'counterclockwise']
+          })
+        }
+      )
+    )
+
+    this.addChild(
+      new Attribute('hole', 'number', {
+        parent: this,
+        description: {
+          type: 'string',
+          value: '设置饼图的内环半径大小。'
+        },
+        controller: new AttributeController({ type: 'number', default: 0, min: 0, max: 1, step: 0.1 })
+      })
+    )
+
+    this.addChild(
+      new Font('insidetextfont', 'Font', {
+        parent: this,
+        description: {
+          type: 'string',
+          value: '设置扇形内部文字的字体样式。此属性优先级高于<code>bar.textfont</code>属性。'
+        }
+      })
+    )
+
+    this.addChild(
+      new Attribute(
+        'insidetextorientation',
+        { type: 'enum', value: ['horizontal', 'radial', 'tangential', 'auto'] },
+        {
+          parent: this,
+          description: { type: 'string', value: '设置扇形内部文字的显示方向。' },
+          controller: new AttributeController({
+            type: 'select',
+            default: 'auto',
+            options: ['horizontal', 'radial', 'tangential', 'auto']
+          })
+        }
+      )
+    )
+
+    this.addChild(
+      new Font('outsidetextfont', 'Font', {
+        parent: this,
+        description: {
+          type: 'string',
+          value: '设置扇形外部文字的字体样式。此属性优先级高于<code>bar.textfont</code>属性。'
+        }
+      })
+    )
+
+    this.addChild(
+      new Attribute('rotation', 'number', {
+        parent: this,
+        description: {
+          type: 'string',
+          value: '默认情况下，第一个扇形在12点钟方向开始绘制。通过此属性可以将扇形旋转。'
+        },
+        controller: new AttributeController({ type: 'number', default: 0 })
+      })
+    )
+
+    this.addChild(
+      new Attribute('scalegroup', 'string', {
+        parent: this,
+        description: {
+          type: 'string',
+          value:
+            '如果你想根据饼图的数据总和大小来调整饼图的大小，请将各个饼图的<code>scalegroup</code>属性设置为相同的值。'
+        },
+        controller: new AttributeController({ type: 'select', default: '', options: ['', 'one'] }),
+        initialConfig: {
+          data: [
+            {
+              values: [10, 20, 30],
+              text: ['Residential', 'Non-Residential', 'Utility'],
+              scalegroup: '',
+              type: 'pie',
+              domain: { column: 0 }
+            },
+            {
+              values: [200, 100, 300],
+              text: ['Residential', 'Non-Residential', 'Utility'],
+              scalegroup: 'one',
+              type: 'pie',
+              domain: { column: 1 }
+            }
+          ],
+          layout: {
+            title: { text: '请尝试更改第一个饼图的scalegroup属性观察变化效果。' },
+            grid: { rows: 1, columns: 2 }
+          }
+        }
+      })
+    )
+
+    this.addChild(
+      new Attribute('sort', 'boolean', {
+        parent: this,
+        description: {
+          type: 'string',
+          value: '设置扇形是否根据数据大小进行排序。'
+        },
+        controller: new AttributeController({ type: 'boolean', default: true })
+      })
+    )
 
     this.addChild(new BaseUirevision(this))
   }

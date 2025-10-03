@@ -54,6 +54,7 @@
   },
   "cSpell.words": [
     "arrayminus",
+    "automargin",
     "bgcolor",
     "bordercolor",
     "borderwidth",
@@ -97,6 +98,7 @@
     "relayout",
     "reversescale",
     "roworder",
+    "scalegroup",
     "selectedpoints",
     "separatethousands",
     "showexponent",
