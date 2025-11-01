@@ -47,6 +47,7 @@ declare module 'vue' {
     ElTree: typeof import('element-plus/es')['ElTree']
     GirdSubplot: typeof import('./src/components/doc/layout/GirdSubplot.vue')['default']
     GirdXaxes: typeof import('./src/components/doc/layout/GirdXaxes.vue')['default']
+    PageScrollAnimation: typeof import('./src/components/PageScrollAnimation.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SelectionRevision: typeof import('./src/components/doc/layout/SelectionRevision.vue')['default']

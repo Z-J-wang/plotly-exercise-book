@@ -39,7 +39,7 @@ declare module 'plotly.js-dist' {
 
 <template>
   <main>
-    <section class="m-full bg-white">
+    <section class="fade-section m-full bg-white">
       <div class="max-w-screen-xl w-full mx-auto py-6">
         <h2 class="text-6xl font-bold mt-10 mb-10 text-primary">Plotly Exercise Book</h2>
         <p class="w-2/3 text-xl">
@@ -87,7 +87,7 @@ declare module 'plotly.js-dist' {
         </div>
       </div>
     </section>
-    <section class="max-w-screen-xl w-full mx-auto mt-4 px-4 py-8 bg-white">
+    <section class="fade-section max-w-screen-xl w-full mx-auto mt-4 px-4 py-8 bg-white">
       <section>
         <h2 class="text-2xl font-bold mb-4">认识 Plotly</h2>
         <p>
