@@ -61,7 +61,7 @@ export class TraceLegendAbout {
             '2. 渲染一个饼状图。<br />' +
             '3. 明确通过<code>showlegend:true</code>声明。'
         },
-        controller: new AttributeController({ type: 'boolean', default: true })
+        controller: new AttributeController({ type: 'boolean', default: null })
       })
     )
 

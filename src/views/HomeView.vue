@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import CodeEditor from '@/components/CodeEditor.vue'
 import { Right } from '@element-plus/icons-vue'
+import PageScrollAnimation from '@/components/PageScrollAnimation.vue'
 
 const cdnCode =
   `<head>
@@ -38,6 +39,7 @@ declare module 'plotly.js-dist' {
 </script>
 
 <template>
+  <PageScrollAnimation />
   <main>
     <section class="fade-section m-full bg-white">
       <div class="max-w-screen-xl w-full mx-auto py-6">

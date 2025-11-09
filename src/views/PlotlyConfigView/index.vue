@@ -85,11 +85,11 @@ onMounted(() => {
       </el-scrollbar>
     </el-aside>
     <el-main class="bg-gray-50 !p-0">
-      <el-scrollbar height="calc(100vh - 60px)">
+      <el-scrollbar height="calc(100vh - 70px)">
         <div
           class="options-view flex"
           :class="{ 'flex-col': direction === 'vertical' }"
-          :style="{ minHeight: 'calc(100vh - 60px)' }"
+          :style="{ minHeight: 'calc(100vh - 70px)' }"
         >
           <div class="flex-auto p-4 bg-white min-w-0">
             <el-tree
