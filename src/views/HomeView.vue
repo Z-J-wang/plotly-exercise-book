@@ -39,15 +39,20 @@ declare module 'plotly.js-dist' {
 
 <template>
   <main>
-    <section class="m-full bg-white">
+    <section class="fade-section m-full bg-white">
       <div class="max-w-screen-xl w-full mx-auto py-6">
-        <h2 class="text-6xl font-bold mt-10 mb-10 text-primary">Plotly Exercise Book</h2>
-        <p class="w-2/3 text-xl">
+        <h2 class="text-5xl font-bold mt-10 mb-10 text-primary">Plotly Exercise Book</h2>
+        <p class="w-2/3 text-lg">
           Plotly Exercise Book（Plotly 练习册）旨在帮助前端开发人员更好的学习和使用 Plotly，系统性描述 plotly.js
           使用方法，对常用的配置项提供了交互式的程序示例，以便直观的感受和了解 plotly.js 的使用方法。
         </p>
-        <div class="md:columns-3 sm:columns-1 mt-20 mb-8">
-          <el-card shadow="hover" class="rounded-lg" header-class="bg-stone-100" body-class="bg-stone-100">
+        <div class="md:columns-3 sm:columns-1 mt-16 mb-6">
+          <el-card
+            shadow="hover"
+            class="rounded-lg hover:outline outline-primary hover:scale-x-105 transition-all ease-linear duration-150"
+            header-class="bg-stone-100"
+            body-class="bg-stone-100"
+          >
             <template #header>
               <el-text size="large" class="font-bold">配置项说明</el-text>
             </template>
@@ -60,7 +65,12 @@ declare module 'plotly.js-dist' {
               </RouterLink>
             </div>
           </el-card>
-          <el-card shadow="hover" header-class="bg-stone-100" body-class="bg-stone-100">
+          <el-card
+            shadow="hover"
+            class="rounded-lg hover:outline outline-primary hover:scale-x-105 transition-all ease-linear duration-150"
+            header-class="bg-stone-100"
+            body-class="bg-stone-100"
+          >
             <template #header>
               <el-text size="large" class="font-bold">Api 说明</el-text>
             </template>
@@ -73,7 +83,12 @@ declare module 'plotly.js-dist' {
               </RouterLink>
             </div>
           </el-card>
-          <el-card shadow="hover" header-class="bg-stone-100" body-class="bg-stone-100">
+          <el-card
+            shadow="hover"
+            class="rounded-lg hover:outline outline-primary hover:scale-x-105 transition-all ease-linear duration-150"
+            header-class="bg-stone-100"
+            body-class="bg-stone-100"
+          >
             <template #header>
               <el-text size="large" class="font-bold">案例</el-text>
             </template>
@@ -87,7 +102,7 @@ declare module 'plotly.js-dist' {
         </div>
       </div>
     </section>
-    <section class="max-w-screen-xl w-full mx-auto mt-4 px-4 py-8 bg-white">
+    <div class="fade-section max-w-screen-xl w-full mx-auto mt-6 px-6 py-6 bg-white">
       <section>
         <h2 class="text-2xl font-bold mb-4">认识 Plotly</h2>
         <p>
@@ -242,6 +257,6 @@ declare module 'plotly.js-dist' {
           <CodeEditor :model-value="plotlyTypeDeclarationCode" />
         </div>
       </section>
-    </section>
+    </div>
   </main>
 </template>

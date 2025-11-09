@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
 import { RouterLink, RouterView, useRoute } from 'vue-router'
+import PageScrollAnimation from '@/components/PageScrollAnimation.vue'
 
 const route = useRoute()
 const year = ref(new Date().getFullYear())
@@ -12,6 +13,7 @@ const showFooter = computed(() => {
 </script>
 
 <template>
+  <PageScrollAnimation />
   <el-container class="basic-layout">
     <el-header class="bg-white border-0 shadow flex justify-between items-center z-50">
       <RouterLink :to="{ name: 'Home' }" class="font-bold text-2xl no-underline text-primary"

@@ -3,6 +3,10 @@
 @import './tailwind.css';
 @import './transition.css';
 
+html{
+  font-size: 16px;
+}
+
 .w-v-40 {
   width: 40vw;
 }
