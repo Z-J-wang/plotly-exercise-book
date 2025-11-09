@@ -38,7 +38,7 @@ onMounted(() => {
       // 创建滚动触发器，详见：https://www.wuzao.com/gsap/docs/v3/Plugins/ScrollTrigger/index.html#config-object
       ScrollTrigger.create({
         trigger: section,
-        start: 'top 80%',
+        start: 'top 100%',
         animation: gsap.to(section, {
           opacity: 1,
           y: 0,
