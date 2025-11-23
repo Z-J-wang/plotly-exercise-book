@@ -28,7 +28,7 @@ const showFooter = computed(() => {
           <el-menu-item index="/docs/api">
             <router-link class="no-underline" :to="{ name: 'Api' }">API</router-link>
           </el-menu-item>
-          <el-menu-item index="/example">
+          <el-menu-item>
             <a href="https://plotly.com/javascript/" target="_blank" rel="noopener noreferrer">案例</a>
           </el-menu-item>
         </el-menu>
