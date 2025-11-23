@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, watchEffect } from 'vue'
+import { onMounted, onUnmounted, ref, watchEffect } from 'vue'
 import { VueLenis } from 'lenis/vue'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -24,6 +24,11 @@ watchEffect((onInvalidate) => {
   // 从watchEffect的前一次执行中清除GSAP的报价器，或者当该效果停止时
   onInvalidate(() => {
     gsap.ticker.remove(update)
+  })
+
+  onUnmounted(() => {
+    gsap.ticker.remove(update)
+    lenisRef.value.lenis.destroy()
   })
 })
 

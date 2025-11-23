@@ -61,7 +61,7 @@ export class TraceLegendAbout {
             '2. 渲染一个饼状图。<br />' +
             '3. 明确通过<code>showlegend:true</code>声明。'
         },
-        controller: new AttributeController({ type: 'boolean', default: true })
+        controller: new AttributeController({ type: 'boolean', default: null })
       })
     )
 
@@ -244,7 +244,7 @@ export class TraceConnectgaps extends Attribute {
           '如果设置为 <code>true</code>，则缺失数据点将用线段连接。即，如果x或者y轴数据有缺失值，则将缺失值设置前后数值的平均值。' +
           '如果设置为 <code>false</code>，则缺失数据点将不连接。'
       },
-      controller: new AttributeController({ default: false })
+      controller: new AttributeController({ type: 'boolean', default: false })
     })
   }
 }

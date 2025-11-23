@@ -34,6 +34,15 @@ async function openEdit() {
     removeConfig(props.data.id)
   }
 }
+
+function convertDescription(description: string) {
+  let temp = description
+  if (Array.isArray(description)) {
+    temp = description.join('')
+  }
+
+  return temp.replace(/\“/g, '<code>').replace(/\”/g, '</code>').replace(/\n/g, '<br />')
+}
 </script>
 
 <template>
@@ -70,7 +79,11 @@ async function openEdit() {
           <span>默认值：</span> <el-tag type="primary" size="small">{{ data.controller?.default }}</el-tag>
         </div>
         <div class="mt-2">
-          <span class="whitespace-normal" v-if="data.description.type === 'string'" v-html="data.description.value" />
+          <span
+            class="whitespace-normal"
+            v-if="data.description.type === 'string'"
+            v-html="convertDescription(data.description.value)"
+          />
           <component v-else-if="data.description.type === 'Component'" :is="data.description.value" />
         </div>
       </div>

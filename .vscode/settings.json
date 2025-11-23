@@ -134,9 +134,11 @@
     "xaxis",
     "xhoverformat",
     "xside",
+    "xtype",
     "yaxes",
     "yaxis",
     "yside",
+    "zhoverformat",
     "zorder"
   ],
   "diffEditor.ignoreTrimWhitespace": false,
