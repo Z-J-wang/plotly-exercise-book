@@ -2,14 +2,11 @@ import Attribute from 'entities/attribute'
 import AttributeController from 'entities/attribute.controller'
 import { Font } from '../base'
 
-export default class TraceMarkerColoBar extends Attribute {
+export default class TraceColoBar extends Attribute {
   constructor(parent: Attribute, description?: Attribute.Description, initialConfig?: PlotlyConfig) {
     super('colorbar', 'ColorBar', {
       parent,
-      description: description || {
-        type: 'string',
-        value: '颜色条样式设置。因为颜色标尺在颜色条中显示，所以<code>marker.showscale</code>属性会影响颜色条的显示。'
-      },
+      description: description || { type: 'string', value: '颜色条样式设置。' },
       initialConfig
     })
 

@@ -9,20 +9,16 @@ import {
   TraceMeta,
   TraceXaxis,
   TraceYaxis,
-  TraceSelectedPoints,
-  TraceCliponaxis,
-  TraceOrientation,
-  TraceTextAngle,
+  TraceConnectgaps,
   TraceType
 } from '../trace.base'
-import TraceData from '../trace.data'
+import HeatmapData from './heatmap.data'
 import AttributeController from 'entities/attribute.controller'
 import TraceText from '../trace.text'
 import TraceHover from '../trace.hover'
-import TraceMarker from '../trace.marker'
-import TraceErrorBar from '../trace.error.bar'
-import TraceSelected from '../trace.selected'
 import { BaseUirevision } from '../../base'
+import Colorbar from '../trace.colorbar'
+import TraceColorscale from '../trace.colorscale'
 
 export default class TraceBar extends Attribute {
   constructor(parent: Attribute) {
@@ -75,53 +71,18 @@ export default class TraceBar extends Attribute {
 
     this.addChild(new TraceZorder(this))
 
-    // 翻译到此处
-
-    new TraceData(this)
+    new HeatmapData(this)
 
     this.addChild(
-      new Attribute('base', 'number | number[]', {
+      new Attribute('text', '[]', {
         parent: this,
-        description: {
-          type: 'string',
-          value: '设置柱状图基线。如果其值为数字数组，则对每个柱状设置单独设置。'
-        },
-        controller: new AttributeController({ type: 'number', default: 0 })
+        description: { type: 'string', value: '设置以每个z值关联的文本。' }
       })
     )
 
-    this.addChild(
-      new Attribute('width', 'number | number[]', {
-        parent: this,
-        description: { type: 'string', value: '设置柱状图宽度。如果其值为数字数组，则对每个柱状设置单独设置。' },
-        controller: new AttributeController({ type: 'number', default: null, min: 0, step: 0.1 })
-      })
-    )
+    new TraceText(this, ['text', 'textfont'])
 
-    new TraceText(this)
-
-    this.addChild(
-      new Attribute(
-        'textposition',
-        {
-          type: 'enum',
-          value: ['inside', 'outside', 'auto', 'none']
-        },
-        {
-          parent: this,
-          description: { type: 'string', value: '设置文本在柱状图中显示的位置。' },
-          controller: new AttributeController({
-            type: 'select',
-            default: 'auto',
-            options: ['inside', 'outside', 'auto', 'none']
-          })
-        }
-      )
-    )
-
-    this.addChild(new TraceTextAngle(this))
-
-    new TraceHover(this)
+    new TraceHover(this, ['zhoverformat'])
 
     this.addChild(new TraceMeta(this))
 
@@ -129,79 +90,89 @@ export default class TraceBar extends Attribute {
 
     this.addChild(new TraceYaxis(this))
 
-    this.addChild(new TraceOrientation(this))
-
     this.addChild(
-      new TraceMarker(
-        this,
-        { type: 'string', value: '柱状图柱子的样式设置。注意，部分属性可能不生效。' },
-        {
-          data: [
-            {
-              x: ['giraffes', 'orangutans', 'monkeys'],
-              y: [20, 14, 23],
-              text: ['A', 'B', 'C'],
-              type: 'bar',
-              marker: {
-                color: [10, 15, 30],
-                size: [10, 30, 20]
-              }
-            }
-          ]
-        }
-      )
+      new Attribute('coloraxis', 'string', {
+        parent: this,
+        description: {
+          type: 'string',
+          value:
+            '指定要使用的颜色轴配置。关于颜色轴的配置，详见 <a href="#layout.coloraxis"><code>layout.coloraxis</code></a>。'
+        },
+        controller: new AttributeController({ default: 'x' })
+      })
     )
 
+    this.addChild(new Colorbar(this))
+
+    new TraceColorscale(this)
+
     this.addChild(
-      new TraceErrorBar('error_x', {
+      new Attribute('zauto', 'boolean', {
         parent: this,
-        description: { type: 'string', value: '设置数据点的在水平方向上的误差条。' }
+        description: {
+          type: 'string',
+          value:
+            '确定颜色域的计算是基于输入数据（此处为“z”）进行的，还是基于在“zmin”和“zmax”中设定的范围进行的。' +
+            '当用户设置了“zmin”和“zmax”时，默认值为“false”。'
+        },
+        controller: new AttributeController({ type: 'boolean', default: null })
       })
     )
 
     this.addChild(
-      new TraceErrorBar('error_y', {
+      new Attribute('zmin', 'number', {
         parent: this,
-        description: { type: 'string', value: '设置数据点的垂直方向上的误差条。' }
-      })
-    )
-
-    this.addChild(new TraceSelectedPoints(this))
-
-    this.addChild(
-      new TraceSelected('selected', {
-        parent: this,
-        description: { type: 'string', value: '设置数据点的选择样式。' }
+        description: {
+          type: 'string',
+          value: '设置颜色域的最小值。'
+        },
+        controller: new AttributeController({ type: 'number', default: null })
       })
     )
 
     this.addChild(
-      new TraceSelected('unselected', {
+      new Attribute('zmax', 'number', {
         parent: this,
-        description: { type: 'string', value: '设置数据点的未选择样式。' }
+        description: {
+          type: 'string',
+          value: '设置颜色域的上限值。该值应与“z”中的单位相同，若设置此值，则“zmin”也必须进行设置。'
+        },
+        controller: new AttributeController({ type: 'number', default: null })
       })
     )
 
-    this.addChild(new TraceCliponaxis(this))
+    this.addChild(
+      new Attribute('zmid', 'number', {
+        parent: this,
+        description: {
+          type: 'string',
+          value:
+            '通过将 “zmin” 和/或 “zmax” 进行缩放，使颜色域的中点与该点保持等距。该值应与 "z" 中的单位相同。当 “zauto” 为 “false” 时，此操作将不起作用。'
+        },
+        controller: new AttributeController({ type: 'number', default: null })
+      })
+    )
 
     this.addChild(
       new Attribute(
-        'constraintext',
-        { type: 'enum', value: ['both', 'inside', 'outside', 'none'] },
+        'zsmooth',
+        { type: 'enum', value: ['fast', 'best', false] },
         {
           parent: this,
           description: {
             type: 'string',
-            value: '将条形图内部或外部的文字大小限制在不超出条形图本身的范围内。'
+            value: '设置颜色域的平滑度。'
           },
           controller: new AttributeController({
             type: 'select',
-            default: 'both',
-            options: ['both', 'inside', 'outside', 'none']
+            default: false,
+            options: ['fast', 'best', false]
           })
         }
       )
     )
+
+    this.addChild(new TraceConnectgaps(this))
 
     this.addChild(new BaseUirevision(this))
   }

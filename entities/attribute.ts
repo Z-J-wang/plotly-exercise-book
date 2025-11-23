@@ -1,4 +1,5 @@
 import AttributeController from './attribute.controller'
+
 export default class Attribute {
   private _parent!: Attribute // 当前属性的父属性
   get parent(): Attribute {
@@ -76,6 +77,12 @@ export default class Attribute {
     }
   }
 
+  /**
+   *
+   * @param name
+   * @param type
+   * @param options 属性选项
+   */
   constructor(name: string, type: string | Attribute.Type, options?: Attribute.Options) {
     this._name = name
 
