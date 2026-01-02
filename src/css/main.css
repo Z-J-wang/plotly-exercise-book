@@ -2,6 +2,7 @@
 @import './base.css';
 @import './tailwind.css';
 @import './transition.css';
+@import './markdwon.less';
 
 html{
   font-size: 16px;
