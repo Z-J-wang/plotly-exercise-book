@@ -103,6 +103,7 @@ declare namespace Attribute {
     type:
       | 'string' // 字符串类型支持 string 和 array 两种数据类型
       | 'Component'
+      | 'markdown'
 
     // 当 type = 'string'是，字符串中的的“”表示行内代码块，\n 表示换行
     value: string | array | Component
