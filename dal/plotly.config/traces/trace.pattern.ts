@@ -1,5 +1,5 @@
-import Attribute from 'entities/attribute'
-import AttributeController from 'entities/attribute.controller'
+import Attribute from 'entity/attribute'
+import AttributeController from 'entity/attribute.controller'
 
 export default class TracePattern extends Attribute {
   constructor(name: string, options?: Attribute.Options) {

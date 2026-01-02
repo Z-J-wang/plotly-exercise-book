@@ -1,5 +1,5 @@
-import Attribute from 'entities/attribute'
-import AttributeController from 'entities/attribute.controller'
+import Attribute from 'entity/attribute'
+import AttributeController from 'entity/attribute.controller'
 import { merge } from 'lodash'
 import TraceMarkerColoBar from './trace.colorbar'
 import TraceMarkerGradient from './trace.marker.gradient'

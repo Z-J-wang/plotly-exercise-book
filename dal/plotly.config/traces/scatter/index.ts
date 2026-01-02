@@ -1,4 +1,4 @@
-import Attribute from 'entities/attribute'
+import Attribute from 'entity/attribute'
 import {
   TraceName,
   TraceVisible,
@@ -16,7 +16,7 @@ import {
   TraceType
 } from '../trace.base'
 import TraceData from '../trace.data'
-import AttributeController from 'entities/attribute.controller'
+import AttributeController from 'entity/attribute.controller'
 import TraceText from '../trace.text'
 import TraceHover from '../trace.hover'
 import TraceStack from '../trace.stack'

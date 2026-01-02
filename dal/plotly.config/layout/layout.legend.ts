@@ -1,6 +1,6 @@
-import Attribute from 'entities/attribute'
+import Attribute from 'entity/attribute'
 import { Font } from '../base'
-import AttributeController from 'entities/attribute.controller'
+import AttributeController from 'entity/attribute.controller'
 
 class LegendTitle extends Attribute {
   constructor(parent: Attribute | null) {

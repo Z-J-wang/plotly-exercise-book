@@ -1,5 +1,5 @@
 import LayoutAttributes from 'dal/plotly.config/layout/index'
-import Attribute from 'entities/attribute'
+import Attribute from 'entity/attribute'
 import ConfigureAttribute from 'dal/plotly.config/configure/index'
 import TracesAttributes from 'dal/plotly.config/traces/index'
 import { defineAsyncComponent } from 'vue'

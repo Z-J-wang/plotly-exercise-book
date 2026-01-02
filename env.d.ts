@@ -41,7 +41,7 @@ declare interface PlotlyConfig {
 }
 
 declare namespace Attribute {
-  import AttributeEntity from 'entities/attribute'
+  import AttributeEntity from 'entity/attribute'
 
   /**
    * Attribute类型

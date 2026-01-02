@@ -1,6 +1,6 @@
-import Attribute from 'entities/attribute'
+import Attribute from 'entity/attribute'
 import { Font, Pad } from '../base'
-import AttributeController from 'entities/attribute.controller'
+import AttributeController from 'entity/attribute.controller'
 
 class SubTittle extends Attribute {
   constructor(parent: Attribute, description: Attribute.Description = { type: 'string', value: '副标题' }) {

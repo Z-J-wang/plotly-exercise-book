@@ -1,4 +1,4 @@
-import Attribute from 'entities/attribute'
+import Attribute from 'entity/attribute'
 import {
   TraceName,
   TraceVisible,
@@ -10,7 +10,7 @@ import {
   TraceCustomdata,
   TraceAutoMargin
 } from '../trace.base'
-import AttributeController from 'entities/attribute.controller'
+import AttributeController from 'entity/attribute.controller'
 import TraceText from '../trace.text'
 import TraceMarker from '../trace.marker'
 import PieHover from './pie.hover'

@@ -1,4 +1,4 @@
-import Attribute from 'entities/attribute'
+import Attribute from 'entity/attribute'
 import { BaseConfig } from '../base'
 import TraceScatter from './scatter/index'
 import TraceBar from './bar/index'

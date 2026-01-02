@@ -24,7 +24,7 @@ export default defineConfig(async () => {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
         dal: fileURLToPath(new URL('./dal', import.meta.url)),
         bll: fileURLToPath(new URL('./bll', import.meta.url)),
-        entities: fileURLToPath(new URL('./entities', import.meta.url)),
+        entity: fileURLToPath(new URL('./entity', import.meta.url)),
         api: fileURLToPath(new URL('./api', import.meta.url))
       }
     },

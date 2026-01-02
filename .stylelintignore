@@ -10,7 +10,7 @@ public
 .vscode
 .husky
 .github
-entities
+entity
 dal
 bll
 api

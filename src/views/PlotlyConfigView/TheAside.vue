@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useRoute, useRouter } from 'vue-router'
 import { useAttributeStore } from '@/stores/attribute'
-import Attribute from 'entities/attribute'
+import Attribute from 'entity/attribute'
 import { ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 

@@ -1,7 +1,7 @@
-import Attribute from 'entities/attribute'
+import Attribute from 'entity/attribute'
 import { BaseConfig } from '../base'
 import ConfigEdits from './configure.edit'
-import AttributeController from 'entities/attribute.controller'
+import AttributeController from 'entity/attribute.controller'
 import ConfigureModeBar from './configure.mode.bar'
 
 export default class Layout extends BaseConfig {

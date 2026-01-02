@@ -1,6 +1,6 @@
-import Attribute from 'entities/attribute'
+import Attribute from 'entity/attribute'
 import { Line } from '../../base'
-import AttributeController from 'entities/attribute.controller'
+import AttributeController from 'entity/attribute.controller'
 
 export default class ScatterLine extends Line {
   constructor(parent: Attribute) {
