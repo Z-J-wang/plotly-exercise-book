@@ -32,7 +32,7 @@ defineProps({
 })
 
 watch(
-  [() => plotlyConfig.value, openDisplay],
+  [() => plotlyConfig.value, openDisplay, position],
   () => {
     renderPlot()
   },
@@ -61,7 +61,10 @@ onMounted(() => {
     </el-button>
   </div>
   <Transition name="slide-fade">
-    <div v-if="openDisplay" class="plot-display flex p-2 h-full flex-col shadow-xl outline outline-gray-100">
+    <div
+      v-if="openDisplay"
+      class="plot-display flex p-2 h-full flex-col shadow-[0px_0px_10px_2px_#0000001a;] outline outline-gray-100"
+    >
       <div class="flex-initial flex justify-between items-center pt-2 px-4 pb-4">
         <h3 class="font-bold">配置项预览效果</h3>
         <div>
@@ -88,7 +91,11 @@ onMounted(() => {
         </div>
       </div>
       <div class="flex-grow min-h-0 min-w-0" :class="direction === 'horizontal' ? '' : 'columns-2'">
-        <div id="PlotContainer" class="plot-container h-1/2 w-full"></div>
+        <div
+          id="PlotContainer"
+          class="plot-container w-full"
+          :class="direction === 'horizontal' ? 'h-1/2' : 'h-full'"
+        ></div>
         <CodeEditor
           class="w-full"
           :customStyle="{ height: direction === 'horizontal' ? '50%' : '100%' }"

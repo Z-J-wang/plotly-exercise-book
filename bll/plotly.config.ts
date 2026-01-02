@@ -52,6 +52,7 @@ const config = new Attribute('config', 'Config', {
     layout: { title: { text: 'Config Title' }, showlegend: true }
   }
 })
+
 config.children = new ConfigureAttribute(config).attributes
 
 const traces = new Attribute('traces', 'TraceData[]', {
