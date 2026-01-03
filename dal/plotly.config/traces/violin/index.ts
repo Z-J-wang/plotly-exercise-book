@@ -10,7 +10,10 @@ import {
   TraceXaxis,
   TraceYaxis,
   TraceConnectgaps,
-  TraceType
+  TraceType,
+  TraceCustomdata,
+  TraceOrientation,
+  TraceSelectedPoints
 } from '../trace.base'
 import ViolinData from './violin.data'
 import AttributeController from 'entity/attribute.controller'
@@ -20,6 +23,11 @@ import { BaseUirevision } from '../../base'
 import Colorbar from '../trace.colorbar'
 import TraceColorscale from '../trace.colorscale'
 import exampleData from '@/assets/data/violin.json'
+import ViolinAlignmentGroup from '@/components/doc/traces/ViolinAlignmentGroup.vue'
+import BoxMarker from '../box/marker'
+import ViolinLine from './violin.line'
+import ViolinBox from './violin.box'
+import TraceSelected from '../trace.selected'
 
 export default class TraceBar extends Attribute {
   constructor(parent: Attribute) {
@@ -27,7 +35,6 @@ export default class TraceBar extends Attribute {
       data: [
         {
           type: 'violin',
-          points: false,
           box: { visible: true },
           boxpoints: false,
           line: { color: 'black' },
@@ -74,102 +81,70 @@ export default class TraceBar extends Attribute {
     new ViolinData(this)
 
     this.addChild(
-      new Attribute('text', '[]', {
+      new Attribute('text', 'string | string[]', {
         parent: this,
-        description: { type: 'string', value: '设置以每个z值关联的文本。' }
+        description: {
+          type: 'markdown',
+          value:
+            '设置与每个样本值相关联的文本元素。若为单个字符串，则该字符串将显示在所有数据点上。若为字符串数组，则数组中的元素将按顺序映射到该轨迹的 (x, y) 坐标上。若要显示这些文本，轨迹的 `hoverinfo` 必须包含 `text` 标志。'
+        },
+        controller: new AttributeController({ type: 'string', default: null })
       })
     )
 
-    new TraceText(this, ['text', 'textfont'])
-
-    new TraceHover(this, ['zhoverformat'])
+    new TraceText(this, ['text', 'textfont', 'hoverongaps', 'texttemplate'])
 
     this.addChild(new TraceMeta(this))
+
+    this.addChild(new TraceCustomdata(this))
 
     this.addChild(new TraceXaxis(this))
 
     this.addChild(new TraceYaxis(this))
 
+    this.addChild(new TraceOrientation(this))
+
     this.addChild(
-      new Attribute('coloraxis', 'string', {
+      new Attribute('alignmentgroup', 'string', {
         parent: this,
         description: {
-          type: 'string',
-          value:
-            '指定要使用的颜色轴配置。关于颜色轴的配置，详见 <a href="#layout.coloraxis"><code>layout.coloraxis</code></a>。'
-        },
-        controller: new AttributeController({ default: 'x' })
-      })
-    )
-
-    this.addChild(new Colorbar(this))
-
-    new TraceColorscale(this)
-
-    this.addChild(
-      new Attribute('zauto', 'boolean', {
-        parent: this,
-        description: {
-          type: 'string',
-          value:
-            '确定颜色域的计算是基于输入数据（此处为“z”）进行的，还是基于在“zmin”和“zmax”中设定的范围进行的。' +
-            '当用户设置了“zmin”和“zmax”时，默认值为“false”。'
-        },
-        controller: new AttributeController({ type: 'boolean', default: null })
-      })
-    )
-
-    this.addChild(
-      new Attribute('zmin', 'number', {
-        parent: this,
-        description: {
-          type: 'string',
-          value: '设置颜色域的最小值。'
-        },
-        controller: new AttributeController({ type: 'number', default: null })
-      })
-    )
-
-    this.addChild(
-      new Attribute('zmax', 'number', {
-        parent: this,
-        description: {
-          type: 'string',
-          value: '设置颜色域的上限值。该值应与“z”中的单位相同，若设置此值，则“zmin”也必须进行设置。'
-        },
-        controller: new AttributeController({ type: 'number', default: null })
-      })
-    )
-
-    this.addChild(
-      new Attribute('zmid', 'number', {
-        parent: this,
-        description: {
-          type: 'string',
-          value:
-            '通过将 “zmin” 和/或 “zmax” 进行缩放，使颜色域的中点与该点保持等距。该值应与 "z" 中的单位相同。当 “zauto” 为 “false” 时，此操作将不起作用。'
-        },
-        controller: new AttributeController({ type: 'number', default: null })
-      })
-    )
-
-    this.addChild(
-      new Attribute(
-        'zsmooth',
-        { type: 'enum', value: ['fast', 'best', false] },
-        {
-          parent: this,
-          description: {
-            type: 'string',
-            value: '设置颜色域的平滑度。'
-          },
-          controller: new AttributeController({
-            type: 'select',
-            default: false,
-            options: ['fast', 'best', false]
-          })
+          type: 'Component',
+          value: ViolinAlignmentGroup
         }
-      )
+      })
+    )
+
+    this.addChild(
+      new Attribute('offsetgroup', 'string', {
+        parent: this,
+        description: {
+          type: 'markdown',
+          value:
+            '将与同一位置轴或匹配轴相关的多个轨迹设置为同一个偏移组，这样同一位置坐标下的柱形图将能够排列整齐。详见：`alignmentgroup`'
+        }
+      })
+    )
+
+    this.addChild(new BoxMarker(this))
+
+    this.addChild(new ViolinLine(this))
+
+    this.addChild(new ViolinBox(this))
+
+    this.addChild(new TraceSelectedPoints(this))
+
+    this.addChild(
+      new TraceSelected('selected', {
+        parent: this,
+        description: { type: 'string', value: '设置数据点的选择样式。' }
+      })
+    )
+
+    this.addChild(
+      new TraceSelected('unselected', {
+        parent: this,
+        description: { type: 'string', value: '设置数据点的未选择样式。' }
+      })
     )
 
     this.addChild(new TraceConnectgaps(this))

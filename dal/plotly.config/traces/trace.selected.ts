@@ -37,7 +37,7 @@ export default class TraceSelected extends Attribute {
     this.addChild(marker)
 
     const textfont = new Attribute('textfont', 'TextFont', {
-      parent: this.parent,
+      parent: this,
       description: { type: 'string', value: '文本字体。' }
     })
 

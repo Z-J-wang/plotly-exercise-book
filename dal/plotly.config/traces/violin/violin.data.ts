@@ -25,7 +25,6 @@ export default class HeatmapData {
           data: [
             {
               type: 'violin',
-              points: false,
               box: { visible: true },
               boxpoints: false,
               line: { color: 'black' },
@@ -77,7 +76,6 @@ export default class HeatmapData {
           data: [
             {
               type: 'violin',
-              points: false,
               box: { visible: true },
               boxpoints: false,
               line: { color: 'black' },
@@ -105,6 +103,33 @@ export default class HeatmapData {
             '设置单框轨迹的 y 坐标，或者使用 q1/中位数/q3 的值来设置多框轨迹的起始坐标。注意，当属性“y”存在时，该属性无效。'
         },
         controller: new AttributeController({ default: null, type: 'string', value: 'Total Bill' })
+      })
+    )
+
+    parent.addChild(
+      new Attribute('width', 'number', {
+        parent,
+        description: { type: 'string', value: '设置小提琴的宽度。当设置为默认值时，将自动选择宽度。' },
+        controller: new AttributeController({ type: 'number', default: 0, min: 0, max: 10, step: 0.1 }),
+        initialConfig: {
+          data: [
+            {
+              type: 'violin',
+              box: { visible: true },
+              boxpoints: false,
+              line: { color: 'black' },
+              fillcolor: '#8dd3c7',
+              opacity: 0.6,
+              meanline: { visible: true },
+              x: exampleData.map((item) => item.day),
+              y: exampleData.map((item) => item.total_bill)
+            }
+          ],
+          layout: {
+            title: { text: '自定义小提琴图的宽度' },
+            yaxis: { zeroline: true }
+          }
+        }
       })
     )
   }

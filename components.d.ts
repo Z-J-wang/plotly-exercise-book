@@ -54,5 +54,7 @@ declare module 'vue' {
     Template: typeof import('./src/components/doc/layout/Template.vue')['default']
     TraceData: typeof import('./src/components/doc/TraceData.vue')['default']
     UiRevision: typeof import('./src/components/doc/layout/UiRevision.vue')['default']
+    ViolinAlignentGroup: typeof import('./src/components/doc/traces/ViolinAlignentGroup.vue')['default']
+    ViolinAlignmentGroup: typeof import('./src/components/doc/traces/ViolinAlignmentGroup.vue')['default']
   }
 }
