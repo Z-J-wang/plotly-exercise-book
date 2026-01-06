@@ -1,3 +1,4 @@
+import { merge } from 'lodash'
 import Attribute from 'entity/attribute'
 import {
   TraceName,
@@ -28,6 +29,8 @@ import BoxMarker from '../box/marker'
 import ViolinLine from './violin.line'
 import ViolinBox from './violin.box'
 import TraceSelected from '../trace.selected'
+import { BoxPointpos, BoxJitter } from '../box/index'
+import ViolinMeanLine from './violin.meanline'
 
 export default class TraceBar extends Attribute {
   constructor(parent: Attribute) {
@@ -94,6 +97,9 @@ export default class TraceBar extends Attribute {
 
     new TraceText(this, ['text', 'textfont', 'hoverongaps', 'texttemplate'])
 
+    this.addChild(new ViolinHoveron({ options: { parent: this } }))
+    new TraceHover(this)
+
     this.addChild(new TraceMeta(this))
 
     this.addChild(new TraceCustomdata(this))
@@ -147,8 +153,88 @@ export default class TraceBar extends Attribute {
       })
     )
 
+    this.addChild(new ViolinBandwidth({ options: { parent: this } }))
+    this.addChild(new ViolinFillcolor({ options: { parent: this } }))
+
+    this.addChild(
+      new BoxPointpos({
+        options: {
+          parent: this,
+          description: {
+            type: 'string',
+            value:
+              '设置样本点相对于小提琴的位置。若设置为“0”，则样本点将位于小提琴的中心之上。正值（负值）对应于垂直小提琴的右侧（左侧）位置，以及水平小提琴的上方（下方）。'
+          }
+        }
+      })
+    )
+
+    this.addChild(new BoxJitter({ options: { parent: this } }))
+
+    this.addChild(new ViolinMeanLine({ options: { parent: this } }))
+
     this.addChild(new TraceConnectgaps(this))
 
     this.addChild(new BaseUirevision(this))
+  }
+}
+
+export class ViolinBandwidth extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'bandwidth',
+      type: 'number',
+      options: {
+        description: {
+          type: 'string',
+          value: '设置用于计算核密度估计值的带宽值。默认情况下，带宽是根据西尔弗曼的经验法则来确定的。'
+        },
+        controller: new AttributeController({ type: 'number', default: null, min: 0, step: 0.1 })
+      }
+    }
+    const mergedInitializer = merge(defaultInitializer, initializer)
+    super(mergedInitializer.name, mergedInitializer.type, mergedInitializer.options)
+  }
+}
+
+export class ViolinFillcolor extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'fillcolor',
+      type: 'Color',
+      options: {
+        description: {
+          type: 'string',
+          value: '小提琴图填充颜色。'
+        },
+        controller: new AttributeController({ type: 'color', default: null, value: '#8dd3c7' })
+      }
+    }
+    const mergedInitializer = merge(defaultInitializer, initializer)
+    super(mergedInitializer.name, mergedInitializer.type, mergedInitializer.options)
+  }
+}
+
+export class ViolinHoveron extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const opts = ['violins', 'points', 'kde', 'violins+points', 'violins+kde', 'points+kde', 'violins+points+kde']
+
+    const defaultInitializer = {
+      name: 'hoveron',
+      type: { type: 'enum', value: opts },
+      options: {
+        description: {
+          type: 'string',
+          value: '设置鼠标悬浮触发位置。'
+        },
+        controller: new AttributeController({
+          type: 'select',
+          default: 'violins+points+kde',
+          options: opts
+        })
+      }
+    }
+    const mergedInitializer = merge(defaultInitializer, initializer)
+    super(mergedInitializer.name, mergedInitializer.type, mergedInitializer.options)
   }
 }
