@@ -31,6 +31,7 @@ import ViolinBox from './violin.box'
 import TraceSelected from '../trace.selected'
 import { BoxPointpos, BoxJitter } from '../box/index'
 import ViolinMeanLine from './violin.meanline'
+import { BoxBoxPoints } from '../box'
 
 export default class TraceBar extends Attribute {
   constructor(parent: Attribute) {
@@ -174,6 +175,11 @@ export default class TraceBar extends Attribute {
     this.addChild(new ViolinMeanLine({ options: { parent: this } }))
 
     this.addChild(new TraceConnectgaps(this))
+    this.addChild(new BoxBoxPoints({ name: 'points', options: { parent: this } }))
+    this.addChild(new ViolinScalegroup({ options: { parent: this } }))
+    this.addChild(new ViolinScalemode({ options: { parent: this } }))
+    this.addChild(new ViolinSpanmode({ options: { parent: this } }))
+    this.addChild(new ViolinSpan({ options: { parent: this } }))
 
     this.addChild(new BaseUirevision(this))
   }
@@ -236,5 +242,86 @@ export class ViolinHoveron extends Attribute {
     }
     const mergedInitializer = merge(defaultInitializer, initializer)
     super(mergedInitializer.name, mergedInitializer.type, mergedInitializer.options)
+  }
+}
+
+export class ViolinScalegroup extends Attribute {
+  constructor(initialization: Attribute.Initializer) {
+    const defaultInitialization = {
+      name: 'scalegroup',
+      type: 'string',
+      options: {
+        description: {
+          type: 'string',
+          value:
+            '如果存在多个应根据某些度量标准（请参阅 `scalemode`）调整大小的小提琴图，则在此处提供一个非空的组 ID，以便将同一组中的每个轨迹链接起来。如果小提琴图的 `width` 未定义，则 `scalegroup` 将默认为轨迹的名称。在这种情况下，具有相同名称的小提琴图将被链接在一起。'
+        }
+      }
+    }
+
+    const mergedInitialization = merge(defaultInitialization, initialization)
+    super(mergedInitialization.name, mergedInitialization.type, mergedInitialization.options)
+  }
+}
+
+export class ViolinScalemode extends Attribute {
+  constructor(initialization: Attribute.Initializer) {
+    const defaultInitialization = {
+      name: 'scalemode',
+      type: { type: 'enum', value: ['count', 'width'] },
+      options: {
+        description: {
+          type: 'string',
+          value:
+            '设置用于确定同一“scalegroup”分组内的每个小提琴宽度的度量标准。“width”表示每把小提琴具有相同的（最大）宽度，“count”表示小提琴的大小根据构成每把小提琴的样本点数量进行缩放。'
+        },
+        controller: new AttributeController({ type: 'select', default: 'width', options: ['count', 'width'] })
+      }
+    }
+
+    const mergedInitialization = merge(defaultInitialization, initialization)
+    super(mergedInitialization.name, mergedInitialization.type, mergedInitialization.options)
+  }
+}
+
+export class ViolinSpanmode extends Attribute {
+  constructor(initialization: Attribute.Initializer) {
+    const defaultInitialization = {
+      name: 'spanmode',
+      type: { type: 'enum', value: ['hard', 'soft', 'manual'] },
+      options: {
+        description: {
+          type: 'markdown',
+          value: `
+设置用于计算密度函数的数据空间中的跨度的方法。
++ \`soft\`表示跨度范围是从样本的最小值减去两个带宽到样本的最大值加上两个带宽。
++ \`hard\`表示跨度范围是从样本的最小值到其最大值。
++ 对于自定义跨度设置，请使用\`manual\`模式并填写\`span\`属性。
+          `
+        },
+        controller: new AttributeController({ type: 'select', default: 'soft', options: ['hard', 'soft', 'manual'] })
+      }
+    }
+
+    const mergedInitialization = merge(defaultInitialization, initialization)
+    super(mergedInitialization.name, mergedInitialization.type, mergedInitialization.options)
+  }
+}
+
+export class ViolinSpan extends Attribute {
+  constructor(initialization: Attribute.Initializer) {
+    const defaultInitialization = {
+      name: 'span',
+      type: '[]',
+      options: {
+        description: {
+          type: 'string',
+          value: '设置用于计算密度函数的数据空间的跨度范围。只有在“spanmode = manual”时才有效。'
+        }
+      }
+    }
+
+    const mergedInitialization = merge(defaultInitialization, initialization)
+    super(mergedInitialization.name, mergedInitialization.type, mergedInitialization.options)
   }
 }
