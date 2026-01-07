@@ -116,4 +116,10 @@ declare namespace Attribute {
     children?: AttributeEntity[]
     initialConfig?: PlotlyConfig
   }
+
+  export interface Initialization {
+    name?: string
+    type?: string
+    options?: Options
+  }
 }
