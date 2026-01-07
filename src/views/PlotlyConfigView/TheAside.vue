@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { useRoute, useRouter } from 'vue-router'
 import { useAttributeStore } from '@/stores/attribute'
-import Attribute from 'entities/attribute'
-import { onMounted, ref, watch } from 'vue'
+import Attribute from 'entity/attribute'
+import { ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 
 const optionsStore = useAttributeStore()
@@ -11,7 +11,6 @@ const { tree: treeData } = storeToRefs(optionsStore)
 const route = useRoute()
 const router = useRouter()
 const currentNodeKey = ref('')
-const defaultExpandedKeys = ref([])
 
 watch(
   () => route.query.id,
@@ -22,9 +21,7 @@ watch(
       convertToExpendedKeysByID(id)
     }
   },
-  {
-    immediate: true
-  }
+  { immediate: true }
 )
 
 function convertToExpendedKeysByID(id: string) {
@@ -43,7 +40,6 @@ function convertToExpendedKeysByID(id: string) {
     }
     expandedKeys.push(idArr.join('-'))
   }
-  console.log(expandedKeys)
 
   return expandedKeys
 }
@@ -64,6 +60,7 @@ const defaultProps = {
     :data="treeData"
     :default-expanded-keys="[currentNodeKey]"
     node-key="id"
+    accordion
     highlight-current
     :current-node-key="currentNodeKey"
     :expand-on-click-node="false"

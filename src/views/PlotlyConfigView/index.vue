@@ -107,7 +107,7 @@ onMounted(() => {
           <div
             class="flex-shrink-0 bg-white"
             :class="rightSideClass"
-            :style="{ height: direction === 'horizontal' ? 'calc(100vh - 60px)' : '40vh' }"
+            :style="{ height: direction === 'horizontal' ? 'calc(100vh - 60px)' : '50vh' }"
           >
             <PlotlyDisplay ref="plotlyDisplay" :direction="direction" />
           </div>

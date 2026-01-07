@@ -1,6 +1,6 @@
 import { easing } from '@/utils/global.variable'
-import Attribute from 'entities/attribute'
-import AttributeController from 'entities/attribute.controller'
+import Attribute from 'entity/attribute'
+import AttributeController from 'entity/attribute.controller'
 
 /**
  * Plotly 配置基类，该类用于维护配置清单

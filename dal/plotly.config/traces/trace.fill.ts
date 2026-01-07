@@ -2,8 +2,8 @@
  * 轨迹填充相关属性
  * @class
  */
-import Attribute from 'entities/attribute'
-import AttributeController from 'entities/attribute.controller'
+import Attribute from 'entity/attribute'
+import AttributeController from 'entity/attribute.controller'
 import TracePattern from './trace.pattern'
 
 export class TraceFill extends Attribute {

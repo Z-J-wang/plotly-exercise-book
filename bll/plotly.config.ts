@@ -1,5 +1,5 @@
 import LayoutAttributes from 'dal/plotly.config/layout/index'
-import Attribute from 'entities/attribute'
+import Attribute from 'entity/attribute'
 import ConfigureAttribute from 'dal/plotly.config/configure/index'
 import TracesAttributes from 'dal/plotly.config/traces/index'
 import { defineAsyncComponent } from 'vue'
@@ -52,6 +52,7 @@ const config = new Attribute('config', 'Config', {
     layout: { title: { text: 'Config Title' }, showlegend: true }
   }
 })
+
 config.children = new ConfigureAttribute(config).attributes
 
 const traces = new Attribute('traces', 'TraceData[]', {

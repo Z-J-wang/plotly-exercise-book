@@ -1,4 +1,4 @@
-import Attribute from 'entities/attribute'
+import Attribute from 'entity/attribute'
 
 export default class LayoutColorAxis extends Attribute {
   constructor(name: string, parent: Attribute, description?: Attribute.Description) {

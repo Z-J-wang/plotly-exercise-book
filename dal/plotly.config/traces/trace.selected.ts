@@ -1,5 +1,5 @@
-import Attribute from 'entities/attribute'
-import AttributeController from 'entities/attribute.controller'
+import Attribute from 'entity/attribute'
+import AttributeController from 'entity/attribute.controller'
 
 export default class TraceSelected extends Attribute {
   constructor(name: string, options?: Attribute.Options) {
@@ -37,7 +37,7 @@ export default class TraceSelected extends Attribute {
     this.addChild(marker)
 
     const textfont = new Attribute('textfont', 'TextFont', {
-      parent: this.parent,
+      parent: this,
       description: { type: 'string', value: '文本字体。' }
     })
 

@@ -1,5 +1,5 @@
-import Attribute from 'entities/attribute'
-import AttributeController from 'entities/attribute.controller'
+import Attribute from 'entity/attribute'
+import AttributeController from 'entity/attribute.controller'
 import { Font } from '../base'
 import { defineAsyncComponent } from 'vue'
 
@@ -48,44 +48,47 @@ export class TraceVisible extends Attribute {
  * 轨迹图例相关属性
  */
 export class TraceLegendAbout {
-  constructor(parent: Attribute) {
-    parent.addChild(
-      new Attribute('showlegend', 'boolean', {
-        parent,
-        description: {
-          type: 'string',
-          value:
-            '是否显示轨迹图例。<br />' +
-            '默认情况下，满足以下任意条件则会显示图例：<br />' +
-            '1. 默认情况下，两个或多个图表。<br />' +
-            '2. 渲染一个饼状图。<br />' +
-            '3. 明确通过<code>showlegend:true</code>声明。'
-        },
-        controller: new AttributeController({ type: 'boolean', default: null })
-      })
-    )
+  constructor(parent: Attribute, omitChildren: string[] = []) {
+    !omitChildren.includes('showlegend') &&
+      parent.addChild(
+        new Attribute('showlegend', 'boolean', {
+          parent,
+          description: {
+            type: 'string',
+            value:
+              '是否显示轨迹图例。<br />' +
+              '默认情况下，满足以下任意条件则会显示图例：<br />' +
+              '1. 默认情况下，两个或多个图表。<br />' +
+              '2. 渲染一个饼状图。<br />' +
+              '3. 明确通过<code>showlegend:true</code>声明。'
+          },
+          controller: new AttributeController({ type: 'boolean', default: null })
+        })
+      )
 
-    parent.addChild(
-      new Attribute('legendrank', 'number', {
-        parent,
-        description: { type: 'string', value: '图例的级别（权重），默认 <code>1000</code>，数字越小越靠前。' },
-        controller: new AttributeController({ type: 'number', default: 1000 })
-      })
-    )
+    !omitChildren.includes('legendrank') &&
+      parent.addChild(
+        new Attribute('legendrank', 'number', {
+          parent,
+          description: { type: 'string', value: '图例的级别（权重），默认 <code>1000</code>，数字越小越靠前。' },
+          controller: new AttributeController({ type: 'number', default: 1000 })
+        })
+      )
 
-    parent.addChild(
-      new Attribute('legendgroup', 'string', {
-        parent,
-        description: {
-          type: 'string',
-          value:
-            '设置图例组名称。<br /> ' +
-            '用于图例分组。同一个组别的图例会集合到一起。切换图例项时，同一图例组的轨迹和形状部分同时隐藏/显示。' +
-            '默认值为 <code>""</code>，表示默认组别。即默认情况下，所有轨迹都显示在同一个组别中。'
-        },
-        controller: new AttributeController({ type: 'string', default: '' })
-      })
-    )
+    !omitChildren.includes('legendgroup') &&
+      parent.addChild(
+        new Attribute('legendgroup', 'string', {
+          parent,
+          description: {
+            type: 'string',
+            value:
+              '设置图例组名称。<br /> ' +
+              '用于图例分组。同一个组别的图例会集合到一起。切换图例项时，同一图例组的轨迹和形状部分同时隐藏/显示。' +
+              '默认值为 <code>""</code>，表示默认组别。即默认情况下，所有轨迹都显示在同一个组别中。'
+          },
+          controller: new AttributeController({ type: 'string', default: '' })
+        })
+      )
 
     const legendgrouptitle = new Attribute('legendgrouptitle', 'LayoutLegendGroupTitle', {
       parent,
@@ -107,15 +110,16 @@ export class TraceLegendAbout {
       })
     )
 
-    parent.addChild(legendgrouptitle)
+    !omitChildren.includes('legendgrouptitle') && parent.addChild(legendgrouptitle)
 
-    parent.addChild(
-      new Attribute('legendwidth', 'number', {
-        parent,
-        description: { type: 'string', value: '图例的宽度。' },
-        controller: new AttributeController({ type: 'number', default: null, min: 0 })
-      })
-    )
+    !omitChildren.includes('legendwidth') &&
+      parent.addChild(
+        new Attribute('legendwidth', 'number', {
+          parent,
+          description: { type: 'string', value: '图例的宽度。' },
+          controller: new AttributeController({ type: 'number', default: null, min: 0 })
+        })
+      )
   }
 }
 

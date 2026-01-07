@@ -5,6 +5,7 @@ import { Edit } from '@element-plus/icons-vue'
 import { usePloyConfigStore } from '@/stores/ploy.config'
 import { InfoFilled } from '@element-plus/icons-vue'
 import { useAttributeStore } from '@/stores/attribute'
+import { useMarkdownIt } from '@/composables/useMarkdownIt'
 
 const props = defineProps({
   data: { type: Object, required: true },
@@ -78,11 +79,12 @@ function convertDescription(description: string) {
         <div class="mt-2" v-if="![undefined, null].includes(data.controller?.default)">
           <span>默认值：</span> <el-tag type="primary" size="small">{{ data.controller?.default }}</el-tag>
         </div>
-        <div class="mt-2">
+        <div class="mt-2 whitespace-normal">
+          <span v-if="data.description.type === 'string'" v-html="convertDescription(data.description.value)" />
           <span
-            class="whitespace-normal"
-            v-if="data.description.type === 'string'"
-            v-html="convertDescription(data.description.value)"
+            class="markdown-body"
+            v-if="data.description.type === 'markdown'"
+            v-html="useMarkdownIt(data.description.value).htmlString"
           />
           <component v-else-if="data.description.type === 'Component'" :is="data.description.value" />
         </div>

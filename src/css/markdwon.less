@@ -1,0 +1,10 @@
+@import 'github-markdown-css/github-markdown-light.css';
+
+.markdown-body {
+  all: revert; /* 重置所有继承样式 */
+  background-color: transparent;
+
+  & * {
+    all: revert; /* 恢复浏览器默认样式层级 */
+  }
+}

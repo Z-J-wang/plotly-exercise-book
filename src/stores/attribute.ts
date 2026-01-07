@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import plotlyConfigData from 'bll/plotly.config'
-import Attribute from 'entities/attribute'
+import Attribute from 'entity/attribute'
 import { ref, watch, type Ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { usePloyConfigStore } from './ploy.config'
