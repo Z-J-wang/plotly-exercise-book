@@ -83,17 +83,30 @@ export default class Attribute {
    * @param type
    * @param options 属性选项
    */
-  constructor(name: string, type: string | Attribute.Type, options?: Attribute.Options) {
-    this._name = name
-
-    if (typeof type === 'string') {
-      this._type = { type: 'string', value: type }
+  constructor(name: string | Attribute.Initializer, type?: string | Attribute.Type, options?: Attribute.Options) {
+    let attrName: string, attrType: string | Attribute.Type, attrOptions: Attribute.Options | undefined
+    if (typeof name !== 'string') {
+      if (!name.name || !name.type) {
+        throw new Error('属性名称和类型不能为空')
+      }
+      attrName = name.name
+      attrType = name.type
+      if (name.options) attrOptions = name.options
     } else {
-      this._type = type
+      attrName = name
+      attrType = type as string | Attribute.Type
+      if (options) attrOptions = options
+    }
+    this._name = attrName
+
+    if (typeof attrType === 'string') {
+      this._type = { type: 'string', value: attrType }
+    } else {
+      this._type = attrType
     }
 
-    if (options) {
-      const { description, controller, children, initialConfig, parent } = options
+    if (attrOptions) {
+      const { description, controller, children, initialConfig, parent } = attrOptions
       if (parent !== undefined) this._parent = parent
       if (description !== undefined) this._description = description
       if (controller !== undefined) this._controller = controller

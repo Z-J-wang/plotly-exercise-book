@@ -55,17 +55,21 @@ export default class TraceBar extends Attribute {
       }
     }
 
-    super('violin', 'Violin', {
-      parent,
-      description: {
-        type: 'markdown',
-        value: `
+    super({
+      name: 'violin',
+      type: 'Violin',
+      options: {
+        parent,
+        description: {
+          type: 'markdown',
+          value: `
 更多示例：<a href="https://plotly.com/javascript/violin/" target="_blank">https://plotly.com/javascript/violin/</a>
 
 官方文档：<a href="https://plotly.com/javascript/reference/violin/" target="_blank">https://plotly.com/javascript/reference/violin/</a>
         `
-      },
-      initialConfig: baseInitialConfig
+        },
+        initialConfig: baseInitialConfig
+      }
     })
 
     this.addChild(new TraceType(this, 'heatmap'))
@@ -174,7 +178,6 @@ export default class TraceBar extends Attribute {
 
     this.addChild(new ViolinMeanLine({ options: { parent: this } }))
 
-    this.addChild(new TraceConnectgaps(this))
     this.addChild(new BoxBoxPoints({ name: 'points', options: { parent: this } }))
     this.addChild(new ViolinScalegroup({ options: { parent: this } }))
     this.addChild(new ViolinScalemode({ options: { parent: this } }))
@@ -199,7 +202,7 @@ export class ViolinBandwidth extends Attribute {
       }
     }
     const mergedInitializer = merge(defaultInitializer, initializer)
-    super(mergedInitializer.name, mergedInitializer.type, mergedInitializer.options)
+    super(mergedInitializer)
   }
 }
 
@@ -217,7 +220,7 @@ export class ViolinFillcolor extends Attribute {
       }
     }
     const mergedInitializer = merge(defaultInitializer, initializer)
-    super(mergedInitializer.name, mergedInitializer.type, mergedInitializer.options)
+    super(mergedInitializer)
   }
 }
 
@@ -241,7 +244,7 @@ export class ViolinHoveron extends Attribute {
       }
     }
     const mergedInitializer = merge(defaultInitializer, initializer)
-    super(mergedInitializer.name, mergedInitializer.type, mergedInitializer.options)
+    super(mergedInitializer)
   }
 }
 
@@ -259,8 +262,7 @@ export class ViolinScalegroup extends Attribute {
       }
     }
 
-    const mergedInitialization = merge(defaultInitialization, initialization)
-    super(mergedInitialization.name, mergedInitialization.type, mergedInitialization.options)
+    super(merge(defaultInitialization, initialization))
   }
 }
 
@@ -279,8 +281,7 @@ export class ViolinScalemode extends Attribute {
       }
     }
 
-    const mergedInitialization = merge(defaultInitialization, initialization)
-    super(mergedInitialization.name, mergedInitialization.type, mergedInitialization.options)
+    super(merge(defaultInitialization, initialization))
   }
 }
 
@@ -303,8 +304,7 @@ export class ViolinSpanmode extends Attribute {
       }
     }
 
-    const mergedInitialization = merge(defaultInitialization, initialization)
-    super(mergedInitialization.name, mergedInitialization.type, mergedInitialization.options)
+    super(merge(defaultInitialization, initialization))
   }
 }
 
@@ -321,7 +321,6 @@ export class ViolinSpan extends Attribute {
       }
     }
 
-    const mergedInitialization = merge(defaultInitialization, initialization)
-    super(mergedInitialization.name, mergedInitialization.type, mergedInitialization.options)
+    super(merge(defaultInitialization, initialization))
   }
 }
