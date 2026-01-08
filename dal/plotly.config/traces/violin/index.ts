@@ -10,7 +10,6 @@ import {
   TraceMeta,
   TraceXaxis,
   TraceYaxis,
-  TraceConnectgaps,
   TraceType,
   TraceCustomdata,
   TraceOrientation,
@@ -21,8 +20,6 @@ import AttributeController from 'entity/attribute.controller'
 import TraceText from '../trace.text'
 import TraceHover from '../trace.hover'
 import { BaseUirevision } from '../../base'
-import Colorbar from '../trace.colorbar'
-import TraceColorscale from '../trace.colorscale'
 import exampleData from '@/assets/data/violin.json'
 import ViolinAlignmentGroup from '@/components/doc/traces/ViolinAlignmentGroup.vue'
 import BoxMarker from '../box/marker'
@@ -136,11 +133,11 @@ export default class TraceBar extends Attribute {
       })
     )
 
-    this.addChild(new BoxMarker(this))
+    this.addChild(new BoxMarker({ options: { parent: this } }))
 
-    this.addChild(new ViolinLine(this))
+    this.addChild(new ViolinLine({ options: { parent: this } }))
 
-    this.addChild(new ViolinBox(this))
+    this.addChild(new ViolinBox({ options: { parent: this } }))
 
     this.addChild(new TraceSelectedPoints(this))
 

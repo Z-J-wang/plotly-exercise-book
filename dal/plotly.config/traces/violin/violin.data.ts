@@ -1,11 +1,24 @@
+import { merge } from 'lodash'
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import exampleData from '@/assets/data/violin.json'
 
 export default class HeatmapData {
   constructor(parent: Attribute) {
-    parent.addChild(
-      new Attribute('x', '[]', {
+    parent.addChild(new ViolinX({ options: { parent } }))
+    parent.addChild(new ViolinX0({ options: { parent } }))
+    parent.addChild(new ViolinY({ options: { parent } }))
+    parent.addChild(new ViolinY0({ options: { parent } }))
+    parent.addChild(new ViolinWidth({ options: { parent } }))
+  }
+}
+
+export class ViolinX extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'x',
+      type: '[]',
+      options: {
         parent,
         description: {
           type: 'markdown',
@@ -40,11 +53,18 @@ export default class HeatmapData {
             yaxis: { zeroline: true }
           }
         }
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    parent.addChild(
-      new Attribute('x0', 'number | string', {
+export class ViolinX0 extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'x0',
+      type: 'number | string',
+      options: {
         parent,
         description: {
           type: 'string',
@@ -52,11 +72,18 @@ export default class HeatmapData {
             '设置单框轨迹的 x 坐标，或者使用 q1/中位数/q3 的值来设置多框轨迹的起始坐标。注意，当属性“X”存在时，该属性无效。'
         },
         controller: new AttributeController({ default: null, type: 'string', value: 'Total Bill' })
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    parent.addChild(
-      new Attribute('y', '[]', {
+export class ViolinY extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'y',
+      type: '[]',
+      options: {
         parent,
         description: {
           type: 'markdown',
@@ -91,11 +118,18 @@ export default class HeatmapData {
             yaxis: { zeroline: true }
           }
         }
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    parent.addChild(
-      new Attribute('y0', 'number', {
+export class ViolinY0 extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'y0',
+      type: 'number',
+      options: {
         parent,
         description: {
           type: 'string',
@@ -103,11 +137,18 @@ export default class HeatmapData {
             '设置单框轨迹的 y 坐标，或者使用 q1/中位数/q3 的值来设置多框轨迹的起始坐标。注意，当属性“y”存在时，该属性无效。'
         },
         controller: new AttributeController({ default: null, type: 'string', value: 'Total Bill' })
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    parent.addChild(
-      new Attribute('width', 'number', {
+export class ViolinWidth extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'width',
+      type: 'number',
+      options: {
         parent,
         description: { type: 'string', value: '设置小提琴的宽度。当设置为默认值时，将自动选择宽度。' },
         controller: new AttributeController({ type: 'number', default: 0, min: 0, max: 10, step: 0.1 }),
@@ -130,7 +171,8 @@ export default class HeatmapData {
             yaxis: { zeroline: true }
           }
         }
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
   }
 }

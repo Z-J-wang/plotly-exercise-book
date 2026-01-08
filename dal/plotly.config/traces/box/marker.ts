@@ -1,10 +1,6 @@
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import { merge } from 'lodash'
-import TraceMarkerColoBar from '../trace.colorbar'
-import TraceMarkerGradient from '../trace.marker.gradient'
-import TraceMarkerLine from '../trace.marker.line'
-import TraceColorscale from '../trace.colorscale'
 
 const markerSymbol = [
   'circle',
@@ -172,144 +168,174 @@ const markerSymbol = [
 ]
 
 export default class BoxMarker extends Attribute {
-  constructor(
-    parent: Attribute,
-    description?: Attribute.Description,
-    omitChildren: string[] = [],
-    initialConfig?: PlotlyConfig
-  ) {
-    super('marker', 'Marker', {
-      parent,
-      description: description || { type: 'string', value: '数据点样式设置。' },
-      initialConfig
-    })
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'marker',
+      type: 'Marker',
+      options: { description: { type: 'string', value: '数据点样式设置。' } }
+    }
+    super(merge(defaultInitializer, initializer))
 
-    !omitChildren.includes('symbol') &&
-      this.addChild(
-        new Attribute(
-          'symbol',
-          { type: 'enum', value: markerSymbol },
-          {
-            parent: this,
-            description: {
-              type: 'string',
-              value:
-                '数据点形状。详见：<a href="https://plotly.com/javascript/reference/scatter/#scatter-marker-symbol" target="_blank">scatter-marker-symbol</a>'
-            },
-            controller: new AttributeController({ type: 'select', default: 'circle', options: markerSymbol })
-          }
-        )
-      )
+    this.addChild(new BoxMarkerSymbol({ options: { parent: this } }))
+    this.addChild(new BoxMarkerSize({ options: { parent: this } }))
+    this.addChild(new BoxMarkerOutliercolor({ options: { parent: this } }))
+    this.addChild(new BoxMarkerColor({ options: { parent: this } }))
+    this.addChild(new BoxMarkerOpacity({ options: { parent: this } }))
+    this.addChild(new BoxMarkerLine({ options: { parent: this } }))
+  }
+}
 
-    !omitChildren.includes('size') &&
-      this.addChild(
-        new Attribute('size', 'number | number[]', {
-          parent: this,
-          description: {
-            type: 'string',
-            value: '数据点大小。可以是数组，数组长度为数据点数量，用于指定每个数据点的大小。'
-          },
-          controller: new AttributeController({ type: 'number', default: 6, min: 0 })
-        })
-      )
+export class BoxMarkerSymbol extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'symbol',
+      type: { type: 'enum', value: markerSymbol },
+      options: {
+        description: {
+          type: 'string',
+          value:
+            '数据点形状。详见：<a href="https://plotly.com/javascript/reference/scatter/#scatter-marker-symbol" target="_blank">scatter-marker-symbol</a>'
+        },
+        controller: new AttributeController({ type: 'select', default: 'circle', options: markerSymbol })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    !omitChildren.includes('color') &&
-      this.addChild(
-        new Attribute('outliercolor', 'Color | Color[] | number[]', {
-          parent: this,
-          description: {
-            type: 'string',
-            value: '设置异常样本数据点的颜色。'
-          },
-          controller: new AttributeController({ type: 'color', default: null })
-        })
-      )
+export class BoxMarkerSize extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'size',
+      type: 'number | number[]',
+      options: {
+        description: {
+          type: 'string',
+          value: '数据点大小。可以是数组，数组长度为数据点数量，用于指定每个数据点的大小。'
+        },
+        controller: new AttributeController({ type: 'number', default: 6, min: 0 })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    !omitChildren.includes('color') &&
-      this.addChild(
-        new Attribute('color', 'Color | Color[] | number[]', {
-          parent: this,
-          description: {
-            type: 'string',
-            value: '数据点颜色。可以是数组，数组长度为数据点数量，用于指定每个数据点的颜色。'
-          },
-          controller: new AttributeController({ type: 'color', default: null })
-        })
-      )
+export class BoxMarkerOutliercolor extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'outliercolor',
+      type: 'Color | Color[] | number[]',
+      options: {
+        description: { type: 'string', value: '设置异常样本数据点的颜色。' },
+        controller: new AttributeController({ type: 'color', default: null })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    !omitChildren.includes('opacity') &&
-      this.addChild(
-        new Attribute('opacity', 'number', {
-          parent: this,
-          description: { type: 'string', value: '数据点透明度。' },
-          controller: new AttributeController({ type: 'number', default: 1, min: 0, max: 1, step: 0.1 })
-        })
-      )
+export class BoxMarkerColor extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'color',
+      type: 'Color | Color[] | number[]',
+      options: {
+        description: {
+          type: 'string',
+          value: '数据点颜色。可以是数组，数组长度为数据点数量，用于指定每个数据点的颜色。'
+        },
+        controller: new AttributeController({ type: 'color', default: null })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    !omitChildren.includes('line') && this.addChild(new BoxMarkerLine(this))
+export class BoxMarkerOpacity extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'opacity',
+      type: 'number',
+      options: {
+        description: { type: 'string', value: '数据点透明度。' },
+        controller: new AttributeController({ type: 'number', default: 1, min: 0, max: 1, step: 0.1 })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
   }
 }
 
 export class BoxMarkerLine extends Attribute {
-  constructor(
-    parent: Attribute,
-    description?: Attribute.Description,
-    omitChildren: string[] = [],
-    initialConfig?: PlotlyConfig
-  ) {
-    super('line', 'BoxMarkerLine', {
-      parent,
-      description: description || { type: 'string', value: '设置数据点的边框样式。' },
-      initialConfig
-    })
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'line',
+      type: 'BoxMarkerLine',
+      options: {
+        parent,
+        description: { type: 'string', value: '设置数据点的边框样式。' }
+      }
+    }
+    super(merge(defaultInitializer, initializer))
 
-    !omitChildren.includes('width') && this.addChild(new BoxMarkerLineWidth(this))
-    !omitChildren.includes('color') && this.addChild(new BoxMarkerLineColor(this))
-    !omitChildren.includes('outlierwidth') && this.addChild(new BoxMarkerLineOutlierWidth(this))
-    !omitChildren.includes('outliercolor') && this.addChild(new BoxMarkerLineOutlierColor(this))
+    this.addChild(new BoxMarkerLineWidth({ options: { parent: this } }))
+    this.addChild(new BoxMarkerLineColor({ options: { parent: this } }))
+    this.addChild(new BoxMarkerLineOutlierWidth({ options: { parent: this } }))
+    this.addChild(new BoxMarkerLineOutlierColor({ options: { parent: this } }))
   }
 }
 
 export class BoxMarkerLineWidth extends Attribute {
-  constructor(parent: Attribute, description?: Attribute.Description, initialConfig?: PlotlyConfig) {
-    super('width', 'number | number[]', {
-      parent,
-      description: description || { type: 'string', value: '设置数据点的边框宽度。' },
-      controller: new AttributeController({ type: 'number', default: null, min: 0 }),
-      initialConfig
-    })
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'width',
+      type: 'number | number[]',
+      options: {
+        description: { type: 'string', value: '设置数据点的边框宽度。' },
+        controller: new AttributeController({ type: 'number', default: null, min: 0 })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
   }
 }
 
 export class BoxMarkerLineColor extends Attribute {
-  constructor(parent: Attribute, description?: Attribute.Description, initialConfig?: PlotlyConfig) {
-    super('color', 'Color | Color[] | number[]', {
-      parent,
-      description: description || { type: 'string', value: '设置数据点的边框颜色。' },
-      controller: new AttributeController({ type: 'color', default: null }),
-      initialConfig
-    })
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'color',
+      type: 'Color',
+      options: {
+        description: { type: 'string', value: '设置数据点的边框颜色。' },
+        controller: new AttributeController({ type: 'color', default: null })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
   }
 }
 
 export class BoxMarkerLineOutlierWidth extends Attribute {
-  constructor(parent: Attribute, description?: Attribute.Description, initialConfig?: PlotlyConfig) {
-    super('outlierwidth', 'number | number[]', {
-      parent,
-      description: description || { type: 'string', value: '设置数据点的边框宽度。' },
-      controller: new AttributeController({ type: 'number', default: null, min: 0 }),
-      initialConfig
-    })
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'outlierwidth',
+      type: 'number | number[]',
+      options: {
+        description: { type: 'string', value: '设置数据点的边框宽度。' },
+        controller: new AttributeController({ type: 'number', default: null, min: 0 })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
   }
 }
 
 export class BoxMarkerLineOutlierColor extends Attribute {
-  constructor(parent: Attribute, description?: Attribute.Description, initialConfig?: PlotlyConfig) {
-    super('outliercolor', 'Color | Color[] | number[]', {
-      parent,
-      description: description || { type: 'string', value: '设置数据点的边框颜色。' },
-      controller: new AttributeController({ type: 'color', default: null }),
-      initialConfig
-    })
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'outliercolor',
+      type: 'Color',
+      options: {
+        description: { type: 'string', value: '设置数据点的边框颜色。' },
+        controller: new AttributeController({ type: 'color', default: null })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
   }
 }
