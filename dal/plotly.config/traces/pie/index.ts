@@ -43,10 +43,15 @@ export default class TracePie extends Attribute {
       initialConfig: baseInitialConfig
     })
 
-    this.addChild(new TraceType(this, 'pie'))
+    this.addChild(new TraceType({ options: { parent: this } }, 'pie'))
 
     this.addChild(
-      new TraceName(this, new AttributeController({ type: 'string', default: null, value: 'scatter trace' }))
+      new TraceName({
+        options: {
+          parent: this,
+          controller: new AttributeController({ type: 'string', default: null, value: 'pie trace' })
+        }
+      })
     )
     this.addChild(new TraceVisible(this))
     new TraceLegendAbout(this)

@@ -56,10 +56,15 @@ export default class TraceScatter extends Attribute {
       initialConfig: baseInitialConfig
     })
 
-    this.addChild(new TraceType(this, 'bar'))
+    this.addChild(new TraceType({ options: { parent: this } }, 'scatter'))
 
     this.addChild(
-      new TraceName(this, new AttributeController({ type: 'string', default: null, value: 'scatter trace' }))
+      new TraceName({
+        options: {
+          parent: this,
+          controller: new AttributeController({ type: 'string', default: null, value: 'scatter trace' })
+        }
+      })
     )
     this.addChild(new TraceVisible(this))
     new TraceLegendAbout(this)

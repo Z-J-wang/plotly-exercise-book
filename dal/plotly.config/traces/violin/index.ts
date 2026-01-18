@@ -69,11 +69,17 @@ export default class TraceBar extends Attribute {
       }
     })
 
-    this.addChild(new TraceType(this, 'heatmap'))
+    this.addChild(new TraceType({ options: { parent: this } }, 'heatmap'))
 
     this.addChild(
-      new TraceName(this, new AttributeController({ type: 'string', default: null, value: 'violin trace' }))
+      new TraceName({
+        options: {
+          parent: this,
+          controller: new AttributeController({ type: 'string', default: null, value: 'heatmap trace' })
+        }
+      })
     )
+
     this.addChild(new TraceVisible(this))
     new TraceLegendAbout(this, ['legendwidth'])
 

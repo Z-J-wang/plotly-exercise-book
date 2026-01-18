@@ -2,27 +2,38 @@ import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import { Font } from '../base'
 import { defineAsyncComponent } from 'vue'
+import { merge } from 'lodash'
 
 export class TraceType extends Attribute {
-  constructor(parent: Attribute, value: string) {
-    super('type', 'string', {
-      parent,
-      description: { type: 'string', value: '设置轨迹类型。其值必须为<code>' + value + '</code>。' },
-      controller: new AttributeController({ type: 'string', default: value, disabled: true })
-    })
+  constructor(initializer: Attribute.Initializer, value: string = '') {
+    const defaultInitializer = {
+      name: 'type',
+      type: 'string',
+      options: {
+        description: { type: 'string', value: '设置轨迹类型。其值必须为<code>' + value + '</code>。' },
+        controller: new AttributeController({ type: 'string', default: value, disabled: true })
+      }
+    }
+
+    super(merge(defaultInitializer, initializer))
   }
 }
 
 export class TraceName extends Attribute {
-  constructor(parent: Attribute, controller?: AttributeController) {
-    super('name', 'string', {
-      parent,
-      description: {
-        type: 'string',
-        value: '设置轨迹名称。轨迹名称将作为图例名称显示，并且在鼠标悬停在轨迹上时显示。'
-      },
-      controller: controller || new AttributeController({ type: 'string', default: null })
-    })
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'name',
+      type: 'string',
+      options: {
+        description: {
+          type: 'string',
+          value: '设置轨迹名称。轨迹名称将作为图例名称显示，并且在鼠标悬停在轨迹上时显示。'
+        },
+        controller: new AttributeController({ type: 'string', default: null })
+      }
+    }
+
+    super(merge(defaultInitializer, initializer))
   }
 }
 
