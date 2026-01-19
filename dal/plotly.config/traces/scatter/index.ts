@@ -111,7 +111,7 @@ export default class TraceScatter extends Attribute {
 
     this.addChild(new TraceOpacity({ options: { parent: this } }))
 
-    this.addChild(new TraceZorder(this))
+    this.addChild(new TraceZorder({ options: { parent: this } }))
 
     new TraceData(this)
 
@@ -156,9 +156,9 @@ export default class TraceScatter extends Attribute {
 
     this.addChild(new TraceMeta(this))
 
-    this.addChild(new TraceXaxis(this))
+    this.addChild(new TraceXaxis({ options: { parent: this } }))
 
-    this.addChild(new TraceYaxis(this))
+    this.addChild(new TraceSelectedPoints({ options: { parent: this } }))
 
     new TraceStack(this, {
       data: [
@@ -214,7 +214,7 @@ export default class TraceScatter extends Attribute {
       })
     )
 
-    this.addChild(new TraceSelectedPoints(this))
+    this.addChild(new TraceSelectedPoints({ options: { parent: this } }))
 
     this.addChild(
       new TraceSelected('selected', {

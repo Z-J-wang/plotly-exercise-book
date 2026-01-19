@@ -76,7 +76,7 @@ export default class TraceBar extends Attribute {
 
     this.addChild(new TraceOpacity({ options: { parent: this } }))
 
-    this.addChild(new TraceZorder(this))
+    this.addChild(new TraceZorder({ options: { parent: this } }))
 
     new HeatmapData(this)
 
@@ -93,9 +93,9 @@ export default class TraceBar extends Attribute {
 
     this.addChild(new TraceMeta(this))
 
-    this.addChild(new TraceXaxis(this))
+    this.addChild(new TraceXaxis({ options: { parent: this } }))
 
-    this.addChild(new TraceYaxis(this))
+    this.addChild(new TraceSelectedPoints({ options: { parent: this } }))
 
     this.addChild(
       new Attribute('coloraxis', 'string', {

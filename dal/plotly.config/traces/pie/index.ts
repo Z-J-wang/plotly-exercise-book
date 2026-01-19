@@ -161,7 +161,7 @@ export default class TracePie extends Attribute {
 
     this.addChild(new TraceMeta(this))
 
-    this.addChild(new TraceCustomdata(this))
+    this.addChild(new TraceCustomdata({ options: { parent: this } }))
 
     this.addChild(new PieDomain(this))
 

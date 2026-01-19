@@ -67,7 +67,7 @@ export default class TraceBar extends Attribute {
 
     this.addChild(new TraceOpacity({ options: { parent: this } }))
 
-    this.addChild(new TraceZorder(this))
+    this.addChild(new TraceZorder({ options: { parent: this } }))
 
     new TraceData(this)
 
@@ -119,9 +119,9 @@ export default class TraceBar extends Attribute {
 
     this.addChild(new TraceMeta(this))
 
-    this.addChild(new TraceXaxis(this))
+    this.addChild(new TraceXaxis({ options: { parent: this } }))
 
-    this.addChild(new TraceYaxis(this))
+    this.addChild(new TraceSelectedPoints({ options: { parent: this } }))
 
     this.addChild(new TraceOrientation(this))
 
@@ -160,7 +160,7 @@ export default class TraceBar extends Attribute {
       })
     )
 
-    this.addChild(new TraceSelectedPoints(this))
+    this.addChild(new TraceSelectedPoints({ options: { parent: this } }))
 
     this.addChild(
       new TraceSelected('selected', {
