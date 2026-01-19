@@ -232,11 +232,11 @@ export default class TraceScatter extends Attribute {
 
     this.addChild(new TraceCliponaxis({ options: { parent: this } }))
 
-    this.addChild(new TraceConnectgaps(this))
+    this.addChild(new TraceConnectgaps({ options: { parent: this } }))
 
     new TraceFillAssemble(this)
 
-    this.addChild(new TraceHoveron(this))
+    this.addChild(new TraceHoveron({ options: { parent: this } }))
 
     this.addChild(new BaseUirevision(this))
   }

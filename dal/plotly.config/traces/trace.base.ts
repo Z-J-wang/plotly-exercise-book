@@ -295,28 +295,32 @@ export class TraceCliponaxis extends Attribute {
 }
 
 export class TraceConnectgaps extends Attribute {
-  constructor(parent: Attribute) {
-    super('connectgaps', 'boolean', {
-      parent,
-      description: {
-        type: 'string',
-        value:
-          '设置轨迹是否连接缺失数据点。' +
-          '如果设置为 <code>true</code>，则缺失数据点将用线段连接。即，如果x或者y轴数据有缺失值，则将缺失值设置前后数值的平均值。' +
-          '如果设置为 <code>false</code>，则缺失数据点将不连接。'
-      },
-      controller: new AttributeController({ type: 'boolean', default: false })
-    })
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'connectgaps',
+      type: 'boolean',
+      options: {
+        description: {
+          type: 'string',
+          value:
+            '设置轨迹是否连接缺失数据点。' +
+            '如果设置为 <code>true</code>，则缺失数据点将用线段连接。即，如果x或者y轴数据有缺失值，则将缺失值设置前后数值的平均值。' +
+            '如果设置为 <code>false</code>，则缺失数据点将不连接。'
+        },
+        controller: new AttributeController({ type: 'boolean', default: false })
+      }
+    }
+
+    super(merge(defaultInitializer, initializer))
   }
 }
 
 export class TraceHoveron extends Attribute {
-  constructor(parent: Attribute) {
-    super(
-      'hoveron',
-      { type: 'enum', value: ['points', 'fills', 'points+fills'] },
-      {
-        parent,
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'hoveron',
+      type: { type: 'enum', value: ['points', 'fills', 'points+fills'] },
+      options: {
         description: {
           type: 'string',
           value:
@@ -330,24 +334,27 @@ export class TraceHoveron extends Attribute {
           options: ['points', 'fills', 'points+fills']
         })
       }
-    )
+    }
+
+    super(merge(defaultInitializer, initializer))
   }
 }
 
 export class TraceOrientation extends Attribute {
-  constructor(parent: Attribute) {
-    super(
-      'orientation',
-      { type: 'enum', value: ['v', 'h'] },
-      {
-        parent,
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'orientation',
+      type: { type: 'enum', value: ['v', 'h'] },
+      options: {
         description: {
           type: 'string',
           value: '设置轨迹的显示方向。默认为 <code>v</code>。'
         },
         controller: new AttributeController({ type: 'select', default: 'v', options: ['v', 'h'] })
       }
-    )
+    }
+
+    super(merge(defaultInitializer, initializer))
   }
 }
 

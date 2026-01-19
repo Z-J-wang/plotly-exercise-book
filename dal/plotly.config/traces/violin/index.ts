@@ -116,7 +116,7 @@ export default class TraceBar extends Attribute {
 
     this.addChild(new TraceYaxis({ options: { parent: this } }))
 
-    this.addChild(new TraceOrientation(this))
+    this.addChild(new TraceOrientation({ options: { parent: this } }))
 
     this.addChild(
       new Attribute('alignmentgroup', 'string', {
