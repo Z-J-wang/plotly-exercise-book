@@ -377,16 +377,21 @@ export class TraceTextAngle extends Attribute {
 }
 
 export class TraceAutoMargin extends Attribute {
-  constructor(parent: Attribute) {
-    super('automargin', 'boolean', {
-      parent,
-      description: {
-        type: 'string',
-        value:
-          '设置自动调整外边距。' +
-          '如果设置为 <code>true</code>，则外边距将自动调整以适应文本内容。' +
-          '如果设置为 <code>false</code>，则外边距将保持不变。'
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'automargin',
+      type: 'boolean',
+      options: {
+        description: {
+          type: 'string',
+          value:
+            '设置自动调整外边距。' +
+            '如果设置为 <code>true</code>，则外边距将自动调整以适应文本内容。' +
+            '如果设置为 <code>false</code>，则外边距将保持不变。'
+        }
       }
-    })
+    }
+
+    super(merge(defaultInitializer, initializer))
   }
 }

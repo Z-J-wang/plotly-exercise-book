@@ -165,7 +165,7 @@ export default class TracePie extends Attribute {
 
     this.addChild(new PieDomain(this))
 
-    this.addChild(new TraceAutoMargin(this))
+    this.addChild(new TraceAutoMargin({ options: { parent: this } }))
 
     this.addChild(
       new Attribute(
