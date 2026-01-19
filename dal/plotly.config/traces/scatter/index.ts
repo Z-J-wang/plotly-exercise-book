@@ -107,7 +107,7 @@ export default class TraceScatter extends Attribute {
       )
     )
 
-    this.addChild(new TraceIds(this))
+    this.addChild(new TraceIds({ options: { parent: this } }))
 
     this.addChild(new TraceOpacity({ options: { parent: this } }))
 

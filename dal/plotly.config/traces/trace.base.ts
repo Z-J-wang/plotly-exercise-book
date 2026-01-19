@@ -151,14 +151,19 @@ export class TraceOpacity extends Attribute {
 }
 
 export class TraceIds extends Attribute {
-  constructor(parent: Attribute) {
-    super('ids', 'string', {
-      parent,
-      description: {
-        type: 'Component',
-        value: defineAsyncComponent(() => import('@/components/doc/traces/BaseIds.vue'))
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'ids',
+      type: 'string',
+      options: {
+        description: {
+          type: 'Component',
+          value: defineAsyncComponent(() => import('@/components/doc/traces/BaseIds.vue'))
+        }
       }
-    })
+    }
+
+    super(merge(defaultInitializer, initializer))
   }
 }
 

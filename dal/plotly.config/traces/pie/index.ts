@@ -56,7 +56,7 @@ export default class TracePie extends Attribute {
     this.addChild(new TraceVisible({ options: { parent: this } }))
     new TraceLegendAbout(this)
 
-    this.addChild(new TraceIds(this))
+    this.addChild(new TraceIds({ options: { parent: this } }))
 
     this.addChild(new TraceOpacity({ options: { parent: this } }))
 
