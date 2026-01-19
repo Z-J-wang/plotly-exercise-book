@@ -359,15 +359,20 @@ export class TraceOrientation extends Attribute {
 }
 
 export class TraceTextAngle extends Attribute {
-  constructor(parent: Attribute) {
-    super('textangle', "number | 'auto'", {
-      parent,
-      description: {
-        type: 'string',
-        value: '设置文本的角度。' + '如果设置为 <code>auto</code>，则文本将自动旋转以适应文本内容。'
-      },
-      controller: new AttributeController({ type: 'number', default: 'auto', value: 0, step: 5 })
-    })
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'textangle',
+      type: "number | 'auto'",
+      options: {
+        description: {
+          type: 'string',
+          value: '设置文本的角度。' + '如果设置为 <code>auto</code>，则文本将自动旋转以适应文本内容。'
+        },
+        controller: new AttributeController({ type: 'number', default: 'auto', value: 0, step: 5 })
+      }
+    }
+
+    super(merge(defaultInitializer, initializer))
   }
 }
 

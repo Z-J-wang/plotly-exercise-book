@@ -113,7 +113,7 @@ export default class TraceBar extends Attribute {
 
     new BarTextAnchor(this)
 
-    this.addChild(new TraceTextAngle(this))
+    this.addChild(new TraceTextAngle({ options: { parent: this } }))
 
     new TraceHover(this, ['zhoverformat', 'hoverongaps'])
 
