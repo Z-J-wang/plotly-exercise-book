@@ -159,7 +159,7 @@ export default class TracePie extends Attribute {
 
     this.addChild(new PieMarker(this))
 
-    this.addChild(new TraceMeta(this))
+    this.addChild(new TraceMeta({ options: { parent: this } }))
 
     this.addChild(new TraceCustomdata({ options: { parent: this } }))
 

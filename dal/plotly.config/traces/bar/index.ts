@@ -117,11 +117,11 @@ export default class TraceBar extends Attribute {
 
     new TraceHover(this, ['zhoverformat', 'hoverongaps'])
 
-    this.addChild(new TraceMeta(this))
+    this.addChild(new TraceMeta({ options: { parent: this } }))
 
     this.addChild(new TraceXaxis({ options: { parent: this } }))
 
-    this.addChild(new TraceSelectedPoints({ options: { parent: this } }))
+    this.addChild(new TraceYaxis({ options: { parent: this } }))
 
     this.addChild(new TraceOrientation(this))
 
@@ -176,7 +176,7 @@ export default class TraceBar extends Attribute {
       })
     )
 
-    this.addChild(new TraceCliponaxis(this))
+    this.addChild(new TraceCliponaxis({ options: { parent: this } }))
 
     this.addChild(
       new Attribute(

@@ -154,11 +154,11 @@ export default class TraceScatter extends Attribute {
 
     new TraceHover(this)
 
-    this.addChild(new TraceMeta(this))
+    this.addChild(new TraceMeta({ options: { parent: this } }))
 
     this.addChild(new TraceXaxis({ options: { parent: this } }))
 
-    this.addChild(new TraceSelectedPoints({ options: { parent: this } }))
+    this.addChild(new TraceYaxis({ options: { parent: this } }))
 
     new TraceStack(this, {
       data: [
@@ -230,7 +230,7 @@ export default class TraceScatter extends Attribute {
       })
     )
 
-    this.addChild(new TraceCliponaxis(this))
+    this.addChild(new TraceCliponaxis({ options: { parent: this } }))
 
     this.addChild(new TraceConnectgaps(this))
 

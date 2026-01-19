@@ -108,13 +108,13 @@ export default class TraceBar extends Attribute {
     this.addChild(new ViolinHoveron({ options: { parent: this } }))
     new TraceHover(this)
 
-    this.addChild(new TraceMeta(this))
+    this.addChild(new TraceMeta({ options: { parent: this } }))
 
     this.addChild(new TraceCustomdata({ options: { parent: this } }))
 
     this.addChild(new TraceXaxis({ options: { parent: this } }))
 
-    this.addChild(new TraceSelectedPoints({ options: { parent: this } }))
+    this.addChild(new TraceYaxis({ options: { parent: this } }))
 
     this.addChild(new TraceOrientation(this))
 

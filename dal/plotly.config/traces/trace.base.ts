@@ -274,18 +274,23 @@ export class TraceSelectedPoints extends Attribute {
 }
 
 export class TraceCliponaxis extends Attribute {
-  constructor(parent: Attribute) {
-    super('cliponaxis', 'boolean', {
-      parent,
-      description: {
-        type: 'string',
-        value:
-          '设置轨迹元素是否在坐标轴上进行裁剪。' +
-          '如果设置为 <code>true</code>，则轨迹元素将只显示在坐标轴的绘图区域。' +
-          '如果设置为 <code>false</code>，则轨迹元素将显示在坐标轴的绘图区域之外。'
-      },
-      controller: new AttributeController({ type: 'boolean', default: true })
-    })
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'cliponaxis',
+      type: 'boolean',
+      options: {
+        description: {
+          type: 'string',
+          value:
+            '设置轨迹元素是否在坐标轴上进行裁剪。' +
+            '如果设置为 <code>true</code>，则轨迹元素将只显示在坐标轴的绘图区域。' +
+            '如果设置为 <code>false</code>，则轨迹元素将显示在坐标轴的绘图区域之外。'
+        },
+        controller: new AttributeController({ type: 'boolean', default: true })
+      }
+    }
+
+    super(merge(defaultInitializer, initializer))
   }
 }
 
