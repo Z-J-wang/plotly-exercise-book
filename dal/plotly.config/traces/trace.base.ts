@@ -38,20 +38,21 @@ export class TraceName extends Attribute {
 }
 
 export class TraceVisible extends Attribute {
-  constructor(parent: Attribute) {
-    super(
-      'visible',
-      { type: 'enum', value: ['true', 'false', 'legendonly'] },
-      {
-        parent,
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'visible',
+      type: { type: 'enum', value: [true, false, 'legendonly'] },
+      options: {
         description: { type: 'string', value: '设置轨迹是否可见。其中<code>legendonly</code>表示仅显示图例。' },
         controller: new AttributeController({
           type: 'select',
           default: 'true',
-          options: ['true', 'false', 'legendonly']
+          options: [true, false, 'legendonly']
         })
       }
-    )
+    }
+
+    super(merge(defaultInitializer, initializer))
   }
 }
 
@@ -135,12 +136,17 @@ export class TraceLegendAbout {
 }
 
 export class TraceOpacity extends Attribute {
-  constructor(parent: Attribute) {
-    super('opacity', 'number', {
-      parent,
-      description: { type: 'string', value: '设置轨迹的不透明度。' },
-      controller: new AttributeController({ type: 'number', default: 1, min: 0, max: 1, step: 0.1 })
-    })
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'opacity',
+      type: 'number',
+      options: {
+        description: { type: 'string', value: '设置轨迹的不透明度。' },
+        controller: new AttributeController({ type: 'number', default: 1, min: 0, max: 1, step: 0.1 })
+      }
+    }
+
+    super(merge(defaultInitializer, initializer))
   }
 }
 

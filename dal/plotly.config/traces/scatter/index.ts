@@ -66,7 +66,7 @@ export default class TraceScatter extends Attribute {
         }
       })
     )
-    this.addChild(new TraceVisible(this))
+    this.addChild(new TraceVisible({ options: { parent: this } }))
     new TraceLegendAbout(this)
 
     this.addChild(
@@ -109,7 +109,7 @@ export default class TraceScatter extends Attribute {
 
     this.addChild(new TraceIds(this))
 
-    this.addChild(new TraceOpacity(this))
+    this.addChild(new TraceOpacity({ options: { parent: this } }))
 
     this.addChild(new TraceZorder(this))
 
