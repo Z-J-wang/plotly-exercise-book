@@ -18,7 +18,7 @@ import TraceText from '../trace.text'
 import TraceHover from '../trace.hover'
 import { BaseUirevision } from '../../base'
 import Colorbar from '../trace.colorbar'
-import TraceColorscale from '../trace.colorscale'
+import TraceColorscaleAbout from '../trace.colorscale.about'
 
 export default class TraceBar extends Attribute {
   constructor(parent: Attribute) {
@@ -111,7 +111,7 @@ export default class TraceBar extends Attribute {
 
     this.addChild(new Colorbar({ options: { parent: this } }))
 
-    new TraceColorscale(this)
+    new TraceColorscaleAbout(this)
 
     this.addChild(
       new Attribute('zauto', 'boolean', {

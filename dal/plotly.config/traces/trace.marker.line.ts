@@ -1,6 +1,6 @@
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
-import TraceColorscale from './trace.colorscale'
+import { TraceAutocolorscale, TraceColorscale, TraceReversescale } from './trace.colorscale.about'
 import { merge } from 'lodash'
 
 export default class TraceMarkerLine extends Attribute {
@@ -91,24 +91,28 @@ export default class TraceMarkerLine extends Attribute {
 
     !omitChildren.includes('autocolorscale') &&
       this.addChild(
-        new Attribute('autocolorscale', 'boolean', {
-          parent: this,
-          description: {
-            type: 'string',
-            value:
-              '是否采用默认颜色标尺。只有当 <code>marker.line.color</code> 被设置为数值数组时，此设置才有效。' +
-              '值域：' +
-              '<ul>' +
-              '<li><code>true</code> - 启用默认颜色标尺</li>' +
-              '<li><code>false</code> - 使用<code>marker.line.colorscale</code>定义的颜色标尺</li>' +
-              '</ul>'
-          },
-          controller: new AttributeController({ type: 'boolean', default: true }),
-          initialConfig: merge({ data: [{ marker: { line: { colorscale: 'Hot' } } }] }, initialConfigOfMarkerColor)
+        new TraceAutocolorscale({
+          options: {
+            parent: this,
+            description: {
+              type: 'string',
+              value:
+                '是否采用默认颜色标尺。只有当 <code>marker.line.color</code> 被设置为数值数组时，此设置才有效。' +
+                '值域：' +
+                '<ul>' +
+                '<li><code>true</code> - 启用默认颜色标尺</li>' +
+                '<li><code>false</code> - 使用<code>marker.line.colorscale</code>定义的颜色标尺</li>' +
+                '</ul>'
+            },
+            initialConfig: merge({ data: [{ marker: { line: { colorscale: 'Hot' } } }] }, initialConfigOfMarkerColor)
+          }
         })
       )
 
-    new TraceColorscale(this, [...omitChildren, 'autocolorscale', 'showscale'], initialConfigOfMarkerColor)
+    !omitChildren.includes('colorscale') &&
+      this.addChild(new TraceColorscale({ options: { parent: this, initialConfig: initialConfigOfMarkerColor } }))
+    !omitChildren.includes('reversescale') &&
+      this.addChild(new TraceReversescale({ options: { parent: this, initialConfig: initialConfigOfMarkerColor } }))
 
     !omitChildren.includes('coloraxis') &&
       this.addChild(

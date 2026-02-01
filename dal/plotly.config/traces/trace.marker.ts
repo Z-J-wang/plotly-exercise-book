@@ -4,7 +4,7 @@ import { merge } from 'lodash'
 import TraceMarkerColoBar from './trace.colorbar'
 import TraceMarkerGradient from './trace.marker.gradient'
 import TraceMarkerLine from './trace.marker.line'
-import TraceColorscale from './trace.colorscale'
+import { TraceAutocolorscale, TraceColorscale, TraceReversescale } from './trace.colorscale.about'
 
 const markerSymbol = [
   'circle',
@@ -330,24 +330,26 @@ export default class TraceMarker extends Attribute {
     )
 
     this.addChild(
-      new Attribute('autocolorscale', 'boolean', {
-        parent: this,
-        description: {
-          type: 'string',
-          value:
-            '是否采用默认颜色标尺。只有当 <code>marker.color</code> 被设置为数值数组时，此设置才有效。' +
-            '值域：' +
-            '<ul>' +
-            '<li><code>true</code> - 启用默认颜色标尺</li>' +
-            '<li><code>false</code> - 使用<code>marker.colorscale</code>定义的颜色标尺</li>' +
-            '</ul>'
-        },
-        controller: new AttributeController({ type: 'boolean', default: true }),
-        initialConfig: merge({ data: [{ marker: { colorscale: 'Hot' } }] }, initialConfig)
+      new TraceAutocolorscale({
+        options: {
+          parent: this,
+          description: {
+            type: 'string',
+            value:
+              '是否采用默认颜色标尺。只有当 <code>marker.color</code> 被设置为数值数组时，此设置才有效。' +
+              '值域：' +
+              '<ul>' +
+              '<li><code>true</code> - 启用默认颜色标尺</li>' +
+              '<li><code>false</code> - 使用<code>marker.colorscale</code>定义的颜色标尺</li>' +
+              '</ul>'
+          },
+          initialConfig: merge({ data: [{ marker: { colorscale: 'Hot' } }] }, initialConfig)
+        }
       })
     )
 
-    new TraceColorscale(this, ['autocolorscale', 'showscale'], initialConfig)
+    this.addChild(new TraceColorscale({ options: { parent: this, initialConfig: initialConfig } }))
+    this.addChild(new TraceReversescale({ options: { parent: this, initialConfig: initialConfig } }))
 
     this.addChild(
       new Attribute('opacity', 'number', {
