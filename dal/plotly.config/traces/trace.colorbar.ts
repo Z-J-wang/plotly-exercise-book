@@ -1,82 +1,166 @@
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import { Font } from '../base'
+import { merge } from 'lodash'
 
 export default class TraceColoBar extends Attribute {
-  constructor(parent: Attribute, description?: Attribute.Description, initialConfig?: PlotlyConfig) {
-    super('colorbar', 'ColorBar', {
-      parent,
-      description: description || { type: 'string', value: '颜色条样式设置。' },
-      initialConfig
-    })
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'colorbar',
+      type: 'ColorBar',
+      options: {
+        description: { type: 'string', value: '颜色条样式设置。' }
+      }
+    }
+    super(merge(defaultInitializer, initializer))
 
+    this.addChild(new TraceColorbarOrientation({ options: { parent: this } }))
+    this.addChild(new TraceColorbarOrientation({ options: { parent: this } }))
+    this.addChild(new TraceColorbarThickness({ options: { parent: this } }))
+    this.addChild(new TraceColorbarThicknessmode({ options: { parent: this } }))
+    this.addChild(new TraceColorbarLen({ options: { parent: this } }))
+    this.addChild(new TraceColorbarLenmode({ options: { parent: this } }))
+    this.addChild(new TraceColorbarX({ options: { parent: this } }))
+    this.addChild(new TraceColorbarXref({ options: { parent: this } }))
+    this.addChild(new TraceColorbarXAnchor({ options: { parent: this } }))
+    this.addChild(new TraceColorbarXPad({ options: { parent: this } }))
+    this.addChild(new TraceColorbarY({ options: { parent: this } }))
+    this.addChild(new TraceColorbarYref({ options: { parent: this } }))
+    this.addChild(new TraceColorbarYAnchor({ options: { parent: this } }))
+    this.addChild(new TraceColorbarYPad({ options: { parent: this } }))
+    this.addChild(new TraceColorOutlinecolor({ options: { parent: this } }))
+    this.addChild(new TraceColorOutlinewidth({ options: { parent: this } }))
+    this.addChild(new TraceColorBordercolor({ options: { parent: this } }))
+    this.addChild(new TraceColorBorderwidth({ options: { parent: this } }))
+    this.addChild(new TraceColorTickmode({ options: { parent: this } }))
+    this.addChild(new TraceColorNticks({ options: { parent: this } }))
+    this.addChild(new TraceColorTick0({ options: { parent: this } }))
+    this.addChild(new TraceColorDTick({ options: { parent: this } }))
+    this.addChild(new TraceColorTickvals({ options: { parent: this } }))
+    this.addChild(new TraceColorTickText({ options: { parent: this } }))
+    this.addChild(new TraceColorTicks({ options: { parent: this } }))
+    this.addChild(new TraceColorTicklabeloverflow({ options: { parent: this } }))
+    this.addChild(new TraceColorTicklabelposition({ options: { parent: this } }))
+    this.addChild(new TraceColorTicklen({ options: { parent: this } }))
+    this.addChild(new TraceColorTickwidth({ options: { parent: this } }))
+    this.addChild(new TraceColorTickcolor({ options: { parent: this } }))
+    this.addChild(new TraceColorTicklabelstep({ options: { parent: this } }))
+    this.addChild(new TraceColorShowticklabels({ options: { parent: this } }))
+    this.addChild(new TraceColorLabelalias({ options: { parent: this } }))
     this.addChild(
-      new Attribute('bgcolor', 'Color', {
-        parent: this,
+      new Font('tickfont', 'Font', { parent: this, description: { type: 'string', value: '刻度标签的字体。' } })
+    )
+    this.addChild(new TraceColorTickAngle({ options: { parent: this } }))
+    this.addChild(new TraceColorTickFormat({ options: { parent: this } }))
+    this.addChild(new TraceColorTickprefix({ options: { parent: this } }))
+    this.addChild(new TraceColorShowtickprefix({ options: { parent: this } }))
+    this.addChild(new TraceColorTicksuffix({ options: { parent: this } }))
+    this.addChild(new TraceColorShowticksuffix({ options: { parent: this } }))
+    this.addChild(new TraceColorSeparatethousands({ options: { parent: this } }))
+    this.addChild(new TraceColorExponentformat({ options: { parent: this } }))
+    this.addChild(new TraceColorShowexponent({ options: { parent: this } }))
+    this.addChild(new TraceColorTitle({ options: { parent: this } }))
+  }
+}
+
+export class TraceColorbarBgcolor extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'bgcolor',
+      type: 'Color',
+      options: {
         description: { type: 'string', value: '颜色条背景色' },
         controller: new AttributeController({ type: 'color', default: '#ffffff' })
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute(
-        'orientation',
-        { type: 'enum', value: ['h', 'v'] },
-        {
-          parent: this,
-          description: { type: 'string', value: '颜色条方向。' },
-          controller: new AttributeController({ type: 'select', default: 'v', options: ['h', 'v'] })
-        }
-      )
-    )
+export class TraceColorbarOrientation extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'orientation',
+      type: { type: 'enum', value: ['h', 'v'] },
+      options: {
+        description: { type: 'string', value: '颜色条方向。' },
+        controller: new AttributeController({ type: 'select', default: 'v', options: ['h', 'v'] })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('thickness', 'number', {
-        parent: this,
+export class TraceColorbarThickness extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'thickness',
+      type: 'number',
+      options: {
         description: { type: 'string', value: '颜色条的宽度。' },
         controller: new AttributeController({ type: 'number', default: 30, min: 0 })
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute(
-        'thicknessmode',
-        { type: 'enum', value: ['pixels', 'fraction'] },
-        {
-          parent: this,
-          description: {
-            type: 'string',
-            value:
-              '颜色条的宽度模式。<code>pixels</code> 使用像素单位；<code>fraction</code> 使用基于绘图区域宽度的比例。'
-          },
-          controller: new AttributeController({ type: 'select', default: 'pixels', options: ['pixels', 'fraction'] })
-        }
-      )
-    )
+export class TraceColorbarThicknessmode extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'thicknessmode',
+      type: { type: 'enum', value: ['pixels', 'fraction'] },
+      options: {
+        description: {
+          type: 'string',
+          value:
+            '颜色条的宽度模式。<code>pixels</code> 使用像素单位；<code>fraction</code> 使用基于绘图区域宽度的比例。'
+        },
+        controller: new AttributeController({ type: 'select', default: 'pixels', options: ['pixels', 'fraction'] })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('len', 'number', {
-        parent: this,
+export class TraceColorbarLen extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'len',
+      type: 'number',
+      options: {
         description: { type: 'string', value: '颜色条的长度' },
         controller: new AttributeController({ type: 'number', default: 1, min: 0 })
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('lenmode', 'string', {
-        parent: this,
+export class TraceColorbarLenmode extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'lenmode',
+      type: 'string',
+      options: {
         description: {
           type: 'string',
           value:
             '颜色条的长度模式。<code>pixels</code> 使用像素单位；<code>fraction</code> 使用基于绘图区域高度的比例。'
         },
         controller: new AttributeController({ type: 'select', default: 'fraction', options: ['pixels', 'fraction'] })
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('x', 'number', {
-        parent: this,
+export class TraceColorbarX extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'x',
+      type: 'number',
+      options: {
         description: {
           type: 'string',
           value:
@@ -93,61 +177,69 @@ export default class TraceColoBar extends Attribute {
             '</ul>'
         },
         controller: new AttributeController({ type: 'number', default: null, step: 0.1 })
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute(
-        'xref',
-        { type: 'enum', value: ['container', 'paper'] },
-        {
-          parent: this,
-          description: {
-            type: 'string',
-            value:
-              '设置<code>colorbar.x</code>属性的参考系。<code>container</code>：整个图表元素的宽度; <code>paper</code>：绘图区域宽度。'
-          },
-          controller: new AttributeController({
-            type: 'select',
-            default: 'paper',
-            options: ['container', 'paper']
-          })
-        }
-      )
-    )
+export class TraceColorbarXref extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'xref',
+      type: { type: 'enum', value: ['container', 'paper'] },
+      options: {
+        description: {
+          type: 'string',
+          value:
+            '设置<code>colorbar.x</code>属性的参考系。<code>container</code>：整个图表元素的宽度; <code>paper</code>：绘图区域宽度。'
+        },
+        controller: new AttributeController({ type: 'select', default: 'paper', options: ['container', 'paper'] })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute(
-        'xanchor',
-        { type: 'enum', value: ['left', 'center', 'right'] },
-        {
-          parent: this,
-          description: {
-            type: 'string',
-            value:
-              '设置颜色条在水平方向上相对于<code>colorbar.x</code>属性设置的位置的对齐方式。' +
-              '垂直颜色条的默认值为<code>left</code>;水平颜色条的默认值为<code>center</code>。'
-          },
-          controller: new AttributeController({
-            type: 'select',
-            default: null,
-            options: ['left', 'center', 'right']
-          })
-        }
-      )
-    )
+export class TraceColorbarXAnchor extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'xanchor',
+      type: { type: 'enum', value: ['left', 'center', 'right'] },
+      options: {
+        description: {
+          type: 'string',
+          value:
+            '设置颜色条在水平方向上相对于<code>colorbar.x</code>属性设置的位置的对齐方式。' +
+            '垂直颜色条的默认值为<code>left</code>;水平颜色条的默认值为<code>center</code>。'
+        },
+        controller: new AttributeController({ type: 'select', default: null, options: ['left', 'center', 'right'] })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('xpad', 'number', {
-        parent: this,
+export class TraceColorbarXPad extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'xpad',
+      type: 'number',
+      options: {
         description: { type: 'string', value: '颜色条水平方向上的内边距。' },
         controller: new AttributeController({ type: 'number', default: 10, min: 0 })
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('y', 'number', {
-        parent: this,
+export class TraceColorbarY extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'y',
+      type: 'number',
+      options: {
         description: {
           type: 'string',
           value:
@@ -163,117 +255,151 @@ export default class TraceColoBar extends Attribute {
             '水平颜色条的默认值为<code>1</code>。</li>' +
             '</ul>'
         },
-        controller: new AttributeController({
-          type: 'number',
-          default: null,
-          step: 0.1
-        })
-      })
-    )
+        controller: new AttributeController({ type: 'number', default: null, step: 0.1 })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute(
-        'yref',
-        { type: 'enum', value: ['container', 'paper'] },
-        {
-          parent: this,
-          description: {
-            type: 'string',
-            value:
-              '设置<code>colorbar.y</code>属性的参考系。<code>container</code>：整个图表元素的宽度; <code>paper</code>：绘图区域宽度。'
-          },
-          controller: new AttributeController({ type: 'select', default: 'paper', options: ['container', 'paper'] })
-        }
-      )
-    )
+export class TraceColorbarYref extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'yref',
+      type: { type: 'enum', value: ['container', 'paper'] },
+      options: {
+        description: {
+          type: 'string',
+          value:
+            '设置<code>colorbar.y</code>属性的参考系。<code>container</code>：整个图表元素的宽度; <code>paper</code>：绘图区域宽度。'
+        },
+        controller: new AttributeController({ type: 'select', default: 'paper', options: ['container', 'paper'] })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute(
-        'yanchor',
-        { type: 'enum', value: ['top', 'middle', 'bottom'] },
-        {
-          parent: this,
-          description: {
-            type: 'string',
-            value:
-              '设置颜色条在垂直方向上相对于<code>colorbar.y</code>属性设置的位置的对齐方式。' +
-              '垂直颜色条的默认值为<code>middle</code>;水平颜色条的默认值为<code>bottom</code>。'
-          },
-          controller: new AttributeController({
-            type: 'select',
-            default: null,
-            options: ['top', 'middle', 'bottom']
-          })
-        }
-      )
-    )
+export class TraceColorbarYAnchor extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'yanchor',
+      type: { type: 'enum', value: ['top', 'middle', 'bottom'] },
+      options: {
+        description: {
+          type: 'string',
+          value:
+            '设置颜色条在垂直方向上相对于<code>colorbar.y</code>属性设置的位置的对齐方式。' +
+            '垂直颜色条的默认值为<code>middle</code>;水平颜色条的默认值为<code>bottom</code>。'
+        },
+        controller: new AttributeController({ type: 'select', default: null, options: ['top', 'middle', 'bottom'] })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('ypad', 'number', {
-        parent: this,
+export class TraceColorbarYPad extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'ypad',
+      type: 'number',
+      options: {
         description: { type: 'string', value: '颜色条的垂直外边距。' },
-        controller: new AttributeController({ type: 'number', default: 10 })
-      })
-    )
+        controller: new AttributeController({ type: 'number', default: 10, min: 0 })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('outlinecolor', 'Color', {
-        parent: this,
+export class TraceColorOutlinecolor extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'outlinecolor',
+      type: 'Color',
+      options: {
         description: { type: 'string', value: '颜色条的轮廓颜色。' },
         controller: new AttributeController({ type: 'color', default: '#444' })
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('outlinewidth', 'number', {
-        parent: this,
+export class TraceColorOutlinewidth extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'outlinewidth',
+      type: 'number',
+      options: {
         description: { type: 'string', value: '颜色条的轮廓宽度。' },
         controller: new AttributeController({ type: 'number', default: 0, min: 0 })
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('bordercolor', 'Color', {
-        parent: this,
+export class TraceColorBordercolor extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'bordercolor',
+      type: 'Color',
+      options: {
         description: { type: 'string', value: '颜色条边框颜色' },
         controller: new AttributeController({ type: 'color', default: '#444' })
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('borderwidth', 'number', {
-        parent: this,
+export class TraceColorBorderwidth extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'borderwidth',
+      type: 'number',
+      options: {
         description: { type: 'string', value: '颜色条边框宽度' },
         controller: new AttributeController({ type: 'number', default: 0, min: 0 })
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute(
-        'tickmode',
-        { type: 'enum', value: ['auto', 'linear', 'array'] },
-        {
-          parent: this,
-          description: {
-            type: 'string',
-            value:
-              '刻度模式。值域：' +
-              '<ul>' +
-              '<li><code>auto</code> - 刻度由 <code>nticks</code> 属性来确定。</li>' +
-              '<li><code>linear</code> - 刻度由起始位置 <code>tick0</code> 和刻度步长 <code>dtick</code> ' +
-              '决定（如果设置了 <code>tick0</code> 和 <code>dtick</code>，则默认值为<code>linear</code>）。</li>' +
-              '<li><code>array</code> - 刻度由使用 <code>tickvals</code> 属性来指定。' +
-              '（如果设置了 <code>tickvals</code>，则“数组”为默认值）</li>' +
-              '</ul>'
-          },
-          controller: new AttributeController({ type: 'select', default: null, options: ['auto', 'linear', 'array'] })
-        }
-      )
-    )
+export class TraceColorTickmode extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'tickmode',
+      type: { type: 'enum', value: ['auto', 'linear', 'array'] },
+      options: {
+        description: {
+          type: 'string',
+          value:
+            '刻度模式。值域：' +
+            '<ul>' +
+            '<li><code>auto</code> - 刻度由 <code>nticks</code> 属性来确定。</li>' +
+            '<li><code>linear</code> - 刻度由起始位置 <code>tick0</code> 和刻度步长 <code>dtick</code> ' +
+            '决定（如果设置了 <code>tick0</code> 和 <code>dtick</code>，则默认值为<code>linear</code>）。</li>' +
+            '<li><code>array</code> - 刻度由使用 <code>tickvals</code> 属性来指定。' +
+            '（如果设置了 <code>tickvals</code>，则“数组”为默认值）</li>' +
+            '</ul>'
+        },
+        controller: new AttributeController({ type: 'select', default: null, options: ['auto', 'linear', 'array'] })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('nticks', 'number', {
-        parent: this,
+export class TraceColorNticks extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'nticks',
+      type: 'number',
+      options: {
         description: {
           type: 'string',
           value:
@@ -281,39 +407,63 @@ export default class TraceColoBar extends Attribute {
             "当值为 <code>0</code>时，表示无限制。只有在 <code>tickmode = 'auto'</code> 时才有效。"
         },
         controller: new AttributeController({ type: 'number', default: 0, min: 0 })
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('tick0', 'number', {
-        parent: this,
+export class TraceColorTick0 extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'tick0',
+      type: 'number',
+      options: {
         description: { type: 'string', value: '设置颜色条刻度的起始值。' },
         controller: new AttributeController({ type: 'number', default: 0 })
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('dtick', 'number | string', {
-        parent: this,
+export class TraceColorDTick extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'dtick',
+      type: 'number',
+      options: {
         description: {
           type: 'string',
           value: '设置颜色条刻度之间的步长。需与 <code>tick0</code> 配合使用。'
         },
         controller: new AttributeController({ type: 'number', default: null })
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('tickvals', 'array', {
-        parent: this,
+export class TraceColorTickvals extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'tickvals',
+      type: 'array',
+      options: {
         description: { type: 'string', value: '设置颜色条刻度轴上显示的值。需与<code>ticktext</code>一起使用。' },
         controller: new AttributeController({ type: 'string', default: null, disabled: true, value: [1, 10, 15, 20] })
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('ticktext', 'array', {
-        parent: this,
+export class TraceColorTickText extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'ticktext',
+      type: 'array',
+      options: {
         description: { type: 'string', value: '设置颜色条刻度轴上显示的文本。需与<code>tickvals</code>一起使用。' },
         controller: new AttributeController({
           type: 'string',
@@ -321,55 +471,64 @@ export default class TraceColoBar extends Attribute {
           disabled: true,
           value: ['A', 'B', 'C', 'D']
         })
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute(
-        'ticks',
-        { type: 'enum', value: ['outside', 'inside', ''] },
-        {
-          parent: this,
-          description: {
-            type: 'string',
-            value:
-              '是否绘制刻度。值域：' +
-              '<ul>' +
-              "<li><code>''</code> - 默认值。不绘制。</li>" +
-              '<li><code>inside</code> - 在颜色条内部绘制。</li>' +
-              '<li><code>outside</code> - 在颜色条外部绘制。</li>' +
-              '</ul>'
-          },
-          controller: new AttributeController({
-            type: 'select',
-            default: "''",
-            value: '',
-            options: ['outside', 'inside', '']
-          })
+export class TraceColorTicks extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'ticks',
+      type: { type: 'enum', value: ['outside', 'inside', ''] },
+      options: {
+        description: {
+          type: 'string',
+          value:
+            '是否绘制刻度。值域：' +
+            '<ul>' +
+            "<li><code>''</code> - 默认值。不绘制。</li>" +
+            '<li><code>inside</code> - 在颜色条内部绘制。</li>' +
+            '<li><code>outside</code> - 在颜色条外部绘制。</li>' +
+            '</ul>'
+        },
+        controller: new AttributeController({
+          type: 'select',
+          default: "''",
+          value: '',
+          options: ['outside', 'inside', '']
+        })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
+
+export class TraceColorTicklabeloverflow extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'ticklabeloverflow',
+      type: { type: 'enum', value: ['allow', 'hide past div', 'hide past domain'] },
+      options: {
+        description: {
+          type: 'string',
+          value:
+            '控制刻度标签溢出时怎么显示。值域：' +
+            '<ul>' +
+            '<li><code>allow</code> - 强制显示。</li>' +
+            '<li><code>hide past div</code> - 隐藏超出图表区域的标签。（非内部刻度标签，默认值为此）</li>' +
+            '<li><code>hide past domain</code> - 隐藏超出坐标轴范围的标签。（内部刻度标签，默认值为此）</li>' +
+            '</ul>'
         }
-      )
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute(
-        'ticklabeloverflow',
-        { type: 'enum', value: ['allow', 'hide past div', 'hide past domain'] },
-        {
-          parent: this,
-          description: {
-            type: 'string',
-            value:
-              '控制刻度标签溢出时怎么显示。值域：' +
-              '<ul>' +
-              '<li><code>allow</code> - 强制显示。</li>' +
-              '<li><code>hide past div</code> - 隐藏超出图表区域的标签。（非内部刻度标签，默认值为此）</li>' +
-              '<li><code>hide past domain</code> - 隐藏超出坐标轴范围的标签。（内部刻度标签，默认值为此）</li>' +
-              '</ul>'
-          }
-        }
-      )
-    )
-
+export class TraceColorTicklabelposition extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
     const ticklabelpositionOpts = [
       'outside',
       'inside',
@@ -382,50 +541,70 @@ export default class TraceColoBar extends Attribute {
       'outside bottom',
       'inside bottom'
     ]
+    const defaultInitializer = {
+      name: 'ticklabelposition',
+      type: { type: 'enum', value: ticklabelpositionOpts },
+      options: {
+        description: {
+          type: 'string',
+          value:
+            '设置控制刻度标签的位置。其中左右布局适用于<code>orientation = "h"</code>，上下布局适用于<code>orientation = "v"</code>。'
+        },
+        controller: new AttributeController({ type: 'select', default: 'outside', options: ticklabelpositionOpts })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute(
-        'ticklabelposition',
-        { type: 'enum', value: ticklabelpositionOpts },
-        {
-          parent: this,
-          description: {
-            type: 'string',
-            value:
-              '设置控制刻度标签的位置。其中左右布局适用于<code>orientation = "h"</code>，上下布局适用于<code>orientation = "v"</code>。'
-          },
-          controller: new AttributeController({ type: 'select', default: 'outside', options: ticklabelpositionOpts })
-        }
-      )
-    )
-
-    this.addChild(
-      new Attribute('ticklen', 'number', {
-        parent: this,
+export class TraceColorTicklen extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'tickwidth',
+      type: 'number',
+      options: {
         description: { type: 'string', value: '刻度的长度。' },
         controller: new AttributeController({ type: 'number', default: 5, min: 0 })
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('tickwidth', 'number', {
-        parent: this,
+export class TraceColorTickwidth extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'tickwidth',
+      type: 'number',
+      options: {
         description: { type: 'string', value: '刻度的宽度。' },
         controller: new AttributeController({ type: 'number', default: 1, min: 0 })
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('tickcolor', 'string', {
-        parent: this,
+export class TraceColorTickcolor extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'tickcolor',
+      type: 'Color',
+      options: {
         description: { type: 'string', value: '刻度的颜色。' },
         controller: new AttributeController({ type: 'string', default: '#444' })
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('ticklabelstep', 'number', {
-        parent: this,
+export class TraceColorTicklabelstep extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'ticklabelstep',
+      type: 'number',
+      options: {
         description: {
           type: 'string',
           value:
@@ -433,20 +612,32 @@ export default class TraceColoBar extends Attribute {
             '值为 1（默认值）表示每个刻度都有对应的标签；值为 2 表示每隔二个刻度显示一个标签；值 n 表示每 n 个刻度显示一个标签。'
         },
         controller: new AttributeController({ type: 'number', default: 1, min: 0 })
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('showticklabels', 'boolean', {
-        parent: this,
+export class TraceColorShowticklabels extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'showticklabels',
+      type: 'boolean',
+      options: {
         description: { type: 'string', value: '是否显示刻度标签。' },
         controller: new AttributeController({ type: 'boolean', default: true })
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('labelalias', 'Object', {
-        parent: this,
+export class TraceColorLabelalias extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'labelalias',
+      type: 'Object',
+      options: {
         description: {
           type: 'string',
           value: '刻度标签的别名。例如，将数字 10 映射为 “Ten”——<code>{ 10: "Ten" }</code> '
@@ -457,27 +648,45 @@ export default class TraceColoBar extends Attribute {
           disabled: true,
           value: { 10: 'Ten', 12: 'Twelve', 14: 'Fourteen', 16: 'Sixteen' }
         })
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Font('tickfont', 'Font', {
-        parent: this,
+export class TraceColorTickfont extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'tickfont',
+      type: 'Font',
+      options: {
         description: { type: 'string', value: '刻度标签的字体。' }
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('tickangle', 'number', {
-        parent: this,
+export class TraceColorTickAngle extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'tickangle',
+      type: 'number',
+      options: {
         description: { type: 'string', value: '刻度标签的旋转角度。' },
         controller: new AttributeController({ type: 'number', default: 0, min: -360, max: 360, step: 15 })
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('tickformat', 'string', {
-        parent: this,
+export class TraceColorTickFormat extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'tickformat',
+      type: 'string',
+      options: {
         description: {
           type: 'string',
           value:
@@ -489,158 +698,191 @@ export default class TraceColoBar extends Attribute {
             '</ul>'
         },
         controller: new AttributeController({ type: 'string', default: null, value: '.2f', disabled: true })
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('tickprefix', 'string', {
-        parent: this,
+export class TraceColorTickprefix extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'tickprefix',
+      type: 'string',
+      options: {
         description: { type: 'string', value: '刻度标签的前缀。' },
         controller: new AttributeController({ type: 'string', default: null, value: '' })
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute(
-        'showtickprefix',
-        { type: 'enum', value: ['all', 'first', 'last', 'none'] },
-        {
-          parent: this,
-          description: { type: 'string', value: '刻度标签的前缀显示规则。' },
-          controller: new AttributeController({
-            type: 'select',
-            default: 'all',
-            options: ['all', 'first', 'last', 'none']
-          })
-        }
-      )
-    )
+export class TraceColorShowtickprefix extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'showtickprefix',
+      type: { type: 'enum', value: ['all', 'first', 'last', 'none'] },
+      options: {
+        description: { type: 'string', value: '刻度标签的前缀显示规则。' },
+        controller: new AttributeController({
+          type: 'select',
+          default: 'all',
+          options: ['all', 'first', 'last', 'none']
+        })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('ticksuffix', 'string', {
-        parent: this,
+export class TraceColorTicksuffix extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'ticksuffix',
+      type: 'string',
+      options: {
         description: { type: 'string', value: '刻度标签的后缀。' },
         controller: new AttributeController({ type: 'string', default: null, value: '' })
-      })
-    )
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute(
-        'showticksuffix',
-        { type: 'enum', value: ['all', 'first', 'last', 'none'] },
-        {
-          parent: this,
-          description: { type: 'string', value: '刻度标签的后缀显示规则。' },
-          controller: new AttributeController({
-            type: 'select',
-            default: 'all',
-            options: ['all', 'first', 'last', 'none']
-          })
-        }
-      )
-    )
+export class TraceColorShowticksuffix extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'showticksuffix',
+      type: { type: 'enum', value: ['all', 'first', 'last', 'none'] },
+      options: {
+        description: { type: 'string', value: '刻度标签的后缀显示规则。' },
+        controller: new AttributeController({
+          type: 'select',
+          default: 'all',
+          options: ['all', 'first', 'last', 'none']
+        })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('separatethousands', 'boolean', {
-        parent: this,
+export class TraceColorSeparatethousands extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'separatethousands',
+      type: 'boolean',
+      options: {
         description: { type: 'string', value: '是否显示数字千分位分隔符。' },
         controller: new AttributeController({ type: 'boolean', default: false })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
+
+export class TraceColorExponentformat extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'exponentformat',
+      type: { type: 'enum', value: ['none', 'e', 'E', 'power', 'SI', 'B'] },
+      options: {
+        description: {
+          type: 'string',
+          value:
+            '设置刻度值的指数形式的显示格式。<br />以<code>1000000000</code>为例： <br />' +
+            '<ul>' +
+            '<li><code>none</code> - 显示为<code>1,000,000,000</code></li>' +
+            '<li><code>e</code> - 显示为<code>1e+9</code></li>' +
+            '<li><code>E</code> - 显示为<code>1E+9</code></li>' +
+            '<li><code>power</code> - 显示为<code>1x10^9</code></li>' +
+            '<li><code>SI</code> - 显示为<code>1G</code></li>' +
+            '<li><code>B</code> - 显示为<code>1B</code></li>' +
+            '</ul>'
+        },
+        controller: new AttributeController({
+          type: 'select',
+          default: 'B',
+          options: ['none', 'e', 'E', 'power', 'SI', 'B']
+        }),
+        initialConfig: {
+          data: [
+            {
+              x: [1, 2, 3, 4],
+              y: [1000000000, 2000000000, 3000000000, 4000000000],
+              marker: { color: [1000000000, 2000000000, 3000000000, 4000000000] }
+            }
+          ]
+        }
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
+
+export class TraceColorShowexponent extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'showexponent',
+      type: { type: 'enum', value: ['all', 'first', 'last', 'none'] },
+      options: {
+        description: { type: 'string', value: '刻度指数规则生效规则' },
+        controller: new AttributeController({
+          type: 'select',
+          default: 'all',
+          options: ['all', 'first', 'last', 'none']
+        }),
+        initialConfig: {
+          data: [
+            {
+              x: [1, 2, 3, 4],
+              y: [1000000000, 2000000000, 3000000000, 4000000000],
+              marker: { color: [1000000000, 2000000000, 3000000000, 4000000000] }
+            }
+          ]
+        }
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
+
+export class TraceColorTitle extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'title',
+      type: 'Title',
+      options: {
+        description: { type: 'string', value: '设置颜色条标题。' }
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+
+    this.addChild(
+      new Attribute({
+        name: 'text',
+        type: 'string',
+        options: {
+          parent: this,
+          description: { type: 'string', value: '标题文本。' },
+          controller: new AttributeController({ type: 'string', default: null })
+        }
       })
     )
 
-    this.addChild(
-      new Attribute(
-        'exponentformat',
-        { type: 'enum', value: ['none', 'e', 'E', 'power', 'SI', 'B'] },
-        {
-          parent: this,
-          description: {
-            type: 'string',
-            value:
-              '设置刻度值的指数形式的显示格式。<br />以<code>1000000000</code>为例： <br />' +
-              '<ul>' +
-              '<li><code>none</code> - 显示为<code>1,000,000,000</code></li>' +
-              '<li><code>e</code> - 显示为<code>1e+9</code></li>' +
-              '<li><code>E</code> - 显示为<code>1E+9</code></li>' +
-              '<li><code>power</code> - 显示为<code>1x10^9</code></li>' +
-              '<li><code>SI</code> - 显示为<code>1G</code></li>' +
-              '<li><code>B</code> - 显示为<code>1B</code></li>' +
-              '</ul>'
-          },
-          controller: new AttributeController({
-            type: 'select',
-            default: 'B',
-            options: ['none', 'e', 'E', 'power', 'SI', 'B']
-          }),
-          initialConfig: {
-            data: [
-              {
-                x: [1, 2, 3, 4],
-                y: [1000000000, 2000000000, 3000000000, 4000000000],
-                marker: { color: [1000000000, 2000000000, 3000000000, 4000000000] }
-              }
-            ]
-          }
-        }
-      )
-    )
+    this.addChild(new Font('font', 'Font', { parent: this, description: { type: 'string', value: '标题字体' } }))
 
     this.addChild(
-      new Attribute(
-        'showexponent',
-        { type: 'enum', value: ['all', 'first', 'last', 'none'] },
-        {
+      new Attribute({
+        name: 'side',
+        type: { type: 'enum', value: ['top', 'bottom', 'right'] },
+        options: {
           parent: this,
-          description: { type: 'string', value: '刻度指数规则生效规则' },
-          controller: new AttributeController({
-            type: 'select',
-            default: 'all',
-            options: ['all', 'first', 'last', 'none']
-          }),
-          initialConfig: {
-            data: [
-              {
-                x: [1, 2, 3, 4],
-                y: [1000000000, 2000000000, 3000000000, 4000000000],
-                marker: { color: [1000000000, 2000000000, 3000000000, 4000000000] }
-              }
-            ]
-          }
-        }
-      )
-    )
-
-    const title = new Attribute('title', 'Title', {
-      parent: this,
-      description: { type: 'string', value: '设置颜色条标题。' }
-    })
-
-    title.addChild(
-      new Attribute('text', 'string', {
-        parent: title,
-        description: { type: 'string', value: '标题内容' },
-        controller: new AttributeController({ type: 'string', default: '' })
-      })
-    )
-
-    title.addChild(new Font('font', 'Font', { parent: title, description: { type: 'string', value: '标题字体' } }))
-
-    title.addChild(
-      new Attribute(
-        'side',
-        { type: 'enum', value: ['top', 'bottom', 'right'] },
-        {
-          parent: title,
           description: { type: 'string', value: '标题的位置。' },
-          controller: new AttributeController({
-            type: 'select',
-            default: null,
-            options: ['top', 'bottom', 'right']
-          })
+          controller: new AttributeController({ type: 'select', default: null, options: ['top', 'bottom', 'right'] })
         }
-      )
+      })
     )
-
-    this.addChild(title)
   }
 }

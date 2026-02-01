@@ -369,14 +369,17 @@ export default class TraceMarker extends Attribute {
     )
 
     this.addChild(
-      new TraceMarkerColoBar(
-        this,
-        {
-          type: 'string',
-          value: '颜色条样式设置。因为颜色标尺在颜色条中显示，所以<code>marker.showscale</code>属性会影响颜色条的显示。'
-        },
-        initialConfig
-      )
+      new TraceMarkerColoBar({
+        options: {
+          parent: this,
+          description: {
+            type: 'string',
+            value:
+              '颜色条样式设置。因为颜色标尺在颜色条中显示，所以<code>marker.showscale</code>属性会影响颜色条的显示。'
+          },
+          initialConfig: initialConfig
+        }
+      })
     )
 
     this.addChild(new TraceMarkerGradient(this))

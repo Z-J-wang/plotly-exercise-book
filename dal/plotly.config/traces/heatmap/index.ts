@@ -109,7 +109,7 @@ export default class TraceBar extends Attribute {
       })
     )
 
-    this.addChild(new Colorbar(this))
+    this.addChild(new Colorbar({ options: { parent: this } }))
 
     new TraceColorscale(this)
 
