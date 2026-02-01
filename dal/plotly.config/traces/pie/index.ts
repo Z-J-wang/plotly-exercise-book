@@ -2,7 +2,6 @@ import Attribute from 'entity/attribute'
 import {
   TraceName,
   TraceVisible,
-  TraceLegendAbout,
   TraceOpacity,
   TraceIds,
   TraceMeta,
@@ -10,6 +9,7 @@ import {
   TraceCustomdata,
   TraceAutoMargin
 } from '../trace.base'
+import TraceLegendAbout from '../trace.legend.about'
 import AttributeController from 'entity/attribute.controller'
 import TraceText from '../trace.text'
 import TraceMarker from '../trace.marker'

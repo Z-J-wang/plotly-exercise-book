@@ -2,7 +2,6 @@ import Attribute from 'entity/attribute'
 import {
   TraceName,
   TraceVisible,
-  TraceLegendAbout,
   TraceOpacity,
   TraceIds,
   TraceZorder,
@@ -15,6 +14,7 @@ import {
   TraceHoveron,
   TraceType
 } from '../trace.base'
+import TraceLegendAbout, { TraceShowlegend } from '../trace.legend.about'
 import TraceData from '../trace.data'
 import AttributeController from 'entity/attribute.controller'
 import TraceText from '../trace.text'
@@ -67,6 +67,7 @@ export default class TraceScatter extends Attribute {
       })
     )
     this.addChild(new TraceVisible({ options: { parent: this } }))
+
     new TraceLegendAbout(this)
 
     this.addChild(

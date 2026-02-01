@@ -78,6 +78,9 @@ export default class Attribute {
   }
 
   // TODO 构造函数改造中，临时兼容两种传参。改造目标：参数改为Attribute.Initializer类型的形参
+  constructor(name: string, type?: string | Attribute.Type, options?: Attribute.Options)
+
+  constructor(initializer: Attribute.Initializer)
   /**
    * 构造函数
    * @param name

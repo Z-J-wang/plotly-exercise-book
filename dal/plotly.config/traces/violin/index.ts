@@ -3,7 +3,6 @@ import Attribute from 'entity/attribute'
 import {
   TraceName,
   TraceVisible,
-  TraceLegendAbout,
   TraceOpacity,
   TraceIds,
   TraceZorder,
@@ -15,6 +14,7 @@ import {
   TraceOrientation,
   TraceSelectedPoints
 } from '../trace.base'
+import TraceLegendAbout from '../trace.legend.about'
 import ViolinData from './violin.data'
 import AttributeController from 'entity/attribute.controller'
 import TraceText from '../trace.text'

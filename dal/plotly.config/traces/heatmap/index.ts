@@ -2,7 +2,6 @@ import Attribute from 'entity/attribute'
 import {
   TraceName,
   TraceVisible,
-  TraceLegendAbout,
   TraceOpacity,
   TraceIds,
   TraceZorder,
@@ -12,6 +11,7 @@ import {
   TraceConnectgaps,
   TraceType
 } from '../trace.base'
+import TraceLegendAbout from '../trace.legend.about'
 import HeatmapData from './heatmap.data'
 import AttributeController from 'entity/attribute.controller'
 import TraceText from '../trace.text'
