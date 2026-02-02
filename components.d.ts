@@ -9,13 +9,11 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AttributeControl: typeof import('./src/components/AttributeControl.vue')['default']
-    'Base.ids': typeof import('./src/components/doc/traces/base.ids.vue')['default']
     BaseIds: typeof import('./src/components/doc/traces/BaseIds.vue')['default']
     BaseX0: typeof import('./src/components/doc/traces/BaseX0.vue')['default']
     BasicAside: typeof import('./src/components/BasicAside.vue')['default']
     CodeAndPlot: typeof import('./src/components/CodeAndPlot.vue')['default']
     CodeEditor: typeof import('./src/components/CodeEditor.vue')['default']
-    copy: typeof import('./src/components/doc/traces/ViolinAlignmentGroup copy.vue')['default']
     DataRevision: typeof import('./src/components/doc/layout/DataRevision.vue')['default']
     EditRevision: typeof import('./src/components/doc/layout/EditRevision.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
@@ -55,8 +53,6 @@ declare module 'vue' {
     Template: typeof import('./src/components/doc/layout/Template.vue')['default']
     TraceData: typeof import('./src/components/doc/TraceData.vue')['default']
     UiRevision: typeof import('./src/components/doc/layout/UiRevision.vue')['default']
-    ViolinAlignentGroup: typeof import('./src/components/doc/traces/ViolinAlignentGroup.vue')['default']
     ViolinAlignmentGroup: typeof import('./src/components/doc/traces/ViolinAlignmentGroup.vue')['default']
-    ViolinScaleGroup: typeof import('./src/components/doc/traces/ViolinScaleGroup.vue')['default']
   }
 }
