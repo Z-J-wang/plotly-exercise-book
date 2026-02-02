@@ -16,8 +16,8 @@ export class BoxPointpos extends Attribute {
         controller: new AttributeController({ type: 'number', default: 0, min: -2, max: 2, step: 0.1 })
       }
     }
-    const mergedInitializer = merge(defaultInitializer, initializer)
-    super(mergedInitializer.name, mergedInitializer.type, mergedInitializer.options)
+
+    super(merge(defaultInitializer, initializer))
   }
 }
 
@@ -35,8 +35,8 @@ export class BoxJitter extends Attribute {
         controller: new AttributeController({ type: 'number', default: 0, min: 0, max: 1, step: 0.1 })
       }
     }
-    const mergedInitializer = merge(defaultInitializer, initializer)
-    super(mergedInitializer.name, mergedInitializer.type, mergedInitializer.options)
+
+    super(merge(defaultInitializer, initializer))
   }
 }
 

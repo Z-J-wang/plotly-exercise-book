@@ -1,9 +1,9 @@
+import { merge } from 'lodash'
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
-import { merge } from 'lodash'
 
 export default class ViolinMeanLine extends Attribute {
-  constructor(initializer: Attribute.Initializer, omitChildren: string[] = []) {
+  constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
       name: 'meanline',
       type: 'ViolinMeanLine',
@@ -11,12 +11,11 @@ export default class ViolinMeanLine extends Attribute {
         description: { type: 'string', value: '设置小提琴图均值线样式/' }
       }
     }
-    const mergedInitializer = merge(defaultInitializer, initializer)
-    super(mergedInitializer.name, mergedInitializer.type, mergedInitializer.options)
+    super(merge(defaultInitializer, initializer))
 
-    !omitChildren.includes('visible') && this.addChild(new ViolinMeanlineVisible({ options: { parent: this } }))
-    !omitChildren.includes('width') && this.addChild(new ViolinMeanlineWidth({ options: { parent: this } }))
-    !omitChildren.includes('color') && this.addChild(new ViolinMeanlineColor({ options: { parent: this } }))
+    this.addChild(new ViolinMeanlineVisible({ options: { parent: this } }))
+    this.addChild(new ViolinMeanlineWidth({ options: { parent: this } }))
+    this.addChild(new ViolinMeanlineColor({ options: { parent: this } }))
   }
 }
 

@@ -2,7 +2,6 @@ import Attribute from 'entity/attribute'
 import {
   TraceName,
   TraceVisible,
-  TraceLegendAbout,
   TraceOpacity,
   TraceIds,
   TraceZorder,
@@ -15,6 +14,7 @@ import {
   TraceTextAngle,
   TraceType
 } from '../trace.base'
+import TraceLegendAbout from '../trace.legend.about'
 import TraceData from '../trace.data'
 import AttributeController from 'entity/attribute.controller'
 import TraceText from '../trace.text'
@@ -50,19 +50,24 @@ export default class TraceBar extends Attribute {
       initialConfig: baseInitialConfig
     })
 
-    this.addChild(new TraceType(this, 'bar'))
+    this.addChild(new TraceType({ options: { parent: this } }, 'bar'))
 
     this.addChild(
-      new TraceName(this, new AttributeController({ type: 'string', default: null, value: 'scatter trace' }))
+      new TraceName({
+        options: {
+          parent: this,
+          controller: new AttributeController({ type: 'string', default: null, value: 'bar trace' })
+        }
+      })
     )
-    this.addChild(new TraceVisible(this))
+    this.addChild(new TraceVisible({ options: { parent: this } }))
     new TraceLegendAbout(this)
 
-    this.addChild(new TraceIds(this))
+    this.addChild(new TraceIds({ options: { parent: this } }))
 
-    this.addChild(new TraceOpacity(this))
+    this.addChild(new TraceOpacity({ options: { parent: this } }))
 
-    this.addChild(new TraceZorder(this))
+    this.addChild(new TraceZorder({ options: { parent: this } }))
 
     new TraceData(this)
 
@@ -108,17 +113,17 @@ export default class TraceBar extends Attribute {
 
     new BarTextAnchor(this)
 
-    this.addChild(new TraceTextAngle(this))
+    this.addChild(new TraceTextAngle({ options: { parent: this } }))
 
     new TraceHover(this, ['zhoverformat', 'hoverongaps'])
 
-    this.addChild(new TraceMeta(this))
+    this.addChild(new TraceMeta({ options: { parent: this } }))
 
-    this.addChild(new TraceXaxis(this))
+    this.addChild(new TraceXaxis({ options: { parent: this } }))
 
-    this.addChild(new TraceYaxis(this))
+    this.addChild(new TraceYaxis({ options: { parent: this } }))
 
-    this.addChild(new TraceOrientation(this))
+    this.addChild(new TraceOrientation({ options: { parent: this } }))
 
     this.addChild(
       new TraceMarker(
@@ -155,7 +160,7 @@ export default class TraceBar extends Attribute {
       })
     )
 
-    this.addChild(new TraceSelectedPoints(this))
+    this.addChild(new TraceSelectedPoints({ options: { parent: this } }))
 
     this.addChild(
       new TraceSelected('selected', {
@@ -171,7 +176,7 @@ export default class TraceBar extends Attribute {
       })
     )
 
-    this.addChild(new TraceCliponaxis(this))
+    this.addChild(new TraceCliponaxis({ options: { parent: this } }))
 
     this.addChild(
       new Attribute(

@@ -2,7 +2,6 @@ import Attribute from 'entity/attribute'
 import {
   TraceName,
   TraceVisible,
-  TraceLegendAbout,
   TraceOpacity,
   TraceIds,
   TraceZorder,
@@ -15,6 +14,7 @@ import {
   TraceHoveron,
   TraceType
 } from '../trace.base'
+import TraceLegendAbout, { TraceShowlegend } from '../trace.legend.about'
 import TraceData from '../trace.data'
 import AttributeController from 'entity/attribute.controller'
 import TraceText from '../trace.text'
@@ -56,12 +56,18 @@ export default class TraceScatter extends Attribute {
       initialConfig: baseInitialConfig
     })
 
-    this.addChild(new TraceType(this, 'bar'))
+    this.addChild(new TraceType({ options: { parent: this } }, 'scatter'))
 
     this.addChild(
-      new TraceName(this, new AttributeController({ type: 'string', default: null, value: 'scatter trace' }))
+      new TraceName({
+        options: {
+          parent: this,
+          controller: new AttributeController({ type: 'string', default: null, value: 'scatter trace' })
+        }
+      })
     )
-    this.addChild(new TraceVisible(this))
+    this.addChild(new TraceVisible({ options: { parent: this } }))
+
     new TraceLegendAbout(this)
 
     this.addChild(
@@ -102,11 +108,11 @@ export default class TraceScatter extends Attribute {
       )
     )
 
-    this.addChild(new TraceIds(this))
+    this.addChild(new TraceIds({ options: { parent: this } }))
 
-    this.addChild(new TraceOpacity(this))
+    this.addChild(new TraceOpacity({ options: { parent: this } }))
 
-    this.addChild(new TraceZorder(this))
+    this.addChild(new TraceZorder({ options: { parent: this } }))
 
     new TraceData(this)
 
@@ -149,11 +155,11 @@ export default class TraceScatter extends Attribute {
 
     new TraceHover(this)
 
-    this.addChild(new TraceMeta(this))
+    this.addChild(new TraceMeta({ options: { parent: this } }))
 
-    this.addChild(new TraceXaxis(this))
+    this.addChild(new TraceXaxis({ options: { parent: this } }))
 
-    this.addChild(new TraceYaxis(this))
+    this.addChild(new TraceYaxis({ options: { parent: this } }))
 
     new TraceStack(this, {
       data: [
@@ -209,7 +215,7 @@ export default class TraceScatter extends Attribute {
       })
     )
 
-    this.addChild(new TraceSelectedPoints(this))
+    this.addChild(new TraceSelectedPoints({ options: { parent: this } }))
 
     this.addChild(
       new TraceSelected('selected', {
@@ -225,13 +231,13 @@ export default class TraceScatter extends Attribute {
       })
     )
 
-    this.addChild(new TraceCliponaxis(this))
+    this.addChild(new TraceCliponaxis({ options: { parent: this } }))
 
-    this.addChild(new TraceConnectgaps(this))
+    this.addChild(new TraceConnectgaps({ options: { parent: this } }))
 
     new TraceFillAssemble(this)
 
-    this.addChild(new TraceHoveron(this))
+    this.addChild(new TraceHoveron({ options: { parent: this } }))
 
     this.addChild(new BaseUirevision(this))
   }

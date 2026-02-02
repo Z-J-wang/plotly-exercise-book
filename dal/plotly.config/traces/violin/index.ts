@@ -3,26 +3,23 @@ import Attribute from 'entity/attribute'
 import {
   TraceName,
   TraceVisible,
-  TraceLegendAbout,
   TraceOpacity,
   TraceIds,
   TraceZorder,
   TraceMeta,
   TraceXaxis,
   TraceYaxis,
-  TraceConnectgaps,
   TraceType,
   TraceCustomdata,
   TraceOrientation,
   TraceSelectedPoints
 } from '../trace.base'
+import TraceLegendAbout from '../trace.legend.about'
 import ViolinData from './violin.data'
 import AttributeController from 'entity/attribute.controller'
 import TraceText from '../trace.text'
 import TraceHover from '../trace.hover'
 import { BaseUirevision } from '../../base'
-import Colorbar from '../trace.colorbar'
-import TraceColorscale from '../trace.colorscale'
 import exampleData from '@/assets/data/violin.json'
 import ViolinAlignmentGroup from '@/components/doc/traces/ViolinAlignmentGroup.vue'
 import BoxMarker from '../box/marker'
@@ -55,32 +52,42 @@ export default class TraceBar extends Attribute {
       }
     }
 
-    super('violin', 'Violin', {
-      parent,
-      description: {
-        type: 'markdown',
-        value: `
+    super({
+      name: 'violin',
+      type: 'Violin',
+      options: {
+        parent,
+        description: {
+          type: 'markdown',
+          value: `
 更多示例：<a href="https://plotly.com/javascript/violin/" target="_blank">https://plotly.com/javascript/violin/</a>
 
 官方文档：<a href="https://plotly.com/javascript/reference/violin/" target="_blank">https://plotly.com/javascript/reference/violin/</a>
         `
-      },
-      initialConfig: baseInitialConfig
+        },
+        initialConfig: baseInitialConfig
+      }
     })
 
-    this.addChild(new TraceType(this, 'heatmap'))
+    this.addChild(new TraceType({ options: { parent: this } }, 'heatmap'))
 
     this.addChild(
-      new TraceName(this, new AttributeController({ type: 'string', default: null, value: 'violin trace' }))
+      new TraceName({
+        options: {
+          parent: this,
+          controller: new AttributeController({ type: 'string', default: null, value: 'heatmap trace' })
+        }
+      })
     )
-    this.addChild(new TraceVisible(this))
+
+    this.addChild(new TraceVisible({ options: { parent: this } }))
     new TraceLegendAbout(this, ['legendwidth'])
 
-    this.addChild(new TraceIds(this))
+    this.addChild(new TraceIds({ options: { parent: this } }))
 
-    this.addChild(new TraceOpacity(this))
+    this.addChild(new TraceOpacity({ options: { parent: this } }))
 
-    this.addChild(new TraceZorder(this))
+    this.addChild(new TraceZorder({ options: { parent: this } }))
 
     new ViolinData(this)
 
@@ -101,15 +108,15 @@ export default class TraceBar extends Attribute {
     this.addChild(new ViolinHoveron({ options: { parent: this } }))
     new TraceHover(this)
 
-    this.addChild(new TraceMeta(this))
+    this.addChild(new TraceMeta({ options: { parent: this } }))
 
-    this.addChild(new TraceCustomdata(this))
+    this.addChild(new TraceCustomdata({ options: { parent: this } }))
 
-    this.addChild(new TraceXaxis(this))
+    this.addChild(new TraceXaxis({ options: { parent: this } }))
 
-    this.addChild(new TraceYaxis(this))
+    this.addChild(new TraceYaxis({ options: { parent: this } }))
 
-    this.addChild(new TraceOrientation(this))
+    this.addChild(new TraceOrientation({ options: { parent: this } }))
 
     this.addChild(
       new Attribute('alignmentgroup', 'string', {
@@ -132,13 +139,13 @@ export default class TraceBar extends Attribute {
       })
     )
 
-    this.addChild(new BoxMarker(this))
+    this.addChild(new BoxMarker({ options: { parent: this } }))
 
-    this.addChild(new ViolinLine(this))
+    this.addChild(new ViolinLine({ options: { parent: this } }))
 
-    this.addChild(new ViolinBox(this))
+    this.addChild(new ViolinBox({ options: { parent: this } }))
 
-    this.addChild(new TraceSelectedPoints(this))
+    this.addChild(new TraceSelectedPoints({ options: { parent: this } }))
 
     this.addChild(
       new TraceSelected('selected', {
@@ -174,7 +181,6 @@ export default class TraceBar extends Attribute {
 
     this.addChild(new ViolinMeanLine({ options: { parent: this } }))
 
-    this.addChild(new TraceConnectgaps(this))
     this.addChild(new BoxBoxPoints({ name: 'points', options: { parent: this } }))
     this.addChild(new ViolinScalegroup({ options: { parent: this } }))
     this.addChild(new ViolinScalemode({ options: { parent: this } }))
@@ -199,7 +205,7 @@ export class ViolinBandwidth extends Attribute {
       }
     }
     const mergedInitializer = merge(defaultInitializer, initializer)
-    super(mergedInitializer.name, mergedInitializer.type, mergedInitializer.options)
+    super(mergedInitializer)
   }
 }
 
@@ -217,7 +223,7 @@ export class ViolinFillcolor extends Attribute {
       }
     }
     const mergedInitializer = merge(defaultInitializer, initializer)
-    super(mergedInitializer.name, mergedInitializer.type, mergedInitializer.options)
+    super(mergedInitializer)
   }
 }
 
@@ -241,7 +247,7 @@ export class ViolinHoveron extends Attribute {
       }
     }
     const mergedInitializer = merge(defaultInitializer, initializer)
-    super(mergedInitializer.name, mergedInitializer.type, mergedInitializer.options)
+    super(mergedInitializer)
   }
 }
 
@@ -259,8 +265,7 @@ export class ViolinScalegroup extends Attribute {
       }
     }
 
-    const mergedInitialization = merge(defaultInitialization, initialization)
-    super(mergedInitialization.name, mergedInitialization.type, mergedInitialization.options)
+    super(merge(defaultInitialization, initialization))
   }
 }
 
@@ -279,8 +284,7 @@ export class ViolinScalemode extends Attribute {
       }
     }
 
-    const mergedInitialization = merge(defaultInitialization, initialization)
-    super(mergedInitialization.name, mergedInitialization.type, mergedInitialization.options)
+    super(merge(defaultInitialization, initialization))
   }
 }
 
@@ -303,8 +307,7 @@ export class ViolinSpanmode extends Attribute {
       }
     }
 
-    const mergedInitialization = merge(defaultInitialization, initialization)
-    super(mergedInitialization.name, mergedInitialization.type, mergedInitialization.options)
+    super(merge(defaultInitialization, initialization))
   }
 }
 
@@ -321,7 +324,6 @@ export class ViolinSpan extends Attribute {
       }
     }
 
-    const mergedInitialization = merge(defaultInitialization, initialization)
-    super(mergedInitialization.name, mergedInitialization.type, mergedInitialization.options)
+    super(merge(defaultInitialization, initialization))
   }
 }

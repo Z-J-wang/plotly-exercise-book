@@ -82,8 +82,8 @@ function convertDescription(description: string) {
         <div class="mt-2 whitespace-normal">
           <span v-if="data.description.type === 'string'" v-html="convertDescription(data.description.value)" />
           <span
-            class="markdown-body"
             v-if="data.description.type === 'markdown'"
+            class="markdown-body"
             v-html="useMarkdownIt(data.description.value).htmlString"
           />
           <component v-else-if="data.description.type === 'Component'" :is="data.description.value" />

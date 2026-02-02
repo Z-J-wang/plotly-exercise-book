@@ -2,7 +2,6 @@ import Attribute from 'entity/attribute'
 import {
   TraceName,
   TraceVisible,
-  TraceLegendAbout,
   TraceOpacity,
   TraceIds,
   TraceZorder,
@@ -12,13 +11,14 @@ import {
   TraceConnectgaps,
   TraceType
 } from '../trace.base'
+import TraceLegendAbout from '../trace.legend.about'
 import HeatmapData from './heatmap.data'
 import AttributeController from 'entity/attribute.controller'
 import TraceText from '../trace.text'
 import TraceHover from '../trace.hover'
 import { BaseUirevision } from '../../base'
 import Colorbar from '../trace.colorbar'
-import TraceColorscale from '../trace.colorscale'
+import TraceColorscaleAbout from '../trace.colorscale.about'
 
 export default class TraceBar extends Attribute {
   constructor(parent: Attribute) {
@@ -57,19 +57,26 @@ export default class TraceBar extends Attribute {
       initialConfig: baseInitialConfig
     })
 
-    this.addChild(new TraceType(this, 'heatmap'))
+    this.addChild(new TraceType({ options: { parent: this } }, 'heatmap'))
 
     this.addChild(
-      new TraceName(this, new AttributeController({ type: 'string', default: null, value: 'scatter trace' }))
+      new TraceName(
+        new TraceName({
+          options: {
+            parent: this,
+            controller: new AttributeController({ type: 'string', default: null, value: 'heatmap trace' })
+          }
+        })
+      )
     )
-    this.addChild(new TraceVisible(this))
+    this.addChild(new TraceVisible({ options: { parent: this } }))
     new TraceLegendAbout(this)
 
-    this.addChild(new TraceIds(this))
+    this.addChild(new TraceIds({ options: { parent: this } }))
 
-    this.addChild(new TraceOpacity(this))
+    this.addChild(new TraceOpacity({ options: { parent: this } }))
 
-    this.addChild(new TraceZorder(this))
+    this.addChild(new TraceZorder({ options: { parent: this } }))
 
     new HeatmapData(this)
 
@@ -84,11 +91,11 @@ export default class TraceBar extends Attribute {
 
     new TraceHover(this, ['zhoverformat'])
 
-    this.addChild(new TraceMeta(this))
+    this.addChild(new TraceMeta({ options: { parent: this } }))
 
-    this.addChild(new TraceXaxis(this))
+    this.addChild(new TraceXaxis({ options: { parent: this } }))
 
-    this.addChild(new TraceYaxis(this))
+    this.addChild(new TraceYaxis({ options: { parent: this } }))
 
     this.addChild(
       new Attribute('coloraxis', 'string', {
@@ -102,9 +109,9 @@ export default class TraceBar extends Attribute {
       })
     )
 
-    this.addChild(new Colorbar(this))
+    this.addChild(new Colorbar({ options: { parent: this } }))
 
-    new TraceColorscale(this)
+    new TraceColorscaleAbout(this)
 
     this.addChild(
       new Attribute('zauto', 'boolean', {
@@ -172,7 +179,7 @@ export default class TraceBar extends Attribute {
       )
     )
 
-    this.addChild(new TraceConnectgaps(this))
+    this.addChild(new TraceConnectgaps({ options: { parent: this } }))
 
     this.addChild(new BaseUirevision(this))
   }

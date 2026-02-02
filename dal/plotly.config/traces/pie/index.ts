@@ -2,7 +2,6 @@ import Attribute from 'entity/attribute'
 import {
   TraceName,
   TraceVisible,
-  TraceLegendAbout,
   TraceOpacity,
   TraceIds,
   TraceMeta,
@@ -10,6 +9,7 @@ import {
   TraceCustomdata,
   TraceAutoMargin
 } from '../trace.base'
+import TraceLegendAbout from '../trace.legend.about'
 import AttributeController from 'entity/attribute.controller'
 import TraceText from '../trace.text'
 import TraceMarker from '../trace.marker'
@@ -43,17 +43,22 @@ export default class TracePie extends Attribute {
       initialConfig: baseInitialConfig
     })
 
-    this.addChild(new TraceType(this, 'pie'))
+    this.addChild(new TraceType({ options: { parent: this } }, 'pie'))
 
     this.addChild(
-      new TraceName(this, new AttributeController({ type: 'string', default: null, value: 'scatter trace' }))
+      new TraceName({
+        options: {
+          parent: this,
+          controller: new AttributeController({ type: 'string', default: null, value: 'pie trace' })
+        }
+      })
     )
-    this.addChild(new TraceVisible(this))
+    this.addChild(new TraceVisible({ options: { parent: this } }))
     new TraceLegendAbout(this)
 
-    this.addChild(new TraceIds(this))
+    this.addChild(new TraceIds({ options: { parent: this } }))
 
-    this.addChild(new TraceOpacity(this))
+    this.addChild(new TraceOpacity({ options: { parent: this } }))
 
     this.addChild(
       new Attribute('values', 'Array', {
@@ -154,13 +159,13 @@ export default class TracePie extends Attribute {
 
     this.addChild(new PieMarker(this))
 
-    this.addChild(new TraceMeta(this))
+    this.addChild(new TraceMeta({ options: { parent: this } }))
 
-    this.addChild(new TraceCustomdata(this))
+    this.addChild(new TraceCustomdata({ options: { parent: this } }))
 
     this.addChild(new PieDomain(this))
 
-    this.addChild(new TraceAutoMargin(this))
+    this.addChild(new TraceAutoMargin({ options: { parent: this } }))
 
     this.addChild(
       new Attribute(
