@@ -147,16 +147,16 @@ export default class TraceBar extends Attribute {
     )
 
     this.addChild(
-      new TraceErrorBar('error_x', {
-        parent: this,
-        description: { type: 'string', value: '设置数据点的在水平方向上的误差条。' }
+      new TraceErrorBar({
+        name: 'error_x',
+        options: { parent: this, description: { type: 'string', value: '设置数据点的在水平方向上的误差条。' } }
       })
     )
 
     this.addChild(
-      new TraceErrorBar('error_y', {
-        parent: this,
-        description: { type: 'string', value: '设置数据点的垂直方向上的误差条。' }
+      new TraceErrorBar({
+        name: 'error_y',
+        options: { parent: this, description: { type: 'string', value: '设置数据点的垂直方向上的误差条。' } }
       })
     )
 
