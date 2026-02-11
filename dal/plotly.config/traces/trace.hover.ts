@@ -1,24 +1,50 @@
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import BaseHoverLabel from '../base.hover.label'
+import { merge } from 'lodash'
 
 export default class TraceHover {
   constructor(parent: Attribute, omitChildren: string[] = []) {
-    !omitChildren.includes('hovertext') &&
+    !omitChildren.includes('hovertext') && parent.addChild(new TraceHovertext({ options: { parent } }))
+    !omitChildren.includes('hoverinfo') && parent.addChild(new TraceHoverinfo({ options: { parent } }))
+    !omitChildren.includes('hovertemplate') && parent.addChild(new TraceHovertemplate({ options: { parent } }))
+    !omitChildren.includes('xhoverformat') && parent.addChild(new TraceXHoverformat({ options: { parent } }))
+    !omitChildren.includes('yhoverformat') && parent.addChild(new TraceYHoverformat({ options: { parent } }))
+    !omitChildren.includes('zhoverformat') && parent.addChild(new TraceZHoverformat({ options: { parent } }))
+    !omitChildren.includes('hoverongaps') && parent.addChild(new TraceHoverongaps({ options: { parent } }))
+
+    !omitChildren.includes('hoverlabel') &&
       parent.addChild(
-        new Attribute('hovertext', 'string | string[]', {
+        new BaseHoverLabel('hoverlabel', {
           parent,
-          description: {
-            type: 'string',
-            value:
-              '指定轨迹数据点的悬浮文本。其值，可以是字符串或者字符串数组。' +
-              '如果是字符串，则表示所有数据点都使用相同的文本；' +
-              '如果是字符串数组，则为每个数据点单独定义的文本。<br />' +
-              '未定义<code>hovertext</code>时，<code>text</code>属性声明的数据点文本充当数据点的悬浮文本。'
-          }
+          description: { type: 'string', value: '设置鼠标悬停时的标签样式。' }
         })
       )
+  }
+}
 
+export class TraceHovertext extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'hovertext',
+      type: 'string | string[]',
+      options: {
+        description: {
+          type: 'string',
+          value:
+            '指定轨迹数据点的悬浮文本。其值，可以是字符串或者字符串数组。' +
+            '如果是字符串，则表示所有数据点都使用相同的文本；' +
+            '如果是字符串数组，则为每个数据点单独定义的文本。<br />' +
+            '未定义<code>hovertext</code>时，<code>text</code>属性声明的数据点文本充当数据点的悬浮文本。'
+        }
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
+
+export class TraceHoverinfo extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
     const hoverinfoOptions = [
       'all',
       'name',
@@ -58,127 +84,134 @@ export default class TraceHover {
       'z+x+y+name'
     ]
 
-    !omitChildren.includes('hoverinfo') &&
-      parent.addChild(
-        new Attribute(
-          'hoverinfo',
-          {
-            type: 'enum',
-            value: hoverinfoOptions
-          },
-          {
-            parent,
-            description: {
-              type: 'string',
-              value:
-                '设置鼠标悬浮时，悬浮弹窗需要显示的信息。<br />' +
-                '可选择:' +
-                '<ul>' +
-                '<li><code>x</code> - x 轴数据</li>' +
-                '<li><code>y</code> - y 轴数据</li>' +
-                '<li><code>z</code> - z 轴数据</li>' +
-                '<li><code>text</code> - 悬浮文本</li>' +
-                '<li><code>name</code> - 图表名称</li>' +
-                '<li><code>all</code> - 显示全部信息</li>' +
-                '<li><code>none</code> - 不显示任何信息，但点击悬浮事件仍会触发</li>' +
-                '<li><code>skip</code> - 不显示任何信息，点击悬浮事件不会触发</li>' +
-                '</ul>'
-            },
-            controller: new AttributeController({
-              type: 'select',
-              default: 'all',
-              options: hoverinfoOptions
-            })
-          }
-        )
-      )
+    const defaultInitializer = {
+      name: 'hoverinfo',
+      type: { type: 'enum', value: hoverinfoOptions },
+      options: {
+        description: {
+          type: 'string',
+          value:
+            '设置鼠标悬浮时，悬浮弹窗需要显示的信息。<br />' +
+            '可选择:' +
+            '<ul>' +
+            '<li><code>x</code> - x 轴数据</li>' +
+            '<li><code>y</code> - y 轴数据</li>' +
+            '<li><code>z</code> - z 轴数据</li>' +
+            '<li><code>text</code> - 悬浮文本</li>' +
+            '<li><code>name</code> - 图表名称</li>' +
+            '<li><code>all</code> - 显示全部信息</li>' +
+            '<li><code>none</code> - 不显示任何信息，但点击悬浮事件仍会触发</li>' +
+            '<li><code>skip</code> - 不显示任何信息，点击悬浮事件不会触发</li>' +
+            '</ul>'
+        },
+        controller: new AttributeController({ type: 'select', default: 'all', options: hoverinfoOptions })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    !omitChildren.includes('hovertemplate') &&
-      parent.addChild(
-        new Attribute('hovertemplate', 'string', {
-          parent,
-          description: {
-            type: 'string',
-            value:
-              'hover 文本渲染模板模板.' +
-              '说明：' +
-              '<ul>' +
-              '<li>支持HTML标签</li>' +
-              '<li>通过<code>%{variable}</code>接收变量。</li>' +
-              '<li>仅支持数据点相关的数据变量，如：<code>x</code>、<code>y</code>、<code>text</code>等等。</li>' +
-              '<li>数字，支持<a href="https://github.com/d3/d3-format/tree/v1.4.5#d3-format" target="_blank">d3-format</a>语法。</li>' +
-              '<li>日期，支持<a href="https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format" target="_blank">d3-time-format</a>语法。</li>' +
-              '</ul>'
-          },
-          controller: new AttributeController({ type: 'string', default: null })
-        })
-      )
+export class TraceHovertemplate extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'hovertemplate',
+      type: 'string',
+      options: {
+        description: {
+          type: 'string',
+          value:
+            'hover 文本渲染模板模板.' +
+            '说明：' +
+            '<ul>' +
+            '<li>支持HTML标签</li>' +
+            '<li>通过<code>%{variable}</code>接收变量。</li>' +
+            '<li>仅支持数据点相关的数据变量，如：<code>x</code>、<code>y</code>、<code>text</code>等等。</li>' +
+            '<li>数字，支持<a href="https://github.com/d3/d3-format/tree/v1.4.5#d3-format" target="_blank">d3-format</a>语法。</li>' +
+            '<li>日期，支持<a href="https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format" target="_blank">d3-time-format</a>语法。</li>' +
+            '</ul>'
+        },
+        controller: new AttributeController({ type: 'string', default: null })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    !omitChildren.includes('xhoverformat') &&
-      parent.addChild(
-        new Attribute('xhoverformat', 'string', {
-          parent,
-          description: {
-            type: 'string',
-            value:
-              '设置 x 轴数据格式化模板。例如：<code>.2f</code>保留两位小数。<br />' +
-              '说明：' +
-              '<ul>' +
-              '<li>数字，支持<a href="https://github.com/d3/d3-format/tree/v1.4.5#d3-format" target="_blank">d3-format</a>语法。</li>' +
-              '<li>日期，支持<a href="https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format" target="_blank">d3-time-format</a>语法。</li>' +
-              '</ul>'
-          },
-          controller: new AttributeController({ type: 'string', default: '' })
-        })
-      )
+export class TraceXHoverformat extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'xhoverformat',
+      type: 'string',
+      options: {
+        description: {
+          type: 'string',
+          value:
+            '设置 x 轴数据格式化模板。例如：<code>.2f</code>保留两位小数。<br />' +
+            '说明：' +
+            '<ul>' +
+            '<li>数字，支持<a href="https://github.com/d3/d3-format/tree/v1.4.5#d3-format" target="_blank">d3-format</a>语法。</li>' +
+            '<li>日期，支持<a href="https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format" target="_blank">d3-time-format</a>语法。</li>' +
+            '</ul>'
+        },
+        controller: new AttributeController({ type: 'string', default: '' })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    !omitChildren.includes('yhoverformat') &&
-      parent.addChild(
-        new Attribute('yhoverformat', 'string', {
-          parent,
-          description: {
-            type: 'string',
-            value:
-              '设置 y 轴数据格式化模板。例如：<code>.2f</code>保留两位小数。<br />' +
-              '说明：' +
-              '<ul>' +
-              '<li>数字，支持<a href="https://github.com/d3/d3-format/tree/v1.4.5#d3-format" target="_blank">d3-format</a>语法。</li>' +
-              '<li>日期，支持<a href="https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format" target="_blank">d3-time-format</a>语法。</li>' +
-              '</ul>'
-          },
-          controller: new AttributeController({ type: 'string', default: '' })
-        })
-      )
+export class TraceYHoverformat extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'yhoverformat',
+      type: 'string',
+      options: {
+        description: {
+          type: 'string',
+          value:
+            '设置 y 轴数据格式化模板。例如：<code>.2f</code>保留两位小数。<br />' +
+            '说明：' +
+            '<ul>' +
+            '<li>数字，支持<a href="https://github.com/d3/d3-format/tree/v1.4.5#d3-format" target="_blank">d3-format</a>语法。</li>' +
+            '<li>日期，支持<a href="https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format" target="_blank">d3-time-format</a>语法。</li>' +
+            '</ul>'
+        },
+        controller: new AttributeController({ type: 'string', default: '' })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    !omitChildren.includes('zhoverformat') &&
-      parent.addChild(
-        new Attribute('zhoverformat', 'string', {
-          parent,
-          description: {
-            type: 'string',
-            value: '设置 z 轴数据格式化模板。例如：<code>.2f</code>保留两位小数。<br />'
-          }
-        })
-      )
+export class TraceZHoverformat extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'zhoverformat',
+      type: 'string',
+      options: {
+        description: {
+          type: 'string',
+          value: '设置 z 轴数据格式化模板。例如：<code>.2f</code>保留两位小数。<br />'
+        }
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
 
-    !omitChildren.includes('hoverongaps') &&
-      parent.addChild(
-        new Attribute('hoverongaps', 'boolean', {
-          parent,
-          description: {
-            type: 'string',
-            value: '确定数据集 `z` 中的空值（即 {nan} 或缺失值）是否具有对应的悬停标签。'
-          },
-          controller: new AttributeController({ type: 'boolean', default: true })
-        })
-      )
-
-    !omitChildren.includes('hoverlabel') &&
-      parent.addChild(
-        new BaseHoverLabel('hoverlabel', {
-          parent,
-          description: { type: 'string', value: '设置鼠标悬停时的标签样式。' }
-        })
-      )
+export class TraceHoverongaps extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'hoverongaps',
+      type: 'boolean',
+      options: {
+        description: {
+          type: 'string',
+          value: '确定数据集 `z` 中的空值（即 {nan} 或缺失值）是否具有对应的悬停标签。'
+        },
+        controller: new AttributeController({ type: 'boolean', default: true })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
   }
 }

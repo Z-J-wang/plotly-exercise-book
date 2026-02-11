@@ -79,6 +79,7 @@
     "hoverinfo",
     "hoverlabel",
     "Hoveron",
+    "hoverongaps",
     "hovertemplate",
     "insidetextanchor",
     "insidetextfont",
@@ -140,6 +141,7 @@
     "xtype",
     "yaxes",
     "yaxis",
+    "yhoverformat",
     "yside",
     "zhoverformat",
     "zorder"
