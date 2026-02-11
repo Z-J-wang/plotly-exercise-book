@@ -84,11 +84,6 @@ export default class PieHover {
       })
     )
 
-    parent.addChild(
-      new BaseHoverLabel('hoverlabel', {
-        parent,
-        description: { type: 'string', value: '设置鼠标悬停时的标签样式。' }
-      })
-    )
+    parent.addChild(new BaseHoverLabel({ options: { parent } }))
   }
 }

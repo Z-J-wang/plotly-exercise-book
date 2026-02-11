@@ -12,14 +12,7 @@ export default class TraceHover {
     !omitChildren.includes('yhoverformat') && parent.addChild(new TraceYHoverformat({ options: { parent } }))
     !omitChildren.includes('zhoverformat') && parent.addChild(new TraceZHoverformat({ options: { parent } }))
     !omitChildren.includes('hoverongaps') && parent.addChild(new TraceHoverongaps({ options: { parent } }))
-
-    !omitChildren.includes('hoverlabel') &&
-      parent.addChild(
-        new BaseHoverLabel('hoverlabel', {
-          parent,
-          description: { type: 'string', value: '设置鼠标悬停时的标签样式。' }
-        })
-      )
+    !omitChildren.includes('hoverlabel') && parent.addChild(new BaseHoverLabel({ options: { parent } }))
   }
 }
 

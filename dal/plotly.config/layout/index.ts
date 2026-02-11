@@ -159,12 +159,7 @@ export default class Layout extends BaseConfig {
     this.insertAttribute(new LayoutModeBar(parent))
 
     new LayoutInteraction(this, parent)
-    this.insertAttribute(
-      new BaseHoverLabel('hoverlabel', {
-        parent,
-        description: { type: 'string', value: '设置鼠标悬停时的标签样式。' }
-      })
-    )
+    this.insertAttribute(new BaseHoverLabel({ options: { parent } }))
     this.insertAttribute(
       new Transition('transition', 'Transition', {
         parent,

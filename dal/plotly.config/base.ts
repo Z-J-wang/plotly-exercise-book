@@ -275,9 +275,8 @@ export class Line extends Attribute {
  * 子属性：'bgcolor' | 'bordercolor' | 'font'
  */
 export class Label extends Attribute {
-  constructor(name: string, type: string, options: Attribute.Options) {
-    super(name, type, options)
-
+  constructor(initializer: Attribute.Initializer) {
+    super(initializer)
     this.addChild(
       new Attribute('bgcolor', 'Color', {
         parent: this,
