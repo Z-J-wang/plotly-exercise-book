@@ -5,14 +5,30 @@
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import TracePattern from './trace.pattern'
+import { merge } from 'lodash'
+
+export class TraceFillAssemble {
+  constructor(parent: Attribute) {
+    parent.addChild(new TraceFill({ options: { parent } }))
+    parent.addChild(new TraceFillColor({ options: { parent } }))
+    parent.addChild(
+      new TracePattern('fillpattern', {
+        parent,
+        description: {
+          type: 'string',
+          value: '设置轨迹填充区域的图案。默认无填充图案（即色块填充）。需搭配<code>fill</code>属性使用。'
+        }
+      })
+    )
+  }
+}
 
 export class TraceFill extends Attribute {
-  constructor(parent: Attribute) {
-    super(
-      'fill',
-      { type: 'enum', value: ['none', 'tozeroy', 'tozerox', 'tonexty', 'tonextx', 'toself', 'tonext'] },
-      {
-        parent,
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'fill',
+      type: { type: 'enum', value: ['none', 'tozeroy', 'tozerox', 'tonexty', 'tonextx', 'toself', 'tonext'] },
+      options: {
         description: {
           type: 'string',
           value:
@@ -38,32 +54,22 @@ export class TraceFill extends Attribute {
           options: ['none', 'tozeroy', 'tozerox', 'tonexty', 'tonextx', 'toself', 'tonext']
         })
       }
-    )
+    }
+
+    super(merge(defaultInitializer, initializer))
   }
 }
 
 export class TraceFillColor extends Attribute {
-  constructor(parent: Attribute) {
-    super('fillcolor', 'Color', {
-      parent,
-      description: { type: 'string', value: '设置轨迹填充颜色。' },
-      controller: new AttributeController({ type: 'color', default: null })
-    })
-  }
-}
-
-export class TraceFillAssemble {
-  constructor(parent: Attribute) {
-    parent.addChild(new TraceFill(parent))
-    parent.addChild(new TraceFillColor(parent))
-    parent.addChild(
-      new TracePattern('fillpattern', {
-        parent,
-        description: {
-          type: 'string',
-          value: '设置轨迹填充区域的图案。默认无填充图案（即色块填充）。需搭配<code>fill</code>属性使用。'
-        }
-      })
-    )
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'fillcolor',
+      type: 'Color',
+      options: {
+        description: { type: 'string', value: '设置轨迹填充颜色。' },
+        controller: new AttributeController({ type: 'color', default: null })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
   }
 }
