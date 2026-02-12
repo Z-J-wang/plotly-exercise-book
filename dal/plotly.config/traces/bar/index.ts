@@ -17,7 +17,7 @@ import {
 import TraceLegendAbout from '../trace.legend.about'
 import TraceData from '../trace.data'
 import AttributeController from 'entity/attribute.controller'
-import TraceText from '../trace.text'
+import TraceTextAbout from '../trace.text'
 import TraceHover from '../trace.hover'
 import TraceMarker from '../trace.marker'
 import TraceErrorBar from '../trace.error.bar'
@@ -90,7 +90,7 @@ export default class TraceBar extends Attribute {
       })
     )
 
-    new TraceText(this)
+    new TraceTextAbout(this)
 
     this.addChild(
       new Attribute(

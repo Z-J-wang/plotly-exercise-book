@@ -11,7 +11,7 @@ import {
 } from '../trace.base'
 import TraceLegendAbout from '../trace.legend.about'
 import AttributeController from 'entity/attribute.controller'
-import TraceText from '../trace.text'
+import TraceTextAbout from '../trace.text'
 import TraceMarker from '../trace.marker'
 import PieHover from './pie.hover'
 import PieMarker from './pie.marker'
@@ -111,7 +111,7 @@ export default class TracePie extends Attribute {
       })
     )
 
-    new TraceText(this)
+    new TraceTextAbout(this)
 
     this.addChild(
       new Attribute(

@@ -17,7 +17,7 @@ import {
 import TraceLegendAbout from '../trace.legend.about'
 import ViolinData from './violin.data'
 import AttributeController from 'entity/attribute.controller'
-import TraceText from '../trace.text'
+import TraceTextAbout from '../trace.text'
 import TraceHover from '../trace.hover'
 import { BaseUirevision } from '../../base'
 import exampleData from '@/assets/data/violin.json'
@@ -103,7 +103,7 @@ export default class TraceBar extends Attribute {
       })
     )
 
-    new TraceText(this, ['text', 'textfont', 'hoverongaps', 'texttemplate'])
+    new TraceTextAbout(this, ['text', 'textfont', 'hoverongaps', 'texttemplate'])
 
     this.addChild(new ViolinHoveron({ options: { parent: this } }))
     new TraceHover(this)

@@ -14,7 +14,7 @@ import {
 import TraceLegendAbout from '../trace.legend.about'
 import HeatmapData from './heatmap.data'
 import AttributeController from 'entity/attribute.controller'
-import TraceText from '../trace.text'
+import TraceTextAbout from '../trace.text'
 import TraceHover from '../trace.hover'
 import { BaseUirevision } from '../../base'
 import Colorbar from '../trace.colorbar'
@@ -87,7 +87,7 @@ export default class TraceBar extends Attribute {
       })
     )
 
-    new TraceText(this, ['text', 'textfont'])
+    new TraceTextAbout(this, ['text', 'textfont'])
 
     new TraceHover(this, ['zhoverformat'])
 

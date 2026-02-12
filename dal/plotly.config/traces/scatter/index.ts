@@ -17,7 +17,7 @@ import {
 import TraceLegendAbout, { TraceShowlegend } from '../trace.legend.about'
 import TraceData from '../trace.data'
 import AttributeController from 'entity/attribute.controller'
-import TraceText from '../trace.text'
+import TraceTextAbout from '../trace.text'
 import TraceHover from '../trace.hover'
 import TraceStack from '../trace.stack'
 import TraceMarker from '../trace.marker'
@@ -116,7 +116,7 @@ export default class TraceScatter extends Attribute {
 
     new TraceData(this)
 
-    new TraceText(this)
+    new TraceTextAbout(this)
 
     const textpositionOptions = [
       'top left',
