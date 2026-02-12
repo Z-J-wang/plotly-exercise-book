@@ -1,18 +1,18 @@
 import { modeBarDefaultButtons } from '@/utils'
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
+import { BaseColor } from '../base'
 
 export default class LayoutModeBar extends Attribute {
   constructor(parent: Attribute) {
     super('modebar', 'Modebar', { parent, description: { type: 'string', value: '右上角模式（工具）栏设置' } })
     this.addChild(
-      new Attribute('activecolor', 'Color', {
-        parent: this,
-        description: { type: 'string', value: '激活按钮颜色' },
-        controller: new AttributeController({
-          type: 'color',
-          default: null
-        })
+      new BaseColor({
+        name: 'activecolor',
+        options: {
+          parent: this,
+          description: { type: 'string', value: '激活按钮颜色' }
+        }
       })
     )
 
@@ -36,24 +36,15 @@ export default class LayoutModeBar extends Attribute {
     )
 
     this.addChild(
-      new Attribute('bgcolor', 'Color', {
-        parent: this,
-        description: { type: 'string', value: '模式栏背景颜色' },
-        controller: new AttributeController({
-          type: 'color',
-          default: null
-        })
+      new BaseColor({
+        name: 'bgcolor',
+        options: { parent: this, description: { type: 'string', value: '模式栏背景颜色' } }
       })
     )
 
     this.addChild(
-      new Attribute('color', 'Color', {
-        parent: this,
-        description: { type: 'string', value: '模式栏按钮默认状态下的颜色' },
-        controller: new AttributeController({
-          type: 'color',
-          default: null
-        })
+      new BaseColor({
+        options: { parent: this, description: { type: 'string', value: '模式栏按钮默认状态下的颜色' } }
       })
     )
 

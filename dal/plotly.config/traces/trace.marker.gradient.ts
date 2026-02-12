@@ -1,6 +1,7 @@
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import { merge } from 'lodash'
+import { BaseColor } from '../base'
 
 export default class TraceMarkerGradient extends Attribute {
   constructor(initializer: Attribute.Initializer) {
@@ -47,18 +48,16 @@ export class TraceMarkerGradientType extends Attribute {
   }
 }
 
-export class TraceMarkerGradientColor extends Attribute {
+export class TraceMarkerGradientColor extends BaseColor {
   constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
-      name: 'color',
       type: 'Color | Color[]',
       options: {
         description: {
           type: 'string',
           value:
             '设置渐变填充的最终颜色。对于径向渐变，为中心颜色；对于水平渐变，为右侧颜色；对于垂直渐变，为底部颜色。需先设置 <code>marker.gradient.type</code> 属性。'
-        },
-        controller: new AttributeController({ type: 'color', default: null })
+        }
       }
     }
     super(merge(defaultInitializer, initializer))

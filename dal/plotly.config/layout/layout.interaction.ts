@@ -1,7 +1,7 @@
 import type { BaseConfig } from '../base'
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
-import { Line } from '../base'
+import { BaseColor, Line } from '../base'
 
 class ActiveSelection extends Attribute {
   constructor(parent: Attribute) {
@@ -11,13 +11,13 @@ class ActiveSelection extends Attribute {
     })
 
     this.addChild(
-      new Attribute('fillcolor', 'Color', {
-        parent: this,
-        description: { type: 'string', value: '选择框的填充颜色' },
-        controller: new AttributeController({
-          type: 'color',
-          default: '#ffffff'
-        })
+      new BaseColor({
+        name: 'fillcolor',
+        options: {
+          parent: this,
+          description: { type: 'string', value: '选择框的填充颜色' },
+          controller: new AttributeController({ type: 'color', default: '#ffffff' })
+        }
       })
     )
 

@@ -1,6 +1,6 @@
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
-import { BaseConfig, Transition } from '../base'
+import { BaseColor, BaseConfig, Transition } from '../base'
 import LayoutTitle from './layout.title'
 import LayoutLegend from './layout.legend'
 import { Margin } from '../base'
@@ -115,18 +115,16 @@ export default class Layout extends BaseConfig {
     )
 
     this.insertAttribute(
-      new Attribute('paper_bgcolor', 'Color', {
-        parent,
-        description: { type: 'string', value: '容器背景色' },
-        controller: new AttributeController({ type: 'color', default: 'white' })
+      new BaseColor({
+        name: 'paper_bgcolor',
+        options: { parent, description: { type: 'string', value: '容器背景色' } }
       })
     )
 
     this.insertAttribute(
-      new Attribute('plot_bgcolor', 'Color', {
-        parent,
-        description: { type: 'string', value: '绘图区域背景色' },
-        controller: new AttributeController({ type: 'color', default: 'white' })
+      new BaseColor({
+        name: 'plot_bgcolor',
+        options: { parent, description: { type: 'string', value: '绘图区域背景色' } }
       })
     )
 

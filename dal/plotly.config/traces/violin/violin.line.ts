@@ -1,6 +1,7 @@
 import { merge } from 'lodash'
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
+import { BaseColor } from 'dal/plotly.config/base'
 
 export default class ViolinLine extends Attribute {
   constructor(initializer: Attribute.Initializer) {
@@ -30,15 +31,10 @@ export class ViolinLineWidth extends Attribute {
   }
 }
 
-export class ViolinLineColor extends Attribute {
+export class ViolinLineColor extends BaseColor {
   constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
-      name: 'color',
-      type: 'Color',
-      options: {
-        description: { type: 'string', value: '设置小提琴图的边框颜色。' },
-        controller: new AttributeController({ type: 'color', default: null })
-      }
+      options: { description: { type: 'string', value: '设置小提琴图的边框颜色。' } }
     }
     super(merge(defaultInitializer, initializer))
   }

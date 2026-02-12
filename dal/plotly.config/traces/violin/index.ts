@@ -19,7 +19,7 @@ import ViolinData from './violin.data'
 import AttributeController from 'entity/attribute.controller'
 import TraceTextAbout from '../trace.text'
 import TraceHover from '../trace.hover'
-import { BaseUirevision } from '../../base'
+import { BaseColor, BaseUirevision } from '../../base'
 import exampleData from '@/assets/data/violin.json'
 import ViolinAlignmentGroup from '@/components/doc/traces/ViolinAlignmentGroup.vue'
 import BoxMarker from '../box/marker'
@@ -209,16 +209,12 @@ export class ViolinBandwidth extends Attribute {
   }
 }
 
-export class ViolinFillcolor extends Attribute {
+export class ViolinFillcolor extends BaseColor {
   constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
       name: 'fillcolor',
-      type: 'Color',
       options: {
-        description: {
-          type: 'string',
-          value: '小提琴图填充颜色。'
-        },
+        description: { type: 'string', value: '小提琴图填充颜色。' },
         controller: new AttributeController({ type: 'color', default: null, value: '#8dd3c7' })
       }
     }

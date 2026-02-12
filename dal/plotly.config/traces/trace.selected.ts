@@ -1,5 +1,6 @@
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
+import { BaseColor } from '../base'
 
 export default class TraceSelected extends Attribute {
   constructor(name: string, options?: Attribute.Options) {
@@ -19,10 +20,12 @@ export default class TraceSelected extends Attribute {
     )
 
     marker.addChild(
-      new Attribute('color', 'Color', {
-        parent: marker,
-        description: { type: 'string', value: '数据点颜色。' },
-        controller: new AttributeController({ type: 'color', default: null })
+      new BaseColor({
+        options: {
+          parent: marker,
+          description: { type: 'string', value: '数据点颜色。' },
+          controller: new AttributeController({ type: 'color', default: null })
+        }
       })
     )
 
@@ -42,10 +45,12 @@ export default class TraceSelected extends Attribute {
     })
 
     textfont.addChild(
-      new Attribute('color', 'Color', {
-        parent: textfont,
-        description: { type: 'string', value: '数据点颜色。' },
-        controller: new AttributeController({ type: 'color', default: null })
+      new BaseColor({
+        options: {
+          parent: textfont,
+          description: { type: 'string', value: '数据点颜色。' },
+          controller: new AttributeController({ type: 'color', default: null })
+        }
       })
     )
 

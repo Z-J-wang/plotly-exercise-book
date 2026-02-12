@@ -1,6 +1,7 @@
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import { Font } from '../base.font'
+import { BaseColor } from '../base'
 
 class LegendTitle extends Attribute {
   constructor(parent: Attribute | null) {
@@ -50,31 +51,31 @@ export default class Legend extends Attribute {
     super('legend', 'Legend', { parent, description })
 
     this.addChild(
-      new Attribute('bgcolor', 'Color', {
-        parent: this,
-        description: {
-          type: 'string',
-          value:
-            '图例背景颜色。默认值等同于<a href="/#/docs/config/?id=layout-paper_bgcolor"><code>layout.paper_bgcolor</code></a>的值。'
-        },
-        controller: new AttributeController({
-          type: 'color',
-          default: 'white'
-        })
+      new BaseColor({
+        name: 'bgcolor',
+        options: {
+          parent: this,
+          description: {
+            type: 'string',
+            value:
+              '图例背景颜色。默认值等同于<a href="/#/docs/config/?id=layout-paper_bgcolor"><code>layout.paper_bgcolor</code></a>的值。'
+          },
+          controller: new AttributeController({
+            type: 'color',
+            default: 'white'
+          })
+        }
       })
     )
 
     this.addChild(
-      new Attribute('bordercolor', 'Color', {
-        parent: this,
-        description: {
-          type: 'string',
-          value: '图例边框颜色。'
-        },
-        controller: new AttributeController({
-          type: 'color',
-          default: '#444'
-        })
+      new BaseColor({
+        name: 'bordercolor',
+        options: {
+          parent: this,
+          description: { type: 'string', value: '图例边框颜色。' },
+          controller: new AttributeController({ type: 'color', default: '#444' })
+        }
       })
     )
 

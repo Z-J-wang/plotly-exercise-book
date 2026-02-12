@@ -1,6 +1,7 @@
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import { merge } from 'lodash'
+import { BaseColor } from '../base'
 
 export default class ErrorBar extends Attribute {
   constructor(initializer: Attribute.Initializer) {
@@ -154,11 +155,9 @@ export class ErrorOptionSymmetric extends Attribute {
   }
 }
 
-export class ErrorOptionColor extends Attribute {
+export class ErrorOptionColor extends BaseColor {
   constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
-      name: 'color',
-      type: 'Color',
       options: {
         description: { type: 'string', value: '误差条颜色。' },
         controller: new AttributeController({ type: 'color', default: null })

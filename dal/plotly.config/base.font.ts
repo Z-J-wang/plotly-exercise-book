@@ -1,5 +1,6 @@
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
+import { BaseColor } from './base'
 import { merge } from 'lodash'
 
 /**
@@ -28,15 +29,10 @@ export class Font extends Attribute {
   }
 }
 
-export class FontColor extends Attribute {
+export class FontColor extends BaseColor {
   constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
-      name: 'color',
-      type: 'Color',
-      options: {
-        description: { type: 'string', value: '字体颜色' },
-        controller: new AttributeController({ type: 'color', default: null })
-      }
+      options: { description: { type: 'string', value: '字体颜色' } }
     }
     super(merge(defaultInitializer, initializer))
   }

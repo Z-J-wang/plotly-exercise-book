@@ -1,9 +1,9 @@
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
-import { Label } from './base'
 import { merge } from 'lodash'
+import { BaseLabel } from './base.lable'
 
-export default class BaseHoverLabel extends Label {
+export default class BaseHoverLabel extends BaseLabel {
   constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
       name: 'hoverlabel',

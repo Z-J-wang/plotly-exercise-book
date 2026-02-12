@@ -5,6 +5,7 @@ import TraceMarkerColoBar from './trace.colorbar'
 import TraceMarkerGradient from './trace.marker.gradient'
 import TraceMarkerLine from './trace.marker.line'
 import { TraceAutocolorscale, TraceColorscale, TraceReversescale } from './trace.colorscale.about'
+import { BaseColor } from '../base'
 
 const markerSymbol = [
   'circle',
@@ -271,13 +272,15 @@ export default class TraceMarker extends Attribute {
     )
 
     this.addChild(
-      new Attribute('color', 'Color | Color[] | number[]', {
-        parent: this,
-        description: {
-          type: 'string',
-          value: '数据点颜色。可以是数组，数组长度为数据点数量，用于指定每个数据点的颜色。'
-        },
-        controller: new AttributeController({ type: 'color', default: null })
+      new BaseColor({
+        type: 'Color | Color[] | number[]',
+        options: {
+          parent: this,
+          description: {
+            type: 'string',
+            value: '数据点颜色。可以是数组，数组长度为数据点数量，用于指定每个数据点的颜色。'
+          }
+        }
       })
     )
 

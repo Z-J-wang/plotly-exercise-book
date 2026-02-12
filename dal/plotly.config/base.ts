@@ -1,7 +1,6 @@
 import { easing } from '@/utils/global.variable'
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
-import { Font } from './base.font'
 import { merge } from 'lodash'
 
 /**
@@ -25,6 +24,20 @@ export class BaseConfig {
 
   constructor(parent: Attribute) {
     this._parent = parent
+  }
+}
+
+export class BaseColor extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'color',
+      type: 'Color',
+      options: {
+        description: { type: 'string', value: '颜色设置。' },
+        controller: new AttributeController({ type: 'color', default: null })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
   }
 }
 
@@ -113,10 +126,8 @@ export class Line extends Attribute {
     super(name, type, options)
 
     this.addChild(
-      new Attribute('color', 'Color', {
-        parent: this,
-        description: { type: 'string', value: '线条颜色' },
-        controller: new AttributeController({ type: 'color', default: null })
+      new BaseColor({
+        options: { parent: this, description: { type: 'string', value: '线条颜色' } }
       })
     )
 
@@ -142,34 +153,6 @@ export class Line extends Attribute {
           })
         }
       )
-    )
-  }
-}
-
-/**
- * 标题属性类，可继承扩展
- * 子属性：'bgcolor' | 'bordercolor' | 'font'
- */
-export class Label extends Attribute {
-  constructor(initializer: Attribute.Initializer) {
-    super(initializer)
-    this.addChild(
-      new Attribute('bgcolor', 'Color', {
-        parent: this,
-        description: { type: 'string', value: '标签背景颜色' },
-        controller: new AttributeController({ type: 'color', default: null })
-      })
-    )
-
-    this.addChild(
-      new Attribute('bordercolor', 'Color', {
-        parent: this,
-        description: { type: 'string', value: '标签边框颜色' },
-        controller: new AttributeController({ type: 'color', default: null })
-      })
-    )
-    this.addChild(
-      new Font({ name: 'font', options: { parent: this, description: { type: 'string', value: '字体设置' } } })
     )
   }
 }

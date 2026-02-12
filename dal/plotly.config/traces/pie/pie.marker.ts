@@ -1,3 +1,4 @@
+import { BaseColor } from 'dal/plotly.config/base'
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 
@@ -21,10 +22,12 @@ export default class PieMarker extends Attribute {
     })
 
     line.addChild(
-      new Attribute('color', 'Color', {
-        parent: line,
-        description: { type: 'string', value: '设置边界线颜色。' },
-        controller: new AttributeController({ type: 'color', default: '#444' })
+      new BaseColor({
+        options: {
+          parent: line,
+          description: { type: 'string', value: '设置边界线颜色。' },
+          controller: new AttributeController({ type: 'color', default: '#444' })
+        }
       })
     )
     line.addChild(

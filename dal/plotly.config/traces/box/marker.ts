@@ -1,3 +1,4 @@
+import { BaseColor } from 'dal/plotly.config/base'
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import { merge } from 'lodash'
@@ -220,31 +221,28 @@ export class BoxMarkerSize extends Attribute {
   }
 }
 
-export class BoxMarkerOutliercolor extends Attribute {
+export class BoxMarkerOutliercolor extends BaseColor {
   constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
       name: 'outliercolor',
       type: 'Color | Color[] | number[]',
       options: {
-        description: { type: 'string', value: '设置异常样本数据点的颜色。' },
-        controller: new AttributeController({ type: 'color', default: null })
+        description: { type: 'string', value: '设置异常样本数据点的颜色。' }
       }
     }
     super(merge(defaultInitializer, initializer))
   }
 }
 
-export class BoxMarkerColor extends Attribute {
+export class BoxMarkerColor extends BaseColor {
   constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
-      name: 'color',
       type: 'Color | Color[] | number[]',
       options: {
         description: {
           type: 'string',
           value: '数据点颜色。可以是数组，数组长度为数据点数量，用于指定每个数据点的颜色。'
-        },
-        controller: new AttributeController({ type: 'color', default: null })
+        }
       }
     }
     super(merge(defaultInitializer, initializer))
@@ -298,15 +296,10 @@ export class BoxMarkerLineWidth extends Attribute {
   }
 }
 
-export class BoxMarkerLineColor extends Attribute {
+export class BoxMarkerLineColor extends BaseColor {
   constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
-      name: 'color',
-      type: 'Color',
-      options: {
-        description: { type: 'string', value: '设置数据点的边框颜色。' },
-        controller: new AttributeController({ type: 'color', default: null })
-      }
+      options: { description: { type: 'string', value: '设置数据点的边框颜色。' } }
     }
     super(merge(defaultInitializer, initializer))
   }
@@ -326,15 +319,11 @@ export class BoxMarkerLineOutlierWidth extends Attribute {
   }
 }
 
-export class BoxMarkerLineOutlierColor extends Attribute {
+export class BoxMarkerLineOutlierColor extends BaseColor {
   constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
       name: 'outliercolor',
-      type: 'Color',
-      options: {
-        description: { type: 'string', value: '设置数据点的边框颜色。' },
-        controller: new AttributeController({ type: 'color', default: null })
-      }
+      options: { description: { type: 'string', value: '设置数据点的边框颜色。' } }
     }
     super(merge(defaultInitializer, initializer))
   }

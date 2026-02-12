@@ -6,6 +6,7 @@ import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import TracePattern from './trace.pattern'
 import { merge } from 'lodash'
+import { BaseColor } from '../base'
 
 export class TraceFillAssemble {
   constructor(parent: Attribute) {
@@ -63,11 +64,10 @@ export class TraceFill extends Attribute {
   }
 }
 
-export class TraceFillColor extends Attribute {
+export class TraceFillColor extends BaseColor {
   constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
       name: 'fillcolor',
-      type: 'Color',
       options: {
         description: { type: 'string', value: '设置轨迹填充颜色。' },
         controller: new AttributeController({ type: 'color', default: null })

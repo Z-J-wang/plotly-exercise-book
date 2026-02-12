@@ -1,6 +1,7 @@
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import { merge } from 'lodash'
+import { BaseColor } from '../base'
 
 export default class TracePattern extends Attribute {
   constructor(initializer: Attribute.Initializer) {
@@ -54,29 +55,21 @@ export class TracePatternFillmode extends Attribute {
   }
 }
 
-export class TracePatternFgcolor extends Attribute {
+export class TracePatternFgcolor extends BaseColor {
   constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
       name: 'fgcolor',
-      type: 'Color',
-      options: {
-        description: { type: 'string', value: '设置填充图案的前景色。' },
-        controller: new AttributeController({ type: 'color', default: null })
-      }
+      options: { description: { type: 'string', value: '设置填充图案的前景色。' } }
     }
     super(merge(defaultInitializer, initializer))
   }
 }
 
-export class TracePatternBgcolor extends Attribute {
+export class TracePatternBgcolor extends BaseColor {
   constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
       name: 'bgcolor',
-      type: 'Color',
-      options: {
-        description: { type: 'string', value: '设置填充图案背景色。' },
-        controller: new AttributeController({ type: 'color', default: null })
-      }
+      options: { description: { type: 'string', value: '设置填充图案背景色。' } }
     }
     super(merge(defaultInitializer, initializer))
   }
