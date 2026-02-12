@@ -12,11 +12,14 @@ export class TraceFillAssemble {
     parent.addChild(new TraceFill({ options: { parent } }))
     parent.addChild(new TraceFillColor({ options: { parent } }))
     parent.addChild(
-      new TracePattern('fillpattern', {
-        parent,
-        description: {
-          type: 'string',
-          value: '设置轨迹填充区域的图案。默认无填充图案（即色块填充）。需搭配<code>fill</code>属性使用。'
+      new TracePattern({
+        name: 'fillpattern',
+        options: {
+          parent,
+          description: {
+            type: 'string',
+            value: '设置轨迹填充区域的图案。默认无填充图案（即色块填充）。需搭配<code>fill</code>属性使用。'
+          }
         }
       })
     )

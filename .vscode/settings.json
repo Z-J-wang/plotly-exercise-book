@@ -72,6 +72,8 @@
     "dlabel",
     "editrevision",
     "exponentformat",
+    "fgcolor",
+    "fgopacity",
     "fillmode",
     "fillpattern",
     "groupnorm",
