@@ -384,7 +384,7 @@ export default class TraceMarker extends Attribute {
       })
     )
 
-    this.addChild(new TraceMarkerGradient(this))
+    this.addChild(new TraceMarkerGradient({ options: { parent: this } }))
 
     this.addChild(new TraceMarkerLine(this, undefined, [], initialConfig))
   }
