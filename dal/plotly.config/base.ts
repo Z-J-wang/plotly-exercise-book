@@ -2,6 +2,7 @@ import { easing } from '@/utils/global.variable'
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import { Font } from './base.font'
+import { merge } from 'lodash'
 
 /**
  * Plotly 配置基类，该类用于维护配置清单
@@ -32,46 +33,73 @@ export class BaseConfig {
  * 属性：'t' | 'b | 'l' | 'r' | 'pad'
  */
 export class Margin extends Attribute {
-  constructor(name: string, type: string, options: Attribute.Options) {
-    super(name, type, options)
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'margin',
+      type: 'Margin',
+      options: {
+        description: { type: 'string', value: '设置绘图区域外边距，即绘图区域与容器的边界之间的距离。' }
+      }
+    }
+    super(merge(defaultInitializer, initializer))
 
     this.addChild(
-      new Attribute('t', 'number', {
-        parent: this,
-        description: { type: 'string', value: '上外边距' },
-        controller: new AttributeController({ type: 'number', default: 100 })
+      new Attribute({
+        name: 't',
+        type: 'number',
+        options: {
+          parent: this,
+          description: { type: 'string', value: '上外边距' },
+          controller: new AttributeController({ type: 'number', default: 100 })
+        }
       })
     )
 
     this.addChild(
-      new Attribute('b', 'number', {
-        parent: this,
-        description: { type: 'string', value: '下外边距' },
-        controller: new AttributeController({ type: 'number', default: 80 })
+      new Attribute({
+        name: 'b',
+        type: 'number',
+        options: {
+          parent: this,
+          description: { type: 'string', value: '下外边距' },
+          controller: new AttributeController({ type: 'number', default: 80 })
+        }
       })
     )
 
     this.addChild(
-      new Attribute('l', 'number', {
-        parent: this,
-        description: { type: 'string', value: '左外边距' },
-        controller: new AttributeController({ type: 'number', default: 80 })
+      new Attribute({
+        name: 'l',
+        type: 'number',
+        options: {
+          parent: this,
+          description: { type: 'string', value: '左外边距' },
+          controller: new AttributeController({ type: 'number', default: 80 })
+        }
       })
     )
 
     this.addChild(
-      new Attribute('r', 'number', {
-        parent: this,
-        description: { type: 'string', value: '右外边距' },
-        controller: new AttributeController({ type: 'number', default: 80 })
+      new Attribute({
+        name: 'r',
+        type: 'number',
+        options: {
+          parent: this,
+          description: { type: 'string', value: '右外边距' },
+          controller: new AttributeController({ type: 'number', default: 80 })
+        }
       })
     )
 
     this.addChild(
-      new Attribute('pad', 'number', {
-        parent: this,
-        description: { type: 'string', value: '内边距' },
-        controller: new AttributeController({ type: 'number', default: 0 })
+      new Attribute({
+        name: 'pad',
+        type: 'number',
+        options: {
+          parent: this,
+          description: { type: 'string', value: '内边距' },
+          controller: new AttributeController({ type: 'number', default: 0 })
+        }
       })
     )
   }

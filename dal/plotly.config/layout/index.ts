@@ -15,6 +15,7 @@ import LayoutBar from './layout.bar'
 import LayoutAxis from './layout.axis'
 import LayoutColorAxis from './layout.coloraxis'
 import { Font } from '../base.font'
+import { merge } from 'lodash'
 
 export default class Layout extends BaseConfig {
   constructor(parent: Attribute) {
@@ -37,27 +38,9 @@ export default class Layout extends BaseConfig {
     )
     this.insertAttribute(new LayoutLegend(parent))
 
-    const margin = new Margin('margin', 'Margin', {
-      parent: parent,
-      description: {
-        type: 'string',
-        value: '设置绘图区域外边距，即绘图区域与容器的边界之间的距离。'
-      }
-    })
+    const margin = new Margin({ options: { parent: parent } })
 
-    margin.addChild(
-      new Attribute('autoexpand', 'boolean', {
-        parent: margin,
-        description: {
-          type: 'string',
-          value:
-            '自动扩展外边距。默认开启。<br />' +
-            '开启后，外边距会根据图表内容自动调整影响因素包括：' +
-            '图例、颜色条、更新菜单、滑块、坐标范围选择器和范围滑块。'
-        },
-        controller: new AttributeController({ type: 'boolean', default: true })
-      })
-    )
+    margin.addChild(new LayoutAutoexpand({ options: { parent: margin } }))
     this.insertAttribute(margin)
 
     this.insertAttribute(
@@ -325,5 +308,25 @@ export default class Layout extends BaseConfig {
           '对默认颜色轴进行自定义。<br />如需自定义多个颜色轴，请使用 <code>layout.coloraxis2</code>、<code>layout.coloraxis3</code> 等属性来定义。'
       })
     )
+  }
+}
+
+export class LayoutAutoexpand extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'autoexpand',
+      type: 'boolean',
+      options: {
+        description: {
+          type: 'string',
+          value:
+            '自动扩展外边距。默认开启。<br />' +
+            '开启后，外边距会根据图表内容自动调整影响因素包括：' +
+            '图例、颜色条、更新菜单、滑块、坐标范围选择器和范围滑块。'
+        },
+        controller: new AttributeController({ type: 'boolean', default: true })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
   }
 }
