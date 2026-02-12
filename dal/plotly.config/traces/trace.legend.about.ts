@@ -1,7 +1,7 @@
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import { merge } from 'lodash'
-import { Font } from '../base.font'
+import { BaseFont } from '../base.font'
 
 /**
  * 轨迹图例相关属性
@@ -88,7 +88,7 @@ export class TraceLegendgrouptitle extends Attribute {
     super(merge(defaultInitializer, initializer))
 
     this.addChild(
-      new Font({
+      new BaseFont({
         name: 'font',
         options: {
           parent: this,

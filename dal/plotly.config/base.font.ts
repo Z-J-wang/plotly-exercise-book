@@ -7,7 +7,7 @@ import { merge } from 'lodash'
  * 字体属性类，可继承扩展
  * 子属性：'color' | 'family' | 'size' | 'weight' | 'style' | 'variant' | 'lineposition' | 'shadow' | 'textcase'
  */
-export class Font extends Attribute {
+export class BaseFont extends Attribute {
   constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
       type: 'Font',

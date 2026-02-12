@@ -1,7 +1,7 @@
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import { merge } from 'lodash'
-import { Font } from '../base.font'
+import { BaseFont } from '../base.font'
 import { BaseColor } from '../base'
 
 export default class TraceColoBar extends Attribute {
@@ -49,7 +49,7 @@ export default class TraceColoBar extends Attribute {
     this.addChild(new TraceColorShowticklabels({ options: { parent: this } }))
     this.addChild(new TraceColorLabelalias({ options: { parent: this } }))
     this.addChild(
-      new Font({
+      new BaseFont({
         name: 'tickfont',
         options: { parent: this, description: { type: 'string', value: '刻度标签的字体。' } }
       })
@@ -859,7 +859,7 @@ export class TraceColorTitle extends Attribute {
     )
 
     this.addChild(
-      new Font({ name: 'font', options: { parent: this, description: { type: 'string', value: '标题字体' } } })
+      new BaseFont({ name: 'font', options: { parent: this, description: { type: 'string', value: '标题字体' } } })
     )
 
     this.addChild(

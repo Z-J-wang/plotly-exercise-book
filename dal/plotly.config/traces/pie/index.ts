@@ -17,7 +17,7 @@ import PieHover from './pie.hover'
 import PieMarker from './pie.marker'
 import PieDomain from './pie.domain'
 import { BaseUirevision } from '../../base'
-import { Font } from 'dal/plotly.config/base.font'
+import { BaseFont } from 'dal/plotly.config/base.font'
 
 export default class TracePie extends Attribute {
   constructor(parent: Attribute) {
@@ -196,7 +196,7 @@ export default class TracePie extends Attribute {
     )
 
     this.addChild(
-      new Font({
+      new BaseFont({
         name: 'insidetextfont',
         options: {
           parent: this,
@@ -225,7 +225,7 @@ export default class TracePie extends Attribute {
     )
 
     this.addChild(
-      new Font({
+      new BaseFont({
         name: 'outsidetextfont',
         options: {
           parent: this,

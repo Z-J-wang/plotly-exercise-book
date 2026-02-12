@@ -1,4 +1,4 @@
-import { Font } from 'dal/plotly.config/base.font'
+import { BaseFont } from 'dal/plotly.config/base.font'
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 
@@ -24,7 +24,7 @@ export default class BarTextAnchor {
     )
 
     parent.addChild(
-      new Font({
+      new BaseFont({
         name: 'insidetextfont',
         options: {
           parent,
@@ -37,7 +37,7 @@ export default class BarTextAnchor {
     )
 
     parent.addChild(
-      new Font({
+      new BaseFont({
         name: 'outsidetextfont',
         options: {
           parent,

@@ -1,7 +1,7 @@
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import { merge } from 'lodash'
-import { Font } from '../base.font'
+import { BaseFont } from '../base.font'
 
 export default class TraceTextAbout {
   constructor(parent: Attribute, omitChildren: string[] = []) {
@@ -10,7 +10,7 @@ export default class TraceTextAbout {
 
     !omitChildren.includes('textfont') &&
       parent.addChild(
-        new Font({
+        new BaseFont({
           name: 'textfont',
           options: {
             parent: parent,

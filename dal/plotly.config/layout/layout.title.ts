@@ -1,7 +1,7 @@
 import Attribute from 'entity/attribute'
 import { Pad } from '../base'
 import AttributeController from 'entity/attribute.controller'
-import { Font } from '../base.font'
+import { BaseFont } from '../base.font'
 
 class SubTittle extends Attribute {
   constructor(parent: Attribute, description: Attribute.Description = { type: 'string', value: '副标题' }) {
@@ -18,7 +18,7 @@ class SubTittle extends Attribute {
       })
     )
     this.addChild(
-      new Font({ name: 'font', options: { parent: this, description: { type: 'string', value: '字体设置' } } })
+      new BaseFont({ name: 'font', options: { parent: this, description: { type: 'string', value: '字体设置' } } })
     )
   }
 }
@@ -39,7 +39,7 @@ export default class LayoutTitle extends Attribute {
       })
     )
     this.addChild(
-      new Font({ name: 'font', options: { parent: this, description: { type: 'string', value: '字体设置' } } })
+      new BaseFont({ name: 'font', options: { parent: this, description: { type: 'string', value: '字体设置' } } })
     )
     this.addChild(new SubTittle(this))
 

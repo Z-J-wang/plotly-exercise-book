@@ -14,7 +14,7 @@ import { calendar } from '@/utils'
 import LayoutBar from './layout.bar'
 import LayoutAxis from './layout.axis'
 import LayoutColorAxis from './layout.coloraxis'
-import { Font } from '../base.font'
+import { BaseFont } from '../base.font'
 import { merge } from 'lodash'
 
 export default class Layout extends BaseConfig {
@@ -86,7 +86,7 @@ export default class Layout extends BaseConfig {
     )
 
     this.insertAttribute(
-      new Font({
+      new BaseFont({
         name: 'font',
         options: {
           parent,
