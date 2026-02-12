@@ -1,8 +1,8 @@
+import { BaseLine } from 'dal/plotly.config/base.line'
 import Attribute from 'entity/attribute'
-import { Line } from '../../base'
 import AttributeController from 'entity/attribute.controller'
 
-export default class ScatterLine extends Line {
+export default class ScatterLine extends BaseLine {
   constructor(parent: Attribute) {
     super('line', 'ScatterLine', {
       parent,

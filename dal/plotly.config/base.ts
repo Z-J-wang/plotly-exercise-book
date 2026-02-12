@@ -133,46 +133,6 @@ export class Margin extends Attribute {
 }
 
 /**
- * 线条属性类，可继承扩展。子属性：'color' | 'width' | 'dash'
- */
-export class Line extends Attribute {
-  constructor(name: string, type: string, options: Attribute.Options) {
-    super(name, type, options)
-
-    this.addChild(
-      new BaseColor({
-        options: { parent: this, description: { type: 'string', value: '线条颜色' } }
-      })
-    )
-
-    this.addChild(
-      new BaseWidth({
-        options: {
-          parent: this,
-          description: { type: 'string', value: '线条宽度。单位为<code>px</code>。' }
-        }
-      })
-    )
-
-    this.addChild(
-      new Attribute(
-        'dash',
-        { type: 'enum', value: ['solid', 'dot', 'dash', 'longdash', 'dashdot', 'longdashdot'] },
-        {
-          parent: this,
-          description: { type: 'string', value: '线条样式' },
-          controller: new AttributeController({
-            type: 'select',
-            default: 'dot',
-            options: ['solid', 'dot', 'dash', 'longdash', 'dashdot', 'longdashdot']
-          })
-        }
-      )
-    )
-  }
-}
-
-/**
  * 过渡效果属性类
  * 子属性: 'duration' | 'easing' | 'ordering'
  */

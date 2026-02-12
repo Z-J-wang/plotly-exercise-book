@@ -1,7 +1,8 @@
 import type { BaseConfig } from '../base'
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
-import { BaseColor, Line } from '../base'
+import { BaseColor } from '../base'
+import { BaseLine } from '../base.line'
 
 class ActiveSelection extends Attribute {
   constructor(parent: Attribute) {
@@ -44,7 +45,7 @@ class NewSelection extends Attribute {
       description: { type: 'string', value: '设置选择模式下拖拽时的选择框样式。' }
     })
 
-    this.addChild(new Line('line', 'Line', { parent: this, description: { type: 'string', value: '设置线条样式' } }))
+    this.addChild(new BaseLine({ options: { parent: this } }))
 
     this.addChild(
       new Attribute(
