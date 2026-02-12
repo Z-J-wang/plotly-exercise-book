@@ -41,6 +41,20 @@ export class BaseColor extends Attribute {
   }
 }
 
+export class BaseWidth extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'width',
+      type: 'number',
+      options: {
+        description: { type: 'string', value: '宽度。单位为<code>px</code>。' },
+        controller: new AttributeController({ type: 'number', default: 1, min: 1 })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
+
 /**
  * 外边距属性类，可继承扩展
  * 属性：'t' | 'b | 'l' | 'r' | 'pad'
@@ -132,10 +146,11 @@ export class Line extends Attribute {
     )
 
     this.addChild(
-      new Attribute('width', 'number', {
-        parent: this,
-        description: { type: 'string', value: '线条宽度。单位为<code>px</code>。' },
-        controller: new AttributeController({ type: 'number', default: 1, min: 1 })
+      new BaseWidth({
+        options: {
+          parent: this,
+          description: { type: 'string', value: '线条宽度。单位为<code>px</code>。' }
+        }
       })
     )
 

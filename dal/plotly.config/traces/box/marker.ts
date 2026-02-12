@@ -1,4 +1,4 @@
-import { BaseColor } from 'dal/plotly.config/base'
+import { BaseColor, BaseWidth } from 'dal/plotly.config/base'
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import { merge } from 'lodash'
@@ -282,10 +282,9 @@ export class BoxMarkerLine extends Attribute {
   }
 }
 
-export class BoxMarkerLineWidth extends Attribute {
+export class BoxMarkerLineWidth extends BaseWidth {
   constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
-      name: 'width',
       type: 'number | number[]',
       options: {
         description: { type: 'string', value: '设置数据点的边框宽度。' },

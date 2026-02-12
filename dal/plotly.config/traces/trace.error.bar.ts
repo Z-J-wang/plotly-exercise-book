@@ -1,7 +1,7 @@
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import { merge } from 'lodash'
-import { BaseColor } from '../base'
+import { BaseColor, BaseWidth } from '../base'
 
 export default class ErrorBar extends Attribute {
   constructor(initializer: Attribute.Initializer) {
@@ -181,11 +181,9 @@ export class ErrorOptionThickness extends Attribute {
   }
 }
 
-export class ErrorOptionWidth extends Attribute {
+export class ErrorOptionWidth extends BaseWidth {
   constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
-      name: 'width',
-      type: 'number',
       options: {
         description: { type: 'string', value: '误差条两端横杠宽度。' },
         controller: new AttributeController({ type: 'number', default: 1, min: 0 })

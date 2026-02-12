@@ -1,7 +1,7 @@
 import { merge } from 'lodash'
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
-import { BaseColor } from 'dal/plotly.config/base'
+import { BaseColor, BaseWidth } from 'dal/plotly.config/base'
 
 export default class ViolinMeanLine extends Attribute {
   constructor(initializer: Attribute.Initializer) {
@@ -39,18 +39,15 @@ export class ViolinMeanlineVisible extends Attribute {
   }
 }
 
-export class ViolinMeanlineWidth extends Attribute {
+export class ViolinMeanlineWidth extends BaseWidth {
   constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
-      name: 'width',
-      type: 'number',
       options: {
         description: { type: 'string', value: '设置均值线宽度。' },
         controller: new AttributeController({ type: 'number', default: 2, min: 0 })
       }
     }
-    const mergedInitializer = merge(defaultInitializer, initializer)
-    super(mergedInitializer.name, mergedInitializer.type, mergedInitializer.options)
+    super(merge(defaultInitializer, initializer))
   }
 }
 

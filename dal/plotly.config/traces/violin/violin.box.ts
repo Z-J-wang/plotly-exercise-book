@@ -2,7 +2,7 @@ import { merge } from 'lodash'
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import ViolinLine from './violin.line'
-import { BaseColor } from 'dal/plotly.config/base'
+import { BaseColor, BaseWidth } from 'dal/plotly.config/base'
 
 export default class ViolinBox extends Attribute {
   constructor(initializer: Attribute.Initializer) {
@@ -20,11 +20,9 @@ export default class ViolinBox extends Attribute {
   }
 }
 
-export class ViolinBoxWidth extends Attribute {
+export class ViolinBoxWidth extends BaseWidth {
   constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
-      name: 'width',
-      type: 'number',
       options: {
         description: {
           type: 'string',
