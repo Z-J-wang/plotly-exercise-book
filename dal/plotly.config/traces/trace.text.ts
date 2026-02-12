@@ -1,7 +1,7 @@
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
-import { Font } from '../base'
 import { merge } from 'lodash'
+import { Font } from '../base.font'
 
 export default class TraceTextAbout {
   constructor(parent: Attribute, omitChildren: string[] = []) {
@@ -10,9 +10,12 @@ export default class TraceTextAbout {
 
     !omitChildren.includes('textfont') &&
       parent.addChild(
-        new Font('textfont', 'Font', {
-          parent: parent,
-          description: { type: 'string', value: '设置<code>text</code>属性的字体。' }
+        new Font({
+          name: 'textfont',
+          options: {
+            parent: parent,
+            description: { type: 'string', value: '设置<code>text</code>属性的字体。' }
+          }
         })
       )
   }

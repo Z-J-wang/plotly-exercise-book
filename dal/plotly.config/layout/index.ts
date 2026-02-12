@@ -3,7 +3,7 @@ import AttributeController from 'entity/attribute.controller'
 import { BaseConfig, Transition } from '../base'
 import LayoutTitle from './layout.title'
 import LayoutLegend from './layout.legend'
-import { Margin, Font } from '../base'
+import { Margin } from '../base'
 import LayoutUniformtext from './layout.uniformtext'
 import LayoutModeBar from './layout.mode.bar'
 import LayoutInteraction from './layout.interaction'
@@ -14,6 +14,7 @@ import { calendar } from '@/utils'
 import LayoutBar from './layout.bar'
 import LayoutAxis from './layout.axis'
 import LayoutColorAxis from './layout.coloraxis'
+import { Font } from '../base.font'
 
 export default class Layout extends BaseConfig {
   constructor(parent: Attribute) {
@@ -102,11 +103,14 @@ export default class Layout extends BaseConfig {
     )
 
     this.insertAttribute(
-      new Font('font', 'Font', {
-        parent,
-        description: {
-          type: 'string',
-          value: '全局字体样式。其他<code>Font</code>属性将继承此处的值并覆盖。'
+      new Font({
+        name: 'font',
+        options: {
+          parent,
+          description: {
+            type: 'string',
+            value: '全局字体样式。其他<code>Font</code>属性将继承此处的值并覆盖。'
+          }
         }
       })
     )

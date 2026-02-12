@@ -1,6 +1,6 @@
 import Attribute from 'entity/attribute'
-import { Font } from '../base'
 import AttributeController from 'entity/attribute.controller'
+import { Font } from '../base.font'
 
 class LegendTitle extends Attribute {
   constructor(parent: Attribute | null) {
@@ -37,7 +37,10 @@ class LegendTitle extends Attribute {
       )
     )
     this.addChild(
-      new Font('font', 'Font', { parent: this, description: { type: 'string', value: '设置图例模块标题字体样式。' } })
+      new Font({
+        name: 'font',
+        options: { parent: this, description: { type: 'string', value: '设置图例模块标题字体样式。' } }
+      })
     )
   }
 }
@@ -130,7 +133,10 @@ export default class Legend extends Attribute {
     // )
 
     this.addChild(
-      new Font('font', 'Font', { parent: this, description: { type: 'string', value: '设置图例字体样式。' } })
+      new Font({
+        name: 'font',
+        options: { parent: this, description: { type: 'string', value: '设置图例字体样式。' } }
+      })
     )
 
     this.addChild(
@@ -158,9 +164,12 @@ export default class Legend extends Attribute {
     )
 
     this.addChild(
-      new Font('grouptitlefont', 'Font', {
-        parent: this,
-        description: { type: 'string', value: '图例组标题字体样式设置。' }
+      new Font({
+        name: 'grouptitlefont',
+        options: {
+          parent: this,
+          description: { type: 'string', value: '图例组标题字体样式设置。' }
+        }
       })
     )
 

@@ -16,7 +16,8 @@ import TraceMarker from '../trace.marker'
 import PieHover from './pie.hover'
 import PieMarker from './pie.marker'
 import PieDomain from './pie.domain'
-import { BaseUirevision, Font } from '../../base'
+import { BaseUirevision } from '../../base'
+import { Font } from 'dal/plotly.config/base.font'
 
 export default class TracePie extends Attribute {
   constructor(parent: Attribute) {
@@ -195,11 +196,14 @@ export default class TracePie extends Attribute {
     )
 
     this.addChild(
-      new Font('insidetextfont', 'Font', {
-        parent: this,
-        description: {
-          type: 'string',
-          value: '设置扇形内部文字的字体样式。此属性优先级高于<code>bar.textfont</code>属性。'
+      new Font({
+        name: 'insidetextfont',
+        options: {
+          parent: this,
+          description: {
+            type: 'string',
+            value: '设置扇形内部文字的字体样式。此属性优先级高于<code>bar.textfont</code>属性。'
+          }
         }
       })
     )
@@ -221,11 +225,14 @@ export default class TracePie extends Attribute {
     )
 
     this.addChild(
-      new Font('outsidetextfont', 'Font', {
-        parent: this,
-        description: {
-          type: 'string',
-          value: '设置扇形外部文字的字体样式。此属性优先级高于<code>bar.textfont</code>属性。'
+      new Font({
+        name: 'outsidetextfont',
+        options: {
+          parent: this,
+          description: {
+            type: 'string',
+            value: '设置扇形外部文字的字体样式。此属性优先级高于<code>bar.textfont</code>属性。'
+          }
         }
       })
     )

@@ -1,7 +1,7 @@
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
-import { Font } from '../base'
 import { merge } from 'lodash'
+import { Font } from '../base.font'
 
 export default class TraceColoBar extends Attribute {
   constructor(initializer: Attribute.Initializer) {
@@ -48,7 +48,10 @@ export default class TraceColoBar extends Attribute {
     this.addChild(new TraceColorShowticklabels({ options: { parent: this } }))
     this.addChild(new TraceColorLabelalias({ options: { parent: this } }))
     this.addChild(
-      new Font('tickfont', 'Font', { parent: this, description: { type: 'string', value: '刻度标签的字体。' } })
+      new Font({
+        name: 'tickfont',
+        options: { parent: this, description: { type: 'string', value: '刻度标签的字体。' } }
+      })
     )
     this.addChild(new TraceColorTickAngle({ options: { parent: this } }))
     this.addChild(new TraceColorTickFormat({ options: { parent: this } }))
@@ -654,19 +657,6 @@ export class TraceColorLabelalias extends Attribute {
   }
 }
 
-export class TraceColorTickfont extends Attribute {
-  constructor(initializer: Attribute.Initializer) {
-    const defaultInitializer = {
-      name: 'tickfont',
-      type: 'Font',
-      options: {
-        description: { type: 'string', value: '刻度标签的字体。' }
-      }
-    }
-    super(merge(defaultInitializer, initializer))
-  }
-}
-
 export class TraceColorTickAngle extends Attribute {
   constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
@@ -871,7 +861,9 @@ export class TraceColorTitle extends Attribute {
       })
     )
 
-    this.addChild(new Font('font', 'Font', { parent: this, description: { type: 'string', value: '标题字体' } }))
+    this.addChild(
+      new Font({ name: 'font', options: { parent: this, description: { type: 'string', value: '标题字体' } } })
+    )
 
     this.addChild(
       new Attribute({

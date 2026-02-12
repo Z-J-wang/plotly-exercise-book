@@ -1,6 +1,7 @@
 import { easing } from '@/utils/global.variable'
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
+import { Font } from './base.font'
 
 /**
  * Plotly 配置基类，该类用于维护配置清单
@@ -23,159 +24,6 @@ export class BaseConfig {
 
   constructor(parent: Attribute) {
     this._parent = parent
-  }
-}
-
-/**
- * 字体属性类，可继承扩展
- * 子属性：'color' | 'family' | 'size' | 'weight' | 'style' | 'variant' | 'lineposition' | 'shadow' | 'textcase'
- */
-export class Font extends Attribute {
-  constructor(name: string, type: string, options: Attribute.Options) {
-    super(name, type, options)
-    this.addChild(
-      new Attribute('color', 'Color', {
-        parent: this,
-        description: { type: 'string', value: '字体颜色' },
-        controller: new AttributeController({ type: 'color', default: null })
-      })
-    )
-
-    this.addChild(
-      new Attribute('family', 'string', {
-        parent: this,
-        description: { type: 'string', value: '字体' },
-        controller: new AttributeController({
-          type: 'string',
-          default: 'Arial, sans-serif'
-        })
-      })
-    )
-    this.addChild(
-      new Attribute('lineposition', 'Lineposition', {
-        parent: this,
-        description: { type: 'string', value: '修饰线的位置' },
-        controller: new AttributeController({
-          type: 'select',
-          default: 'none',
-          options: [
-            'under',
-            'over',
-            'through',
-            'under+over',
-            'under+through',
-            'over+through',
-            'under+over+through',
-            'none'
-          ]
-        })
-      })
-    )
-    this.addChild(
-      new Attribute('shadow', 'string', {
-        parent: this,
-        description: { type: 'string', value: '字体阴影' },
-        controller: new AttributeController({
-          type: 'string',
-          default: 'none'
-        })
-      })
-    )
-    this.addChild(
-      new Attribute('size', 'number', {
-        parent: this,
-        description: { type: 'string', value: '字体大小' },
-        controller: new AttributeController({
-          type: 'number',
-          default: 13,
-          min: 8,
-          step: 2
-        })
-      })
-    )
-    this.addChild(
-      new Attribute('weight', 'number', {
-        parent: this,
-        description: { type: 'string', value: '字重' },
-        controller: new AttributeController({
-          type: 'select',
-          default: 'normal',
-          options: [
-            '100',
-            '200',
-            '300',
-            '400',
-            '500',
-            '600',
-            '700',
-            '800',
-            '900',
-            'normal',
-            'bold',
-            'bolder',
-            'lighter'
-          ]
-        })
-      })
-    )
-    this.addChild(
-      new Attribute(
-        'style',
-        { type: 'enum', value: ['normal', 'italic'] },
-        {
-          parent: this,
-          description: { type: 'string', value: '字体样式' },
-          controller: new AttributeController({
-            type: 'select',
-            default: 'normal',
-            options: ['normal', 'italic']
-          })
-        }
-      )
-    )
-    this.addChild(
-      new Attribute(
-        'textcase',
-        { type: 'enum', value: ['normal', 'word caps', 'upper', 'lower'] },
-        {
-          parent: this,
-          description: {
-            type: 'string',
-            value:
-              '文本大小写设置: <br />' +
-              '<ul>' +
-              '<li><code>normal</code> - 默认值。</li>' +
-              '<li><code>word caps</code> - 每个单词首字母大写。</li>' +
-              '<li><code>upper</code> - 全大写。</li>' +
-              '<li><code>lower</code> - 全小写。</li>' +
-              '</ul>'
-          },
-          controller: new AttributeController({
-            type: 'select',
-            default: 'normal',
-            options: ['normal', 'word caps', 'upper', 'lower']
-          })
-        }
-      )
-    )
-    this.addChild(
-      new Attribute(
-        'variant',
-        {
-          type: 'enum',
-          value: ['normal', 'small-caps', 'all-small-caps', 'all-petite-caps', 'petite-caps', 'unicase']
-        },
-        {
-          parent: this,
-          description: { type: 'string', value: '字体变形' },
-          controller: new AttributeController({
-            type: 'select',
-            default: 'normal',
-            options: ['normal', 'small-caps', 'all-small-caps', 'all-petite-caps', 'petite-caps', 'unicase']
-          })
-        }
-      )
-    )
   }
 }
 
@@ -292,7 +140,9 @@ export class Label extends Attribute {
         controller: new AttributeController({ type: 'color', default: null })
       })
     )
-    this.addChild(new Font('font', 'Font', { parent: this, description: { type: 'string', value: '字体设置' } }))
+    this.addChild(
+      new Font({ name: 'font', options: { parent: this, description: { type: 'string', value: '字体设置' } } })
+    )
   }
 }
 
