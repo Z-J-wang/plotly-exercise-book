@@ -89,7 +89,7 @@ export default class ConfigureModeBar {
       })
     )
 
-    config.insertAttribute(new ConfigureImageOptions(parent))
+    config.insertAttribute(new ConfigureImageOptions({ options: { parent } }))
 
     config.insertAttribute(
       new Attribute('displaylogo', 'boolean', {
