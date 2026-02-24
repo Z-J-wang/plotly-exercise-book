@@ -179,14 +179,19 @@ export default class LayoutTitle extends Attribute {
     )
 
     this.addChild(
-      new Pad(this, {
-        type: 'string',
-        value: [
-          '设置标题的内边距。每个内边距值仅在相应的 <code>xanchor/yanchor</code> 值进行了相应设置时才会生效。',
-          '例如，要使左内边距生效，<code>xanchor</code>必须设置为 <code>left</code>。',
-          '若 <code>xanchor/yanchor</code> 是自动确定的，同样适用此规则。',
-          '若相应的锚点值为 <code>middle/center</code>，则内边距设置将无效。'
-        ].join('')
+      new Pad({
+        options: {
+          parent: this,
+          description: {
+            type: 'string',
+            value: [
+              '设置标题的内边距。每个内边距值仅在相应的 <code>xanchor/yanchor</code> 值进行了相应设置时才会生效。',
+              '例如，要使左内边距生效，<code>xanchor</code>必须设置为 <code>left</code>。',
+              '若 <code>xanchor/yanchor</code> 是自动确定的，同样适用此规则。',
+              '若相应的锚点值为 <code>middle/center</code>，则内边距设置将无效。'
+            ].join('')
+          }
+        }
       })
     )
   }

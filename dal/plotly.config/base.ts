@@ -1,4 +1,3 @@
-import { easing } from '@/utils/global.variable'
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import { merge } from 'lodash'
@@ -136,47 +135,70 @@ export class Margin extends Attribute {
  * 内边距
  */
 export class Pad extends Attribute {
-  constructor(parent: Attribute, description: Attribute.Description = { type: 'string', value: '标题的内边距' }) {
-    super('pad', 'Padding', { parent, description })
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'pad',
+      type: 'Padding',
+      options: {
+        description: { type: 'string', value: '设置标题内边距。' }
+      }
+    }
+    super(merge(defaultInitializer, initializer))
 
     this.addChild(
-      new Attribute('b', 'number', {
-        parent: this,
-        description: { type: 'string', value: '底部边距，单位为<code>px</code>' },
-        controller: new AttributeController({
-          type: 'number',
-          default: 0
-        })
+      new Attribute({
+        name: 'b',
+        type: 'number',
+        options: {
+          parent: this,
+          description: { type: 'string', value: '底部边距，单位为<code>px</code>' },
+          controller: new AttributeController({ type: 'number', default: 0 })
+        }
       })
     )
+
     this.addChild(
-      new Attribute('l', 'number', {
-        parent: this,
-        description: { type: 'string', value: '左边边距，单位为<code>px</code>' },
-        controller: new AttributeController({
-          type: 'number',
-          default: 0
-        })
+      new Attribute({
+        name: 'l',
+        type: 'number',
+        options: {
+          parent: this,
+          description: { type: 'string', value: '左边边距，单位为<code>px</code>' },
+          controller: new AttributeController({
+            type: 'number',
+            default: 0
+          })
+        }
       })
     )
+
     this.addChild(
-      new Attribute('r', 'number', {
-        parent: this,
-        description: { type: 'string', value: '右边边距，单位为<code>px</code>' },
-        controller: new AttributeController({
-          type: 'number',
-          default: 0
-        })
+      new Attribute({
+        name: 'r',
+        type: 'number',
+        options: {
+          parent: this,
+          description: { type: 'string', value: '右边边距，单位为<code>px</code>' },
+          controller: new AttributeController({
+            type: 'number',
+            default: 0
+          })
+        }
       })
     )
+
     this.addChild(
-      new Attribute('t', 'number', {
-        parent: this,
-        description: { type: 'string', value: '顶部边距，单位为<code>px</code>' },
-        controller: new AttributeController({
-          type: 'number',
-          default: 0
-        })
+      new Attribute({
+        name: 't',
+        type: 'number',
+        options: {
+          parent: this,
+          description: { type: 'string', value: '顶部边距，单位为<code>px</code>' },
+          controller: new AttributeController({
+            type: 'number',
+            default: 0
+          })
+        }
       })
     )
   }
