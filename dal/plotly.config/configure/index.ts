@@ -46,7 +46,7 @@ export default class Layout extends BaseConfig {
       })
     )
 
-    this.insertAttribute(new ConfigEdits(parent))
+    this.insertAttribute(new ConfigEdits({ options: { parent } }))
 
     this.insertAttribute(
       new Attribute('editSelection', 'boolean', {
