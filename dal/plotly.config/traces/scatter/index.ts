@@ -14,7 +14,7 @@ import {
   TraceHoveron,
   TraceType
 } from '../trace.base'
-import TraceLegendAbout, { TraceShowlegend } from '../trace.legend.about'
+import TraceLegendAbout from '../trace.legend.about'
 import TraceData from '../trace.data'
 import AttributeController from 'entity/attribute.controller'
 import TraceTextAbout from '../trace.text'
