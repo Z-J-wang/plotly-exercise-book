@@ -1,6 +1,6 @@
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
-import { BaseColor, BaseConfig, Transition } from '../base'
+import { BaseColor, BaseConfig } from '../base'
 import LayoutTitle from './layout.title'
 import LayoutLegend from './layout.legend'
 import { Margin } from '../base'
@@ -16,6 +16,7 @@ import LayoutAxis from './layout.axis'
 import LayoutColorAxis from './layout.coloraxis'
 import { BaseFont } from '../base.font'
 import { merge } from 'lodash'
+import { BaseTransition } from '../base.transition'
 
 export default class Layout extends BaseConfig {
   constructor(parent: Attribute) {
@@ -145,12 +146,7 @@ export default class Layout extends BaseConfig {
 
     new LayoutInteraction(this, parent)
     this.insertAttribute(new BaseHoverLabel({ options: { parent } }))
-    this.insertAttribute(
-      new Transition('transition', 'Transition', {
-        parent,
-        description: { type: 'string', value: '设置在<code>Plotly.react</code>更新过程中的过渡效果。' }
-      })
-    )
+    this.insertAttribute(new BaseTransition({ options: { parent } }))
 
     this.insertAttribute(
       new Attribute('datarevision', 'number|string', {
