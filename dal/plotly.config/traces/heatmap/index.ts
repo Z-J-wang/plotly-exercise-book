@@ -181,6 +181,6 @@ export default class TraceBar extends Attribute {
 
     this.addChild(new TraceConnectgaps({ options: { parent: this } }))
 
-    this.addChild(new BaseUirevision(this))
+    this.addChild(new BaseUirevision({ options: { parent: this } }))
   }
 }

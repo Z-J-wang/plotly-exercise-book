@@ -293,6 +293,6 @@ export default class TracePie extends Attribute {
       })
     )
 
-    this.addChild(new BaseUirevision(this))
+    this.addChild(new BaseUirevision({ options: { parent: this } }))
   }
 }
