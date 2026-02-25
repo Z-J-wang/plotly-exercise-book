@@ -54,6 +54,20 @@ export class BaseWidth extends Attribute {
   }
 }
 
+export class BaseHeight extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'height',
+      type: 'number',
+      options: {
+        description: { type: 'string', value: '高度。单位为<code>px</code>。' },
+        controller: new AttributeController({ type: 'number', default: 1, min: 1 })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
+
 /**
  * 外边距属性类，可继承扩展
  * 属性：'t' | 'b | 'l' | 'r' | 'pad'
