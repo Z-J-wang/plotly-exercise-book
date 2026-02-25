@@ -317,20 +317,33 @@ export default class Layout extends BaseConfig {
     )
 
     this.insertAttribute(
-      new LayoutAxis('xaxis', parent, {
-        type: 'string',
-        value:
-          '对默认 X 轴进行自定义。<br />如需自定义多个 X 轴，请使用 <code>layout.xaxis2</code>、<code>layout.xaxis3</code> 等属性来定义。'
+      new LayoutAxis({
+        name: 'xaxis',
+        options: {
+          parent,
+          description: {
+            type: 'string',
+            value:
+              '对默认 X 轴进行自定义。<br />如需自定义多个 X 轴，请使用 <code>layout.xaxis2</code>、<code>layout.xaxis3</code> 等属性来定义。'
+          }
+        }
       })
     )
 
     this.insertAttribute(
-      new LayoutAxis('yaxis', parent, {
-        type: 'string',
-        value:
-          '对默认 Y 轴进行自定义。<br />如需自定义多个 Y 轴，请使用 <code>layout.yaxis2</code>、<code>layout.yaxis3</code> 等属性来定义。'
+      new LayoutAxis({
+        name: 'yaxis',
+        options: {
+          parent,
+          description: {
+            type: 'string',
+            value:
+              '对默认 Y 轴进行自定义。<br />如需自定义多个 Y 轴，请使用 <code>layout.yaxis2</code>、<code>layout.yaxis3</code> 等属性来定义。'
+          }
+        }
       })
     )
+
     this.insertAttribute(
       new LayoutColorAxis('coloraxis', parent, {
         type: 'string',
