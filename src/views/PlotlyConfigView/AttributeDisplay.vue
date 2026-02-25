@@ -69,7 +69,7 @@ function convertDescription(description: string) {
             <el-tooltip effect="light" placement="right">
               <el-icon class="ml-2 cursor-pointer"><InfoFilled /></el-icon>
               <template #content>
-                <div class="flex space-x-2 space-y-2 flex-wrap" style="max-width: 600px">
+                <div class="flex gap-2 flex-wrap" style="max-width: 600px">
                   <el-tag v-for="item in data.type.value" :key="item">{{ item }}</el-tag>
                 </div>
               </template>
