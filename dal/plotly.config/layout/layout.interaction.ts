@@ -3,13 +3,18 @@ import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import { BaseColor } from '../base'
 import { BaseLine } from '../base.line'
+import { merge } from 'lodash'
 
 class ActiveSelection extends Attribute {
-  constructor(parent: Attribute) {
-    super('activeselection', 'LayoutActiveSelection', {
-      parent,
-      description: { type: 'string', value: '设置选择模式下，选择框的样式。' }
-    })
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'activeselection',
+      type: 'LayoutActiveSelection',
+      options: {
+        description: { type: 'string', value: '设置选择模式下，选择框的样式。' }
+      }
+    }
+    super(merge(defaultInitializer, initializer))
 
     this.addChild(
       new BaseColor({
@@ -23,35 +28,43 @@ class ActiveSelection extends Attribute {
     )
 
     this.addChild(
-      new Attribute('opacity', 'number', {
-        parent: this,
-        description: { type: 'string', value: '选择框的透明度' },
-        controller: new AttributeController({
-          type: 'number',
-          default: 0.5,
-          min: 0,
-          max: 1,
-          step: 0.1
-        })
+      new Attribute({
+        name: 'opacity',
+        type: 'number',
+        options: {
+          parent: this,
+          description: { type: 'string', value: '选择框的透明度' },
+          controller: new AttributeController({
+            type: 'number',
+            default: 0.5,
+            min: 0,
+            max: 1,
+            step: 0.1
+          })
+        }
       })
     )
   }
 }
 
 class NewSelection extends Attribute {
-  constructor(parent: Attribute) {
-    super('newselection', 'LayoutNewSelection', {
-      parent,
-      description: { type: 'string', value: '设置选择模式下拖拽时的选择框样式。' }
-    })
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'newselection',
+      type: 'LayoutNewSelection',
+      options: {
+        description: { type: 'string', value: '设置选择模式下拖拽时的选择框样式。' }
+      }
+    }
+    super(merge(defaultInitializer, initializer))
 
     this.addChild(new BaseLine({ options: { parent: this } }))
 
     this.addChild(
-      new Attribute(
-        'mode',
-        { type: 'enum', value: ['immediate', 'gradual'] },
-        {
+      new Attribute({
+        name: 'mode',
+        type: { type: 'enum', value: ['immediate', 'gradual'] },
+        options: {
           parent: this,
           description: {
             type: 'string',
@@ -69,7 +82,7 @@ class NewSelection extends Attribute {
             options: ['immediate', 'gradual']
           })
         }
-      )
+      })
     )
   }
 }
@@ -77,10 +90,10 @@ class NewSelection extends Attribute {
 export default class LayoutInteraction {
   constructor(config: BaseConfig, parent: Attribute) {
     config.insertAttribute(
-      new Attribute(
-        'hovermode',
-        { type: 'enum', value: ['x', 'y', 'closest', false, 'x unified', 'y unified'] },
-        {
+      new Attribute({
+        name: 'hovermode',
+        type: { type: 'enum', value: ['x', 'y', 'closest', false, 'x unified', 'y unified'] },
+        options: {
           parent,
           description: {
             type: 'string',
@@ -102,14 +115,14 @@ export default class LayoutInteraction {
             options: ['closest', 'x', 'y', 'x unified', 'y unified', false]
           })
         }
-      )
+      })
     )
 
     config.insertAttribute(
-      new Attribute(
-        'clickmode',
-        { type: 'enum', value: ['event', 'select', 'event+select', 'none'] },
-        {
+      new Attribute({
+        name: 'clickmode',
+        type: { type: 'enum', value: ['event', 'select', 'event+select', 'none'] },
+        options: {
           parent,
           description: {
             type: 'string',
@@ -130,30 +143,29 @@ export default class LayoutInteraction {
             options: ['event', 'select', 'event+select', 'none']
           })
         }
-      )
+      })
     )
 
+    const dragmodeOptions = [
+      'zoom',
+      'pan',
+      'select',
+      'lasso',
+      'drawclosedpath',
+      'drawopenpath',
+      'drawline',
+      'drawrect',
+      'drawcircle',
+      'orbit',
+      'turntable',
+      false
+    ]
+
     config.insertAttribute(
-      new Attribute(
-        'dragmode',
-        {
-          type: 'enum',
-          value: [
-            'zoom',
-            'pan',
-            'select',
-            'lasso',
-            'drawclosedpath',
-            'drawopenpath',
-            'drawline',
-            'drawrect',
-            'drawcircle',
-            'orbit',
-            'turntable',
-            false
-          ]
-        },
-        {
+      new Attribute({
+        name: 'dragmode',
+        type: { type: 'enum', value: dragmodeOptions },
+        options: {
           parent,
           description: {
             type: 'string',
@@ -161,33 +173,16 @@ export default class LayoutInteraction {
               '设置鼠标拖拽交互模式。<code>select</code>和<code>lasso</code>仅适用于带有标记或文本的散点图。' +
               '<code>orbit</code>和<code>turntable</code>仅适用于三维场景。'
           },
-          controller: new AttributeController({
-            type: 'select',
-            default: 'zoom',
-            options: [
-              'zoom',
-              'pan',
-              'select',
-              'lasso',
-              'drawclosedpath',
-              'drawopenpath',
-              'drawline',
-              'drawrect',
-              'drawcircle',
-              'orbit',
-              'turntable',
-              false
-            ]
-          })
+          controller: new AttributeController({ type: 'select', default: 'zoom', options: dragmodeOptions })
         }
-      )
+      })
     )
 
     config.insertAttribute(
-      new Attribute(
-        'selectdirection',
-        { type: 'enum', value: ['any', 'h', 'v', 'd'] },
-        {
+      new Attribute({
+        name: 'selectdirection',
+        type: { type: 'enum', value: ['any', 'h', 'v', 'd'] },
+        options: {
           parent,
           description: {
             type: 'string',
@@ -207,20 +202,24 @@ export default class LayoutInteraction {
             options: ['any', 'h', 'v', 'd']
           })
         }
-      )
+      })
     )
 
-    config.insertAttribute(new ActiveSelection(parent))
-    config.insertAttribute(new NewSelection(parent))
+    config.insertAttribute(new ActiveSelection({ options: { parent } }))
+    config.insertAttribute(new NewSelection({ options: { parent } }))
     config.insertAttribute(
-      new Attribute('hoverdistance', 'number', {
-        parent,
-        description: {
-          type: 'string',
-          value:
-            '设置数据点 hover 的触发范围。数值越大，鼠标就可以在距离数据点越远的区域内触发 hover 事件。单位为<code>px</code>。'
-        },
-        controller: new AttributeController({ type: 'number', default: 20, min: -1 })
+      new Attribute({
+        name: 'hoverdistance',
+        type: 'number',
+        options: {
+          parent,
+          description: {
+            type: 'string',
+            value:
+              '设置数据点 hover 的触发范围。数值越大，鼠标就可以在距离数据点越远的区域内触发 hover 事件。单位为<code>px</code>。'
+          },
+          controller: new AttributeController({ type: 'number', default: 20, min: -1 })
+        }
       })
     )
   }
