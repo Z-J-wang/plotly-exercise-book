@@ -233,7 +233,7 @@ export default class Layout extends BaseConfig {
       })
     )
 
-    this.insertAttribute(new LayoutGrid(parent))
+    this.insertAttribute(new LayoutGrid({ options: { parent } }))
 
     this.insertAttribute(
       new Attribute({
