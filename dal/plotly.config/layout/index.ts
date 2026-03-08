@@ -345,10 +345,15 @@ export default class Layout extends BaseConfig {
     )
 
     this.insertAttribute(
-      new LayoutColorAxis('coloraxis', parent, {
-        type: 'string',
-        value:
-          '对默认颜色轴进行自定义。<br />如需自定义多个颜色轴，请使用 <code>layout.coloraxis2</code>、<code>layout.coloraxis3</code> 等属性来定义。'
+      new LayoutColorAxis({
+        options: {
+          parent,
+          description: {
+            type: 'string',
+            value:
+              '对默认颜色轴进行自定义。<br />如需自定义多个颜色轴，请使用 <code>layout.coloraxis2</code>、<code>layout.coloraxis3</code> 等属性来定义。'
+          }
+        }
       })
     )
   }
