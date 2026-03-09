@@ -157,8 +157,7 @@ export default class Layout extends BaseConfig {
       })
     )
 
-    this.insertAttribute(new LayoutModeBar(parent))
-
+    this.insertAttribute(new LayoutModeBar({ options: { parent } }))
     new LayoutInteraction(this, parent)
     this.insertAttribute(new BaseHoverLabel({ options: { parent } }))
     this.insertAttribute(new BaseTransition({ options: { parent } }))
