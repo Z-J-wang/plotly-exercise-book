@@ -2,7 +2,7 @@ import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import { defineAsyncComponent } from 'vue'
 import { merge } from 'lodash'
-import { BaseOrientation, BaseVisible } from '../base'
+import { BaseVisible } from '../base'
 
 export class TraceType extends Attribute {
   constructor(initializer: Attribute.Initializer, value: string = '') {
