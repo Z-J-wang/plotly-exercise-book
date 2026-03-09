@@ -11,7 +11,6 @@ import {
   TraceYaxis,
   TraceType,
   TraceCustomdata,
-  TraceOrientation,
   TraceSelectedPoints
 } from '../trace.base'
 import TraceLegendAbout from '../trace.legend.about'
@@ -19,7 +18,7 @@ import ViolinData from './violin.data'
 import AttributeController from 'entity/attribute.controller'
 import TraceTextAbout from '../trace.text'
 import TraceHover from '../trace.hover'
-import { BaseColor, BaseUirevision } from '../../base'
+import { BaseColor, BaseOrientation, BaseUirevision } from '../../base'
 import exampleData from '@/assets/data/violin.json'
 import ViolinAlignmentGroup from '@/components/doc/traces/ViolinAlignmentGroup.vue'
 import BoxMarker from '../box/marker'
@@ -116,7 +115,14 @@ export default class TraceBar extends Attribute {
 
     this.addChild(new TraceYaxis({ options: { parent: this } }))
 
-    this.addChild(new TraceOrientation({ options: { parent: this } }))
+    this.addChild(
+      new BaseOrientation({
+        options: {
+          parent: this,
+          description: { type: 'string', value: '设置轨迹的显示方向。默认为 <code>v</code>。' }
+        }
+      })
+    )
 
     this.addChild(
       new Attribute('alignmentgroup', 'string', {

@@ -1,7 +1,7 @@
 import { modeBarDefaultButtons } from '@/utils'
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
-import { BaseColor } from '../base'
+import { BaseColor, BaseOrientation } from '../base'
 
 export default class LayoutModeBar extends Attribute {
   constructor(parent: Attribute) {
@@ -49,14 +49,12 @@ export default class LayoutModeBar extends Attribute {
     )
 
     this.addChild(
-      new Attribute('orientation', 'string', {
-        parent: this,
-        description: { type: 'string', value: '模式栏排列方式。' },
-        controller: new AttributeController({
-          type: 'select',
-          default: 'h',
-          options: ['v', 'h']
-        })
+      new BaseOrientation({
+        options: {
+          parent: this,
+          description: { type: 'string', value: '模式栏排列方式。' },
+          controller: new AttributeController({ type: 'select', default: 'h', options: ['v', 'h'] })
+        }
       })
     )
 

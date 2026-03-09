@@ -68,6 +68,20 @@ export class BaseHeight extends Attribute {
   }
 }
 
+export class BaseText extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'text',
+      type: 'string',
+      options: {
+        description: { type: 'string', value: '文本内容。' },
+        controller: new AttributeController({ type: 'string', default: '' })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
+
 /**
  * 外边距属性类，可继承扩展
  * 属性：'t' | 'b | 'l' | 'r' | 'pad'
@@ -230,6 +244,34 @@ export class BaseUirevision extends Attribute {
             '控制UI状态变化的持久性。' +
             '具体说明，详见：<a href="/#/docs/config/?id=layout-uirevision"><code>layout.uirevision</code></a>。'
         }
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
+
+export class BaseOrientation extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'orientation',
+      type: { type: 'enum', value: ['v', 'h'] },
+      options: {
+        description: { type: 'string', value: '排布方向。分为垂直<code>v</code>和水平<code>h</code>两种。' },
+        controller: new AttributeController({ type: 'select', default: 'v', options: ['v', 'h'] })
+      }
+    }
+    super(merge(defaultInitializer, initializer))
+  }
+}
+
+export class BaseVisible extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'visible',
+      type: 'boolean',
+      options: {
+        description: { type: 'string', value: '控制元素的可见性。' },
+        controller: new AttributeController({ type: 'boolean', default: true })
       }
     }
     super(merge(defaultInitializer, initializer))

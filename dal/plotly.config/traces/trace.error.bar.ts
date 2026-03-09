@@ -1,7 +1,7 @@
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import { merge } from 'lodash'
-import { BaseColor, BaseWidth } from '../base'
+import { BaseColor, BaseVisible, BaseWidth } from '../base'
 
 export default class ErrorBar extends Attribute {
   constructor(initializer: Attribute.Initializer) {
@@ -19,7 +19,9 @@ export default class ErrorBar extends Attribute {
     this.addChild(new ErrorBarValueminus({ options: { parent: this } }))
     this.addChild(new ErrorBarArray({ options: { parent: this } }))
     this.addChild(new ErrorBarArrayminus({ options: { parent: this } }))
-    this.addChild(new ErrorOptionVisible({ options: { parent: this } }))
+    this.addChild(
+      new BaseVisible({ options: { parent: this, description: { type: 'string', value: '是否显示误差条。' } } })
+    )
     this.addChild(new ErrorOptionSymmetric({ options: { parent: this } }))
     this.addChild(new ErrorOptionColor({ options: { parent: this } }))
     this.addChild(new ErrorOptionThickness({ options: { parent: this } }))
@@ -121,20 +123,6 @@ export class ErrorBarArrayminus extends Attribute {
             '默认情况下，其值等于<code>array</code>。' +
             '如果显性开启左右对称模式（即 <code>symmetric = true</code>），该属性将失效。'
         }
-      }
-    }
-    super(merge(defaultInitializer, initializer))
-  }
-}
-
-export class ErrorOptionVisible extends Attribute {
-  constructor(initializer: Attribute.Initializer) {
-    const defaultInitializer = {
-      name: 'visible',
-      type: 'boolean',
-      options: {
-        description: { type: 'string', value: '是否显示误差条。' },
-        controller: new AttributeController({ type: 'boolean', default: true })
       }
     }
     super(merge(defaultInitializer, initializer))

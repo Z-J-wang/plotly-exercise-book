@@ -1,12 +1,21 @@
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import { merge } from 'lodash'
+import { BaseOrientation } from '../base'
 
 export default class TraceStack {
   constructor(parent: Attribute, initialConfig: PlotlyConfig) {
     parent.addChild(new TraceStackgroup({ options: { parent, initialConfig } }))
     parent.addChild(new TraceGroupnorm({ options: { parent, initialConfig } }))
-    parent.addChild(new TraceOrientation({ options: { parent, initialConfig } }))
+    parent.addChild(
+      new BaseOrientation({
+        options: {
+          parent,
+          description: { type: 'string', value: '设置轨迹的显示方向。默认为 <code>v</code>。' },
+          initialConfig
+        }
+      })
+    )
     parent.addChild(new TraceStackgaps({ options: { parent, initialConfig } }))
   }
 }
@@ -60,23 +69,6 @@ export class TraceGroupnorm extends Attribute {
           default: "''",
           options: ['', 'fraction', 'percent']
         })
-      }
-    }
-    super(merge(defaultInitializer, initializer))
-  }
-}
-
-export class TraceOrientation extends Attribute {
-  constructor(initializer: Attribute.Initializer) {
-    const defaultInitializer = {
-      name: 'orientation',
-      type: { type: 'enum', value: ['v', 'h'] },
-      options: {
-        description: {
-          type: 'string',
-          value: '设置轨迹的显示方向。默认为 <code>v</code>。'
-        },
-        controller: new AttributeController({ type: 'select', default: 'v', options: ['v', 'h'] })
       }
     }
     super(merge(defaultInitializer, initializer))

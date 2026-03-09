@@ -10,7 +10,6 @@ import {
   TraceYaxis,
   TraceSelectedPoints,
   TraceCliponaxis,
-  TraceOrientation,
   TraceTextAngle,
   TraceType
 } from '../trace.base'
@@ -22,7 +21,7 @@ import TraceHover from '../trace.hover'
 import TraceMarker from '../trace.marker'
 import TraceErrorBar from '../trace.error.bar'
 import TraceSelected from '../trace.selected'
-import { BaseUirevision } from '../../base'
+import { BaseOrientation, BaseUirevision } from '../../base'
 import BarTextAnchor from './bar.text.anchor'
 
 export default class TraceBar extends Attribute {
@@ -123,7 +122,14 @@ export default class TraceBar extends Attribute {
 
     this.addChild(new TraceYaxis({ options: { parent: this } }))
 
-    this.addChild(new TraceOrientation({ options: { parent: this } }))
+    this.addChild(
+      new BaseOrientation({
+        options: {
+          parent: this,
+          description: { type: 'string', value: '设置轨迹的显示方向。默认为 <code>v</code>。' }
+        }
+      })
+    )
 
     this.addChild(
       new TraceMarker(
