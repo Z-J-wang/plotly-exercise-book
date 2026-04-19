@@ -2,6 +2,7 @@ import { merge } from 'lodash'
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import ViolinLine from './violin.line'
+import { BaseColor, BaseVisible, BaseWidth } from 'dal/plotly.config/base'
 
 export default class ViolinBox extends Attribute {
   constructor(initializer: Attribute.Initializer) {
@@ -13,17 +14,17 @@ export default class ViolinBox extends Attribute {
     super(merge(defaultInitializer, initializer))
 
     this.addChild(new ViolinBoxWidth({ options: { parent: this } }))
-    this.addChild(new ViolinBoxVisible({ options: { parent: this } }))
+    this.addChild(
+      new BaseVisible({ options: { parent: this, description: { type: 'string', value: '是否显示内箱形图。' } } })
+    )
     this.addChild(new ViolinBoxFillcolor({ options: { parent: this } }))
     this.addChild(new ViolinLine({ options: { parent: this } }))
   }
 }
 
-export class ViolinBoxWidth extends Attribute {
+export class ViolinBoxWidth extends BaseWidth {
   constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
-      name: 'width',
-      type: 'number',
       options: {
         description: {
           type: 'string',
@@ -36,29 +37,11 @@ export class ViolinBoxWidth extends Attribute {
   }
 }
 
-export class ViolinBoxVisible extends Attribute {
-  constructor(initializer: Attribute.Initializer) {
-    const defaultInitializer = {
-      name: 'visible',
-      type: 'Boolean',
-      options: {
-        description: { type: 'string', value: '是否显示内箱形图。' },
-        controller: new AttributeController({ type: 'boolean', default: true })
-      }
-    }
-    super(merge(defaultInitializer, initializer))
-  }
-}
-
-export class ViolinBoxFillcolor extends Attribute {
+export class ViolinBoxFillcolor extends BaseColor {
   constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
       name: 'fillcolor',
-      type: 'Color',
-      options: {
-        description: { type: 'string', value: '设置内箱形图的填充颜色。' },
-        controller: new AttributeController({ type: 'color', default: null })
-      }
+      options: { description: { type: 'string', value: '设置内箱形图的填充颜色。' } }
     }
     super(merge(defaultInitializer, initializer))
   }

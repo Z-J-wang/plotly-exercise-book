@@ -1,7 +1,8 @@
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
-import { Font } from '../base'
 import { merge } from 'lodash'
+import { BaseFont } from '../base.font'
+import { BaseColor } from '../base'
 
 export default class TraceColoBar extends Attribute {
   constructor(initializer: Attribute.Initializer) {
@@ -48,7 +49,10 @@ export default class TraceColoBar extends Attribute {
     this.addChild(new TraceColorShowticklabels({ options: { parent: this } }))
     this.addChild(new TraceColorLabelalias({ options: { parent: this } }))
     this.addChild(
-      new Font('tickfont', 'Font', { parent: this, description: { type: 'string', value: '刻度标签的字体。' } })
+      new BaseFont({
+        name: 'tickfont',
+        options: { parent: this, description: { type: 'string', value: '刻度标签的字体。' } }
+      })
     )
     this.addChild(new TraceColorTickAngle({ options: { parent: this } }))
     this.addChild(new TraceColorTickFormat({ options: { parent: this } }))
@@ -63,11 +67,10 @@ export default class TraceColoBar extends Attribute {
   }
 }
 
-export class TraceColorbarBgcolor extends Attribute {
+export class TraceColorbarBgcolor extends BaseColor {
   constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
       name: 'bgcolor',
-      type: 'Color',
       options: {
         description: { type: 'string', value: '颜色条背景色' },
         controller: new AttributeController({ type: 'color', default: '#ffffff' })
@@ -313,11 +316,10 @@ export class TraceColorbarYPad extends Attribute {
   }
 }
 
-export class TraceColorOutlinecolor extends Attribute {
+export class TraceColorOutlinecolor extends BaseColor {
   constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
       name: 'outlinecolor',
-      type: 'Color',
       options: {
         description: { type: 'string', value: '颜色条的轮廓颜色。' },
         controller: new AttributeController({ type: 'color', default: '#444' })
@@ -341,11 +343,10 @@ export class TraceColorOutlinewidth extends Attribute {
   }
 }
 
-export class TraceColorBordercolor extends Attribute {
+export class TraceColorBordercolor extends BaseColor {
   constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
       name: 'bordercolor',
-      type: 'Color',
       options: {
         description: { type: 'string', value: '颜色条边框颜色' },
         controller: new AttributeController({ type: 'color', default: '#444' })
@@ -585,11 +586,10 @@ export class TraceColorTickwidth extends Attribute {
   }
 }
 
-export class TraceColorTickcolor extends Attribute {
+export class TraceColorTickcolor extends BaseColor {
   constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
       name: 'tickcolor',
-      type: 'Color',
       options: {
         description: { type: 'string', value: '刻度的颜色。' },
         controller: new AttributeController({ type: 'string', default: '#444' })
@@ -648,19 +648,6 @@ export class TraceColorLabelalias extends Attribute {
           disabled: true,
           value: { 10: 'Ten', 12: 'Twelve', 14: 'Fourteen', 16: 'Sixteen' }
         })
-      }
-    }
-    super(merge(defaultInitializer, initializer))
-  }
-}
-
-export class TraceColorTickfont extends Attribute {
-  constructor(initializer: Attribute.Initializer) {
-    const defaultInitializer = {
-      name: 'tickfont',
-      type: 'Font',
-      options: {
-        description: { type: 'string', value: '刻度标签的字体。' }
       }
     }
     super(merge(defaultInitializer, initializer))
@@ -871,7 +858,9 @@ export class TraceColorTitle extends Attribute {
       })
     )
 
-    this.addChild(new Font('font', 'Font', { parent: this, description: { type: 'string', value: '标题字体' } }))
+    this.addChild(
+      new BaseFont({ name: 'font', options: { parent: this, description: { type: 'string', value: '标题字体' } } })
+    )
 
     this.addChild(
       new Attribute({

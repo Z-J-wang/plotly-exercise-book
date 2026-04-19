@@ -2,6 +2,7 @@ import { merge } from 'lodash'
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import exampleData from '@/assets/data/violin.json'
+import { BaseWidth } from 'dal/plotly.config/base'
 
 export default class HeatmapData {
   constructor(parent: Attribute) {
@@ -143,11 +144,9 @@ export class ViolinY0 extends Attribute {
   }
 }
 
-export class ViolinWidth extends Attribute {
+export class ViolinWidth extends BaseWidth {
   constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
-      name: 'width',
-      type: 'number',
       options: {
         parent,
         description: { type: 'string', value: '设置小提琴的宽度。当设置为默认值时，将自动选择宽度。' },

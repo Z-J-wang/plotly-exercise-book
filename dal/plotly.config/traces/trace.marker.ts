@@ -5,6 +5,7 @@ import TraceMarkerColoBar from './trace.colorbar'
 import TraceMarkerGradient from './trace.marker.gradient'
 import TraceMarkerLine from './trace.marker.line'
 import { TraceAutocolorscale, TraceColorscale, TraceReversescale } from './trace.colorscale.about'
+import { BaseColor } from '../base'
 
 const markerSymbol = [
   'circle',
@@ -172,118 +173,182 @@ const markerSymbol = [
 ]
 
 export default class TraceMarker extends Attribute {
-  constructor(parent: Attribute, description?: Attribute.Description, initialConfig?: PlotlyConfig) {
-    super('marker', 'Marker', {
-      parent,
-      description: description || { type: 'string', value: '数据点样式设置。' },
-      initialConfig
-    })
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'marker',
+      type: 'Marker',
+      options: {
+        description: { type: 'string', value: '数据点样式设置。' }
+      }
+    }
+    super(merge(defaultInitializer, initializer))
 
-    this.addChild(
-      new Attribute(
-        'symbol',
-        { type: 'enum', value: markerSymbol },
-        {
-          parent: this,
-          description: {
-            type: 'string',
-            value:
-              '数据点形状。详见：<a href="https://plotly.com/javascript/reference/scatter/#scatter-marker-symbol" target="_blank">scatter-marker-symbol</a>'
-          },
-          controller: new AttributeController({ type: 'select', default: 'circle', options: markerSymbol })
-        }
-      )
-    )
+    this.addChild(new TraceMarkerSymbol({ options: { parent: this } }))
+    this.addChild(new TraceMarkerAngle({ options: { parent: this } }))
+    this.addChild(new TraceMarkerAngleref({ options: { parent: this } }))
+    this.addChild(new TraceMarkerSize({ options: { parent: this } }))
+    this.addChild(new TraceMarkerSizemin({ options: { parent: this } }))
+    this.addChild(new TraceMarkerSizemode({ options: { parent: this } }))
+    this.addChild(new TraceMarkerSizeref({ options: { parent: this } }))
+    this.addChild(new TraceMarkerColor({ options: { parent: this } }))
+    this.addChild(new TraceMarkerCauto({ options: { parent: this } }))
+    this.addChild(new TraceMarkerCmin({ options: { parent: this } }))
+    this.addChild(new TraceMarkerCmax({ options: { parent: this } }))
+    this.addChild(new TraceMarkerCmid({ options: { parent: this } }))
+    this.addChild(new TraceMarkerAutocolorscale({ options: { parent: this } }))
+    this.addChild(new TraceMarkerColorscale({ options: { parent: this } }))
+    this.addChild(new TraceMarkerReversescale({ options: { parent: this } }))
+    this.addChild(new TraceMarkerOpacity({ options: { parent: this } }))
+    this.addChild(new TraceMarkerMaxdisplayed({ options: { parent: this } }))
+    this.addChild(new TraceMarkerColorbar({ options: { parent: this } }))
+    this.addChild(new TraceMarkerGradient({ options: { parent: this } }))
+    this.addChild(new TraceMarkerLine({ options: { parent: this, initialConfig: initializer.options?.initialConfig } }))
+  }
+}
 
-    this.addChild(
-      new Attribute('angle', 'number', {
-        parent: this,
+export class TraceMarkerSymbol extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'symbol',
+      type: { type: 'enum', value: markerSymbol },
+      options: {
+        description: {
+          type: 'string',
+          value:
+            '数据点形状。详见：<a href="https://plotly.com/javascript/reference/scatter/#scatter-marker-symbol" target="_blank">scatter-marker-symbol</a>'
+        },
+        controller: new AttributeController({ type: 'select', default: 'circle', options: markerSymbol })
+      }
+    }
+    super(merge({}, defaultInitializer, initializer))
+  }
+}
+
+export class TraceMarkerAngle extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'angle',
+      type: 'number',
+      options: {
         description: { type: 'string', value: '设置数据点的旋转角度。' },
         controller: new AttributeController({ type: 'number', default: 0, min: -360, max: 360 })
-      })
-    )
+      }
+    }
+    super(merge({}, defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute(
-        'angleref',
-        { type: 'enum', value: ['previous', 'up'] },
-        {
-          parent: this,
-          description: {
-            type: 'string',
-            value:
-              '设置数据点旋转角度的参考系。值域：' +
-              '<ul>' +
-              '<li><code>up</code> - 默认值。相对于正上方旋转。</li>' +
-              '<li><code>previous</code> - 相对于上一点朝向旋转。</li>' +
-              '</ul>'
-          },
-          controller: new AttributeController({ type: 'select', default: 'up', options: ['previous', 'up'] })
-        }
-      )
-    )
+export class TraceMarkerAngleref extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'angleref',
+      type: { type: 'enum', value: ['previous', 'up'] },
+      options: {
+        description: {
+          type: 'string',
+          value:
+            '设置数据点旋转角度的参考系。值域：' +
+            '<ul>' +
+            '<li><code>up</code> - 默认值。相对于正上方旋转。</li>' +
+            '<li><code>previous</code> - 相对于上一点朝向旋转。</li>' +
+            '</ul>'
+        },
+        controller: new AttributeController({ type: 'select', default: 'up', options: ['previous', 'up'] })
+      }
+    }
+    super(merge({}, defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('size', 'number | number[]', {
-        parent: this,
+export class TraceMarkerSize extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'size',
+      type: 'number | number[]',
+      options: {
         description: {
           type: 'string',
           value: '数据点大小。可以是数组，数组长度为数据点数量，用于指定每个数据点的大小。'
         },
         controller: new AttributeController({ type: 'number', default: 6, min: 0 })
-      })
-    )
+      }
+    }
+    super(merge({}, defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('sizemin', 'number', {
-        parent: this,
+export class TraceMarkerSizemin extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'sizemin',
+      type: 'number',
+      options: {
         description: {
           type: 'string',
           value: '数据点最小大小。只有<code>marker.size</code>的值是数组时，此属性才有效。'
         },
-        controller: new AttributeController({ type: 'number', default: 0, min: 0 }),
-        initialConfig: initialConfig
-      })
-    )
+        controller: new AttributeController({ type: 'number', default: 0, min: 0 })
+      }
+    }
+    super(merge({}, defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('sizemode', 'enum', {
-        parent: this,
+export class TraceMarkerSizemode extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'sizemode',
+      type: 'enum',
+      options: {
         description: {
           type: 'string',
           value: '数据点大小模式。'
         },
-        controller: new AttributeController({ type: 'select', default: 'diameter', options: ['diameter', 'area'] }),
-        initialConfig: initialConfig
-      })
-    )
+        controller: new AttributeController({ type: 'select', default: 'diameter', options: ['diameter', 'area'] })
+      }
+    }
+    super(merge({}, defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('sizeref', 'number', {
-        parent: this,
+export class TraceMarkerSizeref extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'sizeref',
+      type: 'number',
+      options: {
         description: {
           type: 'string',
           value: '用于设置用于确定数据点渲染大小的比例因子。'
         },
-        controller: new AttributeController({ type: 'number', default: 1, min: 0 }),
-        initialConfig: initialConfig
-      })
-    )
+        controller: new AttributeController({ type: 'number', default: 1, min: 0 })
+      }
+    }
+    super(merge({}, defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('color', 'Color | Color[] | number[]', {
-        parent: this,
+export class TraceMarkerColor extends BaseColor {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      type: 'Color | Color[] | number[]',
+      options: {
         description: {
           type: 'string',
           value: '数据点颜色。可以是数组，数组长度为数据点数量，用于指定每个数据点的颜色。'
-        },
-        controller: new AttributeController({ type: 'color', default: null })
-      })
-    )
+        }
+      }
+    }
+    super(merge({}, defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('cauto', 'boolean', {
-        parent: this,
+export class TraceMarkerCauto extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'cauto',
+      type: 'boolean',
+      options: {
         description: {
           type: 'string',
           value:
@@ -292,100 +357,136 @@ export default class TraceMarker extends Attribute {
             '只有当 <code>marker.color</code> 被设置为数值数组时，此设置才有效。' +
             '当用户通过 <code>marker.cmin</code> 和 <code>marker.cmax</code> 进行设置时，默认值为 <code>false</code> 。'
         },
-        controller: new AttributeController({ type: 'boolean', default: true }),
-        initialConfig: merge({ data: [{ marker: { cmin: 15, cmax: 20 } }] }, initialConfig)
-      })
-    )
+        controller: new AttributeController({ type: 'boolean', default: true })
+      }
+    }
+    super(merge({}, defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('cmin', 'number', {
-        parent: this,
+export class TraceMarkerCmin extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'cmin',
+      type: 'number',
+      options: {
         description: {
           type: 'string',
           value:
             '数据点颜色最小值。只有当 <code>marker.color</code> 被设置为数值数组时，此设置才有效。需要与 <code>marker.cmax</code> 一起使用。'
         }
-      })
-    )
+      }
+    }
+    super(merge({}, defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('cmax', 'number', {
-        parent: this,
+export class TraceMarkerCmax extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'cmax',
+      type: 'number',
+      options: {
         description: {
           type: 'string',
           value:
             '数据点颜色最大值。只有当 <code>marker.color</code> 被设置为数值数组时，此设置才有效。需要与 <code>marker.cmin</code> 一起使用。'
         }
-      })
-    )
+      }
+    }
+    super(merge({}, defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new Attribute('cmid', 'number', {
-        parent: this,
+export class TraceMarkerCmid extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'cmid',
+      type: 'number',
+      options: {
         description: {
           type: 'string',
           value: '数据点颜色中间值。只有当 <code>marker.color</code> 被设置为数值数组时，此设置才有效。'
         }
-      })
-    )
+      }
+    }
+    super(merge({}, defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new TraceAutocolorscale({
-        options: {
-          parent: this,
-          description: {
-            type: 'string',
-            value:
-              '是否采用默认颜色标尺。只有当 <code>marker.color</code> 被设置为数值数组时，此设置才有效。' +
-              '值域：' +
-              '<ul>' +
-              '<li><code>true</code> - 启用默认颜色标尺</li>' +
-              '<li><code>false</code> - 使用<code>marker.colorscale</code>定义的颜色标尺</li>' +
-              '</ul>'
-          },
-          initialConfig: merge({ data: [{ marker: { colorscale: 'Hot' } }] }, initialConfig)
-        }
-      })
-    )
-
-    this.addChild(new TraceColorscale({ options: { parent: this, initialConfig: initialConfig } }))
-    this.addChild(new TraceReversescale({ options: { parent: this, initialConfig: initialConfig } }))
-
-    this.addChild(
-      new Attribute('opacity', 'number', {
-        parent: this,
-        description: { type: 'string', value: '数据点透明度。' },
-        controller: new AttributeController({ type: 'number', default: 1, min: 0, max: 1, step: 0.1 })
-      })
-    )
-
-    this.addChild(
-      new Attribute('maxdisplayed', 'number', {
-        parent: this,
+export class TraceMarkerAutocolorscale extends TraceAutocolorscale {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      options: {
         description: {
           type: 'string',
-          value: '设置图表中可以显示的最大数据点数。' + '如果设置为 <code>0</code>，则将所有数据点显示为散点图。'
+          value:
+            '是否采用默认颜色标尺。只有当 <code>marker.color</code> 被设置为数值数组时，此设置才有效。' +
+            '值域：' +
+            '<ul>' +
+            '<li><code>true</code> - 启用默认颜色标尺</li>' +
+            '<li><code>false</code> - 使用<code>marker.colorscale</code>定义的颜色标尺</li>' +
+            '</ul>'
+        }
+      }
+    }
+    super(merge({}, defaultInitializer, initializer))
+  }
+}
+
+export class TraceMarkerColorscale extends TraceColorscale {
+  constructor(initializer: Attribute.Initializer) {
+    super(initializer)
+  }
+}
+
+export class TraceMarkerReversescale extends TraceReversescale {
+  constructor(initializer: Attribute.Initializer) {
+    super(initializer)
+  }
+}
+
+export class TraceMarkerOpacity extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'opacity',
+      type: 'number',
+      options: {
+        description: { type: 'string', value: '数据点透明度。' },
+        controller: new AttributeController({ type: 'number', default: 1, min: 0, max: 1, step: 0.1 })
+      }
+    }
+    super(merge({}, defaultInitializer, initializer))
+  }
+}
+
+export class TraceMarkerMaxdisplayed extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'maxdisplayed',
+      type: 'number',
+      options: {
+        description: {
+          type: 'string',
+          value: '设置图表中可以显示的最大数据点数。如果设置为 <code>0</code>，则将所有数据点显示为散点图。'
         },
         controller: new AttributeController({ type: 'number', default: 0, min: 0 })
-      })
-    )
+      }
+    }
+    super(merge({}, defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(
-      new TraceMarkerColoBar({
-        options: {
-          parent: this,
-          description: {
-            type: 'string',
-            value:
-              '颜色条样式设置。因为颜色标尺在颜色条中显示，所以<code>marker.showscale</code>属性会影响颜色条的显示。'
-          },
-          initialConfig: initialConfig
+export class TraceMarkerColorbar extends TraceMarkerColoBar {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      options: {
+        description: {
+          type: 'string',
+          value: '颜色条样式设置。因为颜色标尺在颜色条中显示，所以<code>marker.showscale</code>属性会影响颜色条的显示。'
         }
-      })
-    )
-
-    this.addChild(new TraceMarkerGradient(this))
-
-    this.addChild(new TraceMarkerLine(this, undefined, [], initialConfig))
+      }
+    }
+    super(merge({}, defaultInitializer, initializer))
   }
 }

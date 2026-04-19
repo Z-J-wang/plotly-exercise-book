@@ -10,19 +10,18 @@ import {
   TraceYaxis,
   TraceSelectedPoints,
   TraceCliponaxis,
-  TraceOrientation,
   TraceTextAngle,
   TraceType
 } from '../trace.base'
 import TraceLegendAbout from '../trace.legend.about'
 import TraceData from '../trace.data'
 import AttributeController from 'entity/attribute.controller'
-import TraceText from '../trace.text'
+import TraceTextAbout from '../trace.text'
 import TraceHover from '../trace.hover'
 import TraceMarker from '../trace.marker'
 import TraceErrorBar from '../trace.error.bar'
 import TraceSelected from '../trace.selected'
-import { BaseUirevision } from '../../base'
+import { BaseOrientation, BaseUirevision, BaseWidth } from '../../base'
 import BarTextAnchor from './bar.text.anchor'
 
 export default class TraceBar extends Attribute {
@@ -39,16 +38,22 @@ export default class TraceBar extends Attribute {
       layout: { title: { text: 'The example of bar trace' } }
     }
 
-    super('bar', 'Bar', {
-      parent,
-      description: {
-        type: 'string',
-        value:
-          '<code>bar</code> 轨迹图，用于可用于绘制柱状图。<br />' +
-          '更多示例：<a href="https://plotly.com/javascript/bar-charts/" target="_blank">https://plotly.com/javascript/bar-charts/</a>'
-      },
-      initialConfig: baseInitialConfig
-    })
+    const initializer: Attribute.Initializer = {
+      name: 'bar',
+      type: 'Bar',
+      options: {
+        parent,
+        description: {
+          type: 'string',
+          value:
+            '<code>bar</code> 轨迹图，用于可用于绘制柱状图。<br />' +
+            '更多示例：<a href="https://plotly.com/javascript/bar-charts/" target="_blank">https://plotly.com/javascript/bar-charts/</a>'
+        },
+        initialConfig: baseInitialConfig
+      }
+    }
+
+    super(initializer)
 
     this.addChild(new TraceType({ options: { parent: this } }, 'bar'))
 
@@ -83,14 +88,16 @@ export default class TraceBar extends Attribute {
     )
 
     this.addChild(
-      new Attribute('width', 'number | number[]', {
-        parent: this,
-        description: { type: 'string', value: '设置柱状图宽度。如果其值为数字数组，则对每个柱状设置单独设置。' },
-        controller: new AttributeController({ type: 'number', default: null, min: 0, step: 0.1 })
+      new BaseWidth({
+        options: {
+          parent: this,
+          description: { type: 'string', value: '设置柱状图宽度。如果其值为数字数组，则对每个柱状设置单独设置。' },
+          controller: new AttributeController({ type: 'number', default: null, min: 0, step: 0.1 })
+        }
       })
     )
 
-    new TraceText(this)
+    new TraceTextAbout(this)
 
     this.addChild(
       new Attribute(
@@ -123,56 +130,71 @@ export default class TraceBar extends Attribute {
 
     this.addChild(new TraceYaxis({ options: { parent: this } }))
 
-    this.addChild(new TraceOrientation({ options: { parent: this } }))
-
     this.addChild(
-      new TraceMarker(
-        this,
-        { type: 'string', value: '柱状图柱子的样式设置。注意，部分属性可能不生效。' },
-        {
-          data: [
-            {
-              x: ['giraffes', 'orangutans', 'monkeys'],
-              y: [20, 14, 23],
-              text: ['A', 'B', 'C'],
-              type: 'bar',
-              marker: {
-                color: [10, 15, 30],
-                size: [10, 30, 20]
-              }
-            }
-          ]
+      new BaseOrientation({
+        options: {
+          parent: this,
+          description: { type: 'string', value: '设置轨迹的显示方向。默认为 <code>v</code>。' }
         }
-      )
-    )
-
-    this.addChild(
-      new TraceErrorBar('error_x', {
-        parent: this,
-        description: { type: 'string', value: '设置数据点的在水平方向上的误差条。' }
       })
     )
 
     this.addChild(
-      new TraceErrorBar('error_y', {
-        parent: this,
-        description: { type: 'string', value: '设置数据点的垂直方向上的误差条。' }
+      new TraceMarker({
+        options: {
+          parent: this,
+          description: { type: 'string', value: '柱状图柱子的样式设置。注意，部分属性可能不生效。' },
+          initialConfig: {
+            data: [
+              {
+                x: ['giraffes', 'orangutans', 'monkeys'],
+                y: [20, 14, 23],
+                text: ['A', 'B', 'C'],
+                type: 'bar',
+                marker: {
+                  color: [10, 15, 30],
+                  size: [10, 30, 20]
+                }
+              }
+            ]
+          }
+        }
+      })
+    )
+
+    this.addChild(
+      new TraceErrorBar({
+        name: 'error_x',
+        options: { parent: this, description: { type: 'string', value: '设置数据点的在水平方向上的误差条。' } }
+      })
+    )
+
+    this.addChild(
+      new TraceErrorBar({
+        name: 'error_y',
+        options: { parent: this, description: { type: 'string', value: '设置数据点的垂直方向上的误差条。' } }
       })
     )
 
     this.addChild(new TraceSelectedPoints({ options: { parent: this } }))
 
     this.addChild(
-      new TraceSelected('selected', {
-        parent: this,
-        description: { type: 'string', value: '设置数据点的选择样式。' }
+      new TraceSelected({
+        name: 'selected',
+        options: {
+          parent: this,
+          description: { type: 'string', value: '设置数据点的选择样式。' }
+        }
       })
     )
 
     this.addChild(
-      new TraceSelected('unselected', {
-        parent: this,
-        description: { type: 'string', value: '设置数据点的未选择样式。' }
+      new TraceSelected({
+        name: 'unselected',
+        options: {
+          parent: this,
+          description: { type: 'string', value: '设置数据点的未选择样式。' }
+        }
       })
     )
 
@@ -197,6 +219,6 @@ export default class TraceBar extends Attribute {
       )
     )
 
-    this.addChild(new BaseUirevision(this))
+    this.addChild(new BaseUirevision({ options: { parent: this } }))
   }
 }

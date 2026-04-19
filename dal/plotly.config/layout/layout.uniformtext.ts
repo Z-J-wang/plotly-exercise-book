@@ -1,26 +1,38 @@
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
+import { merge } from 'lodash'
 
 export default class LayoutUniformtext extends Attribute {
-  constructor(parent: Attribute | null) {
-    const description: Attribute.Description = {
-      type: 'string',
-      value: '<span class="font-bold">未试验出实际效果，需进一步核验！</span><br/>' + '设置轨迹的文本元素的统一样式。'
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'uniformtext',
+      type: 'Uniformtext',
+      options: {
+        description: {
+          type: 'string',
+          value:
+            '<span class="font-bold">未试验出实际效果，需进一步核验！</span><br/>' + '设置轨迹的文本元素的统一样式。'
+        }
+      }
     }
-    super('uniformtext', 'Uniformtext', { parent, description })
+    super(merge(defaultInitializer, initializer))
     this.addChild(
-      new Attribute('minsize', 'number', {
-        parent: this,
-        description: { type: 'string', value: '设置同一类型轨迹之间文本的最小尺寸，单位为<code>px</code>。' },
-        controller: new AttributeController({ type: 'number', default: 0, min: 0 })
+      new Attribute({
+        name: 'minsize',
+        type: 'number',
+        options: {
+          parent: this,
+          description: { type: 'string', value: '设置同一类型轨迹之间文本的最小尺寸，单位为<code>px</code>。' },
+          controller: new AttributeController({ type: 'number', default: 0, min: 0 })
+        }
       })
     )
 
     this.addChild(
-      new Attribute(
-        'mode',
-        { type: 'enum', value: [false, 'hide', 'show'] },
-        {
+      new Attribute({
+        name: 'mode',
+        type: { type: 'enum', value: [false, 'hide', 'show'] },
+        options: {
           parent: this,
           description: {
             type: 'string',
@@ -41,7 +53,7 @@ export default class LayoutUniformtext extends Attribute {
             options: [false, 'hide', 'show']
           })
         }
-      )
+      })
     )
   }
 }

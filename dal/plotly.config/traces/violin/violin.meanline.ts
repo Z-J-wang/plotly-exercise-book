@@ -1,6 +1,7 @@
 import { merge } from 'lodash'
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
+import { BaseColor, BaseVisible, BaseWidth } from 'dal/plotly.config/base'
 
 export default class ViolinMeanLine extends Attribute {
   constructor(initializer: Attribute.Initializer) {
@@ -19,51 +20,38 @@ export default class ViolinMeanLine extends Attribute {
   }
 }
 
-export class ViolinMeanlineVisible extends Attribute {
+export class ViolinMeanlineVisible extends BaseVisible {
   constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
-      name: 'visible',
-      type: 'boolean',
       options: {
         description: {
           type: 'string',
           value:
             '确定是否在箱形图中显示对应于样本均值的线条。如果“箱形图可见性”设置为开启状态，则均值线会绘制在内部箱形图内。否则，均值线会从箱形图的一侧延伸至另一侧。'
-        },
-        controller: new AttributeController({ type: 'boolean', default: true })
+        }
       }
     }
-    const mergedInitializer = merge(defaultInitializer, initializer)
-    super(mergedInitializer.name, mergedInitializer.type, mergedInitializer.options)
+    super(merge(defaultInitializer, initializer))
   }
 }
 
-export class ViolinMeanlineWidth extends Attribute {
+export class ViolinMeanlineWidth extends BaseWidth {
   constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
-      name: 'width',
-      type: 'number',
       options: {
         description: { type: 'string', value: '设置均值线宽度。' },
         controller: new AttributeController({ type: 'number', default: 2, min: 0 })
       }
     }
-    const mergedInitializer = merge(defaultInitializer, initializer)
-    super(mergedInitializer.name, mergedInitializer.type, mergedInitializer.options)
+    super(merge(defaultInitializer, initializer))
   }
 }
 
-export class ViolinMeanlineColor extends Attribute {
+export class ViolinMeanlineColor extends BaseColor {
   constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
-      name: 'color',
-      type: 'Color',
-      options: {
-        description: { type: 'string', value: '设置均值线颜色。' },
-        controller: new AttributeController({ type: 'color', default: null })
-      }
+      options: { description: { type: 'string', value: '设置均值线颜色。' } }
     }
-    const mergedInitializer = merge(defaultInitializer, initializer)
-    super(mergedInitializer.name, mergedInitializer.type, mergedInitializer.options)
+    super(merge(defaultInitializer, initializer))
   }
 }

@@ -5,24 +5,32 @@ import AttributeController from 'entity/attribute.controller'
 export default class LayoutBar {
   constructor(config: BaseConfig, parent: Attribute) {
     config.insertAttribute(
-      new Attribute('bargap', 'number', {
-        parent,
-        description: { type: 'string', value: '设置柱状图之间的间距。取值范围：<code>[0, 1]</code>。' }
+      new Attribute({
+        name: 'bargap',
+        type: 'number',
+        options: {
+          parent,
+          description: { type: 'string', value: '设置柱状图之间的间距。取值范围：<code>[0, 1]</code>。' }
+        }
       })
     )
 
     config.insertAttribute(
-      new Attribute('bargroupgap', 'number', {
-        parent,
-        description: { type: 'string', value: '设置柱状图组之间的间距。取值范围：<code>[0, 1]</code>。' }
+      new Attribute({
+        name: 'bargroupgap',
+        type: 'number',
+        options: {
+          parent,
+          description: { type: 'string', value: '设置柱状图组之间的间距。取值范围：<code>[0, 1]</code>。' }
+        }
       })
     )
 
     config.insertAttribute(
-      new Attribute(
-        'barmode',
-        { type: 'enum', value: ['stack', 'group', 'overlay', 'relative'] },
-        {
+      new Attribute({
+        name: 'barmode',
+        type: { type: 'enum', value: ['stack', 'group', 'overlay', 'relative'] },
+        options: {
           parent,
           description: {
             type: 'string',
@@ -48,14 +56,14 @@ export default class LayoutBar {
             ]
           }
         }
-      )
+      })
     )
 
     config.insertAttribute(
-      new Attribute(
-        'barnorm',
-        { type: 'enum', value: ['', 'fraction', 'percent'] },
-        {
+      new Attribute({
+        name: 'barnorm',
+        type: { type: 'enum', value: ["''", 'fraction', 'percent'] },
+        options: {
           parent,
           description: {
             type: 'string',
@@ -74,7 +82,7 @@ export default class LayoutBar {
           },
           controller: new AttributeController({
             type: 'select',
-            default: '',
+            default: "''",
             options: ['', 'fraction', 'percent']
           }),
           initialConfig: {
@@ -85,7 +93,7 @@ export default class LayoutBar {
             ]
           }
         }
-      )
+      })
     )
   }
 }

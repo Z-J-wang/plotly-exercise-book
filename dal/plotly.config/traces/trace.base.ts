@@ -2,6 +2,7 @@ import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import { defineAsyncComponent } from 'vue'
 import { merge } from 'lodash'
+import { BaseVisible } from '../base'
 
 export class TraceType extends Attribute {
   constructor(initializer: Attribute.Initializer, value: string = '') {
@@ -36,10 +37,9 @@ export class TraceName extends Attribute {
   }
 }
 
-export class TraceVisible extends Attribute {
+export class TraceVisible extends BaseVisible {
   constructor(initializer: Attribute.Initializer) {
     const defaultInitializer = {
-      name: 'visible',
       type: { type: 'enum', value: [true, false, 'legendonly'] },
       options: {
         description: { type: 'string', value: '设置轨迹是否可见。其中<code>legendonly</code>表示仅显示图例。' },
@@ -253,24 +253,6 @@ export class TraceHoveron extends Attribute {
           default: 'points+fills',
           options: ['points', 'fills', 'points+fills']
         })
-      }
-    }
-
-    super(merge(defaultInitializer, initializer))
-  }
-}
-
-export class TraceOrientation extends Attribute {
-  constructor(initializer: Attribute.Initializer) {
-    const defaultInitializer = {
-      name: 'orientation',
-      type: { type: 'enum', value: ['v', 'h'] },
-      options: {
-        description: {
-          type: 'string',
-          value: '设置轨迹的显示方向。默认为 <code>v</code>。'
-        },
-        controller: new AttributeController({ type: 'select', default: 'v', options: ['v', 'h'] })
       }
     }
 
