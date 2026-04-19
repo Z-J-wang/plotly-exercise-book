@@ -154,16 +154,22 @@ export default class TraceBar extends Attribute {
     this.addChild(new TraceSelectedPoints({ options: { parent: this } }))
 
     this.addChild(
-      new TraceSelected('selected', {
-        parent: this,
-        description: { type: 'string', value: '设置数据点的选择样式。' }
+      new TraceSelected({
+        name: 'selected',
+        options: {
+          parent: this,
+          description: { type: 'string', value: '设置数据点的选择样式。' }
+        }
       })
     )
 
     this.addChild(
-      new TraceSelected('unselected', {
-        parent: this,
-        description: { type: 'string', value: '设置数据点的未选择样式。' }
+      new TraceSelected({
+        name: 'unselected',
+        options: {
+          parent: this,
+          description: { type: 'string', value: '设置数据点的未选择样式。' }
+        }
       })
     )
 
@@ -297,7 +303,7 @@ export class ViolinSpanmode extends Attribute {
       type: { type: 'enum', value: ['hard', 'soft', 'manual'] },
       options: {
         description: {
-          type: 'markdown',
+          type: 'string',
           value: `
 设置用于计算密度函数的数据空间中的跨度的方法。
 + \`soft\`表示跨度范围是从样本的最小值减去两个带宽到样本的最大值加上两个带宽。

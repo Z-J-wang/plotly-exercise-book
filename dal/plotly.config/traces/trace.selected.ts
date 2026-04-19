@@ -1,59 +1,98 @@
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import { BaseColor } from '../base'
+import { merge } from 'lodash'
 
 export default class TraceSelected extends Attribute {
-  constructor(name: string, options?: Attribute.Options) {
-    super(name, 'Selected', options)
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = { type: 'Selected' }
+    super(merge({}, defaultInitializer, initializer))
 
-    const marker = new Attribute('marker', 'object', {
-      parent: this,
-      description: { type: 'string', value: '数据点样式。' }
-    })
+    this.addChild(new TraceSelectedMarker({ options: { parent: this } }))
+    this.addChild(new TraceSelectedTextfont({ options: { parent: this } }))
+  }
+}
 
-    marker.addChild(
-      new Attribute('size', 'number', {
-        parent: marker,
+export class TraceSelectedMarker extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'marker',
+      type: 'object',
+      options: {
+        description: { type: 'string', value: '数据点样式。' }
+      }
+    }
+    super(merge({}, defaultInitializer, initializer))
+
+    this.addChild(new TraceSelectedMarkerSize({ options: { parent: this } }))
+    this.addChild(new TraceSelectedMarkerColor({ options: { parent: this } }))
+    this.addChild(new TraceSelectedMarkerOpacity({ options: { parent: this } }))
+  }
+}
+
+export class TraceSelectedMarkerSize extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'size',
+      type: 'number',
+      options: {
         description: { type: 'string', value: '数据点大小。' },
         controller: new AttributeController({ type: 'number', default: 6, min: 0 })
-      })
-    )
+      }
+    }
+    super(merge({}, defaultInitializer, initializer))
+  }
+}
 
-    marker.addChild(
-      new BaseColor({
-        options: {
-          parent: marker,
-          description: { type: 'string', value: '数据点颜色。' },
-          controller: new AttributeController({ type: 'color', default: null })
-        }
-      })
-    )
+export class TraceSelectedMarkerColor extends BaseColor {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      options: {
+        description: { type: 'string', value: '数据点颜色。' },
+        controller: new AttributeController({ type: 'color', default: null })
+      }
+    }
+    super(merge({}, defaultInitializer, initializer))
+  }
+}
 
-    marker.addChild(
-      new Attribute('opacity', 'number', {
-        parent: marker,
+export class TraceSelectedMarkerOpacity extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'opacity',
+      type: 'number',
+      options: {
         description: { type: 'string', value: '数据点透明度。' },
         controller: new AttributeController({ type: 'number', default: 1, min: 0, max: 1, step: 0.1 })
-      })
-    )
+      }
+    }
+    super(merge({}, defaultInitializer, initializer))
+  }
+}
 
-    this.addChild(marker)
+export class TraceSelectedTextfont extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'textfont',
+      type: 'TextFont',
+      options: {
+        description: { type: 'string', value: '文本字体。' }
+      }
+    }
+    super(merge({}, defaultInitializer, initializer))
 
-    const textfont = new Attribute('textfont', 'TextFont', {
-      parent: this,
-      description: { type: 'string', value: '文本字体。' }
-    })
+    this.addChild(new TraceSelectedTextfontColor({ options: { parent: this } }))
+  }
+}
 
-    textfont.addChild(
-      new BaseColor({
-        options: {
-          parent: textfont,
-          description: { type: 'string', value: '数据点颜色。' },
-          controller: new AttributeController({ type: 'color', default: null })
-        }
-      })
-    )
-
-    this.addChild(textfont)
+export class TraceSelectedTextfontColor extends BaseColor {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      options: {
+        description: { type: 'string', value: '数据点颜色。' },
+        controller: new AttributeController({ type: 'color', default: null })
+      }
+    }
+    super(merge({}, defaultInitializer, initializer))
   }
 }
