@@ -21,7 +21,7 @@ import TraceHover from '../trace.hover'
 import TraceMarker from '../trace.marker'
 import TraceErrorBar from '../trace.error.bar'
 import TraceSelected from '../trace.selected'
-import { BaseOrientation, BaseUirevision } from '../../base'
+import { BaseOrientation, BaseUirevision, BaseWidth } from '../../base'
 import BarTextAnchor from './bar.text.anchor'
 
 export default class TraceBar extends Attribute {
@@ -82,10 +82,12 @@ export default class TraceBar extends Attribute {
     )
 
     this.addChild(
-      new Attribute('width', 'number | number[]', {
-        parent: this,
-        description: { type: 'string', value: '设置柱状图宽度。如果其值为数字数组，则对每个柱状设置单独设置。' },
-        controller: new AttributeController({ type: 'number', default: null, min: 0, step: 0.1 })
+      new BaseWidth({
+        options: {
+          parent: this,
+          description: { type: 'string', value: '设置柱状图宽度。如果其值为数字数组，则对每个柱状设置单独设置。' },
+          controller: new AttributeController({ type: 'number', default: null, min: 0, step: 0.1 })
+        }
       })
     )
 

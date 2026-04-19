@@ -2,6 +2,7 @@ import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import { TraceAutocolorscale, TraceColorscale, TraceReversescale } from './trace.colorscale.about'
 import { merge } from 'lodash'
+import { BaseWidth } from '../base'
 
 export default class TraceMarkerLine extends Attribute {
   constructor(
@@ -25,10 +26,12 @@ export default class TraceMarkerLine extends Attribute {
 
     !omitChildren.includes('width') &&
       this.addChild(
-        new Attribute('width', 'number | number[]', {
-          parent: this,
-          description: { type: 'string', value: '设置数据点的边框宽度。' },
-          controller: new AttributeController({ type: 'number', default: null, min: 0 })
+        new BaseWidth({
+          options: {
+            parent: this,
+            description: { type: 'string', value: '设置数据点的边框宽度。' },
+            controller: new AttributeController({ type: 'number', default: null, min: 0 })
+          }
         })
       )
 

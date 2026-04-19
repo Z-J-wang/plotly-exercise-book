@@ -1,6 +1,7 @@
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import { merge } from 'lodash'
+import { BaseWidth, BaseHeight } from '../base'
 
 export default class ConfigureImageOptions extends Attribute {
   constructor(initializer: Attribute.Initializer) {
@@ -52,9 +53,7 @@ export default class ConfigureImageOptions extends Attribute {
     )
 
     this.addChild(
-      new Attribute({
-        name: 'width',
-        type: 'number',
+      new BaseWidth({
         options: {
           parent: this,
           description: { type: 'string', value: '图片宽度。默认宽度为，图片渲染宽度。' },
@@ -64,9 +63,7 @@ export default class ConfigureImageOptions extends Attribute {
     )
 
     this.addChild(
-      new Attribute({
-        name: 'height',
-        type: 'number',
+      new BaseHeight({
         options: {
           parent: this,
           description: { type: 'string', value: '图片高度。默认高度为，图片渲染高度。' },
