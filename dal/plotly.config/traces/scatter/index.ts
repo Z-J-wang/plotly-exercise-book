@@ -26,6 +26,7 @@ import TraceErrorBar from '../trace.error.bar'
 import TraceSelected from '../trace.selected'
 import { TraceFillAssemble } from '../trace.fill'
 import { BaseUirevision } from '../../base'
+import { merge } from 'lodash'
 
 export default class TraceScatter extends Attribute {
   constructor(parent: Attribute) {
@@ -45,16 +46,22 @@ export default class TraceScatter extends Attribute {
       layout: { title: { text: 'The example of scatter trace' } }
     }
 
-    super('scatter', 'Scatter', {
-      parent,
-      description: {
-        type: 'string',
-        value:
-          '<code>scatter</code> 轨迹图，用于可用于绘制散点图或者折线图。<br />' +
-          '更多示例：<a href="https://plotly.com/javascript/line-and-scatter/" target="_blank">https://plotly.com/javascript/line-and-scatter/</a>'
-      },
-      initialConfig: baseInitialConfig
-    })
+    const initializer: Attribute.Initializer = {
+      name: 'scatter',
+      type: 'Scatter',
+      options: {
+        parent,
+        description: {
+          type: 'string',
+          value:
+            '<code>scatter</code> 轨迹图，用于可用于绘制散点图或者折线图。<br />' +
+            '更多示例：<a href="https://plotly.com/javascript/line-and-scatter/" target="_blank">https://plotly.com/javascript/line-and-scatter/</a>'
+        },
+        initialConfig: baseInitialConfig
+      }
+    }
+
+    super(initializer)
 
     this.addChild(new TraceType({ options: { parent: this } }, 'scatter'))
 
@@ -70,43 +77,7 @@ export default class TraceScatter extends Attribute {
 
     new TraceLegendAbout(this)
 
-    this.addChild(
-      new Attribute(
-        'mode',
-        {
-          type: 'enum',
-          value: [
-            'lines',
-            'markers',
-            'text',
-            'lines+markers',
-            'text+markers',
-            'text+lines',
-            'text+lines+markers',
-            'none'
-          ]
-        },
-        {
-          parent: this,
-          description: { type: 'string', value: '设置轨迹模式。' },
-          controller: new AttributeController({
-            type: 'select',
-            default: null,
-            value: 'lines+markers',
-            options: [
-              'lines',
-              'markers',
-              'text',
-              'lines+markers',
-              'text+markers',
-              'text+lines',
-              'text+lines+markers',
-              'none'
-            ]
-          })
-        }
-      )
-    )
+    this.addChild(new TraceScatterMode({ options: { parent: this } }))
 
     this.addChild(new TraceIds({ options: { parent: this } }))
 
@@ -118,40 +89,7 @@ export default class TraceScatter extends Attribute {
 
     new TraceTextAbout(this)
 
-    const textpositionOptions = [
-      'top left',
-      'top center',
-      'top right',
-      'middle left',
-      'middle center',
-      'middle right',
-      'bottom left',
-      'bottom center',
-      'bottom right',
-      'inside',
-      'outside',
-      'auto',
-      'none'
-    ]
-
-    this.addChild(
-      new Attribute(
-        'textposition',
-        {
-          type: 'enum',
-          value: textpositionOptions
-        },
-        {
-          parent: this,
-          description: { type: 'string', value: '文本模式下，设置文本相对于数据点的位置。' },
-          controller: new AttributeController({
-            type: 'select',
-            default: 'middle center',
-            options: textpositionOptions
-          })
-        }
-      )
-    )
+    this.addChild(new TraceScatterTextposition({ options: { parent: this } }))
 
     new TraceHover(this)
 
@@ -204,7 +142,7 @@ export default class TraceScatter extends Attribute {
       })
     )
 
-    this.addChild(new ScatterLine(this))
+    this.addChild(new ScatterLine({ options: { parent: this } }))
 
     this.addChild(
       new TraceErrorBar({
@@ -251,5 +189,75 @@ export default class TraceScatter extends Attribute {
     this.addChild(new TraceHoveron({ options: { parent: this } }))
 
     this.addChild(new BaseUirevision({ options: { parent: this } }))
+  }
+}
+
+// ==================== 提取的子属性类 ====================
+
+export class TraceScatterMode extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'mode',
+      type: {
+        type: 'enum',
+        value: ['lines', 'markers', 'text', 'lines+markers', 'text+markers', 'text+lines', 'text+lines+markers', 'none']
+      },
+      options: {
+        description: { type: 'string', value: '设置轨迹模式。' },
+        controller: new AttributeController({
+          type: 'select',
+          default: null,
+          value: 'lines+markers',
+          options: [
+            'lines',
+            'markers',
+            'text',
+            'lines+markers',
+            'text+markers',
+            'text+lines',
+            'text+lines+markers',
+            'none'
+          ]
+        })
+      }
+    }
+    super(merge({}, defaultInitializer, initializer))
+  }
+}
+
+export class TraceScatterTextposition extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const textpositionOptions = [
+      'top left',
+      'top center',
+      'top right',
+      'middle left',
+      'middle center',
+      'middle right',
+      'bottom left',
+      'bottom center',
+      'bottom right',
+      'inside',
+      'outside',
+      'auto',
+      'none'
+    ]
+
+    const defaultInitializer = {
+      name: 'textposition',
+      type: {
+        type: 'enum',
+        value: textpositionOptions
+      },
+      options: {
+        description: { type: 'string', value: '文本模式下，设置文本相对于数据点的位置。' },
+        controller: new AttributeController({
+          type: 'select',
+          default: 'middle center',
+          options: textpositionOptions
+        })
+      }
+    }
+    super(merge({}, defaultInitializer, initializer))
   }
 }

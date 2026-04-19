@@ -38,16 +38,22 @@ export default class TraceBar extends Attribute {
       layout: { title: { text: 'The example of bar trace' } }
     }
 
-    super('bar', 'Bar', {
-      parent,
-      description: {
-        type: 'string',
-        value:
-          '<code>bar</code> 轨迹图，用于可用于绘制柱状图。<br />' +
-          '更多示例：<a href="https://plotly.com/javascript/bar-charts/" target="_blank">https://plotly.com/javascript/bar-charts/</a>'
-      },
-      initialConfig: baseInitialConfig
-    })
+    const initializer: Attribute.Initializer = {
+      name: 'bar',
+      type: 'Bar',
+      options: {
+        parent,
+        description: {
+          type: 'string',
+          value:
+            '<code>bar</code> 轨迹图，用于可用于绘制柱状图。<br />' +
+            '更多示例：<a href="https://plotly.com/javascript/bar-charts/" target="_blank">https://plotly.com/javascript/bar-charts/</a>'
+        },
+        initialConfig: baseInitialConfig
+      }
+    }
+
+    super(initializer)
 
     this.addChild(new TraceType({ options: { parent: this } }, 'bar'))
 
