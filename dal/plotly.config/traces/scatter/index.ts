@@ -183,19 +183,24 @@ export default class TraceScatter extends Attribute {
     })
 
     this.addChild(
-      new TraceMarker(this, undefined, {
-        data: [
-          {
-            x: [1, 2, 3, 4],
-            y: [10, 15, 13, 17],
-            mode: 'markers',
-            type: 'scatter',
-            marker: {
-              color: [10, 15, 13, 17],
-              size: [10, 30, 20, 40]
-            }
+      new TraceMarker({
+        options: {
+          parent: this,
+          initialConfig: {
+            data: [
+              {
+                x: [1, 2, 3, 4],
+                y: [10, 15, 13, 17],
+                mode: 'markers',
+                type: 'scatter',
+                marker: {
+                  color: [10, 15, 13, 17],
+                  size: [10, 30, 20, 40]
+                }
+              }
+            ]
           }
-        ]
+        }
       })
     )
 

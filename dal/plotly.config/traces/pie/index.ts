@@ -156,7 +156,7 @@ export default class TracePie extends Attribute {
 
     new PieHover(this)
 
-    new TraceMarker(this)
+    new TraceMarker({ options: { parent: this } })
 
     this.addChild(new PieMarker(this))
 

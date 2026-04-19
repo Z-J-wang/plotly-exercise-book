@@ -134,24 +134,26 @@ export default class TraceBar extends Attribute {
     )
 
     this.addChild(
-      new TraceMarker(
-        this,
-        { type: 'string', value: '柱状图柱子的样式设置。注意，部分属性可能不生效。' },
-        {
-          data: [
-            {
-              x: ['giraffes', 'orangutans', 'monkeys'],
-              y: [20, 14, 23],
-              text: ['A', 'B', 'C'],
-              type: 'bar',
-              marker: {
-                color: [10, 15, 30],
-                size: [10, 30, 20]
+      new TraceMarker({
+        options: {
+          parent: this,
+          description: { type: 'string', value: '柱状图柱子的样式设置。注意，部分属性可能不生效。' },
+          initialConfig: {
+            data: [
+              {
+                x: ['giraffes', 'orangutans', 'monkeys'],
+                y: [20, 14, 23],
+                text: ['A', 'B', 'C'],
+                type: 'bar',
+                marker: {
+                  color: [10, 15, 30],
+                  size: [10, 30, 20]
+                }
               }
-            }
-          ]
+            ]
+          }
         }
-      )
+      })
     )
 
     this.addChild(
