@@ -18,6 +18,7 @@ import PieMarker from './pie.marker'
 import PieDomain from './pie.domain'
 import { BaseUirevision } from '../../base'
 import { BaseFont } from 'dal/plotly.config/base.font'
+import { merge } from 'lodash'
 
 export default class TracePie extends Attribute {
   constructor(parent: Attribute) {
@@ -33,15 +34,19 @@ export default class TracePie extends Attribute {
       layout: { title: { text: '饼图示例' } }
     }
 
-    super('pie', 'Pie', {
-      parent,
-      description: {
-        type: 'string',
-        value:
-          '<code>pie</code> 轨迹图，用于绘制饼图。<br />' +
-          '更多示例：<a href="https://plotly.com/javascript/piepie-charts/" target="_blank">https://plotly.com/javascript/piepie-charts/</a>'
-      },
-      initialConfig: baseInitialConfig
+    super({
+      name: 'pie',
+      type: 'Pie',
+      options: {
+        parent,
+        description: {
+          type: 'string',
+          value:
+            '<code>pie</code> 轨迹图，用于绘制饼图。<br />' +
+            '更多示例：<a href="https://plotly.com/javascript/piepie-charts/" target="_blank">https://plotly.com/javascript/piepie-charts/</a>'
+        },
+        initialConfig: baseInitialConfig
+      }
     })
 
     this.addChild(new TraceType({ options: { parent: this } }, 'pie'))
@@ -62,63 +67,84 @@ export default class TracePie extends Attribute {
     this.addChild(new TraceOpacity({ options: { parent: this } }))
 
     this.addChild(
-      new Attribute('values', 'Array', {
-        parent: this,
-        description: { type: 'string', value: '设置饼图的数据值。' }
-      })
-    )
-
-    this.addChild(
-      new Attribute('labels', 'Array', {
-        parent: this,
-        description: {
-          type: 'string',
-          value: '设置饼图的标签。如果存在重复的标签，则它们将自动合并。如果标签不存在对应的值，则统计标签出现的次数。'
+      new Attribute({
+        name: 'values',
+        type: 'Array',
+        options: {
+          parent: this,
+          description: { type: 'string', value: '设置饼图的数据值。' }
         }
       })
     )
 
     this.addChild(
-      new Attribute('label0', 'number', {
-        parent: this,
-        description: {
-          type: 'string',
-          value: '设置饼图的标签起始值。与<code>dlabel</code>一起使用。用于替代<code>labels</code>。'
-        },
-        controller: new AttributeController({ default: 0 })
+      new Attribute({
+        name: 'labels',
+        type: 'Array',
+        options: {
+          parent: this,
+          description: {
+            type: 'string',
+            value:
+              '设置饼图的标签。如果存在重复的标签，则它们将自动合并。如果标签不存在对应的值，则统计标签出现的次数。'
+          }
+        }
       })
     )
 
     this.addChild(
-      new Attribute('dlabel', 'number', {
-        parent: this,
-        description: {
-          type: 'string',
-          value: '设置饼图的标签跨度。与<code>label0</code>一起使用。用于替代<code>labels</code>。'
-        },
-        controller: new AttributeController({ default: 1 })
+      new Attribute({
+        name: 'label0',
+        type: 'number',
+        options: {
+          parent: this,
+          description: {
+            type: 'string',
+            value: '设置饼图的标签起始值。与<code>dlabel</code>一起使用。用于替代<code>labels</code>。'
+          },
+          controller: new AttributeController({ default: 0 })
+        }
       })
     )
 
     this.addChild(
-      new Attribute('pull', 'number', {
-        parent: this,
-        description: {
-          type: 'string',
-          value:
-            '设置从中心向外拉伸扇形区域时较大半径的比例。这可以是一个常量，用于将所有扇形均匀地相互拉开；也可以是一个数组，用于突出显示一个或多个扇形。'
-        },
-        controller: new AttributeController({ type: 'number', default: 0, step: 0.1, min: 0, max: 1 })
+      new Attribute({
+        name: 'dlabel',
+        type: 'number',
+        options: {
+          parent: this,
+          description: {
+            type: 'string',
+            value: '设置饼图的标签跨度。与<code>label0</code>一起使用。用于替代<code>labels</code>。'
+          },
+          controller: new AttributeController({ default: 1 })
+        }
+      })
+    )
+
+    this.addChild(
+      new Attribute({
+        name: 'pull',
+        type: 'number',
+        options: {
+          parent: this,
+          description: {
+            type: 'string',
+            value:
+              '设置从中心向外拉伸扇形区域时较大半径的比例。这可以是一个常量，用于将所有扇形均匀地相互拉开；也可以是一个数组，用于突出显示一个或多个扇形。'
+          },
+          controller: new AttributeController({ type: 'number', default: 0, step: 0.1, min: 0, max: 1 })
+        }
       })
     )
 
     new TraceTextAbout(this)
 
     this.addChild(
-      new Attribute(
-        'textposition',
-        { type: 'enum', value: ['inside', 'outside', 'auto', 'none'] },
-        {
+      new Attribute({
+        name: 'textposition',
+        type: { type: 'enum', value: ['inside', 'outside', 'auto', 'none'] },
+        options: {
           parent: this,
           description: { type: 'string', value: '设置文本的显示位置。' },
           controller: new AttributeController({
@@ -127,7 +153,7 @@ export default class TracePie extends Attribute {
             options: ['inside', 'outside', 'auto', 'none']
           })
         }
-      )
+      })
     )
 
     const textinfoOptions = [
@@ -143,15 +169,15 @@ export default class TracePie extends Attribute {
     ]
 
     this.addChild(
-      new Attribute(
-        'textinfo',
-        { type: 'enum', value: textinfoOptions },
-        {
+      new Attribute({
+        name: 'textinfo',
+        type: { type: 'enum', value: textinfoOptions },
+        options: {
           parent: this,
           description: { type: 'string', value: '设置文本显示信息。' },
           controller: new AttributeController({ type: 'select', default: null, options: textinfoOptions })
         }
-      )
+      })
     )
 
     new PieHover(this)
@@ -169,10 +195,10 @@ export default class TracePie extends Attribute {
     this.addChild(new TraceAutoMargin({ options: { parent: this } }))
 
     this.addChild(
-      new Attribute(
-        'direction',
-        { type: 'enum', value: ['clockwise', 'counterclockwise'] },
-        {
+      new Attribute({
+        name: 'direction',
+        type: { type: 'enum', value: ['clockwise', 'counterclockwise'] },
+        options: {
           parent: this,
           description: { type: 'string', value: '设置饼图的方向。' },
           controller: new AttributeController({
@@ -181,17 +207,21 @@ export default class TracePie extends Attribute {
             options: ['clockwise', 'counterclockwise']
           })
         }
-      )
+      })
     )
 
     this.addChild(
-      new Attribute('hole', 'number', {
-        parent: this,
-        description: {
-          type: 'string',
-          value: '设置饼图的内环半径大小。'
-        },
-        controller: new AttributeController({ type: 'number', default: 0, min: 0, max: 1, step: 0.1 })
+      new Attribute({
+        name: 'hole',
+        type: 'number',
+        options: {
+          parent: this,
+          description: {
+            type: 'string',
+            value: '设置饼图的内环半径大小。'
+          },
+          controller: new AttributeController({ type: 'number', default: 0, min: 0, max: 1, step: 0.1 })
+        }
       })
     )
 
@@ -209,10 +239,10 @@ export default class TracePie extends Attribute {
     )
 
     this.addChild(
-      new Attribute(
-        'insidetextorientation',
-        { type: 'enum', value: ['horizontal', 'radial', 'tangential', 'auto'] },
-        {
+      new Attribute({
+        name: 'insidetextorientation',
+        type: { type: 'enum', value: ['horizontal', 'radial', 'tangential', 'auto'] },
+        options: {
           parent: this,
           description: { type: 'string', value: '设置扇形内部文字的显示方向。' },
           controller: new AttributeController({
@@ -221,7 +251,7 @@ export default class TracePie extends Attribute {
             options: ['horizontal', 'radial', 'tangential', 'auto']
           })
         }
-      )
+      })
     )
 
     this.addChild(
@@ -238,58 +268,70 @@ export default class TracePie extends Attribute {
     )
 
     this.addChild(
-      new Attribute('rotation', 'number', {
-        parent: this,
-        description: {
-          type: 'string',
-          value: '默认情况下，第一个扇形在12点钟方向开始绘制。通过此属性可以将扇形旋转。'
-        },
-        controller: new AttributeController({ type: 'number', default: 0 })
+      new Attribute({
+        name: 'rotation',
+        type: 'number',
+        options: {
+          parent: this,
+          description: {
+            type: 'string',
+            value: '默认情况下，第一个扇形在12点钟方向开始绘制。通过此属性可以将扇形旋转。'
+          },
+          controller: new AttributeController({ type: 'number', default: 0 })
+        }
       })
     )
 
     this.addChild(
-      new Attribute('scalegroup', 'string', {
-        parent: this,
-        description: {
-          type: 'string',
-          value:
-            '如果你想根据饼图的数据总和大小来调整饼图的大小，请将各个饼图的<code>scalegroup</code>属性设置为相同的值。'
-        },
-        controller: new AttributeController({ type: 'select', default: '', options: ['', 'one'] }),
-        initialConfig: {
-          data: [
-            {
-              values: [10, 20, 30],
-              text: ['Residential', 'Non-Residential', 'Utility'],
-              scalegroup: '',
-              type: 'pie',
-              domain: { column: 0 }
-            },
-            {
-              values: [200, 100, 300],
-              text: ['Residential', 'Non-Residential', 'Utility'],
-              scalegroup: 'one',
-              type: 'pie',
-              domain: { column: 1 }
+      new Attribute({
+        name: 'scalegroup',
+        type: 'string',
+        options: {
+          parent: this,
+          description: {
+            type: 'string',
+            value:
+              '如果你想根据饼图的数据总和大小来调整饼图的大小，请将各个饼图的<code>scalegroup</code>属性设置为相同的值。'
+          },
+          controller: new AttributeController({ type: 'select', default: '', options: ['', 'one'] }),
+          initialConfig: {
+            data: [
+              {
+                values: [10, 20, 30],
+                text: ['Residential', 'Non-Residential', 'Utility'],
+                scalegroup: '',
+                type: 'pie',
+                domain: { column: 0 }
+              },
+              {
+                values: [200, 100, 300],
+                text: ['Residential', 'Non-Residential', 'Utility'],
+                scalegroup: 'one',
+                type: 'pie',
+                domain: { column: 1 }
+              }
+            ],
+            layout: {
+              title: { text: '请尝试更改第一个饼图的scalegroup属性观察变化效果。' },
+              grid: { rows: 1, columns: 2 }
             }
-          ],
-          layout: {
-            title: { text: '请尝试更改第一个饼图的scalegroup属性观察变化效果。' },
-            grid: { rows: 1, columns: 2 }
           }
         }
       })
     )
 
     this.addChild(
-      new Attribute('sort', 'boolean', {
-        parent: this,
-        description: {
-          type: 'string',
-          value: '设置扇形是否根据数据大小进行排序。'
-        },
-        controller: new AttributeController({ type: 'boolean', default: true })
+      new Attribute({
+        name: 'sort',
+        type: 'boolean',
+        options: {
+          parent: this,
+          description: {
+            type: 'string',
+            value: '设置扇形是否根据数据大小进行排序。'
+          },
+          controller: new AttributeController({ type: 'boolean', default: true })
+        }
       })
     )
 

@@ -269,7 +269,6 @@ export class BoxMarkerLine extends Attribute {
       name: 'line',
       type: 'BoxMarkerLine',
       options: {
-        parent,
         description: { type: 'string', value: '设置数据点的边框样式。' }
       }
     }

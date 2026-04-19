@@ -1,12 +1,23 @@
 import Attribute from 'entity/attribute'
 import AttributeController from 'entity/attribute.controller'
 import BaseHoverLabel from 'dal/plotly.config/base.hover.label'
+import { merge } from 'lodash'
 
 export default class PieHover {
   constructor(parent: Attribute) {
-    parent.addChild(
-      new Attribute('hovertext', 'string | string[]', {
-        parent,
+    parent.addChild(new PieHoverText({ options: { parent } }))
+    parent.addChild(new PieHoverInfo({ options: { parent } }))
+    parent.addChild(new PieHoverTemplate({ options: { parent } }))
+    parent.addChild(new BaseHoverLabel({ options: { parent } }))
+  }
+}
+
+export class PieHoverText extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'hovertext',
+      type: 'string | string[]',
+      options: {
         description: {
           type: 'string',
           value:
@@ -15,9 +26,14 @@ export default class PieHover {
             '如果是字符串数组，则为每个数据点单独定义的文本。<br />' +
             '未定义<code>hovertext</code>时，<code>text</code>属性声明的数据点文本充当数据点的悬浮文本。'
         }
-      })
-    )
+      }
+    }
+    super(merge({}, defaultInitializer, initializer))
+  }
+}
 
+export class PieHoverInfo extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
     const hoverinfoOptions = [
       'all',
       'none',
@@ -42,31 +58,31 @@ export default class PieHover {
       'percent+name'
     ]
 
-    parent.addChild(
-      new Attribute(
-        'hoverinfo',
-        {
-          type: 'enum',
-          value: hoverinfoOptions
+    const defaultInitializer = {
+      name: 'hoverinfo',
+      type: { type: 'enum', value: hoverinfoOptions },
+      options: {
+        description: {
+          type: 'string',
+          value: '设置鼠标悬浮时，悬浮弹窗需要显示的信息。<br />'
         },
-        {
-          parent,
-          description: {
-            type: 'string',
-            value: '设置鼠标悬浮时，悬浮弹窗需要显示的信息。<br />'
-          },
-          controller: new AttributeController({
-            type: 'select',
-            default: 'all',
-            options: hoverinfoOptions
-          })
-        }
-      )
-    )
+        controller: new AttributeController({
+          type: 'select',
+          default: 'all',
+          options: hoverinfoOptions
+        })
+      }
+    }
+    super(merge({}, defaultInitializer, initializer))
+  }
+}
 
-    parent.addChild(
-      new Attribute('hovertemplate', 'string', {
-        parent,
+export class PieHoverTemplate extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'hovertemplate',
+      type: 'string',
+      options: {
         description: {
           type: 'string',
           value:
@@ -81,9 +97,8 @@ export default class PieHover {
             '</ul>'
         },
         controller: new AttributeController({ type: 'string', default: null })
-      })
-    )
-
-    parent.addChild(new BaseHoverLabel({ options: { parent } }))
+      }
+    }
+    super(merge({}, defaultInitializer, initializer))
   }
 }
