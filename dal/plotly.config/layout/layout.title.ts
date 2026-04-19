@@ -2,21 +2,32 @@ import Attribute from 'entity/attribute'
 import { BaseText, Pad } from '../base'
 import AttributeController from 'entity/attribute.controller'
 import { BaseFont } from '../base.font'
+import { merge } from 'lodash'
 
+/**
+ * SubTittle 类，继承自 Attribute 类，用于表示副标题属性
+ */
 class SubTittle extends Attribute {
-  constructor(parent: Attribute, description: Attribute.Description = { type: 'string', value: '副标题' }) {
-    super('subtitle', 'SubTitle', { parent, description })
+  /**
+   * 构造函数，用于创建 SubTittle 实例
+   * @param initializer 属性初始化配置对象
+   */
+  constructor(initializer: Attribute.Initializer) {
+    // 定义默认的初始化配置
+    const defaultInitializer = {
+      name: 'subtitle', // 属性名称
+      type: 'SubTitle', // 属性类型
+      options: {
+        description: { type: 'string', value: '副标题' } // 描述信息
+      }
+    }
 
-    this.addChild(
-      new Attribute('text', 'string', {
-        parent: this,
-        description: { type: 'string', value: '副标题内容' },
-        controller: new AttributeController({
-          type: 'string',
-          default: ''
-        })
-      })
-    )
+    // 合并默认配置和传入的配置，然后调用父类构造函数
+    super(merge(defaultInitializer, initializer))
+
+    // 添加一个基础文本子组件，用于显示副标题内容
+    this.addChild(new BaseText({ options: { parent: this, description: { type: 'string', value: '副标题内容' } } }))
+    // 添加一个基础字体设置子组件，用于配置副标题字体
     this.addChild(
       new BaseFont({ name: 'font', options: { parent: this, description: { type: 'string', value: '字体设置' } } })
     )
@@ -24,9 +35,15 @@ class SubTittle extends Attribute {
 }
 
 export default class LayoutTitle extends Attribute {
-  constructor(parent: Attribute, description?: Attribute.Description) {
-    if (!description) description = { type: 'string', value: '字体设置' }
-    super('title', 'LayoutTitle', { parent, description })
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'title',
+      type: 'LayoutTitle',
+      options: {
+        description: { type: 'string', value: '字体设置' }
+      }
+    }
+    super(merge(defaultInitializer, initializer))
 
     this.addChild(
       new BaseText({
@@ -39,7 +56,7 @@ export default class LayoutTitle extends Attribute {
     this.addChild(
       new BaseFont({ name: 'font', options: { parent: this, description: { type: 'string', value: '字体设置' } } })
     )
-    this.addChild(new SubTittle(this))
+    this.addChild(new SubTittle({ options: { parent: this } }))
 
     this.addChild(
       new Attribute({

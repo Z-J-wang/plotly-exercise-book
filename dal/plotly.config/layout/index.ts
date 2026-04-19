@@ -21,7 +21,7 @@ import { BaseTransition } from '../base.transition'
 export default class Layout extends BaseConfig {
   constructor(parent: Attribute) {
     super(parent)
-    this.insertAttribute(new LayoutTitle(parent))
+    this.insertAttribute(new LayoutTitle({ options: { parent } }))
     this.insertAttribute(
       new Attribute('showlegend', 'boolean', {
         parent: parent,
@@ -107,7 +107,7 @@ export default class Layout extends BaseConfig {
       })
     )
 
-    this.insertAttribute(new LayoutUniformtext(parent))
+    this.insertAttribute(new LayoutUniformtext({ options: { parent } }))
 
     this.insertAttribute(
       new Attribute({
