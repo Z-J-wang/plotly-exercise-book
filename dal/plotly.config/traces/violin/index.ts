@@ -18,7 +18,7 @@ import ViolinData from './violin.data'
 import AttributeController from 'entity/attribute.controller'
 import TraceTextAbout from '../trace.text'
 import TraceHover from '../trace.hover'
-import { BaseColor, BaseOrientation, BaseUirevision } from '../../base'
+import { BaseColor, BaseOrientation, BaseUirevision, BaseText } from '../../base'
 import exampleData from '@/assets/data/violin.json'
 import ViolinAlignmentGroup from '@/components/doc/traces/ViolinAlignmentGroup.vue'
 import BoxMarker from '../box/marker'
@@ -91,14 +91,16 @@ export default class TraceBar extends Attribute {
     new ViolinData(this)
 
     this.addChild(
-      new Attribute('text', 'string | string[]', {
-        parent: this,
-        description: {
-          type: 'markdown',
-          value:
-            '设置与每个样本值相关联的文本元素。若为单个字符串，则该字符串将显示在所有数据点上。若为字符串数组，则数组中的元素将按顺序映射到该轨迹的 (x, y) 坐标上。若要显示这些文本，轨迹的 `hoverinfo` 必须包含 `text` 标志。'
-        },
-        controller: new AttributeController({ type: 'string', default: null })
+      new BaseText({
+        options: {
+          parent: this,
+          description: {
+            type: 'markdown',
+            value:
+              '设置与每个样本值相关联的文本元素。若为单个字符串，则该字符串将显示在所有数据点上。若为字符串数组，则数组中的元素将按顺序映射到该轨迹的 (x, y) 坐标上。若要显示这些文本，轨迹的 `hoverinfo` 必须包含 `text` 标志。'
+          },
+          controller: new AttributeController({ type: 'string', default: null })
+        }
       })
     )
 
@@ -124,26 +126,9 @@ export default class TraceBar extends Attribute {
       })
     )
 
-    this.addChild(
-      new Attribute('alignmentgroup', 'string', {
-        parent: this,
-        description: {
-          type: 'Component',
-          value: ViolinAlignmentGroup
-        }
-      })
-    )
+    this.addChild(new ViolinAlignmentgroup({ options: { parent: this } }))
 
-    this.addChild(
-      new Attribute('offsetgroup', 'string', {
-        parent: this,
-        description: {
-          type: 'markdown',
-          value:
-            '将与同一位置轴或匹配轴相关的多个轨迹设置为同一个偏移组，这样同一位置坐标下的柱形图将能够排列整齐。详见：`alignmentgroup`'
-        }
-      })
-    )
+    this.addChild(new ViolinOffsetgroup({ options: { parent: this } }))
 
     this.addChild(new BoxMarker({ options: { parent: this } }))
 
@@ -327,11 +312,44 @@ export class ViolinSpan extends Attribute {
       options: {
         description: {
           type: 'string',
-          value: '设置用于计算密度函数的数据空间的跨度范围。只有在“spanmode = manual”时才有效。'
+          value: '设置用于计算密度函数的数据空间的跨度范围。只有在"spanmode = manual"时才有效。'
         }
       }
     }
 
-    super(merge(defaultInitialization, initialization))
+    super(merge({}, defaultInitialization, initialization))
+  }
+}
+
+export class ViolinAlignmentgroup extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'alignmentgroup',
+      type: 'string',
+      options: {
+        description: {
+          type: 'Component',
+          value: ViolinAlignmentGroup
+        }
+      }
+    }
+    super(merge({}, defaultInitializer, initializer))
+  }
+}
+
+export class ViolinOffsetgroup extends Attribute {
+  constructor(initializer: Attribute.Initializer) {
+    const defaultInitializer = {
+      name: 'offsetgroup',
+      type: 'string',
+      options: {
+        description: {
+          type: 'markdown',
+          value:
+            '将与同一位置轴或匹配轴相关的多个轨迹设置为同一个偏移组，这样同一位置坐标下的柱形图将能够排列整齐。详见：`alignmentgroup`'
+        }
+      }
+    }
+    super(merge({}, defaultInitializer, initializer))
   }
 }
